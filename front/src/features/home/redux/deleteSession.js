@@ -57,6 +57,7 @@ export function deleteSession(id) {
           ...state,
           deleteSessionPending: false,
           deleteSessionError: null,
+          sessions: state.sessions.filter(({id})=> id !== action.payload.session.id), // It will be better to use finIndex and then slice the array
         };
   
       case HOME_DELETE_SESSION_FAILURE:
