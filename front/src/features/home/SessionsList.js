@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,18 +22,20 @@ const useStyles = makeStyles(theme => ({
 const formatStart = 'yyy-MM-dd HH:mm';
 const formatHour = 'HH:mm';
 
-function renderRow(props) {
+const renderRow = onDelete => props => {
   const { index, style, data } = props;
   const { name, startDate, endDate, id } = data[index];
   const start = new Date(startDate);
   const end = new Date(endDate || Date.now());
   const duration = differenceInMinutes(end, start);
+  const deleteAction = useCallback(() => onDelete(id), [onDelete,id])
+
   return (
     <ListItem ContainerProps={{style}} key={id || index} ContainerComponent="div">
       <ListItemText primary={name} secondary={format(start, formatStart)} />
       <ListItemText primary={`${duration} min`} secondary={format(end, formatHour)}  />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="delete">
+        <IconButton edge="end" aria-label="delete" onClick={deleteAction}>
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>
@@ -46,13 +48,13 @@ renderRow.propTypes = {
   style: PropTypes.object.isRequired,
 };
 
-export default function SessionsList({ sessions }) {
+export default function SessionsList({ sessions, onDelete }) {
   const classes = useStyles();
   const itemCount = sessions.length
   return (
     <div className={classes.root}>
       <FixedSizeList height={400} width={300} itemSize={46} itemCount={itemCount} itemData={sessions}>
-        {renderRow}
+        {renderRow(onDelete)}
       </FixedSizeList>
     </div>
   );
@@ -60,6 +62,7 @@ export default function SessionsList({ sessions }) {
 
 SessionsList.propTypes = {
   sessions: PropTypes.array,
+  onDelete: PropTypes.func.isRequired,
 };
 SessionsList.defaultProps = {
   sessions: []

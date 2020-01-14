@@ -25,6 +25,7 @@ export class DefaultPage extends Component {
 
   render() {
     const { sessions } = this.props.home
+    const { deleteSession } = this.props.actions
     return (
       <React.Fragment>
         <Navigation page='timer' />
@@ -34,7 +35,7 @@ export class DefaultPage extends Component {
             <Link to='stats' variant="body2" component={RouterLink}>
               See Stats
             </Link>
-            <SessionsList sessions={sessions} />
+            <SessionsList sessions={sessions} onDelete={deleteSession}/>
           </div>
           <Box pt={4}>
             <Copyright />

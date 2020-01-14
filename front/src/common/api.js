@@ -37,3 +37,8 @@ export const stopSession = ({ token, id, name }) =>
     api.patch(`/sessions/${id}`, { name, endDate: (new Date()).toISOString() }, { headers: { Authorization: `Bearer ${token}` } })
         .then(formatResponse)
         .catch(formatError)
+
+export const deleteSession = ({ token, id }) =>
+    api.delete(`/sessions/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        .then(formatResponse)
+        .catch(formatError)

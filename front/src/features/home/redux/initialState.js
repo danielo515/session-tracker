@@ -7,6 +7,8 @@ const initialState = {
   fetchSessionsPending: false,
   fetchSessionsError: null,
   sessions: [],
+  deleteSessionPending: false,
+  deleteSessionError: null,
 };
 
 export default initialState;
