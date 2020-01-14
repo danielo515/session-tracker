@@ -9,11 +9,11 @@ import differenceInMinutes from 'date-fns/differenceInMinutes';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import clsx from 'clsx'
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    height: 400,
     maxWidth: 300,
     backgroundColor: theme.palette.background.paper,
   },
@@ -52,8 +52,8 @@ export default function SessionsList({ sessions, onDelete }) {
   const classes = useStyles();
   const itemCount = sessions.length
   return (
-    <div className={classes.root}>
-      <FixedSizeList height={400} width={300} itemSize={46} itemCount={itemCount} itemData={sessions}>
+    <div className={clsx(classes.root,'home-sessions-list')}>
+      <FixedSizeList className={'home-sessions-list'} height={400} width={300} itemSize={46} itemCount={itemCount} itemData={sessions}>
         {renderRow(onDelete)}
       </FixedSizeList>
     </div>
