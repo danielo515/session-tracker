@@ -39,3 +39,7 @@ If you want to test the frontend with the backend locally:
 
 ## Details
 For details about the back and the front please take a look at their respective folders
+
+## Recomendations
+Albeit it is possible to open this entire repository with a single instance of VSCode it is recommended to open each subfolder using a dedicated instance.
+This will ease some tasks like debugging and terminal management

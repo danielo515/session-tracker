@@ -26,6 +26,15 @@ or just use the shorthand
 yarn dev
 ```
 
+### Debug
+
+If you open this folder with VSCode there is an already existing configuration for attach to a running server so the steps are:
+1. Start the server offline by running `yarn dev`
+2. Open VSCode debug section and select the process that has `serverless offline` on it
+
+![debugger](./debugger.png)
+![process select](./process-select.png)
+
 ## Deployment
 
 run `sls deploy` at the root the `back` folder
