@@ -26,7 +26,11 @@ Take a look at the screenshot for an example:
 ![collection runner screenshot](./collection-runnner.png "col-runner")
 
 ## Testing the frontend locally
-To start the frontend locally for the first time please run `yarn && yarn start`. After that just `yarn start` (or `npm start`) will be required. The frontend points to the dev environment, so once you start it locally you can freely test it without having to start a local backend.
+To start the frontend locally for the first time please run 
+```
+yarn && yarn start
+```
+After that just `yarn start` (or `npm start`) will be required. The frontend points to the dev environment, so once you start it locally you can freely test it without having to start a local backend.
 Backend and fronted are not specifically designed to be tested locally at the same time, but it is possible.
 If you want to test the frontend with the backend locally:
 - Start the backend first following the instructions for it

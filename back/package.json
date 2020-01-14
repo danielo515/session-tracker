@@ -1,0 +1,36 @@
+{
+  "name": "time-tracker-backend",
+  "version": "1.0.0",
+  "description": "time tracking backend example",
+  "repository": "",
+  "author": "Dannielo Rodriguez <rdanielo@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=test serverless offline start",
+    "lint": "eslint src tests-integration",
+    "test:unit": "jest src --coverage",
+    "test:watch": "jest src --coverage ---watch",
+    "integration:local": "AWS_REGION=eu-west-1 jest tests-integration",
+    "integration": "yarn run dev --exec 'yarn integration:local'",
+    "integration:ci": "yarn run dev --exec 'yarn integration:local --runInBand'",
+    "test": "yarn test:unit",
+    "test:ci": "yarn test --runInBand",
+    "postinstall": "serverless dynamodb install"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "standard-http-error": "^2.0.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.12.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-prefer-arrow-functions": "^3.0.1",
+    "jest": "^24.9.0",
+    "serverless-dynamodb-local": "^0.2.18",
+    "serverless-offline": "^3.8.3"
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "User login endpoint schema",
+    "required": [
+        "email","password"
+    ],
+    "properties": {
+        "email": {
+            "type": "string",
+            "title": "The user email",
+            "format":"email"
+        },
+        "password": {
+            "type": "string",
+            "title": "The user password",
+            "pattern": "^[a-zA-Z0-9.-_!@]+$"
+        }
+    }
+}
