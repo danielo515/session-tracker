@@ -1,5 +1,7 @@
 # Pento tech challenge by Daniel Rodriguez
 
+The entire solution is publicly available at: https://pento.danielo.es
+
 ## Testing the back locally
 For testing the backend locally you will need the serverless framework installed.
 After that, you just run `yarn dev` and an offline version will be available for testing
@@ -20,6 +22,8 @@ It is possible to use the collection runner to generate a bunch of valid time tr
 - Run as many times as you want. We recommend short bursts of 8-10
 
 Take a look at the screenshot for an example:
+
+![collection runner screenshot](./collection-runnner.png "col-runner")
 
 ## Testing the frontend locally
 To start the frontend locally for the first time please run `yarn && yarn start`. After that just `yarn start` (or `npm start`) will be required. The frontend points to the dev environment, so once you start it locally you can freely test it without having to start a local backend.
