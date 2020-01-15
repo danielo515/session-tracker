@@ -47,3 +47,7 @@ export default function Navigation({page}) {
 
     );
 }
+
+Navigation.propTpes = {
+    page: PropTypes.string.isRequired,
+}

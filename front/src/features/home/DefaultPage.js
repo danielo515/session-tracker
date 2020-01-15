@@ -31,12 +31,10 @@ export class DefaultPage extends Component {
         <Navigation page='timer' />
         <div className="home-default-page">
           <SessionController />
-          <div>
-            <Link to='stats' variant="body2" component={RouterLink}>
-              See Stats
+          <Link to='stats' variant="body2" component={RouterLink}>
+            See Stats
             </Link>
-            <SessionsList sessions={sessions} onDelete={deleteSession}/>
-          </div>
+          <SessionsList sessions={sessions} onDelete={deleteSession} />
           <Box pt={4}>
             <Copyright />
           </Box>

@@ -14,7 +14,7 @@ import clsx from 'clsx'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 300,
+    maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -32,7 +32,7 @@ const renderRow = onDelete => props => {
 
   return (
     <ListItem ContainerProps={{style}} key={id || index} ContainerComponent="div">
-      <ListItemText primary={name} secondary={format(start, formatStart)} />
+      <ListItemText primary={name} className='sl-left-item' secondary={format(start, formatStart)} />
       <ListItemText primary={`${duration} min`} secondary={format(end, formatHour)}  />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" onClick={deleteAction}>
@@ -53,7 +53,7 @@ export default function SessionsList({ sessions, onDelete }) {
   const itemCount = sessions.length
   return (
     <div className={clsx(classes.root,'home-sessions-list')}>
-      <FixedSizeList className={'home-sessions-list'} height={400} width={300} itemSize={46} itemCount={itemCount} itemData={sessions}>
+      <FixedSizeList className={'home-sessions-list'} height={400} width='100%' itemSize={46} itemCount={itemCount} itemData={sessions}>
         {renderRow(onDelete)}
       </FixedSizeList>
     </div>
