@@ -4,6 +4,7 @@ import subMonths from 'date-fns/subMonths';
 import endOfDay from 'date-fns/endOfDay';
 import startOfDay from 'date-fns/startOfDay';
 import startOfWeek from 'date-fns/startOfWeek';
+import endOfWeek from 'date-fns/endOfWeek';
 import startOfMonth from 'date-fns/startOfMonth';
 import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
@@ -33,10 +34,10 @@ export function createChartData({ daysAgo, weeksAgo = 0, monthsAgo = 0, sessions
     const today = endOfDay(new Date());
 
     const dayRef = subDays(today, daysAgo);
-    const dayInterval = { start: startOfDay(dayRef), end: today };
+    const dayInterval = { start: startOfDay(dayRef), end: endOfDay(dayRef) };
 
     const weekRef = subWeeks(startOfWeek(today), weeksAgo);
-    const weekInterval = { start: weekRef, end: today };
+    const weekInterval = { start: weekRef, end: endOfWeek(weekRef) };
 
     const monthRef = subMonths(startOfMonth(today), monthsAgo);
     const monthInterval = { start: monthRef, end: today };

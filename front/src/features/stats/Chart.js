@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { XAxis, YAxis, Label, ResponsiveContainer,BarChart, Bar, Cell, CartesianGrid, Tooltip, Legend, } from 'recharts';
+import { XAxis, YAxis, Label, ResponsiveContainer,BarChart, Bar, CartesianGrid, Tooltip, Legend, } from 'recharts';
 import Title from './Title';
 import PropTypes from 'prop-types'
 
@@ -44,6 +44,7 @@ export default function Chart({sessions, title, names}) {
             </Label>
           </YAxis>
           <CartesianGrid strokeDasharray="3 3" />
+          <Legend/>
           <Tooltip/>
           {Bars}
         </BarChart>

@@ -10,7 +10,11 @@ import Chart from './Chart';
 import { Copyright } from '../common/Copyright';
 import Navigation from '../common/Navigation'
 import { createChartData } from './createChartData';
-
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/Button';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import Typography from '@material-ui/core/Typography';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -63,7 +67,24 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  navigation: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 }));
+
+function NavigationControls({ setValue, baseName, value, unit }) {
+  const { navigation } = useStyles();
+  const back = () => setValue(value + 1)
+  const next = () => setValue(value - 1)
+  return (
+    <div className={navigation}>
+      <IconButton onClick={back}>< NavigateBeforeIcon /></IconButton>
+      <Typography variant='button' align='center'> {value === 0 ? baseName : `${value} ${unit} ago`}</Typography>
+      <IconButton onClick={next} disabled={value === 0}><NavigateNextIcon /></IconButton>
+    </div>)
+}
 
 export default function Dashboard({ sessions = [] }) {
   const classes = useStyles();
@@ -79,20 +100,20 @@ export default function Dashboard({ sessions = [] }) {
     <div className={classes.root}>
       <CssBaseline />
       <main className={classes.content}>
-      <Navigation page='stats'/>
+        <Navigation page='stats' />
 
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Day */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={dayData} names={names} title='Day' />
+                <Chart sessions={dayData} names={names} title={<NavigationControls value={daysAgo} setValue={setDay} baseName='today' unit='days' />} />
               </Paper>
             </Grid>
             {/* Week */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={weekData} names={names} title='Week' />
+                <Chart sessions={weekData} names={names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
               </Paper>
             </Grid>
             {/* Month */}
