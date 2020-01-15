@@ -18,10 +18,9 @@ function  stringToColour(str='') {
   return colour;
 }
 
-export default function Chart({sessions, title}) {
+export default function Chart({sessions, title, names}) {
   const theme = useTheme();
-  const names = [...new Set(sessions.map(x=>x.name))];
-  const Bars = names.map (x=>  <Bar dataKey="duration" name={x} stackId='a' fill={stringToColour(x)} />)
+  const Bars = names.map (x=>  <Bar dataKey={x} name={x} stackId='a' fill={stringToColour(x)} />)
   return (
     <React.Fragment>
       <Title>{title}</Title>

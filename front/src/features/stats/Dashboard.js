@@ -73,7 +73,7 @@ export default function Dashboard({ sessions = [] }) {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const { dayData, weekData, monthData } = createChartData({ sessions, daysAgo, weeksAgo, monthsAgo });
+  const { dayData, weekData, monthData, names } = createChartData({ sessions, daysAgo, weeksAgo, monthsAgo });
 
   return (
     <div className={classes.root}>
@@ -86,19 +86,19 @@ export default function Dashboard({ sessions = [] }) {
             {/* Day */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={dayData} title='Day' />
+                <Chart sessions={dayData} names={names} title='Day' />
               </Paper>
             </Grid>
             {/* Week */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={weekData} title='Week' />
+                <Chart sessions={weekData} names={names} title='Week' />
               </Paper>
             </Grid>
             {/* Month */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart title='Month' sessions={monthData} />
+                <Chart title='Month' names={names} sessions={monthData} />
               </Paper>
             </Grid>
           </Grid>
