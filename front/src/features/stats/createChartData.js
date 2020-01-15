@@ -14,12 +14,12 @@ import differenceInMinutes from 'date-fns/differenceInMinutes';
 export const addToRow = formatter => (map, { name, startDate, endDate }) => {
     const duration = differenceInMinutes(new Date(endDate || Date.now()), new Date(startDate));
     const date = formatter(new Date(startDate));
-    const existing = (map[date] || { duration: 0 })
+    const existing = (map[date] || {})
     return {
         ...map,
         [date]: {
             ...existing,
-            [name]: existing.duration + duration,
+            [name]: (existing[name]||0) + duration,
             startDate: date
         }
     };
