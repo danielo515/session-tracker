@@ -51,8 +51,6 @@ export function createChartData({ daysAgo, weeksAgo = 0, monthsAgo = 0, sessions
             return acc; // I don't usually mutate, but this is a big performance gain on this case
         },
         { d: {}, w: {}, m: {}, names: new Set() }) // I was originally using longer names, but I think this is obvious
-
-        console.log(chartData);
     
     return {
         dayData: Object.values(chartData.d),
