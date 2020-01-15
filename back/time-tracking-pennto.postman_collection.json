@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "aa039990-b6d7-4c0e-82ed-e0f2765b9f33",
+		"name": "time-tracking-pennto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "sign-in",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7cd984fc-3c1a-47e1-b1b0-d82d5eaa2bbf",
+						"exec": [
+							"function jwt_decode(jwt) {",
+							"    var parts = jwt.split('.'); // header, payload, signature",
+							"    return JSON.parse(atob(parts[1]));",
+							"}",
+							"pm.test(\"Returns user info\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.email).to.be.a('string');",
+							"    pm.environment.set(\"current-user\", jsonData.email);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"{{password}}\",\n    \"name\": \"{{username}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37a9f80f-77dc-4674-8d82-306c1e68f40d",
+						"exec": [
+							"",
+							"function jwt_decode(jwt) {",
+							"    var parts = jwt.split('.'); // header, payload, signature",
+							"    return JSON.parse(atob(parts[1]));",
+							"}",
+							"",
+							"pm.test(\"Returns a token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.token).to.be.a('string');",
+							"    pm.environment.set(\"time-token\", jsonData.token);",
+							"    console.log(jwt_decode(jsonData.token));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"{{current-user}}\",\n\t\"password\":\"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "me",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37a9f80f-77dc-4674-8d82-306c1e68f40d",
+						"exec": [
+							"",
+							"pm.test(\"Returns a user\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.be.a('string');",
+							"    console.log(jsonData);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{time-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/me",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start session",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "07e116fe-e80e-4a4f-9fab-7baf0fdca474",
+						"exec": [
+							"function getRandomInt(min, max) {",
+							"    min = Math.ceil(min);",
+							"    max = Math.floor(max);",
+							"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+							"}",
+							"",
+							"const sessionNames = [",
+							"    \"work\",",
+							"    \"pento\",",
+							"    \"gardering\",",
+							"    \"dog-walk\",",
+							"    \"work harder\",",
+							"    \"exercisinng\"];",
+							"const d = new Date();",
+							"const minus = getRandomInt(0,7)",
+							"const minutes = getRandomInt(1,10)",
+							"const duration = minutes * 60000",
+							"const startDate = new Date(d.getFullYear(),d.getMonth(), getRandomInt(12,d.getDate()), getRandomInt(0,23));",
+							"const endDate = new Date(startDate.getTime() + duration)",
+							"pm.environment.set(\"now\", (startDate).toISOString());",
+							"pm.environment.set(\"endDate\", (endDate).toISOString());",
+							"pm.environment.set(\"sessionName\", sessionNames[getRandomInt(0, sessionNames.length-1)]);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "468bd86a-995f-4e4a-be89-ecd7ad7a07b0",
+						"exec": [
+							"pm.test(\"Returns session\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.be.a('string');",
+							"    //pm.expect(jsonData.name).to.be.a('string');",
+							"    pm.environment.set(\"last-session\", jsonData.id);",
+							"    pm.environment.set(\"last-name\", jsonData.name);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{time-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"{{sessionName}}\",\n\t\"startDate\": \"{{now}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/sessions",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"sessions"
+					]
+				},
+				"description": "Starts a new sessionn"
+			},
+			"response": []
+		},
+		{
+			"name": "List sessions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc075f26-1c20-46f2-b372-ac2485d3f28d",
+						"exec": [
+							"pm.test(\"All sessions are from the same user\", function () {",
+							"    var sessions = pm.response.json().sessions;",
+							"    sessions.forEach( ({userId}) => pm.expect(sessions[0].userId).to.eql(userId))",
+							"});",
+							"",
+							"postman.setNextRequest('Start session')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{time-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/sessions",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"sessions"
+					]
+				},
+				"description": "Starts a new sessionn"
+			},
+			"response": []
+		},
+		{
+			"name": "Finnish session",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "07e116fe-e80e-4a4f-9fab-7baf0fdca474",
+						"exec": [
+							"pm.environment.set(\"now\", (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{time-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\"endDate\": \"{{endDate}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/sessions/{{last-session}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"sessions",
+						"{{last-session}}"
+					]
+				},
+				"description": "Updates a session with finnish"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Sessioon",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "07e116fe-e80e-4a4f-9fab-7baf0fdca474",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{time-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/sessions/{{last-session}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"sessions",
+						"{{last-session}}"
+					]
+				},
+				"description": "Updates a session with finnish"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
