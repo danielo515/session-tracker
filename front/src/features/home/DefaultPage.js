@@ -16,7 +16,6 @@ export class DefaultPage extends Component {
   render() {
 
     const { pathname } = this.props.location; // default to root page name
-console.log({pathname});
 
     return (
       <React.Fragment>

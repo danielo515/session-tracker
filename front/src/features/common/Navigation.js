@@ -24,19 +24,12 @@ function LinkTab(props) {
 
 export default function Navigation({page}) {
 
-    const [value, setValue] = React.useState(page);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     return (
 
         <AppBar position="static">
             <Tabs
                 variant="fullWidth"
-                value={value}
-                onChange={handleChange}
+                value={page}
                 aria-label="navigation"
             >
                 <LinkTab label="Timer" to="/" value='/' {...a11yProps('timer')} />
