@@ -1,7 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -98,7 +97,6 @@ export default function Dashboard({ sessions = [] }) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <main className={classes.content}>
         <Navigation page='stats' />
 

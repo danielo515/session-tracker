@@ -20,6 +20,7 @@ export default class App extends Component {
   render() {
     return (
     <Container component="main">
+      <CssBaseline/>
         <div className="page-container">{this.props.children}</div>
       </Container>
     );
