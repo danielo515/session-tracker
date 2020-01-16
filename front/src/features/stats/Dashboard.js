@@ -9,7 +9,6 @@ import Chart from './Chart';
 import { Copyright } from '../common/Copyright';
 import Navigation from '../common/Navigation'
 import { createChartData } from './createChartData';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -98,8 +97,6 @@ export default function Dashboard({ sessions = [] }) {
   return (
     <div className={classes.root}>
       <main className={classes.content}>
-        <Navigation page='stats' />
-
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Day */}

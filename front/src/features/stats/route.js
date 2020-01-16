@@ -9,6 +9,6 @@ export default {
   path: 'stats',
   name: 'Stats',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
+    { path: 'default-page', name: 'Default page', component: DefaultPage },
   ],
 };

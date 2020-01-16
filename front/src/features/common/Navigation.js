@@ -10,7 +10,6 @@ function a11yProps(index) {
     return {
         id: `nav-tab-${index}`,
         'aria-controls': `nav-tabpanel-${index}`,
-        value: index,
     };
 }
 
@@ -40,8 +39,8 @@ export default function Navigation({page}) {
                 onChange={handleChange}
                 aria-label="navigation"
             >
-                <LinkTab label="Timer" to="/" {...a11yProps('timer')} />
-                <LinkTab label="Stats" to="/stats" {...a11yProps('stats')} />
+                <LinkTab label="Timer" to="/" value='/' {...a11yProps('timer')} />
+                <LinkTab label="Stats" to="/stats" value='/stats' {...a11yProps('stats')} />
             </Tabs>
         </AppBar>
 
