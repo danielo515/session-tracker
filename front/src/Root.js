@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import history from './common/history';
 
@@ -26,6 +26,7 @@ function renderRouteConfigV3(routes, contextPath) {
           key={newContextPath}
           render={props => <item.component {...props}>{childRoutes}</item.component>}
           path={newContextPath}
+          exact={item.exact}
         />
       );
     } else if (item.component) {
@@ -38,7 +39,11 @@ function renderRouteConfigV3(routes, contextPath) {
   routes.forEach(item => renderRoute(item, contextPath));
 
   // Use Switch so that only the first matched route is rendered.
-  return <Switch>{children}</Switch>;
+  return (
+    <Switch>
+      {children}
+      <Redirect to="/not-found" />
+    </Switch>)
 }
 
 export default class Root extends React.Component {
@@ -48,6 +53,7 @@ export default class Root extends React.Component {
   };
   render() {
     const children = renderRouteConfigV3(this.props.routeConfig, '/');
+
     return (
       <Provider store={this.props.store}>
         <ConnectedRouter history={history}>{children}</ConnectedRouter>
