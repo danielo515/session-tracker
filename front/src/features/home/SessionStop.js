@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import BigButton from './BigButton';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';

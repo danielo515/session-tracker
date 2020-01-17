@@ -9,7 +9,7 @@ export default class NotImplemented extends Component {
       <div class="not-implemented">
         <h2>I wanted to implement this feature but...</h2>
         <p>
-          <img src={meme} />
+          <img src={meme} alt='not implemented meme'/>
         </p>
         <h2>Didn't had time...</h2>
         <Button variant="outlined" size="large" onClick={this.props.history.goBack} startIcon={<ArrowBackIcon />}>

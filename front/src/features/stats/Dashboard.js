@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from './Chart';
 import { Copyright } from '../common/Copyright';
-import Navigation from '../common/Navigation'
 import { createChartData } from './createChartData';
 import IconButton from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
