@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import BigButton from './BigButton';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import StopIcon from '@material-ui/icons/Stop';
 import useHandleChange from './hooks/useHandleChange'
 import Timer from "./Timer";
+import Zoom from '@material-ui/core/Zoom';
+
 export default function SessionStop({ name: sessionName, id, stopSession, startDate }) {
   const [name, handleChange] = useHandleChange(sessionName)
-  const stop = () => stopSession({ id, name });
+  const [visible,setVisible] = useState(true);
+  const stop = () => {
+    stopSession({id, name});
+    setVisible(false)
+  }
   return (
     <div>
       <form noValidate>
@@ -17,13 +23,17 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
           fullWidth
           id="name"
           label="Session Name"
-          name="name"
+          name="session-name"
           autoComplete="session"
           value={name}
           onChange={handleChange}
         />
       </form>
-      <BigButton onClick={stop} icon={StopIcon} variant='stop'/>
+      <Zoom in={visible} unmountOnLeave={true}>
+        <div>
+          <BigButton onClick={stop} icon={StopIcon} variant='stop'/>
+        </div>
+      </Zoom>
       <Timer startDate={startDate}></Timer>
     </div>
   );

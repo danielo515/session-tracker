@@ -57,7 +57,7 @@ const doTimes = times => fn => {
 
 const Loading = () => (
   <React.Fragment>
-    {doTimes(10)(i => <Skeleton height={46} key={i} />)}
+    {doTimes(8)(i => <Skeleton height={46} key={i} />)}
   </React.Fragment>
 )
 
