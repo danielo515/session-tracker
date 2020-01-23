@@ -48,7 +48,6 @@ const useStyles = makeStyles(theme => ({
 
   content: {
     flexGrow: 1,
-    height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -62,7 +61,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height:240,
+    [theme.breakpoints.down(600)]: {height: 400}
   },
   navigation: {
     display: 'flex',
@@ -99,13 +99,13 @@ export default function Dashboard({ sessions = [] }) {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Day */}
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
                 <Chart sessions={dayData} names={names} title={<NavigationControls value={daysAgo} setValue={setDay} baseName='today' unit='days' />} />
               </Paper>
             </Grid>
             {/* Week */}
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
                 <Chart sessions={weekData} names={names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
               </Paper>
