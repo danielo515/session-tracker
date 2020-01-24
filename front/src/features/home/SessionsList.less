@@ -1,10 +1,15 @@
 @import '../../styles/mixins';
 
 .home-sessions-list {
-  @media only screen and (max-device-width: 600px) {
-    height: 200px !important; // I don't like this, but it's the cheapest way to override inline styles
-  }
   .sl-left-item {
     max-width: 60%;
+  }
+  background-color: #fafafa;
+  .home-sessions-skeleton {
+    height: 400px;
+  @media only screen and (max-device-width: 600px) {
+    height: 200px;
+    overflow: hidden;
+  }
   }
 }
