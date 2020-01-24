@@ -9,4 +9,10 @@
   justify-content: space-around;
   height: 90vh;
   box-sizing: border-box;
+  @media only screen and (max-device-width: 600px) {
+    flex-direction: column-reverse;
+    .home-copyright {
+      display: none;
+    }
+  }
 }

@@ -25,13 +25,11 @@ class SessionsPage extends Component {
     render() {
         const { sessions } = this.props.home
         const { deleteSession } = this.props.actions
-        return (<div className="home-default-page">
+        return (
+        <div className="home-default-page">
             <SessionController />
-            <Link to='stats' variant="body2" component={RouterLink}>
-                See Stats
-            </Link>
             <SessionsList sessions={sessions} onDelete={deleteSession} />
-            <Box pt={4}>
+            <Box pt={4} className='home-copyright'>
                 <Copyright />
             </Box>
         </div>);
