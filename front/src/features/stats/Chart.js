@@ -18,7 +18,7 @@ export default function Chart({ sessions, title, names }) {
             top: 16,
             right: 16,
             bottom: 0,
-            left: 40,
+            left: 10,
           }}
         >
           <XAxis dataKey="startDate" stroke={theme.palette.text.secondary} />
@@ -26,6 +26,8 @@ export default function Chart({ sessions, title, names }) {
             <Label
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
+              offset={0}
+              angle={-90}
             >
               Minutes
             </Label>

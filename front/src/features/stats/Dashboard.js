@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height:240,
-    [theme.breakpoints.down(600)]: {height: 400}
+    [theme.breakpoints.down('xs')]: {height: 400}
   },
   navigation: {
     display: 'flex',
