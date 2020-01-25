@@ -4,8 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Link as RouterLink } from 'react-router-dom';
-
-
+import AlarmIcon from '@material-ui/icons/AccessAlarms';
 function a11yProps(index) {
     return {
         id: `nav-tab-${index}`,
@@ -32,7 +31,7 @@ export default function Navigation({page}) {
                 value={page}
                 aria-label="navigation"
             >
-                <LinkTab label="Timer" to="/" value='/' {...a11yProps('timer')} />
+                <LinkTab label="Timer" icon={< AlarmIcon />} to="/" value='/' {...a11yProps('timer')} />
                 <LinkTab label="Stats" to="/stats" value='/stats' {...a11yProps('stats')} />
             </Tabs>
         </AppBar>
