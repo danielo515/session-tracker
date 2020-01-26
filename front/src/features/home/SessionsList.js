@@ -56,12 +56,13 @@ const doTimes = times => fn => {
   return res;
 }
 
-const Loading = ({smallScreen}) => {
+const Loading = ({ smallScreen }) => {
   return (
   <div className='home-sessions-skeleton'>
     {doTimes(smallScreen ? 5 : 8)(i => <Skeleton height={46} key={i} />)}
   </div>
-) }
+  )
+}
 
 export default function SessionsList({ sessions, onDelete }) {
   const smallScreen = useMediaQuery('(max-width: 600px');
@@ -74,7 +75,7 @@ export default function SessionsList({ sessions, onDelete }) {
           <FixedSizeList className={'home-sessions-list'} height={smallScreen ? 200 : 400} width='100%' itemSize={46} itemCount={itemCount} itemData={sessions}>
             {renderRow(onDelete)}
           </FixedSizeList>
-          : <Loading smallScreen={smallScreen}/>
+          : <Loading smallScreen={smallScreen} />
       }
     </div>
   );
