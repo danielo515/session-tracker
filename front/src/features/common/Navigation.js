@@ -1,4 +1,6 @@
 import React from 'react';
+import BarChart from '@material-ui/icons/BarChart';
+import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -12,10 +14,12 @@ function a11yProps(index) {
     };
 }
 
-function LinkTab(props) {
+function LinkTab({label, ...props}) {
+    const Label = <Box display={{xs:'none',sm:'block'}}>{label}</Box>
     return (
         <Tab
             component={RouterLink}
+            label={Label}
             {...props}
         />
     );
@@ -30,9 +34,10 @@ export default function Navigation({page}) {
                 variant="fullWidth"
                 value={page}
                 aria-label="navigation"
+                centered
             >
                 <LinkTab label="Timer" icon={< AlarmIcon />} to="/" value='/' {...a11yProps('timer')} />
-                <LinkTab label="Stats" to="/stats" value='/stats' {...a11yProps('stats')} />
+                <LinkTab label="Stats" icon={< BarChart />} to="/stats" value='/stats' {...a11yProps('stats')} />
             </Tabs>
         </AppBar>
 
