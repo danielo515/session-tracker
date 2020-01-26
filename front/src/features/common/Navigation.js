@@ -1,4 +1,6 @@
 import React from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import BarChart from '@material-ui/icons/BarChart';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
@@ -15,7 +17,9 @@ function a11yProps(index) {
 }
 
 function LinkTab({label, ...props}) {
-    const Label = <Box display={{xs:'none',sm:'block'}}>{label}</Box>
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('xs'));
+    const Label = smallScreen ? null : <Box display={{xs:'none',sm:'block'}}>{label}</Box>
     return (
         <Tab
             component={RouterLink}
@@ -26,7 +30,6 @@ function LinkTab({label, ...props}) {
 }
 
 export default function Navigation({page}) {
-
     return (
 
         <AppBar position="static">
