@@ -23,7 +23,7 @@ const renderTimer = (hours, minutes, seconds) => (
 )
 
 export default function Timer({ startDate, isActive }) {
-  if (!isActive) return renderTimer('00', '00');
+  if (!isActive) return renderTimer('00', '00', '00');
   const diff = useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToMinSec(diff);
   return renderTimer(hours,minutes, seconds)
