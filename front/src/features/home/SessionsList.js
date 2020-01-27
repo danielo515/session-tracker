@@ -12,6 +12,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx'
 import Skeleton from '@material-ui/lab/Skeleton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Autosizer from 'react-virtualized-auto-sizer'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,9 +60,9 @@ const doTimes = times => fn => {
 
 const Loading = ({ smallScreen }) => {
   return (
-  <div className='home-sessions-skeleton'>
-    {doTimes(smallScreen ? 5 : 8)(i => <Skeleton height={46} key={i} />)}
-  </div>
+    <div className='home-sessions-skeleton'>
+      {doTimes(smallScreen ? 5 : 8)(i => <Skeleton height={46} key={i} />)}
+    </div>
   )
 }
 
@@ -70,13 +72,16 @@ export default function SessionsList({ sessions, onDelete }) {
   const itemCount = sessions.length
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
-      {
-        itemCount ?
-          <FixedSizeList className={'home-sessions-list'} height={smallScreen ? 200 : 400} width='100%' itemSize={46} itemCount={itemCount} itemData={sessions}>
-            {renderRow(onDelete)}
-          </FixedSizeList>
-          : <Loading smallScreen={smallScreen} />
-      }
+      <Autosizer>
+
+        {({height, width})=>
+          itemCount ?
+            <FixedSizeList className={'home-sessions-list'} height={height} width={width} itemSize={46} itemCount={itemCount} itemData={sessions}>
+              {renderRow(onDelete)}
+            </FixedSizeList>
+            : <Loading smallScreen={smallScreen} />
+        }
+      </Autosizer>
     </div>
   );
 }
