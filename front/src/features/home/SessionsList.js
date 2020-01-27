@@ -16,7 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 400,
+    maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
   },
 }));
