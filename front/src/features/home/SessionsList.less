@@ -1,7 +1,18 @@
 @import '../../styles/mixins';
 
 .home-sessions-list {
-    @media (max-width: 600px) {
-        height: 200px !important; // I don't like this, but it's the cheapest way to override inline styles
+  background-color: #fafafa;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  .sl-left-item {
+    max-width: 60%;
+  }
+  .home-sessions-skeleton {
+    height: 400px;
+    @media only screen and (max-device-width: 600px) {
+      height: 200px;
+      overflow: hidden;
     }
+  }
 }

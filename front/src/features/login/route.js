@@ -4,7 +4,6 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 import {
   DefaultPage,
-  SignUp,
 } from './';
 
 export default {

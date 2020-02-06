@@ -1,29 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff'
-const second = 1000;
-const minute = 60 * second;
+import { msToHourMinSec } from './msToHourMinSec';
 
-const msToMinSec = ms => {
-  const minutes = ms / minute | 0; // 32 bit integer shorthand
-  const seconds = (ms % minute) / second | 0;
-  return [
-    `${minutes}`.padStart(2, '0'),
-    `${seconds}`.padStart(2, '0')
-  ]
-}
-
-const renderTimer = (minutes, seconds) => (
+const renderTimer = (hours, minutes, seconds) => (
   <div className="home-timer">
-    <h3> {minutes} </h3><h3> : </h3><h3> {seconds} </h3>
+    <h3> {hours} </h3>:<h3> {minutes} </h3><h3> : </h3><h3> {seconds} </h3>
   </div>
 )
 
 export default function Timer({ startDate, isActive }) {
-  if (!isActive) return renderTimer('00','00');
+  if (!isActive) return renderTimer('00', '00', '00');
   const diff = useTimeDiff(startDate);
-  const [minutes, seconds] = msToMinSec(diff);
-  return renderTimer(minutes, seconds)
+  const [hours, minutes, seconds] = msToHourMinSec(diff);
+  return renderTimer(hours,minutes, seconds)
 };
 
 Timer.propTypes = {

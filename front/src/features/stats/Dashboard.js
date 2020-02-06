@@ -1,16 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from './Chart';
 import { Copyright } from '../common/Copyright';
-import Navigation from '../common/Navigation'
 import { createChartData } from './createChartData';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -51,7 +48,6 @@ const useStyles = makeStyles(theme => ({
 
   content: {
     flexGrow: 1,
-    height: '100vh',
     overflow: 'auto',
   },
   container: {
@@ -65,7 +61,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height:440,
+    [theme.breakpoints.down('xs')]: {height: 400}
   },
   navigation: {
     display: 'flex',
@@ -98,20 +95,17 @@ export default function Dashboard({ sessions = [] }) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <main className={classes.content}>
-        <Navigation page='stats' />
-
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Day */}
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
                 <Chart sessions={dayData} names={names} title={<NavigationControls value={daysAgo} setValue={setDay} baseName='today' unit='days' />} />
               </Paper>
             </Grid>
             {/* Week */}
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
                 <Chart sessions={weekData} names={names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
               </Paper>

@@ -1,17 +1,16 @@
 import {
   DefaultPage,
-  NotImplemented,
+  SessionsPage,
 } from './';
+
+import {DefaultPage as  Dashboard} from '../stats'
 
 export default {
   path: '/',
   name: 'Home',
+  component: DefaultPage,
   childRoutes: [
-    { path: 'default-page',
-      name: 'Default page',
-      component: DefaultPage,
-      isIndex: true,
-    },
-    { path: 'not-implemented', name: 'Not implemented', component: NotImplemented },
+    { path: 'timer', name: 'Default page', component: SessionsPage, isIndex: true, },
+    { path: 'stats', name: 'Statistics', component: Dashboard},
   ],
 };

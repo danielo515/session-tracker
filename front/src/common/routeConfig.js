@@ -9,9 +9,9 @@ import statsRoute from '../features/stats/route';
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
 const childRoutes = [
-  homeRoute,
-  commonRoute,
   loginRoute,
+  commonRoute,
+  homeRoute,
   statsRoute,
 ];
 
@@ -19,10 +19,12 @@ const routes = [{
   path: '/',
   component: App,
   childRoutes: [
+    { path: 'not-found', name: 'Page not found', component: PageNotFound },
     ...childRoutes,
-    { path: '*', name: 'Page not found', component: PageNotFound },
   ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
 }];
+
+console.log({routes});
 
 // Handle isIndex property of route config:
 //  Dupicate it and put it as the first route rule.

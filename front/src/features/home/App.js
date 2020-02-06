@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -19,9 +18,10 @@ export default class App extends Component {
 
   render() {
     return (
-    <Container component="main">
+      <React.Fragment>
+        <CssBaseline />
         <div className="page-container">{this.props.children}</div>
-      </Container>
+      </React.Fragment>
     );
   }
 }
