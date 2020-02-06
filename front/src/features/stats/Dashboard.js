@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height:240,
+    height:440,
     [theme.breakpoints.down('xs')]: {height: 400}
   },
   navigation: {
