@@ -16,11 +16,10 @@ export class SessionController extends Component {
 
   render() {
     const { runningSession } = this.props.home;
-    const { startSession, stopSession, switchSession } = this.props.actions;
+    const { startSession, stopSession } = this.props.actions;
     return runningSession ? (
       <SessionStop
         stopSession={stopSession}
-        switchSession={switchSession}
         name={runningSession.name}
         id={runningSession.id}
         startDate={runningSession.startDate}
