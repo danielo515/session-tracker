@@ -101,19 +101,19 @@ export default function Dashboard({ sessions = [] }) {
             {/* Day */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={dayData} names={names} title={<NavigationControls value={daysAgo} setValue={setDay} baseName='today' unit='days' />} />
+                <Chart sessions={dayData.data} names={dayData.names} title={<NavigationControls value={daysAgo} setValue={setDay} baseName='today' unit='days' />} />
               </Paper>
             </Grid>
             {/* Week */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={weekData} names={names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
+                <Chart sessions={weekData.data} names={weekData.names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
               </Paper>
             </Grid>
             {/* Month */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart title='Month' names={names} sessions={monthData} />
+                <Chart title='Month' names={monthData.names} sessions={monthData.data} />
               </Paper>
             </Grid>
           </Grid>
