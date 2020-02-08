@@ -33,7 +33,7 @@ export const addToRow = formatter => (map, { name, startDate, endDate }) => {
 
 
 const makeDayRow = addToRow(format('HH:mm'));
-const makeWeekRow = addToRow(format('E do'));
+const makeWeekRow = addToRow(format('E do MMM'));
 
 const omitNamesProp = ({names, ...rest}) => rest
 
