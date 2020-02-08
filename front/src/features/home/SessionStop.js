@@ -21,7 +21,7 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
           variant="outlined"
           margin="normal"
           fullWidth
-          id="name"
+          id="session"
           label="Session Name"
           name="session-name"
           autoComplete="session"

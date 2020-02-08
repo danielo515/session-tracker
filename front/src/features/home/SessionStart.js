@@ -21,9 +21,9 @@ export default function SessionStart({ startSession }) {
           margin="normal"
           required
           fullWidth
-          id="name"
+          id="session"
           label="Session Name"
-          name="name"
+          name="session-name"
           autoComplete="session"
           value={sessionName}
           onChange={handleChange}

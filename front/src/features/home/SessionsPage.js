@@ -1,9 +1,7 @@
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Copyright } from '../common/Copyright';
 import { setupApp } from '../common/redux/actions';
@@ -24,11 +22,11 @@ class SessionsPage extends Component {
 
     render() {
         const { sessions } = this.props.home
-        const { deleteSession } = this.props.actions
+        const { deleteSession, switchTask } = this.props.actions
         return (
         <div className="home-default-page">
             <SessionController />
-            <SessionsList sessions={sessions} onDelete={deleteSession} />
+            <SessionsList sessions={sessions} onDelete={deleteSession} onSwitch={switchTask} />
             <Box pt={4} className='home-copyright'>
                 <Copyright />
             </Box>
