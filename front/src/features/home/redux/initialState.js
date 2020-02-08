@@ -9,6 +9,8 @@ const initialState = {
   sessions: [],
   deleteSessionPending: false,
   deleteSessionError: null,
+  switchTaskPending: false,
+  switchTaskError: null,
 };
 
 export default initialState;

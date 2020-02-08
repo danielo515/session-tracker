@@ -3,12 +3,14 @@ import { reducer as startSessionReducer } from './startSession';
 import { reducer as stopSessionReducer } from './stopSession';
 import { reducer as fetchSessionsReducer } from './fetchSessions';
 import { reducer as deleteSessionReducer } from './deleteSession';
+import { reducer as switchTaskReducer } from './switchTask';
 
 const reducers = [
   startSessionReducer,
   stopSessionReducer,
   fetchSessionsReducer,
   deleteSessionReducer,
+  switchTaskReducer,
 ];
 
 export default function reducer(state = initialState, action) {

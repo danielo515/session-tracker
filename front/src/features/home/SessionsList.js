@@ -26,16 +26,17 @@ const useStyles = makeStyles(theme => ({
 const formatStart = 'yyy-MM-dd HH:mm';
 const formatHour = 'HH:mm';
 
-const renderRow = onDelete => props => {
-  const { index, style, data } = props;
+const renderRow = (onDelete,  onSwitch) => props => {
+  const { index, style, data  } = props;
   const { name, startDate, endDate, id } = data[index];
   const start = new Date(startDate);
   const end = new Date(endDate || Date.now());
   const duration = differenceInMinutes(end, start);
   const deleteAction = useCallback(() => onDelete(id), [onDelete, id])
+  const switchTask = useCallback(() => onSwitch(name), [onSwitch, name])
 
   return (
-    <ListItem ContainerProps={{ style }} key={id || index} ContainerComponent="div">
+    <ListItem ContainerProps={{ style }} key={id || index} ContainerComponent="div" button onClick={switchTask}>
       <ListItemText primary={name} className='sl-left-item' secondary={format(start, formatStart)} />
       <ListItemText primary={`${duration} min`} secondary={format(end, formatHour)} />
       <ListItemSecondaryAction>
@@ -66,18 +67,19 @@ const Loading = ({ smallScreen }) => {
   )
 }
 
-export default function SessionsList({ sessions, onDelete }) {
+export default function SessionsList({ sessions, onDelete, onSwitch }) {
   const smallScreen = useMediaQuery('(max-width: 600px');
   const classes = useStyles();
   const itemCount = sessions.length
+  const row = renderRow(onDelete, onSwitch);
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
       <Autosizer>
 
         {({height, width})=>
           itemCount ?
-            <FixedSizeList className={'home-sessions-list'} height={height} width={width} itemSize={46} itemCount={itemCount} itemData={sessions}>
-              {renderRow(onDelete)}
+            <FixedSizeList className={'home-sessions-list'} height={height} width={width} itemSize={72} itemCount={itemCount} itemData={sessions}>
+              {row}
             </FixedSizeList>
             : <Loading smallScreen={smallScreen} />
         }
