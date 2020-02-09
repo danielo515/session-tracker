@@ -32,10 +32,11 @@ const formatEventAsRequest = (
   };
 };
 
-const wrapHandler = ({ handler, logger, getAuth }) => async (event) => {
+const wrapHandler = ({ handler, logger }) => async (event) => {
   try {
     const requestLike = formatEventAsRequest(event);
-    const auth = getAuth ? await getAuth(requestLike) : undefined;
+    const { identity } = event.requestContext;
+    const auth = identity ? { userId: identity.cognitoIdentityId } : {};
     const { status, result } = await handler({ ...requestLike, auth });
     return formatResponse({ status, result, request: requestLike });
   } catch (error) {
