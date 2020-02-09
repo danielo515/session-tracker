@@ -37,8 +37,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const isValidName = (name) => typeof name === 'string' && name.length > 3
-
 export default function SignIn({ login, error }) {
   const classes = useStyles();
   const {email, setEmail, password, setPassword } = useLoginForm();
