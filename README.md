@@ -1,5 +1,5 @@
 # Pento tech challenge by Daniel Rodriguez
-
+[![Build Status](https://travis-ci.org/danielo515/pento-tech-challenge.svg?branch=master)](https://travis-ci.org/danielo515/pento-tech-challenge)
 The entire solution is publicly available at: https://pento.danielo.es
 
 ## Testing the back locally
