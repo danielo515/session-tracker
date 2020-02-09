@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import Typography from '@material-ui/core/Typography';
+import format from 'date-fns/format';
+import subDays from 'date-fns/subDays';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -71,17 +73,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function NavigationControls({ setValue, baseName, value, unit }) {
+function NavigationControls({ setValue, baseName, value, text, unit }) {
   const { navigation } = useStyles();
   const back = () => setValue(value + 1)
   const next = () => setValue(value - 1)
   return (
     <div className={navigation}>
       <IconButton onClick={back}>< NavigateBeforeIcon /></IconButton>
-      <Typography variant='button' align='center'> {value === 0 ? baseName : `${value} ${unit} ago`}</Typography>
+      <Typography variant='button' align='center'> {text || ( value === 0 ? baseName : `${value} ${unit} ago` )}</Typography>
       <IconButton onClick={next} disabled={value === 0}><NavigateNextIcon /></IconButton>
     </div>)
 }
+const formatDaysAgo = ago => ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today'
 
 export default function Dashboard({ sessions = [] }) {
   const classes = useStyles();
@@ -91,7 +94,7 @@ export default function Dashboard({ sessions = [] }) {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const { dayData, weekData, monthData, names } = createChartData({ sessions, daysAgo, weeksAgo, monthsAgo });
+  const { dayData, weekData, monthData } = createChartData({ sessions, daysAgo, weeksAgo, monthsAgo });
 
   return (
     <div className={classes.root}>
@@ -101,19 +104,19 @@ export default function Dashboard({ sessions = [] }) {
             {/* Day */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={dayData} names={names} title={<NavigationControls value={daysAgo} setValue={setDay} baseName='today' unit='days' />} />
+                <Chart sessions={dayData.data} names={dayData.names} title={<NavigationControls  value={daysAgo} setValue={setDay} text={formatDaysAgo(daysAgo)} />} />
               </Paper>
             </Grid>
             {/* Week */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={weekData} names={names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
+                <Chart sessions={weekData.data} names={weekData.names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
               </Paper>
             </Grid>
             {/* Month */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart title='Month' names={names} sessions={monthData} />
+                <Chart title='Month' names={monthData.names} sessions={monthData.data} />
               </Paper>
             </Grid>
           </Grid>
