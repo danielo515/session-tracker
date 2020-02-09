@@ -13,6 +13,6 @@ deploy:
   secret_access_key: $AWS_SECRET_ACCESS_KEY
   bucket: "pento.danielo.es"
   region: $AWS_DEFAULT_REGION
-  local_dir: ./front/build
+  local_dir: ./build
   on:
     branch: master
