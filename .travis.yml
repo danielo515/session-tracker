@@ -1,7 +1,7 @@
 language: "node"
 node_js: 10
 before_install:
-  cd front
+  cd front # this affects the entire job, including deploy
 install:
   yarn
 script:
