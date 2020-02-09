@@ -109,4 +109,6 @@ functions:
 resources:
   - ${file(resources/tables.yml)}
   - ${file(resources/api-gateway-errors.yml)}
+  # Cognito Identity Pool Policy
+  - ${file(resources/cognito-policy.yml)}
 
