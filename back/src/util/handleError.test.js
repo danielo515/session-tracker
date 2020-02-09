@@ -12,8 +12,6 @@ const event = { headers };
 const logger = { error: jest.fn() };
 const formatResponse = jest.fn();
 
-const ParseErrorObjectNotFound = 101;
-const ParseErrorOperationForbidden = 119;
 
 describe('handleError util', () => {
   afterEach(() => logger.error.mockReset());
