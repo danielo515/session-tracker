@@ -1,14 +1,16 @@
-env: "node:8"
+language: "node"
+before_install:
+  cd front
 install:
   yarn
 script:
-  - yarn build
+  yarn build
 deploy:
   provider: S3
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
   bucket: "pento.danielo.es"
   region: $AWS_DEFAULT_REGION
-  local_dir: ./build
+  local_dir: ./front/build
   on:
     branch: master
