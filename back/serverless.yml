@@ -7,6 +7,7 @@ plugins:
   - serverless-offline
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
   dynamodb:
     start:
       port: 8000
@@ -115,5 +116,5 @@ resources:
   - ${file(resources/tables.yml)}
   - ${file(resources/api-gateway-errors.yml)}
   # Cognito Identity Pool Policy
-  - ${file(resources/cognito-policy.yml)}
+  - ${file(resources/cognito.yml)}
 
