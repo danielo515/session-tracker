@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "https://pento.danielo.es",
   "dependencies": {
+    "@aws-amplify/api": "^2.1.5",
+    "@aws-amplify/auth": "^2.1.5",
+    "@aws-amplify/core": "^2.2.4",
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.39",
@@ -69,13 +72,15 @@
     "terser-webpack-plugin-legacy": "^1.2.3",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
-    "webpack-dev-server": "3.1.11",
+    "webpack-dev-server": "3.0.0",
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "node scripts/with-aws-env.js yarn _start",
+    "build": "node scripts/with-aws-env.js yarn _build",
+    "_start": "node scripts/start.js",
+    "_build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "s3-deploy": "a(){ aws s3 sync build s3://$1/; };a",
     "deploy": "yarn build && yarn s3-deploy"
@@ -123,5 +128,8 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "description": "time-traker created by Rekit."
+  "description": "time-traker created by Rekit.",
+  "devDependencies": {
+    "shelljs": "^0.8.3"
+  }
 }

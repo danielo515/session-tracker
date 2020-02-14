@@ -25,7 +25,7 @@ import {
   
       const storeToken = getState().login.token; // the token from the store!
       const savedToken = storeToken || localStorage.getItem('token');
-      if (!savedToken || isExpired(savedToken)) return history.replace('/login');
+      if (!savedToken) return history.replace('/login');
   
       const { error } = await api.me({ token: savedToken });
   
