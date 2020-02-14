@@ -6,6 +6,7 @@ import {
 } from './constants';
 
 import * as api from '../../../common/api'
+import { groupByName, formatGroupedSessions } from './groupByName';
 
 
 export function fetchSessions(args = {}) {
@@ -40,7 +41,7 @@ export function dismissFetchSessionsError() {
     type: HOME_FETCH_SESSIONS_DISMISS_ERROR,
   };
 }
-
+const formatSessions = groupByName(formatGroupedSessions)
 export function reducer(state, { type, payload }) {
   switch (type) {
     case HOME_FETCH_SESSIONS_BEGIN:
@@ -59,7 +60,7 @@ export function reducer(state, { type, payload }) {
         fetchSessionsPending: false,
         fetchSessionsError: null,
         runningSession: sessions.find(({ endDate }) => !endDate),
-        sessions: sessions.filter(({ endDate }) => endDate) // skip runninng sessions
+        sessions: Object.values( formatSessions(sessions.filter(({ endDate }) => endDate)) ) // skip runninng sessions
       };
     }
 

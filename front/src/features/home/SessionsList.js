@@ -13,6 +13,7 @@ import clsx from 'clsx'
 import Skeleton from '@material-ui/lab/Skeleton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Autosizer from 'react-virtualized-auto-sizer'
+import { TaskGroup } from './TaskGroup';
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 const formatStart = 'yyy-MM-dd HH:mm';
 const formatHour = 'HH:mm';
 
-const renderRow = (onDelete,  onSwitch) => props => {
-  const { index, style, data  } = props;
+const renderRow = (onDelete, onSwitch) => props => {
+  const { index, style, data } = props;
   const { name, startDate, endDate, id } = data[index];
   const start = new Date(startDate);
   const end = new Date(endDate || Date.now());
@@ -74,7 +75,12 @@ export default function SessionsList({ sessions, onDelete, onSwitch }) {
   const row = renderRow(onDelete, onSwitch);
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
-      <Autosizer>
+      {sessions.map(({name, nested}) => 
+
+        <TaskGroup name={name} nested={nested} />
+      )
+      }
+      {/* <Autosizer>
 
         {({height, width})=>
           itemCount ?
@@ -83,7 +89,7 @@ export default function SessionsList({ sessions, onDelete, onSwitch }) {
             </FixedSizeList>
             : <Loading smallScreen={smallScreen} />
         }
-      </Autosizer>
+      </Autosizer> */}
     </div>
   );
 }
