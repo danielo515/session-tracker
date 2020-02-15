@@ -9,7 +9,6 @@ import startOfMonth from 'date-fns/startOfMonth';
 import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
-import differenceInHours from 'date-fns/differenceInHours';
 /**
  * 
  * @param {Function} formatter should format the date to string
@@ -32,7 +31,6 @@ export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDat
     };
 };
 
-window.hoursdiff = differenceInHours;
 const diffInHours = (a,b) => (differenceInMinutes(a, b) / 60);
 const makeDayRow = addToRow(format('HH:mm'), differenceInMinutes);
 const makeWeekRow = addToRow(format('E do MMM'), differenceInMinutes);
