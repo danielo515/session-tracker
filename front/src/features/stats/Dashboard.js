@@ -14,6 +14,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
+import minsToHoursMinutes from '../../common/minsToHoursMinutes';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -116,7 +117,7 @@ export default function Dashboard({ sessions = [] }) {
             {/* Month */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart title='Month' names={monthData.names} sessions={monthData.data} />
+                <Chart tooltipFormatter={minsToHoursMinutes} title='Month' names={monthData.names} sessions={monthData.data} />
               </Paper>
             </Grid>
           </Grid>
