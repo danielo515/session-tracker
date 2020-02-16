@@ -34,7 +34,7 @@ export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDat
 const diffInHours = (a,b) => (differenceInMinutes(a, b) / 60);
 const makeDayRow = addToRow(format('HH:mm'), differenceInMinutes);
 const makeWeekRow = addToRow(format('E do MMM'), differenceInMinutes);
-const makeMonthRow = addToRow(format('Io'), diffInHours);
+const makeMonthRow = addToRow(format('Io'), differenceInMinutes);
 
 const omitNamesProp = ({ names, ...rest }) => rest
 

@@ -5,7 +5,7 @@ import Title from './Title';
 import PropTypes from 'prop-types'
 import { stringToColour } from './stringToColour';
 
-export default function Chart({ sessions, title, names }) {
+export default function Chart({ sessions, title, names, tooltipFormatter }) {
   const theme = useTheme();
   const Bars = names.map(x => <Bar key={x} dataKey={x} name={x} stackId='a' fill={stringToColour(x)} />)
   return (
@@ -34,7 +34,7 @@ export default function Chart({ sessions, title, names }) {
           </YAxis>
           <CartesianGrid strokeDasharray="3 3" />
           <Legend />
-          <Tooltip />
+          <Tooltip  formatter={tooltipFormatter} />
           {Bars}
         </BarChart>
       </ResponsiveContainer>
@@ -45,10 +45,12 @@ export default function Chart({ sessions, title, names }) {
 Chart.propTypes = {
   title: PropTypes.string,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tooltipFormatter: PropTypes.func,
   sessions: PropTypes.arrayOf(PropTypes.shape({
     startDate: PropTypes.string.isRequired,
   })),
 };
 Chart.defaultProps = {
-  sessions: []
+  sessions: [],
+  tooltipFormatter: i => i,
 };
