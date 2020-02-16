@@ -29,7 +29,7 @@ export default function Chart({ sessions, title, names, formatter }) {
               offset={0}
               angle={-90}
             >
-              Minutes
+              Duration
             </Label>
           </YAxis>
           <CartesianGrid strokeDasharray="3 3" />
@@ -41,7 +41,11 @@ export default function Chart({ sessions, title, names, formatter }) {
     </React.Fragment>
   );
 }
-
+/**
+ * The expected shape of the data is
+ * sessions: {startDAte: String, task1: duration, task2: duration}
+ * names: ['task1','task2']
+ */
 Chart.propTypes = {
   title: PropTypes.string,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
