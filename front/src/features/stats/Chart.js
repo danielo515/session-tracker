@@ -5,7 +5,7 @@ import Title from './Title';
 import PropTypes from 'prop-types'
 import { stringToColour } from './stringToColour';
 
-export default function Chart({ sessions, title, names }) {
+export default function Chart({ sessions, title, names, formatter }) {
   const theme = useTheme();
   const Bars = names.map(x => <Bar key={x} dataKey={x} name={x} stackId='a' fill={stringToColour(x)} />)
   return (
@@ -21,34 +21,40 @@ export default function Chart({ sessions, title, names }) {
             left: 10,
           }}
         >
-          <XAxis dataKey="startDate" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
+          <XAxis dataKey="startDate" stroke={theme.palette.text.secondary}/>
+          <YAxis stroke={theme.palette.text.secondary} tickFormatter={formatter}>
             <Label
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
               offset={0}
               angle={-90}
             >
-              Minutes
+              Duration
             </Label>
           </YAxis>
           <CartesianGrid strokeDasharray="3 3" />
           <Legend />
-          <Tooltip />
+          <Tooltip  formatter={formatter} />
           {Bars}
         </BarChart>
       </ResponsiveContainer>
     </React.Fragment>
   );
 }
-
+/**
+ * The expected shape of the data is
+ * sessions: {startDAte: String, task1: duration, task2: duration}
+ * names: ['task1','task2']
+ */
 Chart.propTypes = {
   title: PropTypes.string,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
+  formatter: PropTypes.func,
   sessions: PropTypes.arrayOf(PropTypes.shape({
     startDate: PropTypes.string.isRequired,
   })),
 };
 Chart.defaultProps = {
-  sessions: []
+  sessions: [],
+  formatter: i => i,
 };

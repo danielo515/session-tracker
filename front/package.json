@@ -95,7 +95,7 @@
       "<rootDir>/tests/setup.js"
     ],
     "testMatch": [
-      "<rootDir>/tests/**/*.test.{js,jsx,mjs}"
+      "<rootDir>/**/*.test.{js,jsx,mjs}"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
