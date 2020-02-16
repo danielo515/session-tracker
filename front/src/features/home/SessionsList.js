@@ -77,7 +77,7 @@ export default function SessionsList({ sessions, onDelete, onSwitch }) {
     <div className={clsx(classes.root, 'home-sessions-list')}>
       {sessions.map(({name, nested}) => 
 
-        <TaskGroup name={name} nested={nested} />
+        <TaskGroup key={name} name={name} nested={nested} />
       )
       }
       {/* <Autosizer>
