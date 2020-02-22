@@ -8,6 +8,7 @@ import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import SessionsList from './SessionsList';
+import EditSession from './EditSession';
 
 class SessionsPage extends Component {
     static propTypes = {
@@ -27,6 +28,7 @@ class SessionsPage extends Component {
         <div className="home-default-page">
             <SessionController />
             <SessionsList sessions={sessions} onDelete={deleteSession} onSwitch={switchTask} />
+            <EditSession open={true} {...sessions[0]}/>
             <Box pt={4} className='home-copyright'>
                 <Copyright />
             </Box>
