@@ -42,7 +42,7 @@ function EditSession(props) {
         <Button onClick={cancel} color="primary">
           Cancel
           </Button>
-        <Button onClick={submit} color="primary">
+        <Button onClick={submit} color="primary" variant="contained">
           Save
           </Button>
       </DialogActions>
