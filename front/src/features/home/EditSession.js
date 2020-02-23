@@ -10,7 +10,7 @@ import { DateTimePicker } from "@material-ui/pickers";
 
 
 function EditSession(props) {
-  const { open, handleClose, name, startDate, endDate, id, onSubmit } = props;
+  const { open, cancel, name, startDate, endDate, id, onSubmit } = props;
   const [date, setDate] = React.useState(startDate)
   const [dateEnd, setEndDate] = React.useState(endDate)
   const submit = React.useCallback(
@@ -18,8 +18,8 @@ function EditSession(props) {
     [onSubmit, dateEnd],
   )
   return (
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-      <DialogTitle centered_ id="edit-session-title">{name}</DialogTitle>
+    <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-title">
+      <DialogTitle id="edit-session-title">{name}</DialogTitle>
       <DialogContent>
         <Box pb={4}>
           <DateTimePicker
@@ -39,7 +39,7 @@ function EditSession(props) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={cancel} color="primary">
           Cancel
           </Button>
         <Button onClick={submit} color="primary">

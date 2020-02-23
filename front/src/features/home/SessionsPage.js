@@ -23,13 +23,13 @@ class SessionsPage extends Component {
 
     render() {
         const { sessions, editing, sessionBeingEdited } = this.props.home
-        const { deleteSession, switchTask, editSession, updateSession } = this.props.actions
+        const { deleteSession, switchTask, editSession, cancelEditSession, updateSession } = this.props.actions
         const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
         return (
             <div className="home-default-page">
                 <SessionController />
                 <SessionsList sessions={sessions} primaryAction={editSession} onSwitch={switchTask} />
-                <EditSession key={editing} open={editing} onDelete={deleteSession} onSubmit={updateSession} {...sessionToEdit} />
+                <EditSession key={editing} open={editing} cancel={cancelEditSession} onDelete={deleteSession} onSubmit={updateSession} {...sessionToEdit} />
                 <Box pt={4} className='home-copyright'>
                     <Copyright />
                 </Box>
