@@ -15,7 +15,7 @@ function EditSession(props) {
   const [dateEnd, setEndDate] = React.useState(endDate)
   const submit = React.useCallback(
     () => onSubmit({ id, name, startDate: date, endDate: dateEnd }) ,
-    [onSubmit, dateEnd],
+    [onSubmit, dateEnd, date],
   )
   return (
     <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-title">
