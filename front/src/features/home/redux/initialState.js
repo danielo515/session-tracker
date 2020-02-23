@@ -11,6 +11,8 @@ const initialState = {
   deleteSessionError: null,
   switchTaskPending: false,
   switchTaskError: null,
+  updateSessionPending: false,
+  updateSessionError: null,
 };
 
 export default initialState;
