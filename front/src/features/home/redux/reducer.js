@@ -4,6 +4,9 @@ import { reducer as stopSessionReducer } from './stopSession';
 import { reducer as fetchSessionsReducer } from './fetchSessions';
 import { reducer as deleteSessionReducer } from './deleteSession';
 import { reducer as switchTaskReducer } from './switchTask';
+import { reducer as editSessionReducer } from './editSession';
+import { reducer as updateSessionReducer } from './updateSession';
+import { reducer as cancelEditSessionReducer } from './cancelEditSession';
 
 const reducers = [
   startSessionReducer,
@@ -11,6 +14,9 @@ const reducers = [
   fetchSessionsReducer,
   deleteSessionReducer,
   switchTaskReducer,
+  editSessionReducer,
+  updateSessionReducer,
+  cancelEditSessionReducer,
 ];
 
 export default function reducer(state = initialState, action) {

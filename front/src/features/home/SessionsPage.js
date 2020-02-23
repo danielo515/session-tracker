@@ -8,6 +8,7 @@ import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import SessionsList from './SessionsList';
+import EditSession from './EditSession';
 
 class SessionsPage extends Component {
     static propTypes = {
@@ -21,16 +22,18 @@ class SessionsPage extends Component {
     }
 
     render() {
-        const { sessions } = this.props.home
-        const { deleteSession, switchTask } = this.props.actions
+        const { sessions, editing, sessionBeingEdited } = this.props.home
+        const { deleteSession, switchTask, editSession, cancelEditSession, updateSession } = this.props.actions
+        const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
         return (
-        <div className="home-default-page">
-            <SessionController />
-            <SessionsList sessions={sessions} onDelete={deleteSession} onSwitch={switchTask} />
-            <Box pt={4} className='home-copyright'>
-                <Copyright />
-            </Box>
-        </div>);
+            <div className="home-default-page">
+                <SessionController />
+                <SessionsList sessions={sessions} primaryAction={editSession} onSwitch={switchTask} />
+                <EditSession key={editing} open={editing} cancel={cancelEditSession} onDelete={deleteSession} onSubmit={updateSession} {...sessionToEdit} />
+                <Box pt={4} className='home-copyright'>
+                    <Copyright />
+                </Box>
+            </div>);
     }
 }
 

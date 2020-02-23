@@ -4,9 +4,11 @@
   "private": true,
   "homepage": "https://pento.danielo.es",
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.39",
+    "@material-ui/pickers": "^3.2.10",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
     "babel-core": "6.26.0",
@@ -69,7 +71,7 @@
     "terser-webpack-plugin-legacy": "^1.2.3",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
-    "webpack-dev-server": "3.1.11",
+    "webpack-dev-server": "3.0.0",
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
