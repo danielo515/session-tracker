@@ -26,7 +26,7 @@ const stopSession = async ({ dispatch, id, name, token }) => {
   });
 }
 
-export function switchTask(name) {
+export function switchTask({name}) {
   return async (dispatch, getState) => {
     dispatch({
       type: HOME_SWITCH_TASK_BEGIN,
