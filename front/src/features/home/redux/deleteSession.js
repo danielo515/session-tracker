@@ -32,7 +32,7 @@ export function deleteSession(id) {
 
   };
 }
-  
+
   // Async action saves request error by default, this method is used to dismiss the error info.
   // If you don't want errors to be saved in Redux store, just ignore this method.
   export function dismissDeleteSessionError() {
@@ -40,7 +40,7 @@ export function deleteSession(id) {
       type: HOME_DELETE_SESSION_DISMISS_ERROR,
     };
   }
-  
+
   export function reducer(state, action) {
     switch (action.type) {
       case HOME_DELETE_SESSION_BEGIN:
@@ -50,16 +50,17 @@ export function deleteSession(id) {
           deleteSessionPending: true,
           deleteSessionError: null,
         };
-  
+
       case HOME_DELETE_SESSION_SUCCESS:
         // The request is success
         return {
           ...state,
+          editing: false,
           deleteSessionPending: false,
           deleteSessionError: null,
           sessions: state.sessions.filter(({id})=> id !== action.payload.session.id), // It will be better to use finIndex and then slice the array
         };
-  
+
       case HOME_DELETE_SESSION_FAILURE:
         // The request is failed
         return {
@@ -67,14 +68,14 @@ export function deleteSession(id) {
           deleteSessionPending: false,
           deleteSessionError: action.payload.error,
         };
-  
+
       case HOME_DELETE_SESSION_DISMISS_ERROR:
         // Dismiss the request failure error
         return {
           ...state,
           deleteSessionError: null,
         };
-  
+
       default:
         return state;
     }
