@@ -4,30 +4,33 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import Delete from '@material-ui/icons/Delete'
+import Delete from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
-import { DateTimePicker } from "@material-ui/pickers";
-
+import { DateTimePicker } from '@material-ui/pickers';
 
 function EditSession(props) {
   const { open, cancel, name, startDate, endDate, id, onSubmit, onDelete } = props;
-  const [date, setDate] = React.useState(startDate)
-  const [dateEnd, setEndDate] = React.useState(endDate)
+  const [date, setDate] = React.useState(startDate);
+  const [dateEnd, setEndDate] = React.useState(endDate);
   const submit = React.useCallback(
-    () => onSubmit({ id, name, startDate: date, endDate: dateEnd }) ,
-    [onSubmit, dateEnd, date]
+    () => onSubmit({ id, name, startDate: date, endDate: dateEnd }),
+    [onSubmit, dateEnd, date],
   );
   const deleteCb = React.useCallback(() => onDelete(id), [onDelete, id]);
   return (
     <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-title">
-      <DialogTitle id="edit-session-title"><Box display='flex' alignItems='center'>
-        <Box flex='1 1 auto' textAlign='center'>{name}</Box>
-        <IconButton onClick={deleteCb}>
-          <Delete />
-        </IconButton>
-      </Box></DialogTitle>
+      <DialogTitle id="edit-session-title">
+        <Box display="flex" alignItems="center">
+          <Box flex="1 1 auto" textAlign="center">
+            {name}
+          </Box>
+          <IconButton onClick={deleteCb}>
+            <Delete />
+          </IconButton>
+        </Box>
+      </DialogTitle>
       <DialogContent>
         <Box pb={4}>
           <DateTimePicker
@@ -57,7 +60,6 @@ function EditSession(props) {
     </Dialog>
   );
 }
-
 
 EditSession.propTypes = {
   open: PropTypes.bool,
