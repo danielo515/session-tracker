@@ -27,7 +27,6 @@ export default function SessionStart({ startSession }) {
           autoComplete="session"
           value={sessionName}
           onChange={handleChange}
-          autoFocus
         />
       </form>
       <Zoom in={visible}>
