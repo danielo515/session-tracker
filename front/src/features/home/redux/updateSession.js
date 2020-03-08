@@ -51,15 +51,19 @@ export function updateSession(session = {}) {
           updateSessionError: null,
         };
   
-      case HOME_UPDATE_SESSION_SUCCESS:
-        // The request is success
-        return {
-          ...state,
-          editing: false,
-          updateSessionPending: false,
-          updateSessionError: null,
-        };
-  
+      case HOME_UPDATE_SESSION_SUCCESS: {
+        const {session} = action.payload
+        const updatedIdx = state.sessions.findIndex(({id})=> id === session.id)
+        const sessions = state.sessions.slice(0,updatedIdx).concat([session]).concat(state.sessions.slice(updatedIdx+1))
+          return {
+            ...state,
+            sessions,
+            editing: false,
+            updateSessionPending: false,
+            updateSessionError: null,
+          };
+        }
+
       case HOME_UPDATE_SESSION_FAILURE:
         // The request is failed
         return {
