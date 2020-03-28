@@ -1,4 +1,4 @@
-const makeHandler = require("../setup/makeHandler");
+const makeHandler = require('../setup/makeHandler');
 
 const updateSessionHandler = ({ updateSession }) => async ({
   body: session,

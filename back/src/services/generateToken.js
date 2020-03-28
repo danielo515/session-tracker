@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const EXPIRATION_LENGTH = '1day';
+const EXPIRATION_LENGTH = '1day'; // human friendly managed by library
 
 const generateToken = ({
   secret,
