@@ -9,26 +9,21 @@ import {
 
   import * as api from '../../../common/api';
   import history from '../../../common/history';
-  
-  const isExpired = token => {
-    const [, payload] = token.split('.');
-    const tokenInfo = JSON.parse(atob(payload));
-    return tokenInfo.exp < (Date.now() / 100 | 0);
-  };
-  
+import { isTokenExpired } from '../../../common/isTokenExpired';
+
   export function setupApp() {
     return async (dispatch, getState) => {
       // optionally you can have getState as the second argument
       dispatch({
         type: COMMON_SETUP_APP_BEGIN,
       });
-  
+
       const storeToken = getState().login.token; // the token from the store!
       const savedToken = storeToken || localStorage.getItem('token');
-      if (!savedToken || isExpired(savedToken)) return history.replace('/login');
-  
+      if (!savedToken || isTokenExpired(savedToken)) return history.replace('/login');
+
       const { error } = await api.me({ token: savedToken });
-  
+
       if (error) {
         dispatch({
           type: COMMON_SETUP_APP_FAILURE,
@@ -41,12 +36,12 @@ import {
         }
         return
       }
-  
+
       dispatch({ type: COMMON_SETUP_APP_SUCCESS });
       if (!storeToken) dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: savedToken } }); // save the token on the store!
     };
   }
-  
+
   // Async action saves request error by default, this method is used to dismiss the error info.
   // If you don't want errors to be saved in Redux store, just ignore this method.
   export function dismissSetupAppError() {
@@ -54,7 +49,7 @@ import {
       type: COMMON_SETUP_APP_DISMISS_ERROR,
     };
   }
-  
+
   export function reducer(state, { type, payload }) {
     switch (type) {
       case COMMON_SETUP_APP_BEGIN:
@@ -64,7 +59,7 @@ import {
           setupAppPending: true,
           setupAppError: null,
         };
-  
+
       case COMMON_SETUP_APP_SUCCESS:
         // The request is success
         return {
@@ -73,7 +68,7 @@ import {
           setupAppError: null,
           loggedIn: true
         };
-  
+
       case COMMON_SETUP_APP_FAILURE:
         // The request is failed
         return {
@@ -81,14 +76,14 @@ import {
           setupAppPending: false,
           setupAppError: payload.error,
         };
-  
+
       case COMMON_SETUP_APP_DISMISS_ERROR:
         // Dismiss the request failure error
         return {
           ...state,
           setupAppError: null,
         };
-  
+
       default:
         return state;
     }
