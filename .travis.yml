@@ -6,6 +6,7 @@ install:
   yarn
 script:
   yarn build
+before_deploy: yarn semantic-release
 deploy:
   provider: S3
   skip_cleanup: true
