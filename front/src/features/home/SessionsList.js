@@ -12,6 +12,7 @@ import clsx from 'clsx'
 import Skeleton from '@material-ui/lab/Skeleton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Autosizer from 'react-virtualized-auto-sizer'
+import { formatMinutes4Human } from './formatMinutes4Human';
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +39,7 @@ const renderRow = ({ secondaryAction,  primaryAction, Icon }) => props => {
   return (
     <ListItem ContainerProps={{ style }} key={id || index} ContainerComponent="div" button onClick={primary}>
       <ListItemText primary={name} className='sl-left-item' secondary={format(start, formatStart)} />
-      <ListItemText primary={`${duration} min`} secondary={format(end, formatHour)} />
+      <ListItemText primary={formatMinutes4Human(duration)} secondary={format(end, formatHour)} />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" onClick={secondary}>
           <Icon />
