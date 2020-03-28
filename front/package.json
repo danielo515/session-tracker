@@ -125,5 +125,8 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "description": "time-traker created by Rekit."
+  "description": "time-traker created by Rekit.",
+  "devDependencies": {
+    "semantic-release": "^17.0.4"
+  }
 }
