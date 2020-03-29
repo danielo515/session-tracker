@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Copyright } from '../common/Copyright';
+import { Version } from '../common/Version';
 import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
@@ -40,6 +41,7 @@ class SessionsPage extends Component {
             />
             <Box pt={4} className="home-copyright">
               <Copyright />
+              <Version/>
             </Box>
           </div>
         );
