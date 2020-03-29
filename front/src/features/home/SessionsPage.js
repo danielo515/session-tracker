@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Copyright } from '../common/Copyright';
-import { Version } from '../common/Version';
 import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import PlayIcon from '@material-ui/icons/PlayCircleOutline';
 import SessionsList from './SessionsList';
 import EditSession from './EditSession';
+import { FooterWithVersion } from '../common/index';
 
 class SessionsPage extends Component {
     static propTypes = {
@@ -40,8 +39,7 @@ class SessionsPage extends Component {
               {...sessionToEdit}
             />
             <Box pt={4} className="home-copyright">
-              <Copyright />
-              <Version/>
+              <FooterWithVersion/>
             </Box>
           </div>
         );

@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from './Chart';
-import { Copyright } from '../common/Copyright';
 import { createChartData } from './createChartData';
 import IconButton from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -15,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 import minsToHoursMinutes from '../../common/minsToHoursMinutes';
+import { FooterWithVersion } from '../common/index';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -122,7 +122,7 @@ export default function Dashboard({ sessions = [] }) {
             </Grid>
           </Grid>
           <Box pt={4}>
-            <Copyright />
+            <FooterWithVersion/>
           </Box>
         </Container>
       </main>

@@ -8,6 +8,5 @@ export function Copyright() {
       Danielo Rodriguez
       </Link>{' '}
     {new Date().getFullYear()}
-    {'.'}
   </Typography>);
 }
