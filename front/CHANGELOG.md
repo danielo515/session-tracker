@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.0.0...v1.1.0) (2020-03-29)
+
+
+### Bug Fixes
+
+* **CI:** build after semantic release ([85c6d54](https://github.com/danielo515/pento-tech-challenge/commit/85c6d54e2c1f2496aa1737f9dc3e8aaefb076da4))
+
+
+### Features
+
+* **UI:** include version on app ([08847cb](https://github.com/danielo515/pento-tech-challenge/commit/08847cbab78a40f1ff5d937f671c146c164667e2))
+
 # 1.0.0 (2020-03-28)
 
 
