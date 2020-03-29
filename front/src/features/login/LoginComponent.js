@@ -14,8 +14,8 @@ import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import isValidEmail from '../../common/isValidEmail'
 import isValidPassword from '../../common/isValidPassword'
-import { Copyright } from '../common/Copyright';
 import { useLoginForm } from './useLoginForm';
+import { FooterWithVersion } from '../common/index';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn({ login, error }) {
   const classes = useStyles();
-  const {email, setEmail, password, setPassword } = useLoginForm();
+  const { email, setEmail, password, setPassword } = useLoginForm();
   const [rememberMe, setRememberMe] = useState(false)
   const handleCheck = set => ({ target }) => set(target.checked)
   const handleSubmit = () => login({ email, password, rememberMe })
@@ -112,7 +112,7 @@ export default function SignIn({ login, error }) {
         </div>
       </div>
       <Box mt={8}>
-        <Copyright />
+        <FooterWithVersion/>
       </Box>
     </Container>
   );
