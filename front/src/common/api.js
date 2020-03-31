@@ -48,7 +48,7 @@ export const listSessions = refreshToken(({ token }) =>
         .catch(formatError),
 );
 
-export const startSession = ({ token, name }) =>
+export const startSession = refreshToken(({ token, name }) =>
     api
         .post(
             '/sessions',
@@ -56,7 +56,7 @@ export const startSession = ({ token, name }) =>
             { headers: { Authorization: `Bearer ${token}` } },
         )
         .then(formatResponse)
-        .catch(formatError);
+        .catch(formatError))
 
 export const stopSession = ({ token, id, name }) =>
     api
