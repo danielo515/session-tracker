@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.1...v1.1.2) (2020-04-07)
+
+
+### Bug Fixes
+
+* date round bug ([6449fbc](https://github.com/danielo515/pento-tech-challenge/commit/6449fbcbb4482f3e19e6b35f935729e7a7d15fbf))
+
 ## [1.1.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.0...v1.1.1) (2020-03-31)
 
 
