@@ -8,7 +8,7 @@ const parseTokenInfo = token => {
 
 export const isTokenExpired = token => {
   const tokenInfo = parseTokenInfo(token);
-  return tokenInfo.exp < Date.now() / 100;
+  return tokenInfo.exp < Date.now() / 1000;
 };
 
 /*
@@ -16,6 +16,6 @@ export const isTokenExpired = token => {
  */
 export const isCloseToExpire = token => {
   const tokenInfo = parseTokenInfo(token);
-  const timeDiff = tokenInfo.exp - Date.now() / 100;
+  const timeDiff = tokenInfo.exp - Date.now() / 1000;
   return timeDiff < 4 * oneHour;
 };
