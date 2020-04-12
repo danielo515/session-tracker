@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.2...v1.1.3) (2020-04-12)
+
+
+### Bug Fixes
+
+* refresh token again ([94c82ab](https://github.com/danielo515/pento-tech-challenge/commit/94c82ab9d7153280010fb9c8279e113b4ec3d9c9))
+
 ## [1.1.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.1...v1.1.2) (2020-04-07)
 
 
