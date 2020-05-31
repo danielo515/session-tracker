@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {GenerateSW} = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
@@ -30,6 +30,11 @@ module.exports = {
     publicPath: publicPath,
     devtoolModuleFilenameTemplate: info =>
       path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   resolve: {
     modules: ['node_modules', paths.appNodeModules].concat(
