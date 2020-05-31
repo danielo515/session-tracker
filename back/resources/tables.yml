@@ -48,3 +48,23 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       TableName: ${self:provider.environment.USERS_DYNAMODB_TABLE}
+  TokensDynamoDbTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: userId
+          AttributeType: S
+        -
+          AttributeName: id
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: id
+          KeyType: HASH
+        -
+          AttributeName: userId
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      TableName: ${self:provider.environment.TOKENS_DYNAMODB_TABLE}

@@ -8,6 +8,8 @@ const findSession = require('../services/findSession');
 const listSessions = require('../services/listSessions');
 const getAuthFromAccessToken = require('../services/getAuthFromAccessToken');
 const { AUDIENCE } = require('../users/constats');
+const createRefreshToken = require('../services/createRefreshToken');
+const validateRefreshToken = require('../services/validateRefreshToken');
 
 const setupServices = ({ secret, baseDomain, logger, dynamoDb }) => {
   const generateToken = GenerateToken({ secret, baseDomain });
@@ -21,6 +23,8 @@ const setupServices = ({ secret, baseDomain, logger, dynamoDb }) => {
     findSession: findSession({ dynamoDb, logger }),
     listSessions: listSessions({ dynamoDb, logger }),
     getAuth: getAuthFromAccessToken({ secret, audience: AUDIENCE, baseDomain }),
+    createRefreshToken: createRefreshToken({ dynamoDb }),
+    validateRefreshToken: validateRefreshToken({ dynamoDb })
   };
 };
 

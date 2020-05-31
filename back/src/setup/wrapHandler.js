@@ -36,8 +36,8 @@ const wrapHandler = ({ handler, logger, getAuth }) => async (event) => {
   try {
     const requestLike = formatEventAsRequest(event);
     const auth = getAuth ? await getAuth(requestLike) : undefined;
-    const { status, result } = await handler({ ...requestLike, auth });
-    return formatResponse({ status, result, request: requestLike });
+    const { status, result, headers } = await handler({ ...requestLike, auth });
+    return formatResponse({ status, result, request: requestLike, headers });
   } catch (error) {
     if (isDev) logger.error(error);
     return handleError({ error, event });
