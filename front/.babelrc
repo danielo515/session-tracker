@@ -1,4 +1,10 @@
 {
-  "presets": ["react-app"],
-  "plugins": ["react-hot-loader/babel", "syntax-dynamic-import", "lodash"]
+  "presets": [["@babel/preset-env", { "useBuiltIns": "usage" }], "@babel/preset-react"],
+  "plugins": [
+    "@babel/plugin-proposal-optional-chaining",
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-class-properties",
+    "syntax-dynamic-import",
+    "lodash"
+  ]
 }
