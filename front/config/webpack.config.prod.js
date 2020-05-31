@@ -31,6 +31,10 @@ module.exports = {
     devtoolModuleFilenameTemplate: info =>
       path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
+  performance: {
+    maxEntrypointSize: 1100000,
+    maxAssetSize: 1100000,
+  },
   optimization: {
     splitChunks: {
       chunks: 'all',
