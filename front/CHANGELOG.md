@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.3...v1.2.0) (2020-05-31)
+
+
+### Features
+
+* separate babel runtime and vendor ([bd071d6](https://github.com/danielo515/pento-tech-challenge/commit/bd071d6ee4af390ab3315b6c3ae4c181cdade35d))
+* webpack V4 ([e7cf33e](https://github.com/danielo515/pento-tech-challenge/commit/e7cf33e7fdb8666d03c44d2294d820a52838cac0))
+
 ## [1.1.3](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.2...v1.1.3) (2020-04-12)
 
 
