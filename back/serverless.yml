@@ -69,7 +69,9 @@ functions:
       - http:
           path: refreshToken
           method: post
-          cors: true
+          cors:
+            origin: https://pento.danielo.es
+            allowCredentials: true
 
   authEcho:
     handler: src/users/me.handler
