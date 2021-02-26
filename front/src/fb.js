@@ -26,3 +26,4 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);

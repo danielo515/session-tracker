@@ -12,7 +12,15 @@ import { LOGIN_LOGIN_ACTION_SUCCESS } from '../../login/redux/constants';
 
 import * as api from '../../../common/api';
 import history from '../../../common/history';
-import { isTokenExpired } from '../../../common/isTokenExpired';
+
+function isUserLoggedIn() {
+  return new Promise(resolve => {
+    firebase.auth().onAuthStateChanged((user, error) => {
+      console.error('Failed cheking logged user', error);
+      resolve(user);
+    });
+  });
+}
 
 export function setupApp() {
   return async (dispatch, getState) => {
@@ -21,8 +29,8 @@ export function setupApp() {
       type: COMMON_SETUP_APP_BEGIN,
     });
 
-    const userId = firebase.auth().currentUser?.uid;
-    if (!userId) return history.replace('/login');
+    const loggedUser = await isUserLoggedIn();
+    if (!loggedUser) return history.replace('/login');
 
     // const { error } = await api.me({ token: savedToken });
 
@@ -39,8 +47,8 @@ export function setupApp() {
     //   return
     // }
 
-    dispatch({ type: COMMON_SETUP_APP_SUCCESS, payload: { userId } });
-    // if (!storeToken) dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: savedToken } }); // save the token on the store!
+    dispatch({ type: COMMON_SETUP_APP_SUCCESS });
+    dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: loggedUser.uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
   };
 }
 
@@ -69,7 +77,6 @@ export function reducer(state, { type, payload }) {
         setupAppPending: false,
         setupAppError: null,
         loggedIn: true,
-        userId: payload.userId,
       };
 
     case COMMON_SETUP_APP_FAILURE:
