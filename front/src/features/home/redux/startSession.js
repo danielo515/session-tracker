@@ -1,19 +1,27 @@
+// @ts-check
+
 import {
   HOME_START_SESSION_BEGIN,
   HOME_START_SESSION_SUCCESS,
   HOME_START_SESSION_FAILURE,
   HOME_START_SESSION_DISMISS_ERROR,
 } from './constants';
-import * as api from '../../../common/api'
+import * as api from '../../../common/api';
 
-export function startSession({name}) {
-  return async (dispatch, getState) => { // optionally you can have getState as the second argument
+export function startSession({ name }) {
+  return async (dispatch, getState) => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_START_SESSION_BEGIN,
     });
 
-    const { login: { token } } = getState();
-    const { error, response } = await api.startSession({ name: name || new Date().toDateString(), token })
+    const {
+      login: { token },
+    } = getState();
+    const { error, response } = await api.startSession({
+      name: name || new Date().toDateString(),
+      token,
+    });
     if (error) {
       dispatch({
         type: HOME_START_SESSION_FAILURE,
@@ -25,7 +33,6 @@ export function startSession({name}) {
       type: HOME_START_SESSION_SUCCESS,
       payload: response,
     });
-
   };
 }
 
@@ -53,7 +60,7 @@ export function reducer(state, action) {
         ...state,
         startSessionPending: false,
         startSessionError: null,
-        runningSession: action.payload
+        runningSession: action.payload,
       };
 
     case HOME_START_SESSION_FAILURE:

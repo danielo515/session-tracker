@@ -2,13 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "module": "es6",
+    "moduleResolution": "node",
     "paths": {
-      "*": ["./**/*"]
+      "*": ["./*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp",
-    "temp"
-  ]
+  "exclude": ["node_modules", "tmp", "temp"]
 }

@@ -5,8 +5,7 @@ import {
   HOME_FETCH_SESSIONS_DISMISS_ERROR,
 } from './constants';
 
-import * as api from '../../../common/api'
-
+import * as api from '../../../common/api';
 
 export function fetchSessions(args = {}) {
   return async (dispatch, getState) => {
@@ -14,7 +13,9 @@ export function fetchSessions(args = {}) {
       type: HOME_FETCH_SESSIONS_BEGIN,
     });
 
-    const { login: { token } } = getState();
+    const {
+      login: { token },
+    } = getState();
 
     const { error, response } = await api.listSessions({ token });
 
@@ -29,7 +30,6 @@ export function fetchSessions(args = {}) {
       type: HOME_FETCH_SESSIONS_SUCCESS,
       payload: response,
     });
-
   };
 }
 
@@ -52,14 +52,14 @@ export function reducer(state, { type, payload }) {
       };
 
     case HOME_FETCH_SESSIONS_SUCCESS: {
-      const sessions = payload.sessions.reverse() // they are sorted asc by default
+      const sessions = payload;
       // The request is success
       return {
         ...state,
         fetchSessionsPending: false,
         fetchSessionsError: null,
         runningSession: sessions.find(({ endDate }) => !endDate),
-        sessions: sessions.filter(({ endDate }) => endDate) // skip runninng sessions
+        sessions: sessions.filter(({ endDate }) => endDate), // skip runninng sessions
       };
     }
 

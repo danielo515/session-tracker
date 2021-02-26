@@ -1,13 +1,15 @@
+// @ts-check
 import {
   HOME_STOP_SESSION_BEGIN,
   HOME_STOP_SESSION_SUCCESS,
   HOME_STOP_SESSION_FAILURE,
   HOME_STOP_SESSION_DISMISS_ERROR,
 } from './constants';
-import * as api from '../../../common/api'
+import * as api from '../../../common/api';
 
 export function stopSession({ id, name } = {}) {
-  return async (dispatch, getState) => { // optionally you can have getState as the second argument
+  return async (dispatch, getState) => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_STOP_SESSION_BEGIN,
     });
@@ -25,9 +27,6 @@ export function stopSession({ id, name } = {}) {
       type: HOME_STOP_SESSION_SUCCESS,
       payload: response,
     });
-
-
-
   };
 }
 
@@ -39,7 +38,7 @@ export function dismissStopSessionError() {
   };
 }
 
-export function reducer(state, {type, payload}) {
+export function reducer(state, { type, payload }) {
   switch (type) {
     case HOME_STOP_SESSION_BEGIN:
       // Just after a request is sent
@@ -55,8 +54,8 @@ export function reducer(state, {type, payload}) {
         ...state,
         stopSessionPending: false,
         stopSessionError: null,
-        runningSession:null,
-        sessions: [payload.session, ...state.sessions]
+        runningSession: null,
+        sessions: [payload, ...state.sessions],
       };
 
     case HOME_STOP_SESSION_FAILURE:
