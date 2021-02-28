@@ -10,7 +10,7 @@ import 'firebase/analytics';
 
 // Add the Firebase products that you want to use
 import 'firebase/auth';
-import 'firebase/firestore';
+import 'firebase/database';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var firebaseConfig = {
@@ -24,6 +24,9 @@ var firebaseConfig = {
   measurementId: 'G-SHEYGKGY9P',
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 firebase.analytics();
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+export default firebase;

@@ -1,9 +1,20 @@
 // @ts-check
 
-import firebase from 'firebase';
+import firebase from '../fb';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+export function isUserLoggedIn() {
+  return new Promise(resolve => {
+    firebase.auth().onAuthStateChanged((user, error) => {
+      if (error) {
+        console.error('Failed cheking logged user', error);
+        return resolve(null);
+      }
+      resolve(user);
+    });
+  });
+}
 export const login = ({ email, password }) => {};
 
 export const googleLogin = () =>

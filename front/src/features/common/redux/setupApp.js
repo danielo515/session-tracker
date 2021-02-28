@@ -1,5 +1,3 @@
-// @ts-check
-
 import {
   COMMON_SETUP_APP_BEGIN,
   COMMON_SETUP_APP_SUCCESS,
@@ -7,21 +5,11 @@ import {
   COMMON_SETUP_APP_DISMISS_ERROR,
 } from './constants';
 
-import firebase from 'firebase';
-
 import { LOGIN_LOGIN_ACTION_SUCCESS } from '../../login/redux/constants';
 
 import history from '../../../common/history';
 import { syncSessions } from '../../home/redux/actions';
-
-function isUserLoggedIn() {
-  return new Promise(resolve => {
-    firebase.auth().onAuthStateChanged((user, error) => {
-      console.error('Failed cheking logged user', error);
-      resolve(user);
-    });
-  });
-}
+import { isUserLoggedIn } from '../../../common/api';
 
 export function setupApp() {
   return async (dispatch, getState) => {
@@ -49,6 +37,14 @@ export function dismissSetupAppError() {
   };
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {typeof import('./initialState').default} state
+ * @param {{type: string, payload: Object}} action
+ * @return {typeof import('./initialState').default}
+ */
 export function reducer(state, { type, payload }) {
   switch (type) {
     case COMMON_SETUP_APP_BEGIN:
