@@ -88,8 +88,8 @@ export const listSessions = withDb(db => {
     });
 });
 
-/** @type { (args: Function) => void }*/
-export const syncData = withDb(async (db, cb) => {
+/** @type { (args:{onSessionAdded: Function, onRunningUpdate: (session: void|{}) => any} ) => void }*/
+export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate }) => {
   const last = await db
     .orderByKey()
     .limitToLast(1)
@@ -97,32 +97,42 @@ export const syncData = withDb(async (db, cb) => {
   db.orderByKey()
     .startAfter(last.key)
     .on('child_added', snapshot => {
-      if (snapshot.exists()) return cb(snapshot.val());
+      if (snapshot.exists()) return onSessionAdded(snapshot.val());
     });
+  db.child('runningSession').on('value', snapshot => {
+    return onRunningUpdate(snapshot.val());
+  });
 });
 
 /**
- * @type { (args: {name: string}) => apiResponse }
+ * @type { (args: {name: string}) => Promise<apiResponse> }
  */
 export const startSession = withDb((db, { name }) => {
   const newSessionRef = db.push();
   const session = { name, startDate: new Date().toISOString(), id: newSessionRef.key };
-  return newSessionRef.set(session).then(() => ({ response: session }));
+  newSessionRef.set(session);
+  return db
+    .child('runningSession')
+    .set(session)
+    .then(() => ({ response: session }));
 });
-/** @type { (args: {id: string, name: string}) => apiResponse }*/
-export const stopSession = withDb((db, { id, name }) => {
+
+/** @type { (args: {id: string, name: string}) => Promise<apiResponse> }*/
+export const stopSession = withDb(async (db, { id, name }) => {
   const session = { name, endDate: new Date().toISOString() };
+  await db.child('runningSession').set(null);
   db.child(id).update(session);
   return db
     .child(id)
     .once('value')
     .then(snap => ({ response: snap.val() }));
 });
-/** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => apiResponse }*/
+
+/** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => Promise<apiResponse> }*/
 export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
   return db
     .child(id)
-    .set({ name, startDate, endDate })
+    .update({ name, startDate, endDate })
     .then(() => ({ response: { id, name, startDate, endDate } }));
 });
 

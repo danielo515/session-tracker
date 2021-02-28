@@ -1,6 +1,7 @@
 import {
   HOME_FETCH_SESSIONS_BEGIN,
   HOME_FETCH_SESSIONS_SUCCESS,
+  HOME_START_SESSION_SUCCESS,
   HOME_PUSHED_SESSION,
   HOME_FETCH_SESSIONS_FAILURE,
   HOME_FETCH_SESSIONS_DISMISS_ERROR,
@@ -36,11 +37,20 @@ export function fetchSessions() {
 
 export function syncSessions() {
   return async (dispatch, getState) => {
-    api.syncData(value => {
-      dispatch({
-        type: HOME_PUSHED_SESSION,
-        payload: value,
-      });
+    api.syncData({
+      onRunningUpdate(session) {
+        dispatch({
+          type: HOME_START_SESSION_SUCCESS,
+          payload: session,
+        });
+      },
+      onSessionAdded: value => {
+        value.endDate &&
+          dispatch({
+            type: HOME_PUSHED_SESSION,
+            payload: value,
+          });
+      },
     });
   };
 }
