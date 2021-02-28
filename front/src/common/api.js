@@ -1,36 +1,10 @@
 // @ts-check
 
-import axios from 'axios';
 import firebase from 'firebase';
-import { isCloseToExpire } from './isTokenExpired';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
-  useAuth: true,
-});
-
-const refreshToken = fn => async args => {
-  if (!args.token || !isCloseToExpire(args.token)) return fn(args);
-  api
-    .post('refreshToken', {}, { headers: { Authorization: `Bearer ${args.token}` } })
-    .then(({ data: { token } }) => localStorage.setItem('token', token))
-    .catch(err => console.error('Failed updating token: ', err));
-
-  return fn(args);
-};
-
-const formatError = ({ response, request }) => ({
-  error: { data: response.data, status: request.status },
-});
-const formatResponse = ({ data }) => ({ response: data });
-
-export const login = ({ email, password }) =>
-  api
-    .post('login', { email, password })
-    .then(formatResponse)
-    .catch(formatError);
+export const login = ({ email, password }) => {};
 
 export const googleLogin = () =>
   firebase
@@ -67,89 +41,71 @@ export const googleLogin = () =>
       };
     });
 
-export const signUp = ({ email, password, name }) =>
-  api
-    .post('users', { email, password, name })
-    .then(formatResponse)
-    .catch(formatError);
+export const signUp = ({ email, password, name }) => {};
 
-export const me = ({ token }) =>
-  api
-    .get('me', { headers: { Authorization: `Bearer ${token}` } })
-    .then(formatResponse)
-    .catch(formatError);
+/**
+ * @typedef { {response: any, error?: {status: number}} } apiResponse
+ */
+/**
+ * @typedef { { error?: {status: number}} } errorResponse
+ */
 
-const getDb = userId => {
-  return firebase
+/**
+ * Injects the user namespace on database Reference to the provided handler
+ * @template T
+ * @template K
+ * @param {(db: firebase.database.Reference, args: T) => K} handler
+ * @returns { (args:T) => Promise<K|errorResponse> }
+ */
+const withDb = handler => async args => {
+  const userId = firebase.auth()?.currentUser?.uid;
+  if (!userId) return { error: { status: 401 } };
+  const db = firebase
     .database()
     .ref('/tasks')
     .child(userId);
+  return handler(db, args);
 };
 
-export const listSessions = () => {
-  const userId = firebase.auth()?.currentUser?.uid;
-  if (!userId) return { response: [], error: { status: 401 } };
-  const db = getDb(userId);
+export const listSessions = withDb(db => {
   return db.get().then(snapshot => {
     if (snapshot.exists()) return { response: Object.values(snapshot.val()) };
     return db.set([]).then(() => ({ response: [] }));
   });
-};
+});
 
-export const startSession = ({ name }) => {
-  const userId = firebase.auth()?.currentUser?.uid;
-  if (!userId) return { response: [], error: { status: 401 } };
-  const db = getDb(userId);
-  const session = { name, startDate: new Date().toISOString() };
-  return db
-    .child(name)
-    .set(session)
-    .then(() => ({ response: session }));
-};
+/** @type { (args: Function) => void }*/
+export const syncData = withDb((db, cb) => {
+  return db.on('child_added', snapshot => {
+    if (snapshot.exists()) return cb(snapshot.val());
+  });
+});
 
-// export const startSession = refreshToken(({ token, name }) =>
-//   api
-//     .post(
-//       '/sessions',
-//       { name, startDate: new Date().toISOString() },
-//       { headers: { Authorization: `Bearer ${token}` } },
-//     )
-//     .then(formatResponse)
-//     .catch(formatError),
-// );
-export const stopSession = ({ id, name }) => {
-  const userId = firebase.auth()?.currentUser?.uid;
-  if (!userId) return { response: [], error: { status: 401 } };
-  const db = getDb(userId);
+/**
+ * @type { (args: {name: string}) => apiResponse }
+ */
+export const startSession = withDb((db, { name }) => {
+  const newSessionRef = db.push();
+  const session = { name, startDate: new Date().toISOString(), id: newSessionRef.key };
+  return newSessionRef.set(session).then(() => ({ response: session }));
+});
+/** @type { (args: {id: string, name: string}) => apiResponse }*/
+export const stopSession = withDb((db, { id, name }) => {
   const session = { name, endDate: new Date().toISOString() };
+  db.child(id).update(session);
   return db
-    .child(name)
-    .update(session)
-    .then(() => ({ response: session }));
-};
+    .child(id)
+    .once('value')
+    .then(snap => ({ response: snap.val() }));
+});
+/** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => apiResponse }*/
+export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
+  return db
+    .child(id)
+    .set({ name, startDate, endDate })
+    .then(() => ({ response: { id, name, startDate, endDate } }));
+});
 
-// export const stopSession = ({ token, id, name }) =>
-//   api
-//     .patch(
-//       `/sessions/${id}`,
-//       { name, endDate: new Date().toISOString() },
-//       { headers: { Authorization: `Bearer ${token}` } },
-//     )
-//     .then(formatResponse)
-//     .catch(formatError);
-
-export const updateSession = ({ token, id, name, startDate, endDate }) =>
-  api
-    .patch(
-      `/sessions/${id}`,
-      { name, endDate, startDate },
-      { headers: { Authorization: `Bearer ${token}` } },
-    )
-    .then(formatResponse)
-    .catch(formatError);
-
-export const deleteSession = ({ token, id }) =>
-  api
-    .delete(`/sessions/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-    .then(formatResponse)
-    .catch(formatError);
+export const deleteSession = withDb((db, { id }) => {
+  return db.child(id).set(null);
+});

@@ -6,12 +6,13 @@ import {
   COMMON_SETUP_APP_FAILURE,
   COMMON_SETUP_APP_DISMISS_ERROR,
 } from './constants';
+
 import firebase from 'firebase';
 
 import { LOGIN_LOGIN_ACTION_SUCCESS } from '../../login/redux/constants';
 
-import * as api from '../../../common/api';
 import history from '../../../common/history';
+import { syncSessions } from '../../home/redux/actions';
 
 function isUserLoggedIn() {
   return new Promise(resolve => {
@@ -24,31 +25,19 @@ function isUserLoggedIn() {
 
 export function setupApp() {
   return async (dispatch, getState) => {
+    const { setupAppPending } = getState().common;
     // optionally you can have getState as the second argument
-    dispatch({
-      type: COMMON_SETUP_APP_BEGIN,
-    });
+    if (setupAppPending) {
+      dispatch({
+        type: COMMON_SETUP_APP_BEGIN,
+      });
 
-    const loggedUser = await isUserLoggedIn();
-    if (!loggedUser) return history.replace('/login');
-
-    // const { error } = await api.me({ token: savedToken });
-
-    // if (error) {
-    //   dispatch({
-    //     type: COMMON_SETUP_APP_FAILURE,
-    //     payload: { error },
-    //   });
-    //   const authRelated = (/authorization/i).test(((error.data||{}).errors||[{}])[0].code)
-    //   if (error.status === 401 || authRelated) {
-    //     localStorage.removeItem('token');
-    //     history.replace('/login');
-    //   }
-    //   return
-    // }
-
+      const loggedUser = await isUserLoggedIn();
+      if (!loggedUser) return history.replace('/login');
+      dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: loggedUser.uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
+      dispatch(syncSessions());
+    }
     dispatch({ type: COMMON_SETUP_APP_SUCCESS });
-    dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: loggedUser.uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
   };
 }
 

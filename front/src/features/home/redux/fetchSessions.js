@@ -1,13 +1,14 @@
 import {
   HOME_FETCH_SESSIONS_BEGIN,
   HOME_FETCH_SESSIONS_SUCCESS,
+  HOME_PUSHED_SESSION,
   HOME_FETCH_SESSIONS_FAILURE,
   HOME_FETCH_SESSIONS_DISMISS_ERROR,
 } from './constants';
 
 import * as api from '../../../common/api';
 
-export function fetchSessions(args = {}) {
+export function fetchSessions() {
   return async (dispatch, getState) => {
     dispatch({
       type: HOME_FETCH_SESSIONS_BEGIN,
@@ -29,6 +30,17 @@ export function fetchSessions(args = {}) {
     dispatch({
       type: HOME_FETCH_SESSIONS_SUCCESS,
       payload: response,
+    });
+  };
+}
+
+export function syncSessions() {
+  return async (dispatch, getState) => {
+    api.syncData(value => {
+      dispatch({
+        type: HOME_PUSHED_SESSION,
+        payload: value,
+      });
     });
   };
 }
@@ -60,6 +72,21 @@ export function reducer(state, { type, payload }) {
         fetchSessionsError: null,
         runningSession: sessions.find(({ endDate }) => !endDate),
         sessions: sessions.filter(({ endDate }) => endDate), // skip runninng sessions
+      };
+    }
+
+    case HOME_PUSHED_SESSION: {
+      const sessionIdx = state.sessions.findIndex(({ id }) => id === payload.id);
+      return {
+        ...state,
+        sessions:
+          sessionIdx >= 0
+            ? [
+                ...state.sessions.slice(0, sessionIdx),
+                payload,
+                ...state.sessions.slice(sessionIdx + 1),
+              ]
+            : [payload, ...state.sessions],
       };
     }
 

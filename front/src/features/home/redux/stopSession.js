@@ -7,7 +7,7 @@ import {
 } from './constants';
 import * as api from '../../../common/api';
 
-export function stopSession({ id, name } = {}) {
+export function stopSession({ id, name }) {
   return async (dispatch, getState) => {
     // optionally you can have getState as the second argument
     dispatch({
