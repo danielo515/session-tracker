@@ -18,8 +18,8 @@ class SessionsPage extends Component {
   };
 
   componentDidMount() {
-    const { setupApp } = this.props.actions;
-    setupApp();
+    const { setupApp, fetchSessions } = this.props.actions;
+    setupApp().then(fetchSessions);
   }
 
   render() {

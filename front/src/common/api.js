@@ -79,17 +79,26 @@ const withDb = handler => async args => {
 };
 
 export const listSessions = withDb(db => {
-  return db.get().then(snapshot => {
-    if (snapshot.exists()) return { response: Object.values(snapshot.val()) };
-    return db.set([]).then(() => ({ response: [] }));
-  });
+  return db
+    .orderByKey()
+    .get()
+    .then(snapshot => {
+      if (snapshot.exists()) return { response: Object.values(snapshot.val()).reverse() };
+      return { response: [] };
+    });
 });
 
 /** @type { (args: Function) => void }*/
-export const syncData = withDb((db, cb) => {
-  return db.on('child_added', snapshot => {
-    if (snapshot.exists()) return cb(snapshot.val());
-  });
+export const syncData = withDb(async (db, cb) => {
+  const last = await db
+    .orderByKey()
+    .limitToLast(1)
+    .once('child_added');
+  db.orderByKey()
+    .startAfter(last.key)
+    .on('child_added', snapshot => {
+      if (snapshot.exists()) return cb(snapshot.val());
+    });
 });
 
 /**
