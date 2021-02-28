@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["es2020", "DOM"],
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "strict": true,
+    "jsx": "react"
+  },
+  "include": ["src/**/*.js", "src/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
