@@ -6,13 +6,15 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 export function isUserLoggedIn() {
   return new Promise(resolve => {
-    firebase.auth().onAuthStateChanged((user, error) => {
-      if (error) {
+    firebase.auth().onAuthStateChanged(
+      user => {
+        resolve(user);
+      },
+      error => {
         console.error('Failed cheking logged user', error);
         return resolve(null);
-      }
-      resolve(user);
-    });
+      },
+    );
   });
 }
 export const login = ({ email, password }) => {};
@@ -108,9 +110,7 @@ export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate }) =
  * @type { (args: {name: string}) => Promise<apiResponse> }
  */
 export const startSession = withDb((db, { name }) => {
-  const newSessionRef = db.push();
-  const session = { name, startDate: new Date().toISOString(), id: newSessionRef.key };
-  newSessionRef.set(session);
+  const session = { name, startDate: new Date().toISOString() };
   return db
     .child('runningSession')
     .set(session)
@@ -120,8 +120,10 @@ export const startSession = withDb((db, { name }) => {
 /** @type { (args: {id: string, name: string}) => Promise<apiResponse> }*/
 export const stopSession = withDb(async (db, { id, name }) => {
   const session = { name, endDate: new Date().toISOString() };
-  await db.child('runningSession').set(null);
-  db.child(id).update(session);
+  const runningSnap = await db.child('runningSession').get();
+  if (!runningSnap.exists()) {
+    console.error('Stopping not existing session', { session });
+  }
   return db
     .child(id)
     .once('value')

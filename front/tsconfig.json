@@ -10,6 +10,7 @@
     "strict": true,
     "jsx": "react"
   },
+  "typeAcquisition": { "enable": true },
   "include": ["src/**/*.js", "src/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
