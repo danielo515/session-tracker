@@ -72,6 +72,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build-types": "tsc  --noEmit false --emitDeclarationOnly true",
     "test": "node scripts/test.js --env=jsdom",
     "s3-deploy": "a(){ aws s3 sync build s3://$1/; };a",
     "deploy": "yarn build && yarn s3-deploy"

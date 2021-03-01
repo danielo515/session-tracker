@@ -2,13 +2,15 @@
   "compilerOptions": {
     "lib": ["es2020", "DOM"],
     "moduleResolution": "node",
-    "module": "CommonJS",
+    "module": "es6",
     "allowJs": true,
     "checkJs": true,
     "resolveJsonModule": true,
     "noEmit": true,
     "strict": true,
-    "jsx": "react"
+    "jsx": "react",
+    "declaration": true,
+    "declarationDir": "types"
   },
   "typeAcquisition": { "enable": true },
   "include": ["src/**/*.js", "src/**/*.d.ts"],
