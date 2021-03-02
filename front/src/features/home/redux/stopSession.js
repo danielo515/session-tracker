@@ -38,6 +38,8 @@ export function dismissStopSessionError() {
   };
 }
 
+/** @typedef {typeof import('./initialState').default} State*/
+/** @type {import('redux').Reducer<State>} */
 export function reducer(state, { type, payload }) {
   switch (type) {
     case HOME_STOP_SESSION_BEGIN:
@@ -55,7 +57,7 @@ export function reducer(state, { type, payload }) {
         stopSessionPending: false,
         stopSessionError: null,
         runningSession: null,
-        sessions: [payload, ...state.sessions],
+        // sessions: [payload, ...state.sessions],
       };
 
     case HOME_STOP_SESSION_FAILURE:

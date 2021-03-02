@@ -4,3 +4,7 @@ export type Session = {
   endDate?: string;
   id: string;
 };
+export type RunningSession = {
+  name: string;
+  startDate: string;
+};

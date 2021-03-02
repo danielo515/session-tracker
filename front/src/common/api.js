@@ -82,6 +82,7 @@ const withDb = handler => async args => {
 
 export const listSessions = withDb(db => {
   return db
+    .child('all')
     .orderByKey()
     .get()
     .then(snapshot => {
@@ -89,18 +90,27 @@ export const listSessions = withDb(db => {
       return { response: [] };
     });
 });
-
-/** @type { (args:{onSessionAdded: Function, onRunningUpdate: (session: void|{}) => any} ) => void }*/
-export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate }) => {
-  const last = await db
+/** @typedef { (args: import('../types').Session) => any } sessionCb*/
+/** @typedef { (args: import('../types').Session|null) => any } sessionCbNull*/
+/** @type { (args:{ onSessionAdded: sessionCb,
+ *                  onRunningUpdate: sessionCbNull,
+ *                  onSessionUpdate: sessionCb }) => void }
+ * */
+export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
+  const all = db.child('all');
+  const last = await all
     .orderByKey()
     .limitToLast(1)
     .once('child_added');
-  db.orderByKey()
+  all
+    .orderByKey()
     .startAfter(last.key)
     .on('child_added', snapshot => {
       if (snapshot.exists()) return onSessionAdded(snapshot.val());
     });
+  all.on('child_changed', snap => {
+    if (snap.exists() && snap.val().id) onSessionUpdate(snap.val());
+  });
   db.child('runningSession').on('value', snapshot => {
     return onRunningUpdate(snapshot.val());
   });
@@ -118,26 +128,31 @@ export const startSession = withDb((db, { name }) => {
 });
 
 /** @type { (args: {id: string, name: string}) => Promise<apiResponse> }*/
-export const stopSession = withDb(async (db, { id, name }) => {
-  const session = { name, endDate: new Date().toISOString() };
-  const runningSnap = await db.child('runningSession').get();
+export const stopSession = withDb(async db => {
+  const running = db.child('runningSession');
+  const runningSnap = await running.get();
   if (!runningSnap.exists()) {
-    console.error('Stopping not existing session', { session });
+    throw new Error('Stopping not existing session');
   }
-  return db
-    .child(id)
-    .once('value')
-    .then(snap => ({ response: snap.val() }));
+  const push = await db.child('all').push();
+  const session = { ...runningSnap.val(), id: (push).key, endDate: new Date().toISOString() };
+  await running.set(null);
+  await push.set(session);
+  return { response: session };
 });
 
 /** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => Promise<apiResponse> }*/
 export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
   return db
+    .child('all')
     .child(id)
     .update({ name, startDate, endDate })
     .then(() => ({ response: { id, name, startDate, endDate } }));
 });
 
 export const deleteSession = withDb((db, { id }) => {
-  return db.child(id).set(null);
+  return db
+    .child('all')
+    .child(id)
+    .set(null);
 });
