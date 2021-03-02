@@ -1,16 +1,22 @@
-import {
-  DefaultPage,
-  SessionsPage,
-} from './';
+import React from 'react';
+import loadable from 'react-loadable';
+import { DefaultPage, SessionsPage } from './';
 
-import {DefaultPage as  Dashboard} from '../stats'
+const LoadingComponent = () => <h3>please wait...</h3>;
+const DashboardPromise = () => {
+  return import('../stats/Dashboard');
+};
+const Dashboard = loadable({
+  loader: DashboardPromise,
+  loading: LoadingComponent,
+});
 
 export default {
   path: '/',
   name: 'Home',
   component: DefaultPage,
   childRoutes: [
-    { path: 'timer', name: 'Default page', component: SessionsPage, isIndex: true, },
-    { path: 'stats', name: 'Statistics', component: Dashboard},
+    { path: 'timer', name: 'Default page', component: SessionsPage, isIndex: true },
+    { path: 'stats', name: 'Statistics', component: Dashboard },
   ],
 };
