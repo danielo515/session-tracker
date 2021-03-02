@@ -15,6 +15,12 @@ import Title from './Title';
 import PropTypes from 'prop-types';
 import { stringToColour } from './stringToColour';
 
+/**
+ * @param {{ sessions: import('../../types').Session[],
+ *           title: React.ReactChild,
+ *           names: string[],
+ *          formatter: import('recharts').TickFormatterFunction }} props
+ */
 export default function Chart({ sessions, title, names, formatter }) {
   const theme = useTheme();
   const Bars = names.map(x => (

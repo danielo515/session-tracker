@@ -10,7 +10,8 @@
     "strict": true,
     "jsx": "react",
     "declaration": true,
-    "declarationDir": "types"
+    "declarationDir": "types",
+    "allowSyntheticDefaultImports": true
   },
   "typeAcquisition": { "enable": true },
   "include": ["src/**/*.js", "src/**/*.d.ts"],

@@ -117,7 +117,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
     new webpack.EnvironmentPlugin(env.raw),
     new HtmlWebpackPlugin({
       inject: true,
