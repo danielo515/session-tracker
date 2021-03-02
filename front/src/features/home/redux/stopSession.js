@@ -57,7 +57,7 @@ export function reducer(state, { type, payload }) {
         stopSessionPending: false,
         stopSessionError: null,
         runningSession: null,
-        // sessions: [payload, ...state.sessions],
+        // sessions: [payload, ...state.sessions], // this is now handled on the sync mechanism
       };
 
     case HOME_STOP_SESSION_FAILURE:
