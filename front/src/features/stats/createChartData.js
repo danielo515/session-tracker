@@ -10,8 +10,8 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 /** @typedef {import('../../types').Session} Session*/
-/** @typedef {{ startDate: string, [name: string]: number }}  Row hashmap of name-value indexed by formatted date**/
-/** @typedef {{names: Set<string>, date: Row }} MapRow **/
+/** @typedef {{ startDate: string, [name: string]: number|string }}  Row hashmap of name-value indexed by formatted date**/
+/** @typedef {{names: Set<string>, [date:string]: Row|Set<string> }} MapRow **/
 /**
  *
  * @param {Function} diffCalc
@@ -21,7 +21,8 @@ import differenceInMinutes from 'date-fns/differenceInMinutes';
 export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDate }) => {
   const duration = diffCalc(new Date(endDate || Date.now()), new Date(startDate));
   const date = formatter(new Date(startDate));
-  const existing = map[date] || {};
+
+  const existing = /** @type { Row }*/ (map[date] || {});
   const names = map.names || new Set();
   names.add(name);
   return {
@@ -48,7 +49,7 @@ const omitNamesProp = ({ names, ...rest }) => rest;
 
 /**
  *
- * @param {{ daysAgo: number, weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} }
+ * @param {{ daysAgo: number, weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} } args
  */
 export function createChartData({ daysAgo, weeksAgo = 0, monthsAgo = 0, sessions }) {
   const today = endOfDay(new Date());
