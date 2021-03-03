@@ -11,7 +11,8 @@
     "jsx": "react",
     "declaration": true,
     "declarationDir": "types",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
   },
   "typeAcquisition": { "enable": true },
   "include": ["src/**/*.js", "src/**/*.d.ts"],

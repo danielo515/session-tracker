@@ -99,6 +99,10 @@ function NavigationControls({ setValue, baseName, value, text, unit }) {
  */
 const formatDaysAgo = ago => (ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today');
 
+/**
+ * @param {{ sessions: import('../../types').Session[]}} args
+ * @return {*}
+ */
 export default function Dashboard({ sessions = [] }) {
   const classes = useStyles();
   const [daysAgo, setDay] = React.useState(0);
