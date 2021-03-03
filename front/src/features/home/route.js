@@ -4,7 +4,7 @@ import { DefaultPage, SessionsPage } from './';
 
 const LoadingComponent = () => <h3>please wait...</h3>;
 const DashboardPromise = () => {
-  return import('../stats/Dashboard');
+  return import('../stats/DefaultPage');
 };
 const Dashboard = loadable({
   loader: DashboardPromise,

@@ -65,7 +65,7 @@ export function reducer(state, { type, payload }) {
         ...state,
         getSessionsPending: false,
         getSessionsError: null,
-        sessions: payload.sessions,
+        sessions: payload,
       };
 
     case STATS_GET_SESSIONS_FAILURE:
