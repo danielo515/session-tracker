@@ -1,4 +1,6 @@
 const path = require('path');
+const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -124,6 +126,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new AsyncChunkNames(),
     new webpack.EnvironmentPlugin(env.raw),
     new HtmlWebpackPlugin({
       inject: true,
