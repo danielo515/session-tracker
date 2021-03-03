@@ -18,4 +18,7 @@ const reducerMap = {
   stats: statsReducer,
 };
 
-export default combineReducers(reducerMap);
+/** @typedef {ReturnType<typeof rootReducer>} RootState*/
+
+const rootReducer = combineReducers(reducerMap);
+export default rootReducer;
