@@ -37,7 +37,7 @@ export function deleteSession(id) {
     }
     dispatch({
       type: HOME_DELETE_SESSION_SUCCESS,
-      payload: response,
+      payload: { session: response },
     });
   };
 }

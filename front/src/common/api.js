@@ -60,7 +60,7 @@ export const signUp = ({ email, password, name }) => {};
  * @typedef { {response: any, error?: {status: number}} } apiResponse
  */
 /**
- * @typedef { { error?: {status: number}} } errorResponse
+ * @typedef { { response: null, error: {status: number}} } errorResponse
  */
 
 /**
@@ -72,7 +72,7 @@ export const signUp = ({ email, password, name }) => {};
  */
 const withDb = handler => async args => {
   const userId = firebase.auth()?.currentUser?.uid;
-  if (!userId) return { error: { status: 401 } };
+  if (!userId) return { error: { status: 401 }, response: null };
   const db = firebase
     .database()
     .ref('/tasks')
@@ -124,7 +124,7 @@ export const startSession = withDb((db, { name }) => {
   return db
     .child('runningSession')
     .set(session)
-    .then(() => ({ response: session }));
+    .then(() => ({ response: session, error: null }));
 });
 
 /** @type { (args: {id: string, name: string}) => Promise<apiResponse> }*/
@@ -154,5 +154,7 @@ export const deleteSession = withDb((db, { id }) => {
   return db
     .child('all')
     .child(id)
-    .set(null);
+    .set(null)
+    .then(() => ({ response: { id }, error: null }))
+    .catch(error => ({ error, response: null }));
 });
