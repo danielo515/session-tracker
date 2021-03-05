@@ -1,5 +1,3 @@
-// @ts-check
-
 const oneHour = 3600000;
 
 const parseTokenInfo = token => {

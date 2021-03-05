@@ -48,6 +48,7 @@ export function dismissGetSessionsError() {
   };
 }
 
+/** @typedef {typeof import('./initialState').default} State*/
 /** @type {import('redux').Reducer<State>}*/
 export function reducer(state, { type, payload }) {
   switch (type) {
