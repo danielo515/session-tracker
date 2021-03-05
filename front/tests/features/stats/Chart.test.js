@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Chart } from '../../../src/features/stats';
+import { Chart } from '../../../src/features/stats/Chart';
 
 it('renders node with correct class name', () => {
   const renderedComponent = shallow(<Chart />);
