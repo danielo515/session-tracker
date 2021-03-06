@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.3.1...v1.3.2) (2021-03-06)
+
+
+### Bug Fixes
+
+* fetch all and running sessions on listing ([96cdd45](https://github.com/danielo515/pento-tech-challenge/commit/96cdd45c335e69d6a6790590704ebf1969e62621))
+
 ## [1.3.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.3.0...v1.3.1) (2021-03-06)
 
 
