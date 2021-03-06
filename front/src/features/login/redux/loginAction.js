@@ -11,6 +11,20 @@ import * as api from '../../../common/api';
 import { getErrorData } from '../../../common/getErrorData';
 import history from '../../../common/history';
 
+/** @typedef {Object} Props
+ * @property {string} email
+ * @property {string} password
+ */
+
+/** @typedef {import('redux-thunk').ThunkAction<void,import('../../../common/rootReducer').RootState,unknown,import('redux').Action>} loginAction*/
+
+/**
+ *
+ *
+ * @export
+ * @param {Props|{isGoogleLogin: boolean}} args
+ * @return {loginAction}
+ */
 export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false } = {}) {
   return async dispatch => {
     // optionally you can have getState as the second argument

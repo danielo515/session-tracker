@@ -4,6 +4,6 @@ import { Merge } from 'type-fest';
 type InitialState = typeof initialState;
 type state = {
   sessions: Session[];
-  runningSession?: RunningSession;
+  runningSession: void | RunningSession;
 };
 export type State = Merge<InitialState, state>;

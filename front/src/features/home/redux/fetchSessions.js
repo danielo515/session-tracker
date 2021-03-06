@@ -7,9 +7,20 @@ import {
   HOME_FETCH_SESSIONS_DISMISS_ERROR,
   HOME_UPDATED_SESSION,
 } from './constants';
+/** @typedef {{type: HOME_FETCH_SESSIONS_SUCCESS, payload: {sessions: Session[], current: void | import('../../../types').RunningSession } }} Success*/
+/** @typedef {{type: HOME_PUSHED_SESSION, payload: Session}} Pushed*/
+/** @typedef {{type: HOME_UPDATED_SESSION, payload: Session}} Updated*/
+/** @typedef {{type: HOME_FETCH_SESSIONS_BEGIN }} Begin*/
+/** @typedef {{type: HOME_FETCH_SESSIONS_FAILURE, payload: {error: any} }} Fail*/
+/** @typedef {{type: HOME_FETCH_SESSIONS_DISMISS_ERROR}} Dismiss*/
+/** @typedef { Success | Pushed | Begin | Fail | Dismiss | Updated} Actions*/
 
 import * as api from '../../../common/api';
 
+/**
+ * Fetches all sessions
+ * @return {import('redux-thunk').ThunkAction<void,State,unknown,Actions>}
+ */
 export function fetchSessions() {
   return async (dispatch, getState) => {
     dispatch({
@@ -20,26 +31,31 @@ export function fetchSessions() {
       login: { token },
     } = getState();
 
-    const { error, response } = await api.listSessions({ token });
+    const result = await api.listSessions({ token });
 
-    if (error) {
+    if (result.error) {
       dispatch({
         type: HOME_FETCH_SESSIONS_FAILURE,
-        payload: { error },
+        payload: { error: result.error },
       });
       return;
     }
+    const { response } = result;
     dispatch({
       type: HOME_FETCH_SESSIONS_SUCCESS,
-      payload: response,
+      payload: { sessions: response.all, current: response.current },
     });
   };
 }
 /** @typedef {import('../../../types').Session} Session*/
 /** @typedef {import('./types').State} State*/
-/** @type { import('redux-thunk').ThunkAction<Promise<void>,State,unknown,import('redux').Action>}*/
+
+/**
+ * Starts the process of syncing sessions
+ * @return {import('redux-thunk').ThunkAction<void,State,unknown,import('redux').Action>}
+ */
 export function syncSessions() {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     api.syncData({
       onRunningUpdate(session) {
         dispatch({
@@ -87,13 +103,7 @@ function updateAtIdx(idx, arr, newVal) {
     ...arr.slice(idx + 1),
   ];
 }
-/** @typedef {{type: HOME_FETCH_SESSIONS_SUCCESS, payload: Session[]}} Success*/
-/** @typedef {{type: HOME_PUSHED_SESSION, payload: Session}} Pushed*/
-/** @typedef {{type: HOME_UPDATED_SESSION, payload: Session}} Updated*/
-/** @typedef {{type: HOME_FETCH_SESSIONS_BEGIN }} Begin*/
-/** @typedef {{type: HOME_FETCH_SESSIONS_FAILURE, payload: {error: any} }} Fail*/
-/** @typedef {{type: HOME_FETCH_SESSIONS_DISMISS_ERROR}} Dismiss*/
-/** @type {import('react').Reducer<State, Success | Pushed | Begin | Fail | Dismiss | Updated>}*/
+/** @type {import('react').Reducer<State,Actions>} */
 export function reducer(state, action) {
   switch (action.type) {
     case HOME_FETCH_SESSIONS_BEGIN:
@@ -105,14 +115,14 @@ export function reducer(state, action) {
       };
 
     case HOME_FETCH_SESSIONS_SUCCESS: {
-      const sessions = action.payload;
+      const { sessions, current } = action.payload;
       // The request is success
       return {
         ...state,
         fetchSessionsPending: false,
         fetchSessionsError: null,
-        runningSession: sessions.find(({ endDate }) => !endDate),
-        sessions: sessions.filter(({ endDate }) => endDate), // skip runninng sessions
+        runningSession: current,
+        sessions: sessions, // skip runninng sessions
       };
     }
 

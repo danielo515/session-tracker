@@ -62,11 +62,12 @@ export function reducer(state, { type, payload }) {
 
     case STATS_GET_SESSIONS_SUCCESS:
       // The request is success
+      const { all } = payload;
       return {
         ...state,
         getSessionsPending: false,
         getSessionsError: null,
-        sessions: payload,
+        sessions: all,
       };
 
     case STATS_GET_SESSIONS_FAILURE:

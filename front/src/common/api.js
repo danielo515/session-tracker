@@ -57,10 +57,10 @@ export const googleLogin = () =>
 export const signUp = ({ email, password, name }) => {};
 
 /**
- * @typedef { {response: any, error?: {status: number}} } apiResponse
+ * @typedef { {response: any, error: null} } apiResponse
  */
 /**
- * @typedef { { response: null, error: {status: number}} } errorResponse
+ * @typedef { { error: {status: number}} } errorResponse
  */
 
 /**
@@ -81,14 +81,20 @@ const withDb = handler => async args => {
 };
 
 export const listSessions = withDb(db => {
-  return db
-    .child('all')
-    .orderByKey()
-    .get()
-    .then(snapshot => {
-      if (snapshot.exists()) return { response: Object.values(snapshot.val()).reverse() };
-      return { response: [] };
-    });
+  return Promise.all([
+    db
+      .child('all')
+      .orderByKey()
+      .get(),
+    db.child('runningSession').get(),
+  ]).then(([snapshot, currentSnap]) => {
+    if (snapshot.exists())
+      return {
+        error: null,
+        response: { all: Object.values(snapshot.val()).reverse(), current: currentSnap.val() },
+      };
+    return { error: null, response: { all: [], current: currentSnap.val() } };
+  });
 });
 /** @typedef { (args: import('../types').Session) => any } sessionCb*/
 /** @typedef { (args: import('../types').Session|null) => any } sessionCbNull*/
