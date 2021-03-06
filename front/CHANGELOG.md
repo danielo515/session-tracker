@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.2.0...v1.3.0) (2021-03-06)
+
+
+### Features
+
+* async load stats ([cb311bb](https://github.com/danielo515/pento-tech-challenge/commit/cb311bb7110e9d8a5167dfa174e08dcffe526716))
+* full two way sync ([50f4f0d](https://github.com/danielo515/pento-tech-challenge/commit/50f4f0dae97f991bb25c401ecef8e7636f057ceb))
+
 # [1.2.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.1.3...v1.2.0) (2020-05-31)
 
 
