@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.3.0...v1.3.1) (2021-03-06)
+
+
+### Bug Fixes
+
+* latest corejs ([f847f68](https://github.com/danielo515/pento-tech-challenge/commit/f847f68c89906f32c186bf93d13c25f18b503a06))
+
 # [1.3.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.2.0...v1.3.0) (2021-03-06)
 
 
