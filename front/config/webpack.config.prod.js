@@ -35,7 +35,7 @@ module.exports = {
       path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   performance: {
-    maxEntrypointSize: 1100000,
+    maxEntrypointSize: 1200000,
     maxAssetSize: 1100000,
   },
   optimization: {
