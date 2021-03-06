@@ -1,3 +1,5 @@
+// @ts-check
+
 import {
   LOGIN_LOGIN_ACTION_BEGIN,
   LOGIN_LOGIN_ACTION_SUCCESS,
@@ -5,23 +7,30 @@ import {
   LOGIN_LOGIN_ACTION_DISMISS_ERROR,
 } from './constants';
 
-import * as api from '../../../common/api'
-import {getErrorData} from '../../../common/getErrorData'
-import history from '../../../common/history'
+import * as api from '../../../common/api';
+import { getErrorData } from '../../../common/getErrorData';
+import history from '../../../common/history';
 
-export function loginAction({ email, password, rememberMe } = {}) {
-  return async (dispatch) => { // optionally you can have getState as the second argument
+export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false } = {}) {
+  return async dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: LOGIN_LOGIN_ACTION_BEGIN,
     });
 
+    let error, response;
 
-    const { error, response } = await api.login({ email, password });
+    if (isGoogleLogin) {
+      ({ error, response } = await api.googleLogin());
+    } else {
+      ({ error, response } = await api.login({ email, password }));
+    }
+
     if (error) {
       dispatch({
         type: LOGIN_LOGIN_ACTION_FAILURE,
         payload: { error },
-      })
+      });
       return;
     }
 
@@ -30,8 +39,8 @@ export function loginAction({ email, password, rememberMe } = {}) {
     dispatch({
       type: LOGIN_LOGIN_ACTION_SUCCESS,
       payload: { token: response.token },
-    })
-    history.replace('/')
+    });
+    history.replace('/');
   };
 }
 

@@ -1,19 +1,29 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import BigButton from './BigButton';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import StopIcon from '@material-ui/icons/Stop';
-import useHandleChange from './hooks/useHandleChange'
-import Timer from "./Timer";
+import useHandleChange from './hooks/useHandleChange';
+import Timer from './Timer';
 import Zoom from '@material-ui/core/Zoom';
 
+/** @typedef {Object} Props
+ * @property {string} name
+ * @property {string} id
+ * @property {string} startDate
+ * @property {Function} stopSession
+ */
+/**
+ * @export
+ * @param {Props} Props
+ */
 export default function SessionStop({ name: sessionName, id, stopSession, startDate }) {
-  const [name, handleChange] = useHandleChange(sessionName)
-  const [visible,setVisible] = useState(true);
+  const [name, handleChange] = useHandleChange(sessionName);
+  const [visible, setVisible] = useState(true);
   const stop = () => {
-    stopSession({id, name});
-    setVisible(false)
-  }
+    stopSession({ id, name });
+    setVisible(false);
+  };
   return (
     <div>
       <form noValidate>
@@ -29,9 +39,9 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
           onChange={handleChange}
         />
       </form>
-      <Zoom in={visible} unmountOnLeave={true}>
+      <Zoom in={visible} unmountOnExit>
         <div>
-          <BigButton onClick={stop} icon={StopIcon} variant='stop'/>
+          <BigButton onClick={stop} icon={StopIcon} variant="stop" />
         </div>
       </Zoom>
       <Timer startDate={startDate}></Timer>

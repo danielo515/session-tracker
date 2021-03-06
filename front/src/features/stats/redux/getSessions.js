@@ -5,16 +5,24 @@ import {
   STATS_GET_SESSIONS_DISMISS_ERROR,
 } from './constants';
 
-import * as api from '../../../common/api'
+import * as api from '../../../common/api';
 
+/** @typedef {import('../../../common/rootReducer').default} RootState*/
+/** @typedef {import('redux').Action} Action*/
+/** @typedef {import('redux-thunk').ThunkAction<Promise<void>,RootState,void,Action>} GetSessionThunk*/
 
-export function getSessions(args = {}) {
+/**
+ * @return {GetSessionThunk}
+ */
+export function getSessions() {
   return async (dispatch, getState) => {
     dispatch({
       type: STATS_GET_SESSIONS_BEGIN,
     });
 
-    const { login: { token } } = getState();
+    const {
+      login: { token },
+    } = getState();
 
     const { error, response } = await api.listSessions({ token });
 
@@ -29,7 +37,6 @@ export function getSessions(args = {}) {
       type: STATS_GET_SESSIONS_SUCCESS,
       payload: response,
     });
-
   };
 }
 
@@ -41,7 +48,9 @@ export function dismissGetSessionsError() {
   };
 }
 
-export function reducer(state, {type, payload}) {
+/** @typedef {typeof import('./initialState').default} State*/
+/** @type {import('redux').Reducer<State>}*/
+export function reducer(state, { type, payload }) {
   switch (type) {
     case STATS_GET_SESSIONS_BEGIN:
       // Just after a request is sent
@@ -57,7 +66,7 @@ export function reducer(state, {type, payload}) {
         ...state,
         getSessionsPending: false,
         getSessionsError: null,
-        sessions: payload.sessions
+        sessions: payload,
       };
 
     case STATS_GET_SESSIONS_FAILURE:

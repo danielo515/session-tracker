@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   paper: {
     padding: theme.spacing(2),
@@ -64,38 +64,59 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height:440,
-    [theme.breakpoints.down('xs')]: {height: 400}
+    height: 440,
+    [theme.breakpoints.down('xs')]: { height: 400 },
   },
   navigation: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 }));
 
 function NavigationControls({ setValue, baseName, value, text, unit }) {
   const { navigation } = useStyles();
-  const back = () => setValue(value + 1)
-  const next = () => setValue(value - 1)
+  const back = () => setValue(value + 1);
+  const next = () => setValue(value - 1);
   return (
     <div className={navigation}>
-      <IconButton onClick={back}>< NavigateBeforeIcon /></IconButton>
-      <Typography variant='button' align='center'> {text || ( value === 0 ? baseName : `${value} ${unit} ago` )}</Typography>
-      <IconButton onClick={next} disabled={value === 0}><NavigateNextIcon /></IconButton>
-    </div>)
+      <IconButton onClick={back}>
+        <NavigateBeforeIcon />
+      </IconButton>
+      <Typography variant="button" align="center">
+        {' '}
+        {text || (value === 0 ? baseName : `${value} ${unit} ago`)}
+      </Typography>
+      <IconButton onClick={next} disabled={value === 0}>
+        <NavigateNextIcon />
+      </IconButton>
+    </div>
+  );
 }
-const formatDaysAgo = ago => ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today'
 
+/**
+ * @param {number} ago
+ */
+const formatDaysAgo = ago => (ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today');
+
+/**
+ * @param {{ sessions: import('../../types').Session[]}} args
+ * @return {*}
+ */
 export default function Dashboard({ sessions = [] }) {
   const classes = useStyles();
   const [daysAgo, setDay] = React.useState(0);
   const [weeksAgo, setWeek] = React.useState(0);
-  const [monthsAgo/*, setMonth*/] = React.useState(0);
+  const [monthsAgo /*, setMonth*/] = React.useState(0);
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const { dayData, weekData, monthData } = createChartData({ sessions, daysAgo, weeksAgo, monthsAgo });
+  const { dayData, weekData, monthData } = createChartData({
+    sessions,
+    daysAgo,
+    weeksAgo,
+    monthsAgo,
+  });
 
   return (
     <div className={classes.root}>
@@ -105,29 +126,54 @@ export default function Dashboard({ sessions = [] }) {
             {/* Day */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart sessions={dayData.data} names={dayData.names} title={<NavigationControls  value={daysAgo} setValue={setDay} text={formatDaysAgo(daysAgo)} />} />
+                <Chart
+                  sessions={dayData.data}
+                  names={dayData.names}
+                  title={
+                    <NavigationControls
+                      value={daysAgo}
+                      setValue={setDay}
+                      text={formatDaysAgo(daysAgo)}
+                    />
+                  }
+                />
               </Paper>
             </Grid>
             {/* Week */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart formatter={minsToHoursMinutes} sessions={weekData.data} names={weekData.names} title={<NavigationControls value={weeksAgo} setValue={setWeek} baseName='this week' unit='weeks' />}/>
+                <Chart
+                  formatter={minsToHoursMinutes}
+                  sessions={weekData.data}
+                  names={weekData.names}
+                  title={
+                    <NavigationControls
+                      value={weeksAgo}
+                      setValue={setWeek}
+                      baseName="this week"
+                      unit="weeks"
+                    />
+                  }
+                />
               </Paper>
             </Grid>
             {/* Month */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart formatter={minsToHoursMinutes} title='Month' names={monthData.names} sessions={monthData.data} />
+                <Chart
+                  formatter={minsToHoursMinutes}
+                  title="Month"
+                  names={monthData.names}
+                  sessions={monthData.data}
+                />
               </Paper>
             </Grid>
           </Grid>
           <Box pt={4}>
-            <FooterWithVersion/>
+            <FooterWithVersion />
           </Box>
         </Container>
       </main>
     </div>
   );
 }
-
-

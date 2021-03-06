@@ -12,52 +12,63 @@ import EditSession from './EditSession';
 import { FooterWithVersion } from '../common/index';
 
 class SessionsPage extends Component {
-    static propTypes = {
-        home: PropTypes.object.isRequired,
-        actions: PropTypes.object.isRequired,
-    };
+  static propTypes = {
+    home: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+  };
 
-    componentDidMount() {
-        const { setupApp, fetchSessions } = this.props.actions;
-        setupApp().then(fetchSessions);
-    }
+  componentDidMount() {
+    const { setupApp, fetchSessions } = this.props.actions;
+    setupApp().then(fetchSessions);
+  }
 
-    render() {
-        const { sessions, editing, sessionBeingEdited } = this.props.home
-        const { deleteSession, switchTask, editSession, cancelEditSession, updateSession } = this.props.actions
-        const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
-        return (
-          <div className="home-default-page">
-            <SessionController />
-            <SessionsList icon={PlayIcon} sessions={sessions} primaryAction={editSession} secondaryAction={switchTask} />
-            <EditSession
-              key={editing}
-              open={editing}
-              cancel={cancelEditSession}
-              onDelete={deleteSession}
-              onSubmit={updateSession}
-              {...sessionToEdit}
-            />
-            <Box pt={4} className="home-copyright">
-              <FooterWithVersion/>
-            </Box>
-          </div>
-        );
-    }
+  render() {
+    const { sessions, editing, sessionBeingEdited } = this.props.home;
+    const {
+      deleteSession,
+      switchTask,
+      editSession,
+      cancelEditSession,
+      updateSession,
+    } = this.props.actions;
+    const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
+    return (
+      <div className="home-default-page">
+        <SessionController />
+        <SessionsList
+          icon={PlayIcon}
+          sessions={sessions}
+          primaryAction={editSession}
+          secondaryAction={switchTask}
+        />
+        <EditSession
+          key={editing}
+          open={editing}
+          cancel={cancelEditSession}
+          onDelete={deleteSession}
+          onSubmit={updateSession}
+          {...sessionToEdit}
+        />
+        <Box pt={4} className="home-copyright">
+          <FooterWithVersion />
+        </Box>
+      </div>
+    );
+  }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-    return {
-        home: state.home,
-    };
+  return {
+    home: state.home,
+  };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({ ...actions, setupApp }, dispatch),
-    };
+  return {
+    actions: bindActionCreators({ ...actions, setupApp }, dispatch),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SessionsPage);

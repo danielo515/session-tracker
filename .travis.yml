@@ -1,5 +1,5 @@
 language: "node"
-node_js: 10
+node_js: 12
 cache: yarn
 before_install: cd front # this affects the entire job, including deploy
 install: yarn

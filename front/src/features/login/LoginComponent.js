@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
-import isValidEmail from '../../common/isValidEmail'
-import isValidPassword from '../../common/isValidPassword'
+import isValidEmail from '../../common/isValidEmail';
+import isValidPassword from '../../common/isValidPassword';
 import { useLoginForm } from './useLoginForm';
 import { FooterWithVersion } from '../common/index';
 
@@ -40,10 +40,10 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn({ login, error }) {
   const classes = useStyles();
   const { email, setEmail, password, setPassword } = useLoginForm();
-  const [rememberMe, setRememberMe] = useState(false)
-  const handleCheck = set => ({ target }) => set(target.checked)
-  const handleSubmit = () => login({ email, password, rememberMe })
-  const canSubmit = isValidEmail(email) && isValidPassword(password)
+  const [rememberMe, setRememberMe] = useState(false);
+  const handleCheck = set => ({ target }) => set(target.checked);
+  const handleSubmit = isGoogleLogin => login({ email, password, rememberMe, isGoogleLogin });
+  const canSubmit = isValidEmail(email) && isValidPassword(password);
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -83,7 +83,14 @@ export default function SignIn({ login, error }) {
             helperText={error}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" checked={rememberMe} onChange={handleCheck(setRememberMe)} />}
+            control={
+              <Checkbox
+                value="remember"
+                color="primary"
+                checked={rememberMe}
+                onChange={handleCheck(setRememberMe)}
+              />
+            }
             label="Remember me"
           />
           <Button
@@ -97,14 +104,24 @@ export default function SignIn({ login, error }) {
           >
             Sign In
           </Button>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleSubmit.bind(null, true)}
+          >
+            Google Sign In
+          </Button>
           <Grid container>
             <Grid item xs>
-              <Link to='/not-implemented' variant="body2" component={RouterLink}>
+              <Link to="/not-implemented" variant="body2" component={RouterLink}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to='/login/signup' variant="body2" component={RouterLink}>
+              <Link to="/login/signup" variant="body2" component={RouterLink}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -112,7 +129,7 @@ export default function SignIn({ login, error }) {
         </div>
       </div>
       <Box mt={8}>
-        <FooterWithVersion/>
+        <FooterWithVersion />
       </Box>
     </Container>
   );

@@ -5,7 +5,6 @@
     "@babel/plugin-proposal-optional-chaining",
     "react-hot-loader/babel",
     "@babel/plugin-proposal-class-properties",
-    "syntax-dynamic-import",
-    "lodash"
+    "syntax-dynamic-import"
   ]
 }

@@ -1,14 +1,10 @@
 {
   "compilerOptions": {
+    "checkJs": true,
     "baseUrl": "./",
     "module": "es6",
-    "paths": {
-      "*": ["./**/*"]
-    }
+    "moduleResolution": "node",
+    "jsx": "react"
   },
-  "exclude": [
-    "node_modules",
-    "tmp",
-    "temp"
-  ]
+  "exclude": ["node_modules", "tmp", "temp"]
 }

@@ -1,4 +1,7 @@
 const path = require('path');
+const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -32,12 +35,30 @@ module.exports = {
       path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   performance: {
-    maxEntrypointSize: 1100000,
+    maxEntrypointSize: 1200000,
     maxAssetSize: 1100000,
   },
   optimization: {
     splitChunks: {
-      chunks: 'all',
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        // vendor chunk
+        vendor: {
+          // sync + async chunks
+          chunks: 'all',
+          // import file path containing node_modules
+          test: /node_modules/,
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+          chunks: 'async',
+          priority: 10,
+          reuseExistingChunk: true,
+          enforce: true,
+        },
+      },
     },
   },
   resolve: {
@@ -105,6 +126,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new AsyncChunkNames(),
     new webpack.EnvironmentPlugin(env.raw),
     new HtmlWebpackPlugin({
       inject: true,
@@ -132,6 +154,7 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new GenerateSW(),
+    new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: !process.env.CI }),
   ],
   node: {
     dgram: 'empty',

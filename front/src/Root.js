@@ -1,5 +1,6 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
+// @ts-nocheck
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
@@ -27,10 +28,12 @@ function renderRouteConfigV3(routes, contextPath) {
           render={props => <item.component {...props}>{childRoutes}</item.component>}
           path={newContextPath}
           exact={item.exact}
-        />
+        />,
       );
     } else if (item.component) {
-      children.push(<Route key={newContextPath} component={item.component} path={newContextPath} exact />);
+      children.push(
+        <Route key={newContextPath} component={item.component} path={newContextPath} exact />,
+      );
     } else if (item.childRoutes) {
       item.childRoutes.forEach(r => renderRoute(r, newContextPath));
     }
@@ -43,7 +46,8 @@ function renderRouteConfigV3(routes, contextPath) {
     <Switch>
       {children}
       <Redirect to="/not-found" />
-    </Switch>)
+    </Switch>
+  );
 }
 
 export default class Root extends React.Component {
