@@ -27,6 +27,7 @@ export function loginAction({ email, password, rememberMe = false, isGoogleLogin
     }
 
     if (error) {
+      console.error('Error logging in:', error);
       dispatch({
         type: LOGIN_LOGIN_ACTION_FAILURE,
         payload: { error },
