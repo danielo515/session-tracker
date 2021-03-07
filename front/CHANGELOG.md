@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.3.2...v1.4.0) (2021-03-07)
+
+
+### Features
+
+* update redux to latest ([d6736bf](https://github.com/danielo515/pento-tech-challenge/commit/d6736bfdaf0de3854974e2cc3014b5f0cf870d1f))
+
 ## [1.3.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.3.1...v1.3.2) (2021-03-06)
 
 
