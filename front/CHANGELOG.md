@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.5.0...v1.6.0) (2021-03-07)
+
+
+### Features
+
+* remove polifyls ([75e6c47](https://github.com/danielo515/pento-tech-challenge/commit/75e6c472d2cb1845d43577131f9cf0a4dbf51155))
+
 # [1.5.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.4.2...v1.5.0) (2021-03-07)
 
 
