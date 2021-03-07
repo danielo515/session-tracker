@@ -17,8 +17,12 @@ const reducerMap = {
   stats: statsReducer,
 };
 
-/** @typedef {ReturnType<typeof rootReducer>} RootState*/
+/** @typedef {ReturnType<ReturnType<typeof rootReducer>>} RootState*/
 
+/**
+ * creates a root reducer injecting router reducer
+ * @param {typeof import('../common/history').default} history
+ */
 const rootReducer = history =>
   combineReducers({
     ...reducerMap,

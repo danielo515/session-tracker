@@ -74,7 +74,26 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/** @typedef {Object} PropsA
+ * @property {(n:number) => any} setValue
+ * @property {never} [ baseName ]
+ * @property {never} [ unit ]
+ * @property {string} text
+ * @property {number} value
+ */
+/** @typedef {Object} PropsB
+ * @property {(n:number) => any} setValue
+ * @property {string} baseName
+ * @property {string} unit
+ * @property {never} [ text ]
+ * @property {number} value
+ */
+
+/**
+ * @param {PropsA|PropsB} props
+ */
 function NavigationControls({ setValue, baseName, value, text, unit }) {
+  // @ts-ignore
   const { navigation } = useStyles();
   const back = () => setValue(value + 1);
   const next = () => setValue(value - 1);
@@ -104,6 +123,7 @@ const formatDaysAgo = ago => (ago > 0 ? format(subDays(new Date(), ago), 'E d MM
  * @return {*}
  */
 export default function Dashboard({ sessions = [] }) {
+  // @ts-ignore
   const classes = useStyles();
   const [daysAgo, setDay] = React.useState(0);
   const [weeksAgo, setWeek] = React.useState(0);

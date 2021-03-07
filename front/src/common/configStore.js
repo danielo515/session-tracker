@@ -9,6 +9,9 @@ const router = routerMiddleware(history);
 // NOTE: Do not change middleares delaration pattern since rekit plugins may register middlewares to it.
 const middlewares = [thunk, router];
 
+/**
+ * @param {*} f
+ */
 let devToolsExtension = f => f;
 
 /* istanbul ignore if  */
@@ -23,6 +26,9 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
+/**
+ * @param {import('./rootReducer').RootState} initialState
+ */
 export default function configureStore(initialState) {
   const store = createStore(
     rootReducer(history),

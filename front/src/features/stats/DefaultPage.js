@@ -1,43 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import {setupApp} from '../common/redux/actions';
+import { setupApp } from '../common/redux/actions';
 import Dashboard from './Dashboard';
 
-export class DefaultPage extends Component {
-  static propTypes = {
-    stats: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
-
-  componentDidMount(){
-    const {setupApp, getSessions} = this.props.actions
-    setupApp().then(getSessions);
-  }
-
-  render() {
-    const { sessions } = this.props.stats;
-    return <Dashboard sessions={sessions}/>;
-  }
-}
-
-/* istanbul ignore next */
+/**
+ * @param {import('../../common/rootReducer').RootState} state
+ */
 function mapStateToProps(state) {
   return {
     stats: state.stats,
   };
 }
 
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions, setupApp }, dispatch),
-  };
+const mapDispatchToProps = {
+  actions: { ...actions, setupApp },
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+/**
+ * @param {import('react-redux').ConnectedProps<typeof connector>} Props
+ */
+function DefaultPage({ actions, stats }) {
+  useEffect(() => {
+    const { setupApp, getSessions } = actions;
+    setupApp().then(getSessions);
+  }, []);
+  const { sessions } = stats;
+  return <Dashboard sessions={sessions} />;
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DefaultPage);
+export default connector(DefaultPage);

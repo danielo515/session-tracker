@@ -7,17 +7,24 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import history from './common/history';
 
+/** @typedef { import('./types').Route } route*/
+
+/**
+ *
+ *
+ * @param {route[]} routes
+ * @param {string} contextPath
+ */
 function renderRouteConfigV3(routes, contextPath) {
   // Resolve route config object in React Router v3.
+  /** @type { import('react').ReactNodeArray }*/
   const children = []; // children component list
-
+  /**
+   * @param {route} item
+   * @param {string} routeContextPath
+   */
   const renderRoute = (item, routeContextPath) => {
-    let newContextPath;
-    if (/^\//.test(item.path)) {
-      newContextPath = item.path;
-    } else {
-      newContextPath = `${routeContextPath}/${item.path}`;
-    }
+    let newContextPath = /^\//.test(item.path) ? item.path : `${routeContextPath}/${item.path}`;
     newContextPath = newContextPath.replace(/\/+/g, '/');
     if (item.component && item.childRoutes) {
       const childRoutes = renderRouteConfigV3(item.childRoutes, newContextPath);

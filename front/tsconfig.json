@@ -12,7 +12,10 @@
     "declaration": true,
     "declarationDir": "types",
     "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "paths": {
+      "rootReducer": ["./src/common/rootReducer"]
+    }
   },
   "typeAcquisition": { "enable": true },
   "include": ["src/**/*.js", "src/**/*.d.ts"],

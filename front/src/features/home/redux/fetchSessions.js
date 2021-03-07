@@ -13,13 +13,15 @@ import {
 /** @typedef {{type: HOME_FETCH_SESSIONS_BEGIN }} Begin*/
 /** @typedef {{type: HOME_FETCH_SESSIONS_FAILURE, payload: {error: any} }} Fail*/
 /** @typedef {{type: HOME_FETCH_SESSIONS_DISMISS_ERROR}} Dismiss*/
+/** @typedef {import('redux').Action<HOME_START_SESSION_SUCCESS>} ExternalAction*/
 /** @typedef { Success | Pushed | Begin | Fail | Dismiss | Updated} Actions*/
+/** @typedef {import('rootReducer').RootState} RootState*/
 
 import * as api from '../../../common/api';
 
 /**
  * Fetches all sessions
- * @return {import('redux-thunk').ThunkAction<void,State,unknown,Actions>}
+ * @return {import('redux-thunk').ThunkAction<void,RootState,unknown,Actions>}
  */
 export function fetchSessions() {
   return async (dispatch, getState) => {
@@ -52,10 +54,10 @@ export function fetchSessions() {
 
 /**
  * Starts the process of syncing sessions
- * @return {import('redux-thunk').ThunkAction<void,State,unknown,import('redux').Action>}
+ * @return {import('redux-thunk').ThunkAction<void,void,unknown,Actions|ExternalAction>}
  */
 export function syncSessions() {
-  return async dispatch => {
+  return dispatch => {
     api.syncData({
       onRunningUpdate(session) {
         dispatch({

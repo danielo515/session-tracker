@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 
 /**
  * @param {{children: import('react').ReactChild}} props
- * @return {*}
  */
 export default function Title(props) {
   return (
