@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.4.2...v1.5.0) (2021-03-07)
+
+
+### Features
+
+* lazy edit session ([2341a7d](https://github.com/danielo515/pento-tech-challenge/commit/2341a7d49e1507a291cca3fb53be31ff2b62a012))
+
 ## [1.4.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.4.1...v1.4.2) (2021-03-07)
 
 
