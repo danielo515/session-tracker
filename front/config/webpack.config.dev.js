@@ -16,8 +16,6 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     paths.appIndexJs,
     paths.appIndexStyle,

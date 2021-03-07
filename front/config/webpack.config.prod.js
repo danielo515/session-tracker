@@ -25,7 +25,7 @@ module.exports = {
   mode: 'production',
   bail: true,
   devtool: shouldUseSourceMap ? 'source-map' : false,
-  entry: [require.resolve('./polyfills'), paths.appIndexJs, paths.appIndexStyle],
+  entry: [paths.appIndexJs, paths.appIndexStyle],
   output: {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
