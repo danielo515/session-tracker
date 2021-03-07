@@ -8,8 +8,17 @@ import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import PlayIcon from '@material-ui/icons/PlayCircleOutline';
 import SessionsList from './SessionsList';
-import EditSession from './EditSession';
+import loadable from 'react-loadable';
 import { FooterWithVersion } from '../common/index';
+
+const LoadingComponent = () => <h3>please wait...</h3>;
+const EditSessionPromise = () => {
+  return import('./EditSession');
+};
+const EditSession = loadable({
+  loader: EditSessionPromise,
+  loading: LoadingComponent,
+});
 
 class SessionsPage extends Component {
   static propTypes = {

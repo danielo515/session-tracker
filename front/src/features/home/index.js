@@ -8,4 +8,3 @@ export { default as SessionStop } from './SessionStop';
 export { default as Timer } from './Timer';
 export { default as SessionsPage } from './SessionsPage';
 export { default as SessionsList } from './SessionsList';
-export { default as EditSession } from './EditSession';
