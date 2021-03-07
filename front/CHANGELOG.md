@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.4.1...v1.4.2) (2021-03-07)
+
+
+### Bug Fixes
+
+* Shortcut to edit the time directly ([e068ff3](https://github.com/danielo515/pento-tech-challenge/commit/e068ff332324a3f304208bc6b8e897573d52a1e6)), closes [#31](https://github.com/danielo515/pento-tech-challenge/issues/31)
+
 ## [1.4.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.4.0...v1.4.1) (2021-03-07)
 
 
