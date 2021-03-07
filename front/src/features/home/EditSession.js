@@ -8,7 +8,7 @@ import Delete from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
-import { DateTimePicker } from '@material-ui/pickers';
+import { DatePicker, TimePicker } from '@material-ui/pickers';
 
 function EditSession(props) {
   const { open, cancel, name, startDate, endDate, id, onSubmit, onDelete } = props;
@@ -32,22 +32,20 @@ function EditSession(props) {
         </Box>
       </DialogTitle>
       <DialogContent>
-        <Box pb={4}>
-          <DateTimePicker
-            label="Started at:"
-            value={date}
-            onChange={setDate}
-            animateYearScrolling
+        <Box pb={4} display="flex">
+          <DatePicker label="Started at date" value={date} onChange={setDate} variant="inline" />
+          <TimePicker id="time-picker" label="time" value={date} onChange={setDate} ampm={false} />
+        </Box>
+        <Box display="flex">
+          <DatePicker label="Finished at" value={dateEnd} onChange={setEndDate} variant="inline" />
+          <TimePicker
+            id="time-picker"
+            label="time"
+            value={dateEnd}
+            onChange={setEndDate}
             ampm={false}
           />
         </Box>
-        <DateTimePicker
-          label="Finished at"
-          value={dateEnd}
-          onChange={setEndDate}
-          animateYearScrolling
-          ampm={false}
-        />
       </DialogContent>
       <DialogActions>
         <Button onClick={cancel} color="primary">
