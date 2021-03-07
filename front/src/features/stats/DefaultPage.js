@@ -14,7 +14,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  actions: { ...actions, setupApp },
+  ...actions,
+  setupApp,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -22,9 +23,8 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} Props
  */
-function DefaultPage({ actions, stats }) {
+function DefaultPage({ setupApp, getSessions, stats }) {
   useEffect(() => {
-    const { setupApp, getSessions } = actions;
     setupApp().then(getSessions);
   }, []);
   const { sessions } = stats;
