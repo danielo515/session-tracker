@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.4.0...v1.4.1) (2021-03-07)
+
+
+### Bug Fixes
+
+* proper root state and routes types ([bc31105](https://github.com/danielo515/pento-tech-challenge/commit/bc31105c0fcbe11c159af212e33fd1378a810cc1))
+
 # [1.4.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.3.2...v1.4.0) (2021-03-07)
 
 
