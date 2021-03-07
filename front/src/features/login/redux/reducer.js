@@ -16,6 +16,7 @@ const reducers = [
 ];
 
 export default function reducer(state = initialState, action) {
+  /** @type { typeof initialState }*/
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here

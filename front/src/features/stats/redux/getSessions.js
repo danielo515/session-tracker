@@ -7,7 +7,7 @@ import {
 
 import * as api from '../../../common/api';
 
-/** @typedef {import('../../../common/rootReducer').default} RootState*/
+/** @typedef {import('../../../common/rootReducer').RootState} RootState*/
 /** @typedef {import('redux').Action} Action*/
 /** @typedef {import('redux-thunk').ThunkAction<Promise<void>,RootState,void,Action>} GetSessionThunk*/
 
