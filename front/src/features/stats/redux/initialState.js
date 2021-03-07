@@ -8,6 +8,7 @@
 const initialState = {
   getSessionsPending: false,
   getSessionsError: null,
+  sessions: [],
 };
 
 export default initialState;

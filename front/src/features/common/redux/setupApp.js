@@ -11,6 +11,8 @@ import history from '../../../common/history';
 import { syncSessions } from '../../home/redux/actions';
 import { isUserLoggedIn } from '../../../common/api';
 
+/** @typedef {import('../../../common/rootReducer').RootState} RootState*/
+/** @returns { import('redux-thunk').ThunkAction<Promise<void>,RootState,void, any>}*/
 export function setupApp() {
   return async (dispatch, getState) => {
     const { setupAppPending } = getState().common;
