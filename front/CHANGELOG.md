@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.6.0...v1.7.0) (2021-03-09)
+
+
+### Features
+
+* pick sessions from one single source ([d15600e](https://github.com/danielo515/pento-tech-challenge/commit/d15600eb614b139f98e9fce15fd74685d5f7ebeb))
+
 # [1.6.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.5.0...v1.6.0) (2021-03-07)
 
 
