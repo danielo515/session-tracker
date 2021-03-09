@@ -6,6 +6,7 @@ const initialState = {
   stopSessionError: null,
   fetchSessionsPending: false,
   fetchSessionsError: null,
+  /** @type { import("../../../types").Session[] }*/
   sessions: [],
   deleteSessionPending: false,
   deleteSessionError: null,
