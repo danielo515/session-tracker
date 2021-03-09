@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
+import { fetchSessions } from '../home/redux/actions';
 import { setupApp } from '../common/redux/actions';
 import Dashboard from './Dashboard';
+import selectSessions from '../../common/selectSessions';
 
 /**
- * @param {import('../../common/rootReducer').RootState} state
+ * @param {import('rootReducer').RootState} state
  */
 function mapStateToProps(state) {
   return {
     stats: state.stats,
+    sessions: selectSessions(state),
   };
 }
 
 const mapDispatchToProps = {
-  ...actions,
   setupApp,
+  fetchSessions,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -23,11 +25,10 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} Props
  */
-function DefaultPage({ setupApp, getSessions, stats }) {
+function DefaultPage({ setupApp, fetchSessions, sessions }) {
   useEffect(() => {
-    setupApp().then(getSessions);
+    setupApp().then(fetchSessions);
   }, []);
-  const { sessions } = stats;
   return <Dashboard sessions={sessions} />;
 }
 
