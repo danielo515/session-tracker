@@ -9,6 +9,13 @@ export type RunningSession = {
   startDate: string;
 };
 
+export interface SessionGroup {
+  name: string;
+  total: number;
+  lastRun: string;
+  sessions: Session[];
+}
+
 export interface Route {
   path: string;
   name: string;

@@ -14,7 +14,8 @@
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "paths": {
-      "rootReducer": ["./src/common/rootReducer"]
+      "rootReducer": ["./src/common/rootReducer"],
+      "@types": ["./src/types"]
     }
   },
   "typeAcquisition": { "enable": true },

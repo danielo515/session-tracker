@@ -31,6 +31,9 @@ export class SessionController extends Component {
 }
 
 /* istanbul ignore next */
+/**
+ * @param {import('rootReducer').RootState} state
+ */
 function mapStateToProps(state) {
   return {
     home: state.home,
@@ -44,7 +47,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SessionController);
+export default connect(mapStateToProps, mapDispatchToProps)(SessionController);
