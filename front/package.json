@@ -78,6 +78,7 @@
     "redux-thunk": "^2.3.0",
     "rekit-core": "^2.3.0",
     "rekit-studio": "^2.3.0",
+    "reselect": "^4.0.0",
     "semantic-release": "^17.0.4",
     "style-loader": "^1.2.1",
     "tsconfig-paths-webpack-plugin": "^3.3.0",

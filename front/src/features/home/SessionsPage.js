@@ -8,6 +8,9 @@ import PlayIcon from '@material-ui/icons/PlayCircleOutline';
 import SessionsList from './SessionsList';
 import loadable from 'react-loadable';
 import { FooterWithVersion } from '../common/index';
+import selectGroupedSessions from './redux/selectGroupedSessions';
+import { TaskGroup } from './TaskGroup';
+import List from '@material-ui/core/List';
 
 const LoadingComponent = () => <h3>please wait...</h3>;
 const EditSessionPromise = () => {
@@ -27,17 +30,29 @@ const SessionsPage = props => {
     setupApp().then(fetchSessions);
   }, []);
   const { sessions, editing, sessionBeingEdited } = props.home;
-  const { deleteSession, switchTask, editSession, cancelEditSession, updateSession } = props;
+  const {
+    deleteSession,
+    switchTask,
+    editSession,
+    cancelEditSession,
+    updateSession,
+    groupedSessions,
+  } = props;
   const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
   return (
     <div className="home-default-page">
       <SessionController />
-      <SessionsList
+      {/* <SessionsList
         icon={PlayIcon}
         sessions={sessions}
         primaryAction={editSession}
         secondaryAction={switchTask}
-      />
+      /> */}
+      <List>
+        {groupedSessions.map(x => (
+          <TaskGroup key={x.name} {...x} />
+        ))}
+      </List>
       <EditSession
         key={editing}
         open={editing}
@@ -60,6 +75,7 @@ const SessionsPage = props => {
 function mapStateToProps(state) {
   return {
     home: state.home,
+    groupedSessions: selectGroupedSessions(state),
   };
 }
 
