@@ -13,9 +13,11 @@
     "declarationDir": "types",
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
+    "baseUrl": "./src",
     "paths": {
-      "rootReducer": ["./src/common/rootReducer"],
-      "@types": ["./src/types"]
+      "rootReducer": ["common/rootReducer"],
+      "formatters": ["formatters"],
+      "@types": ["types"]
     }
   },
   "typeAcquisition": { "enable": true },
