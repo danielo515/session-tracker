@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { VariableSizeList } from 'react-window';
@@ -69,11 +69,9 @@ const Loading = ({ isSmallScreen }) => {
 export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
   const [openRow, setOpenRow] = useState('');
-  const [refreshIdx, setRefreshIdx] = useState(0);
-  /** @returns {(name:string) => any }*/
-  const activateRow = idx => name => {
+  /** @type {(name:string) => any }*/
+  const activateRow = name => {
     // const name = '' + e.currentTarget.getAttribute('data-name');
-    setRefreshIdx(idx);
     setOpenRow(name === openRow ? '' : name);
   };
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
@@ -82,7 +80,6 @@ export default function SessionsList({ sessions, startSession, editSession }) {
     <div className={clsx(classes.root, 'home-sessions-list')}>
       <VirtualList
         data={sessions}
-        refreshIdx={refreshIdx}
         itemSize={idx => {
           const sessionGroup = sessions[idx];
           return sessionGroup.name === openRow
@@ -94,13 +91,13 @@ export default function SessionsList({ sessions, startSession, editSession }) {
           const item = data[index];
 
           return (
-            <div style={style}>
+            <div style={style} className="virtual-node">
               <TaskGroup
                 {...item}
                 startSession={start}
                 editSession={edit}
                 activeRow={openRow}
-                activateRow={activateRow(index)}
+                activateRow={activateRow}
               />
             </div>
           );
@@ -131,19 +128,18 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
  * @typedef {Object} VirtualProps
  * @property {T[]} data
  * @property { (props:{data: T[], style: Object, index: number}) => any } row
- * @property {number} refreshIdx
  * @property {(i:number) => number} itemSize
  */
 /**
  * @template T
  * @param {VirtualProps<T>} props **/
-export function VirtualList({ data, row, itemSize, refreshIdx }) {
+export function VirtualList({ data, row, itemSize }) {
   const smallScreen = useMediaQuery('(max-width: 600px');
   const list = useRef();
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (list.current) {
       // list.current.scrollToItem(refreshIdx, 'start');
-      list.current.resetAfterIndex(Math.max(refreshIdx - 1, 0));
+      list.current.resetAfterIndex(0);
     }
   });
   return data.length ? (
