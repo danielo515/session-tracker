@@ -1,82 +1,33 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
-import format from 'date-fns/format';
-import differenceInMinutes from 'date-fns/differenceInMinutes';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
+import { VariableSizeList } from 'react-window';
 import clsx from 'clsx';
 import Skeleton from '@material-ui/lab/Skeleton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import List from '@material-ui/core/List';
 import Autosizer from 'react-virtualized-auto-sizer';
-import { formatMinutes4Human } from '../../formatters/formatMinutes4Human';
+import { TaskGroup } from './TaskGroup';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
   },
 }));
 
-const formatStart = 'yyy-MM-dd HH:mm';
-const formatHour = 'HH:mm';
+const ItemHeight = 72;
+// const NestedItemHeight = 400;
+// const formatHour = 'HH:mm';
 /**
  * @typedef {import('@types').Session} Session
  * @typedef {import('@types').SessionGroup} SessionGroup
  */
 
 /** @typedef {Object} PropsRender
- * @property {(item: Session) => any} secondaryAction
- * @property {(id:string) => any} primaryAction
- * @property {*} Icon
+ * @property {(item: {name: string}) => any} startSession
+ * @property {(id:string) => any} editSession
  */
-
-/**
- *  @param {PropsRender} props
- * @returns {(props:{index:number, style: any, data: Session[]}) => JSX.Element}
- * **/
-const renderRow = ({ secondaryAction, primaryAction, Icon }) => props => {
-  const { index, style, data } = props;
-  const item = data[index];
-  const { name, startDate, endDate, id } = item;
-  const start = new Date(startDate);
-  const end = new Date(endDate || Date.now());
-  const duration = differenceInMinutes(end, start);
-  const secondary = useCallback(() => secondaryAction(item), [secondaryAction, id]);
-  const primary = useCallback(() => primaryAction(id), [primaryAction, id]);
-
-  return (
-    <ListItem
-      ContainerProps={{ style }}
-      key={id || index}
-      ContainerComponent="div"
-      button
-      onClick={primary}
-    >
-      <ListItemText
-        primary={name}
-        className="sl-left-item"
-        secondary={format(start, formatStart)}
-      />
-      <ListItemText primary={formatMinutes4Human(duration)} secondary={format(end, formatHour)} />
-      <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="delete" onClick={secondary}>
-          <Icon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
-  );
-};
-
-renderRow.propTypes = {
-  data: PropTypes.array,
-  index: PropTypes.number.isRequired,
-  style: PropTypes.object.isRequired,
-};
 
 /**
  * @template T
@@ -102,36 +53,50 @@ const Loading = ({ isSmallScreen }) => {
 
 /** @typedef {Object} Props
  * @property {SessionGroup[]} sessions
- * @property {()=>any} secondaryAction
- * @property {(id:string) => any} primaryAction
+ * @property {(i:{name: string}) => any} startSession
+ * @property {(id:string) => any} editSession
  */
 
 /** @param {Props} props **/
-export default function SessionsList({ sessions, secondaryAction, primaryAction, icon: Icon }) {
-  const smallScreen = useMediaQuery('(max-width: 600px');
+export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
-  const itemCount = sessions.length;
-  const row = renderRow({ Icon, secondaryAction, primaryAction });
+  const [openRow, setOpenRow] = useState('');
+  const [refreshIdx, setRefreshIdx] = useState(0);
+  /** @returns { React.MouseEventHandler<HTMLDivElement> }*/
+  const activateRow = idx => e => {
+    const name = '' + e.currentTarget.getAttribute('data-name');
+    setRefreshIdx(idx);
+    setOpenRow(name === openRow ? '' : name);
+  };
+  const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
+  const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
-      <Autosizer>
-        {({ height, width }) =>
-          itemCount ? (
-            <FixedSizeList
-              className={'home-sessions-list'}
-              height={height}
-              width={width}
-              itemSize={72}
-              itemCount={itemCount}
-              itemData={sessions}
-            >
-              {row}
-            </FixedSizeList>
-          ) : (
-            <Loading isSmallScreen={smallScreen} />
-          )
-        }
-      </Autosizer>
+      <VirtualList
+        data={sessions}
+        refreshIdx={refreshIdx}
+        itemSize={idx => {
+          const sessionGroup = sessions[idx];
+          return sessionGroup.name === openRow
+            ? sessionGroup.sessions.length * ItemHeight + ItemHeight
+            : 72;
+        }}
+        row={props => {
+          const { index, style, data } = props;
+          const item = data[index];
+
+          return (
+            <TaskGroup
+              {...item}
+              style={style}
+              startSession={start}
+              editSession={edit}
+              activeRow={openRow}
+              activateRow={activateRow(index)}
+            />
+          );
+        }}
+      />
     </div>
   );
 }
@@ -145,3 +110,47 @@ SessionsList.propTypes = {
 SessionsList.defaultProps = {
   sessions: [],
 };
+
+/**
+ * @template T
+ * @typedef {Object} VirtualProps
+ * @property {T[]} data
+ * @property { (props:{data: T[], style: Object, index: number}) => any } row
+ * @property {number} refreshIdx
+ * @property {(i:number) => number} itemSize
+ */
+
+/**
+ * @template T
+ * @param {VirtualProps<T>} props **/
+export function VirtualList({ data, row, itemSize, refreshIdx }) {
+  const smallScreen = useMediaQuery('(max-width: 600px');
+  const list = useRef();
+  if (list.current) {
+    // list.current.scrollToItem(refreshIdx, 'start');
+    list.current.resetAfterIndex(Math.max(refreshIdx - 1, 0));
+  }
+  return data.length ? (
+    <Autosizer>
+      {({ height, width }) => (
+        <List>
+          <VariableSizeList
+            className={'home-sessions-list'}
+            height={height}
+            width={width}
+            itemSize={itemSize}
+            estimatedItemSize={ItemHeight}
+            itemCount={data.length}
+            itemData={data}
+            ref={list}
+            useIsScrolling
+          >
+            {row}
+          </VariableSizeList>
+        </List>
+      )}
+    </Autosizer>
+  ) : (
+    <Loading isSmallScreen={smallScreen} />
+  );
+}

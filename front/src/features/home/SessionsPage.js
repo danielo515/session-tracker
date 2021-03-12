@@ -9,8 +9,6 @@ import SessionsList from './SessionsList';
 import loadable from 'react-loadable';
 import { FooterWithVersion } from '../common/index';
 import selectGroupedSessions from './redux/selectGroupedSessions';
-import { TaskGroup } from './TaskGroup';
-import List from '@material-ui/core/List';
 
 const LoadingComponent = () => <h3>please wait...</h3>;
 const EditSessionPromise = () => {
@@ -42,17 +40,13 @@ const SessionsPage = props => {
   return (
     <div className="home-default-page">
       <SessionController />
-      {/* <SessionsList
+      <SessionsList
         icon={PlayIcon}
-        sessions={sessions}
-        primaryAction={editSession}
-        secondaryAction={switchTask}
-      /> */}
-      <List>
-        {groupedSessions.map(x => (
-          <TaskGroup key={x.name} {...x} />
-        ))}
-      </List>
+        sessions={groupedSessions}
+        editSession={editSession}
+        startSession={switchTask}
+      />
+
       <EditSession
         key={editing}
         open={editing}

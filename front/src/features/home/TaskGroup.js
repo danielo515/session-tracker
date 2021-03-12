@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import { formatDateDiff, formatStartDate, msToHuman } from 'formatters/formatDateDiff';
+import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -35,9 +36,11 @@ const useStyles = makeStyles(theme => ({
  **/
 
 /** @typedef {Object} props
- * @property {() => any} secondaryAction
- * @property {(id:string) => any} primaryAction
- * @property {*} Icon
+ * @property {React.MouseEventHandler<HTMLElement>} startSession
+ * @property {React.MouseEventHandler<HTMLDivElement>} editSession
+ * @property {string} activeRow
+ * @property {React.MouseEventHandler<HTMLDivElement>} activateRow
+ * @property {*} style
  */
 /** @typedef {import('type-fest').Merge<SessionGroup, props>} Props */
 
@@ -46,31 +49,44 @@ const useStyles = makeStyles(theme => ({
  * that have the same name
  * @param {Props} props
  */
-export function TaskGroup({ name, total, lastRun, sessions, secondaryAction }) {
+export function TaskGroup({
+  name,
+  activateRow,
+  activeRow,
+  total,
+  lastRun,
+  sessions,
+  startSession,
+  editSession,
+  style,
+}) {
   const css = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const toggle = () => setOpen(!open);
+  const isOpen = activeRow === name;
   return (
-    <React.Fragment>
-      <ListItem button onClick={toggle} className={css.taskOverView}>
+    <div style={style}>
+      <ListItem button onClick={activateRow} data-name={name} className={css.taskOverView}>
         <ListItemText
           primary={name}
           secondary={formatStartDate(lastRun)}
           classes={{ root: css.leftItem }}
         />
         <ListItemText primary="Today" secondary={msToHuman(total)} className={css.rightItem} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemSecondaryAction>
+          <IconButton edge="end" aria-label="delete" id={name} onClick={startSession}>
+            <PlayCircleOutline />
+          </IconButton>
+        </ListItemSecondaryAction>
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit className={css.childWrapper}>
+      <Collapse in={isOpen} timeout="auto" unmountOnExit className={css.childWrapper} mountOnEnter>
         <List component="div" disablePadding>
           {sessions.map(({ id, startDate: start, endDate: end = Date.now() }) => (
-            <ListItem key={id} button className={css.nested}>
+            <ListItem key={id} id={id} onClick={editSession} button className={css.nested}>
               <ListItemText primary="Started" secondary={formatStartDate(start)} />
               <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
             </ListItem>
           ))}
         </List>
       </Collapse>
-    </React.Fragment>
+    </div>
   );
 }
