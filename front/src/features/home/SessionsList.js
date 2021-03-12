@@ -49,7 +49,8 @@ const doTimes = times => fn => {
   return res;
 };
 
-const Loading = ({ isSmallScreen }) => {
+const Loading = () => {
+  const isSmallScreen = useMediaQuery('(max-width: 600px');
   return (
     <div className="home-sessions-skeleton">
       {doTimes(isSmallScreen ? 5 : 8)(i => (
@@ -134,7 +135,6 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
  * @template T
  * @param {VirtualProps<T>} props **/
 export function VirtualList({ data, row, itemSize }) {
-  const smallScreen = useMediaQuery('(max-width: 600px');
   const list = useRef();
   useLayoutEffect(() => {
     if (list.current) {
@@ -162,6 +162,6 @@ export function VirtualList({ data, row, itemSize }) {
       )}
     </Autosizer>
   ) : (
-    <Loading isSmallScreen={smallScreen} />
+    <Loading />
   );
 }
