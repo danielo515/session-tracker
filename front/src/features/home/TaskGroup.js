@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
+import { FixedSizeList } from 'react-window';
 import { formatDateDiff, formatStartDate, msToHuman } from 'formatters/formatDateDiff';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 
@@ -30,6 +31,8 @@ const useStyles = makeStyles(theme => ({
     flex: '1 1 auto',
   },
 }));
+const ItemHeight = 72;
+const ListHeight = 3 * ItemHeight;
 /**
  * @typedef {import('@types').SessionGroup} SessionGroup
  * @typedef {import('@types').Session} Session
@@ -39,8 +42,7 @@ const useStyles = makeStyles(theme => ({
  * @property {React.MouseEventHandler<HTMLElement>} startSession
  * @property {React.MouseEventHandler<HTMLDivElement>} editSession
  * @property {string} activeRow
- * @property {React.MouseEventHandler<HTMLDivElement>} activateRow
- * @property {*} style
+ * @property {(name:string) => any} activateRow
  */
 /** @typedef {import('type-fest').Merge<SessionGroup, props>} Props */
 
@@ -58,13 +60,25 @@ export function TaskGroup({
   sessions,
   startSession,
   editSession,
-  style,
 }) {
   const css = useStyles();
-  const isOpen = activeRow === name;
+  const [isOpen, setIsOpen] = useState(activeRow === name);
+  /* This is tricky. 
+     When it is closed and the function is called it will call the outer function
+     to activate this row.
+     When it is open and the function is called, it will mutate the internal state first
+     so the exit animation can happen and when the animation finishes it will call this
+     function again which will sync the internal state with the outher one
+   */
+  const toggleRow = () => {
+    if (isOpen) {
+      return setIsOpen(false);
+    }
+    activateRow(name);
+  };
   return (
-    <div style={style}>
-      <ListItem button onClick={activateRow} data-name={name} className={css.taskOverView}>
+    <>
+      <ListItem button onClick={toggleRow} data-name={name} className={css.taskOverView}>
         <ListItemText
           primary={name}
           secondary={formatStartDate(lastRun)}
@@ -77,16 +91,35 @@ export function TaskGroup({
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-      <Collapse in={isOpen} timeout="auto" unmountOnExit className={css.childWrapper} mountOnEnter>
+      <Collapse
+        in={isOpen}
+        timeout="auto"
+        unmountOnExit
+        className={css.childWrapper}
+        onExited={toggleRow}
+        mountOnEnter
+        appear
+      >
         <List component="div" disablePadding>
-          {sessions.map(({ id, startDate: start, endDate: end = Date.now() }) => (
-            <ListItem key={id} id={id} onClick={editSession} button className={css.nested}>
-              <ListItemText primary="Started" secondary={formatStartDate(start)} />
-              <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
-            </ListItem>
-          ))}
+          <FixedSizeList
+            height={Math.min(ListHeight, sessions.length * ItemHeight)}
+            width="100%"
+            itemSize={ItemHeight}
+            itemCount={sessions.length}
+            itemData={sessions}
+          >
+            {({ index, style, data }) => {
+              const { id, startDate: start, endDate: end = Date.now() } = data[index];
+              return (
+                <ListItem style={style} id={id} onClick={editSession} button className={css.nested}>
+                  <ListItemText primary="Started" secondary={formatStartDate(start)} />
+                  <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
+                </ListItem>
+              );
+            }}
+          </FixedSizeList>
         </List>
       </Collapse>
-    </div>
+    </>
   );
 }

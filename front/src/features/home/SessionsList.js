@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { VariableSizeList } from 'react-window';
@@ -17,6 +17,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ItemHeight = 72;
+const ListHeight = ItemHeight + 3 * ItemHeight;
+
+/**
+ * @param {any[]} items
+ */
+export function CalculateListHeight(items) {
+  return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
+}
 // const NestedItemHeight = 400;
 // const formatHour = 'HH:mm';
 /**
@@ -62,9 +70,9 @@ export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
   const [openRow, setOpenRow] = useState('');
   const [refreshIdx, setRefreshIdx] = useState(0);
-  /** @returns { React.MouseEventHandler<HTMLDivElement> }*/
-  const activateRow = idx => e => {
-    const name = '' + e.currentTarget.getAttribute('data-name');
+  /** @returns {(name:string) => any }*/
+  const activateRow = idx => name => {
+    // const name = '' + e.currentTarget.getAttribute('data-name');
     setRefreshIdx(idx);
     setOpenRow(name === openRow ? '' : name);
   };
@@ -78,22 +86,23 @@ export default function SessionsList({ sessions, startSession, editSession }) {
         itemSize={idx => {
           const sessionGroup = sessions[idx];
           return sessionGroup.name === openRow
-            ? sessionGroup.sessions.length * ItemHeight + ItemHeight
-            : 72;
+            ? CalculateListHeight(sessionGroup.sessions)
+            : ItemHeight;
         }}
         row={props => {
           const { index, style, data } = props;
           const item = data[index];
 
           return (
-            <TaskGroup
-              {...item}
-              style={style}
-              startSession={start}
-              editSession={edit}
-              activeRow={openRow}
-              activateRow={activateRow(index)}
-            />
+            <div style={style}>
+              <TaskGroup
+                {...item}
+                startSession={start}
+                editSession={edit}
+                activeRow={openRow}
+                activateRow={activateRow(index)}
+              />
+            </div>
           );
         }}
       />
@@ -102,15 +111,21 @@ export default function SessionsList({ sessions, startSession, editSession }) {
 }
 
 SessionsList.propTypes = {
-  icon: PropTypes.node.isRequired,
   sessions: PropTypes.array,
-  secondaryAction: PropTypes.func.isRequired,
-  primaryAction: PropTypes.func.isRequired,
+  startSession: PropTypes.func.isRequired,
+  editSession: PropTypes.func.isRequired,
 };
 SessionsList.defaultProps = {
   sessions: [],
 };
 
+/**
+ *
+ * @template {{name: string, id?: string}} T
+ * @param {number} idx
+ * @param {T[]} data
+ */
+const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
 /**
  * @template T
  * @typedef {Object} VirtualProps
@@ -119,35 +134,35 @@ SessionsList.defaultProps = {
  * @property {number} refreshIdx
  * @property {(i:number) => number} itemSize
  */
-
 /**
  * @template T
  * @param {VirtualProps<T>} props **/
 export function VirtualList({ data, row, itemSize, refreshIdx }) {
   const smallScreen = useMediaQuery('(max-width: 600px');
   const list = useRef();
-  if (list.current) {
-    // list.current.scrollToItem(refreshIdx, 'start');
-    list.current.resetAfterIndex(Math.max(refreshIdx - 1, 0));
-  }
+  useEffect(() => {
+    if (list.current) {
+      // list.current.scrollToItem(refreshIdx, 'start');
+      list.current.resetAfterIndex(Math.max(refreshIdx - 1, 0));
+    }
+  });
   return data.length ? (
     <Autosizer>
       {({ height, width }) => (
-        <List>
-          <VariableSizeList
-            className={'home-sessions-list'}
-            height={height}
-            width={width}
-            itemSize={itemSize}
-            estimatedItemSize={ItemHeight}
-            itemCount={data.length}
-            itemData={data}
-            ref={list}
-            useIsScrolling
-          >
-            {row}
-          </VariableSizeList>
-        </List>
+        <VariableSizeList
+          innerElementType={List}
+          className={'home-sessions-list'}
+          height={height}
+          width={width}
+          itemSize={itemSize}
+          estimatedItemSize={ItemHeight}
+          itemCount={data.length}
+          itemData={data}
+          itemKey={getIdOrName}
+          ref={list}
+        >
+          {row}
+        </VariableSizeList>
       )}
     </Autosizer>
   ) : (

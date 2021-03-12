@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
-import PlayIcon from '@material-ui/icons/PlayCircleOutline';
 import SessionsList from './SessionsList';
 import loadable from 'react-loadable';
 import { FooterWithVersion } from '../common/index';
@@ -41,20 +40,21 @@ const SessionsPage = props => {
     <div className="home-default-page">
       <SessionController />
       <SessionsList
-        icon={PlayIcon}
         sessions={groupedSessions}
         editSession={editSession}
         startSession={switchTask}
       />
 
-      <EditSession
-        key={editing}
-        open={editing}
-        cancel={cancelEditSession}
-        onDelete={deleteSession}
-        onSubmit={updateSession}
-        {...sessionToEdit}
-      />
+      {editing && (
+        <EditSession
+          key={editing}
+          open={editing}
+          cancel={cancelEditSession}
+          onDelete={deleteSession}
+          onSubmit={updateSession}
+          {...sessionToEdit}
+        />
+      )}
       <Box pt={4} className="home-copyright">
         <FooterWithVersion />
       </Box>
