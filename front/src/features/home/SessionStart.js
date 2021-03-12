@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BigButton from './BigButton';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -8,14 +7,6 @@ import useHandleChange from './hooks/useHandleChange';
 import Timer from './Timer';
 import Zoom from '@material-ui/core/Zoom';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-}));
 /** @typedef {Object} Props
  * @property {(args: {name: string}) => any} startSession
  */
@@ -24,13 +15,12 @@ const useStyles = makeStyles(theme => ({
 export default function SessionStart({ startSession }) {
   const [sessionName, handleChange] = useHandleChange('');
   const [visible, setVisible] = useState(true);
-  const css = useStyles();
   const start = () => {
     startSession({ name: sessionName });
     setVisible(false);
   };
   return (
-    <div className={css.root}>
+    <div>
       <form noValidate>
         <TextField
           variant="outlined"

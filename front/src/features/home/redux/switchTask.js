@@ -6,8 +6,16 @@ import {
   HOME_STOP_SESSION_SUCCESS,
   HOME_START_SESSION_SUCCESS,
 } from './constants';
-
-import * as api from '../../../common/api'
+import * as api from '../../../common/api';
+/**
+ * @typedef {import('rootReducer').RootState} RootState
+ * @typedef {import('redux').Action<HOME_SWITCH_TASK_BEGIN>} SwitchTask
+ * @typedef {import('redux').Action<HOME_SWITCH_TASK_FAILURE>} SwitchError
+ * @typedef {import('redux').Action<HOME_SWITCH_TASK_SUCCESS>} SwitchSUCCESS
+ * @typedef {import('redux').Action<HOME_START_SESSION_SUCCESS>} START_SESSION_SUCCESS
+ * @typedef {SwitchTask | SwitchError | SwitchSUCCESS|START_SESSION_SUCCESS} Actions
+ *
+ **/
 
 const stopSession = async ({ dispatch, id, name, token }) => {
   const { error, response } = await api.stopSession({ token, id, name });
@@ -24,17 +32,25 @@ const stopSession = async ({ dispatch, id, name, token }) => {
     type: HOME_STOP_SESSION_SUCCESS,
     payload: response,
   });
-}
+};
 
-export function switchTask({name}) {
+/**
+ * Stops current task and starts a new one with the given name
+ * @param {{name: string}} args
+ * @return {import('redux-thunk').ThunkAction<void,RootState,unknown, Actions>}
+ */
+export function switchTask({ name }) {
   return async (dispatch, getState) => {
     dispatch({
       type: HOME_SWITCH_TASK_BEGIN,
     });
 
-    const { login: { token }, home: { runningSession } } = getState();
+    const {
+      login: { token },
+      home: { runningSession },
+    } = getState();
 
-    runningSession && await stopSession({ dispatch, token, ...runningSession })
+    runningSession && (await stopSession({ dispatch, token, ...runningSession }));
 
     const { error: startError, response: startResp } = await api.startSession({ token, name });
 
@@ -65,6 +81,8 @@ export function dismissSwitchTaskError() {
   };
 }
 
+/** @typedef {import('./types').State} State*/
+/** @type {import('react').Reducer<State,Actions>} */
 export function reducer(state, action) {
   switch (action.type) {
     case HOME_SWITCH_TASK_BEGIN:
