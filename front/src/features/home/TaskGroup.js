@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
-import Collapse from '@material-ui/core/Collapse';
 import { FixedSizeList } from 'react-window';
 import { formatDateDiff, formatStartDate, msToHuman } from 'formatters/formatDateDiff';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';

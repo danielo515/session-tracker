@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useLayoutEffect } from 'react';
+import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { VariableSizeList } from 'react-window';
