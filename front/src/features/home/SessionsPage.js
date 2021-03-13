@@ -1,83 +1,54 @@
 import Box from '@material-ui/core/Box';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
-import PlayIcon from '@material-ui/icons/PlayCircleOutline';
 import SessionsList from './SessionsList';
-import loadable from 'react-loadable';
+import EditSession from './EditSession';
 import { FooterWithVersion } from '../common/index';
+import selectGroupedSessions from './redux/selectGroupedSessions';
 
-const LoadingComponent = () => <h3>please wait...</h3>;
-const EditSessionPromise = () => {
-  return import('./EditSession');
-};
-const EditSession = loadable({
-  loader: EditSessionPromise,
-  loading: LoadingComponent,
-});
-
-class SessionsPage extends Component {
-  static propTypes = {
-    home: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
-
-  componentDidMount() {
-    const { setupApp, fetchSessions } = this.props.actions;
+/**
+ * @param {import('react-redux').ConnectedProps<typeof connector>} props
+ */
+const SessionsPage = props => {
+  useEffect(() => {
+    const { setupApp, fetchSessions } = props;
     setupApp().then(fetchSessions);
-  }
-
-  render() {
-    const { sessions, editing, sessionBeingEdited } = this.props.home;
-    const {
-      deleteSession,
-      switchTask,
-      editSession,
-      cancelEditSession,
-      updateSession,
-    } = this.props.actions;
-    const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
-    return (
-      <div className="home-default-page">
-        <SessionController />
-        <SessionsList
-          icon={PlayIcon}
-          sessions={sessions}
-          primaryAction={editSession}
-          secondaryAction={switchTask}
-        />
-        <EditSession
-          key={editing}
-          open={editing}
-          cancel={cancelEditSession}
-          onDelete={deleteSession}
-          onSubmit={updateSession}
-          {...sessionToEdit}
-        />
-        <Box pt={4} className="home-copyright">
-          <FooterWithVersion />
-        </Box>
-      </div>
-    );
-  }
-}
+  }, []);
+  const { switchTask, editSession, groupedSessions } = props;
+  return (
+    <div className="home-default-page">
+      <SessionController />
+      <SessionsList
+        sessions={groupedSessions}
+        editSession={editSession}
+        startSession={switchTask}
+      />
+      <EditSession />
+      <Box pt={4} className="home-copyright">
+        <FooterWithVersion />
+      </Box>
+    </div>
+  );
+};
 
 /* istanbul ignore next */
+/**
+ * @param {import('rootReducer').RootState} state
+ */
 function mapStateToProps(state) {
   return {
-    home: state.home,
+    groupedSessions: selectGroupedSessions(state),
   };
 }
 
 /* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions, setupApp }, dispatch),
-  };
-}
+const mapDispatchToProps = {
+  ...actions,
+  setupApp,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SessionsPage);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+export default connector(SessionsPage);

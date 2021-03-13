@@ -14,6 +14,7 @@ import history from '../../../common/history';
 /** @typedef {Object} Props
  * @property {string} email
  * @property {string} password
+ * @property {boolean} rememberMe
  */
 
 /** @typedef {import('redux-thunk').ThunkAction<void,import('../../../common/rootReducer').RootState,unknown,import('redux').Action>} loginAction*/
@@ -22,10 +23,10 @@ import history from '../../../common/history';
  *
  *
  * @export
- * @param {Props|{isGoogleLogin: boolean}} args
+ * @param {Props & {isGoogleLogin: boolean}} args
  * @return {loginAction}
  */
-export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false } = {}) {
+export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false }) {
   return async dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
@@ -49,7 +50,7 @@ export function loginAction({ email, password, rememberMe = false, isGoogleLogin
       return;
     }
 
-    if (rememberMe) localStorage.setItem('token', response.token);
+    // if (rememberMe) localStorage.setItem('token', response?.token?.toString() || '');
 
     dispatch({
       type: LOGIN_LOGIN_ACTION_SUCCESS,

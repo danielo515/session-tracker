@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchSessions } from '../home/redux/actions';
 import { setupApp } from '../common/redux/actions';
 import Dashboard from './Dashboard';
-import selectSessions from '../../common/selectSessions';
+import selectSessions from '../home/redux/selectSessions';
 
 /**
  * @param {import('rootReducer').RootState} state

@@ -1,6 +1,7 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
@@ -11,6 +12,7 @@ const paths = require('./paths');
 const publicPath = '/';
 const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
+const extensions = ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'];
 
 module.exports = {
   mode: 'development',
@@ -32,11 +34,11 @@ module.exports = {
     modules: ['node_modules', paths.appNodeModules].concat(
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
     ),
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
-    alias: {
-      'react-native': 'react-native-web',
-    },
-    plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])],
+    extensions,
+    plugins: [
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      new TsconfigPathsPlugin({ logLevel: 'info', extensions }),
+    ],
   },
   module: {
     strictExportPresence: true,

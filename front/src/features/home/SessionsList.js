@@ -1,109 +1,168 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
-import format from 'date-fns/format'
-import differenceInMinutes from 'date-fns/differenceInMinutes';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
-import clsx from 'clsx'
+import { VariableSizeList } from 'react-window';
+import clsx from 'clsx';
 import Skeleton from '@material-ui/lab/Skeleton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Autosizer from 'react-virtualized-auto-sizer'
-import { formatMinutes4Human } from './formatMinutes4Human';
-
+import List from '@material-ui/core/List';
+import Autosizer from 'react-virtualized-auto-sizer';
+import { TaskGroup } from './TaskGroup';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
   },
 }));
 
-const formatStart = 'yyy-MM-dd HH:mm';
-const formatHour = 'HH:mm';
+const ItemHeight = 72;
+const ListHeight = ItemHeight + 3 * ItemHeight;
 
-const renderRow = ({ secondaryAction,  primaryAction, Icon }) => props => {
-  const { index, style, data  } = props;
-  const item = data[index];
-  const { name, startDate, endDate, id } = item;
-  const start = new Date(startDate);
-  const end = new Date(endDate || Date.now());
-  const duration = differenceInMinutes(end, start);
-  const secondary = useCallback(() => secondaryAction(item), [secondaryAction, id])
-  const primary = useCallback(() => primaryAction(id), [primaryAction, id])
-
-  return (
-    <ListItem ContainerProps={{ style }} key={id || index} ContainerComponent="div" button onClick={primary}>
-      <ListItemText primary={name} className='sl-left-item' secondary={format(start, formatStart)} />
-      <ListItemText primary={formatMinutes4Human(duration)} secondary={format(end, formatHour)} />
-      <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="delete" onClick={secondary}>
-          <Icon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
-  );
+/**
+ * @param {any[]} items
+ */
+export function CalculateListHeight(items) {
+  return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
 }
+// const NestedItemHeight = 400;
+// const formatHour = 'HH:mm';
+/**
+ * @typedef {import('@types').Session} Session
+ * @typedef {import('@types').SessionGroup} SessionGroup
+ */
 
-renderRow.propTypes = {
-  data: PropTypes.array,
-  index: PropTypes.number.isRequired,
-  style: PropTypes.object.isRequired,
-};
+/** @typedef {Object} PropsRender
+ * @property {(item: {name: string}) => any} startSession
+ * @property {(id:string) => any} editSession
+ */
 
+/**
+ * @template T
+ * @template {(i:number) => T} cb
+ * @param {number} times
+ * @returns {(fn:cb) => T[]}
+ */
 const doTimes = times => fn => {
   const res = [];
-  for (; times; times--) res.push(fn(times))
+  for (; times; times--) res.push(fn(times));
   return res;
-}
+};
 
-const Loading = ({ smallScreen }) => {
+const Loading = () => {
+  const isSmallScreen = useMediaQuery('(max-width: 600px');
   return (
-    <div className='home-sessions-skeleton'>
-      {doTimes(smallScreen ? 5 : 8)(i => <Skeleton height={46} key={i} />)}
+    <div className="home-sessions-skeleton">
+      {doTimes(isSmallScreen ? 5 : 8)(i => (
+        <Skeleton height={ItemHeight} key={i} />
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default function SessionsList({ sessions, secondaryAction, primaryAction, icon: Icon }) {
-  const smallScreen = useMediaQuery('(max-width: 600px');
+/** @typedef {Object} Props
+ * @property {SessionGroup[]} sessions
+ * @property {(i:{name: string}) => any} startSession
+ * @property {(id:string) => any} editSession
+ */
+
+/** @param {Props} props **/
+export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
-  const itemCount = sessions.length
-  const row = renderRow({Icon, secondaryAction, primaryAction });
+  const openRow = useRef('');
+  const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
+  const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
-      <Autosizer>
-        {({ height, width }) =>
-          itemCount ? (
-            <FixedSizeList
-              className={'home-sessions-list'}
-              height={height}
-              width={width}
-              itemSize={72}
-              itemCount={itemCount}
-              itemData={sessions}
-            >
-              {row}
-            </FixedSizeList>
-          ) : (
-            <Loading smallScreen={smallScreen} />
-          )
-        }
-      </Autosizer>
+      <VirtualList
+        data={sessions}
+        itemSize={idx => {
+          const sessionGroup = sessions[idx];
+          return sessionGroup.name === openRow.current
+            ? CalculateListHeight(sessionGroup.sessions)
+            : ItemHeight;
+        }}
+        row={props => {
+          const { index, style, data, resizeList } = props;
+          const item = data[index];
+
+          return (
+            <div style={style} className="virtual-node">
+              <TaskGroup
+                {...item}
+                startSession={start}
+                editSession={edit}
+                onOpen={name => {
+                  openRow.current = name;
+                  resizeList();
+                }}
+                onClose={() => {
+                  openRow.current = '';
+                  resizeList();
+                }}
+              />
+            </div>
+          );
+        }}
+      />
     </div>
   );
 }
 
 SessionsList.propTypes = {
-  icon: PropTypes.node.isRequired,
   sessions: PropTypes.array,
-  secondaryAction: PropTypes.func.isRequired,
-  primaryAction: PropTypes.func.isRequired,
+  startSession: PropTypes.func.isRequired,
+  editSession: PropTypes.func.isRequired,
 };
 SessionsList.defaultProps = {
-  sessions: []
+  sessions: [],
 };
+
+/**
+ *
+ * @template {{name: string, id?: string}} T
+ * @param {number} idx
+ * @param {T[]} data
+ */
+const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
+/**
+ * @template T
+ * @typedef {Object} VirtualProps
+ * @property {T[]} data
+ * @property { (props:{data: T[], style: Object, index: number}) => any } row
+ * @property {(i:number) => number} itemSize
+ */
+/**
+ * @template T
+ * @param {VirtualProps<T>} props **/
+export function VirtualList({ data, row, itemSize }) {
+  const list = useRef();
+  const resizeList = () => {
+    if (list.current) {
+      // list.current.scrollToItem(refreshIdx, 'start');
+      list.current.resetAfterIndex(0);
+    }
+  };
+  return data.length ? (
+    <Autosizer>
+      {({ height, width }) => (
+        <VariableSizeList
+          innerElementType={List}
+          className={'home-sessions-list'}
+          height={height}
+          width={width}
+          itemSize={itemSize}
+          estimatedItemSize={ItemHeight}
+          itemCount={data.length}
+          itemData={data}
+          itemKey={getIdOrName}
+          ref={list}
+        >
+          {props => row({ ...props, resizeList })}
+        </VariableSizeList>
+      )}
+    </Autosizer>
+  ) : (
+    <Loading />
+  );
+}

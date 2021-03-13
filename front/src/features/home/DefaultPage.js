@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Navigation from '../common/Navigation'
+import Navigation from '../common/Navigation';
 import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
-
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -14,7 +13,6 @@ export class DefaultPage extends Component {
   };
 
   render() {
-
     const { pathname } = this.props.location; // default to root page name
 
     return (
@@ -27,6 +25,9 @@ export class DefaultPage extends Component {
 }
 
 /* istanbul ignore next */
+/**
+ * @param {import('rootReducer').RootState} state
+ */
 function mapStateToProps(state) {
   return {
     home: state.home,
