@@ -8,6 +8,7 @@
 const initialState = {
   getSessionsPending: false,
   getSessionsError: null,
+  /** @type { import("@types").Session[] }*/
   sessions: [],
 };
 

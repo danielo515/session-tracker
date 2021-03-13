@@ -40,7 +40,6 @@ const ListHeight = 3 * ItemHeight;
 /** @typedef {Object} props
  * @property {React.MouseEventHandler<HTMLElement>} startSession
  * @property {React.MouseEventHandler<HTMLDivElement>} editSession
- * @property {string} activeRow
  * @property {(name:string) => any} onOpen
  * @property {() => any} onClose
  */

@@ -17,7 +17,13 @@ export function isUserLoggedIn() {
     );
   });
 }
-export const login = ({ email, password }) => {};
+
+/**
+ * @param {{ email: string, password: string}} args
+ */
+export function login({ email, password }) {
+  return { error: null, response: null };
+}
 
 export const googleLogin = () =>
   firebase
@@ -25,7 +31,7 @@ export const googleLogin = () =>
     .signInWithPopup(provider)
     .then(({ credential, user }) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = credential.toJSON();
+      var token = credential && credential.toJSON();
       // The signed-in user info.
       return {
         error: null,
@@ -54,13 +60,16 @@ export const googleLogin = () =>
       };
     });
 
+/**
+ * @param {{ email: string, password: string, name: string}} args
+ */
 export const signUp = ({ email, password, name }) => {};
 
 /**
  * @typedef { {response: any, error: null} } apiResponse
  */
 /**
- * @typedef { { error: {status: number}} } errorResponse
+ * @typedef { { error: {status: number}, response: null } } errorResponse
  */
 
 /**
@@ -144,7 +153,7 @@ export const stopSession = withDb(async db => {
   const session = { ...runningSnap.val(), id: (push).key, endDate: new Date().toISOString() };
   await running.set(null);
   await push.set(session);
-  return { response: session };
+  return { response: session, error: null };
 });
 
 /** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => Promise<apiResponse> }*/
@@ -153,7 +162,7 @@ export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
     .child('all')
     .child(id)
     .update({ name, startDate, endDate })
-    .then(() => ({ response: { id, name, startDate, endDate } }));
+    .then(() => ({ response: { id, name, startDate, endDate }, error: null }));
 });
 
 export const deleteSession = withDb((db, { id }) => {

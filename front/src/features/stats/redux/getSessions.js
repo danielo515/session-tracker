@@ -49,7 +49,10 @@ export function dismissGetSessionsError() {
 }
 
 /** @typedef {typeof import('./initialState').default} State*/
-/** @type {import('redux').Reducer<State>}*/
+/**
+ * @param {State} state
+ * @param {{ type: string, payload: {all: Session[], error: string}}} action
+ **/
 export function reducer(state, { type, payload }) {
   switch (type) {
     case STATS_GET_SESSIONS_BEGIN:
