@@ -5,18 +5,9 @@ import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import SessionsList from './SessionsList';
-import loadable from 'react-loadable';
+import EditSession from './EditSession';
 import { FooterWithVersion } from '../common/index';
 import selectGroupedSessions from './redux/selectGroupedSessions';
-
-const LoadingComponent = () => <h3>please wait...</h3>;
-const EditSessionPromise = () => {
-  return import('./EditSession');
-};
-const EditSession = loadable({
-  loader: EditSessionPromise,
-  loading: LoadingComponent,
-});
 
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} props
@@ -26,16 +17,7 @@ const SessionsPage = props => {
     const { setupApp, fetchSessions } = props;
     setupApp().then(fetchSessions);
   }, []);
-  const { sessions, editing, sessionBeingEdited } = props.home;
-  const {
-    deleteSession,
-    switchTask,
-    editSession,
-    cancelEditSession,
-    updateSession,
-    groupedSessions,
-  } = props;
-  const sessionToEdit = editing ? sessions.find(s => s.id === sessionBeingEdited) : {};
+  const { switchTask, editSession, groupedSessions } = props;
   return (
     <div className="home-default-page">
       <SessionController />
@@ -44,17 +26,7 @@ const SessionsPage = props => {
         editSession={editSession}
         startSession={switchTask}
       />
-
-      {editing && (
-        <EditSession
-          key={editing}
-          open={editing}
-          cancel={cancelEditSession}
-          onDelete={deleteSession}
-          onSubmit={updateSession}
-          {...sessionToEdit}
-        />
-      )}
+      <EditSession />
       <Box pt={4} className="home-copyright">
         <FooterWithVersion />
       </Box>
@@ -68,7 +40,6 @@ const SessionsPage = props => {
  */
 function mapStateToProps(state) {
   return {
-    home: state.home,
     groupedSessions: selectGroupedSessions(state),
   };
 }

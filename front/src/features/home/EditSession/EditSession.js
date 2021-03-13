@@ -10,6 +10,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
 import { DatePicker, TimePicker } from '@material-ui/pickers';
 
+/** @typedef {import('@types').Session} Session*/
+
+/** @typedef {Object} Props
+ * @property {boolean} open
+ * @property {(x:any) => void} cancel
+ * @property {(id:string)=> void} onDelete
+ * @property {(session: Session)=> void} onSubmit
+ */
+
+/** @param {import('type-fest').Merge<Session, Props>} props **/
 function EditSession(props) {
   const { open, cancel, name, startDate, endDate, id, onSubmit, onDelete } = props;
   const [date, setDate] = React.useState(startDate);
