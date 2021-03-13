@@ -1,3 +1,18 @@
+# [1.8.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.7.0...v1.8.0) (2021-03-13)
+
+
+### Bug Fixes
+
+* animated toggle grouped list ([fa0b464](https://github.com/danielo515/pento-tech-challenge/commit/fa0b4645c1462a4f01faefeff7c706c97670207c))
+* simplify and improve types for SessionsPage ([ed002bd](https://github.com/danielo515/pento-tech-challenge/commit/ed002bdf946185f7209d2c72e46a2793c2f24454))
+
+
+### Features
+
+* sow only today total ([eb469f2](https://github.com/danielo515/pento-tech-challenge/commit/eb469f241dae8f7268333577c3ec9c48cae849a2))
+* TaskGroup v1 (fully virtualised) ([55cfa69](https://github.com/danielo515/pento-tech-challenge/commit/55cfa694d0b6d9ec494fdde4b5f11ba01cfae301))
+* typescript aliases and wepback in sync ([3007fc0](https://github.com/danielo515/pento-tech-challenge/commit/3007fc090787f08423fc56d362557779ade0a223))
+
 # [1.7.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.6.0...v1.7.0) (2021-03-09)
 
 
