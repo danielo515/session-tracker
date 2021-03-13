@@ -50,7 +50,7 @@ export function loginAction({ email, password, rememberMe = false, isGoogleLogin
       return;
     }
 
-    if (rememberMe) localStorage.setItem('token', response.token);
+    // if (rememberMe) localStorage.setItem('token', response?.token?.toString() || '');
 
     dispatch({
       type: LOGIN_LOGIN_ACTION_SUCCESS,

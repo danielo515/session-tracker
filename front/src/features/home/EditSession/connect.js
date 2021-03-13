@@ -4,10 +4,14 @@ import { cancelEditSession, deleteSession, updateSession } from '../redux/action
 import selectSessionToEdit from '../redux/selectSessionToEdit';
 import EditSession from './EditSession';
 /** @typedef {import('@types').Session} Session*/
+/** @typedef {import('rootReducer').RootState} RootState*/
 
 export default function EditSessionConnect() {
   const sessionToEdit = useSelector(selectSessionToEdit);
-  const editing = useSelector(state => state.home.editing);
+  const editing = useSelector(
+    /** @param {RootState} state*/
+    state => state.home.editing,
+  );
   const dispatch = useDispatch();
   const [onCancel, onUpdate, onDelete] = useMemo(() => {
     return [
