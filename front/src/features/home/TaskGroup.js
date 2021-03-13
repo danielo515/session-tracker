@@ -42,7 +42,8 @@ const ListHeight = 3 * ItemHeight;
  * @property {React.MouseEventHandler<HTMLElement>} startSession
  * @property {React.MouseEventHandler<HTMLDivElement>} editSession
  * @property {string} activeRow
- * @property {(name:string) => any} activateRow
+ * @property {(name:string) => any} onOpen
+ * @property {() => any} onClose
  */
 /** @typedef {import('type-fest').Merge<SessionGroup, props>} Props */
 
@@ -53,16 +54,16 @@ const ListHeight = 3 * ItemHeight;
  */
 export function TaskGroup({
   name,
-  activateRow,
-  activeRow,
   total,
   lastRun,
   sessions,
+  onOpen,
+  onClose,
   startSession,
   editSession,
 }) {
   const css = useStyles();
-  const [isOpen, setIsOpen] = useState(activeRow === name);
+  const [isOpen, setIsOpen] = useState(false);
   /* This is tricky. 
      When it is closed and the function is called it will call the outer function
      to activate this row.
@@ -72,9 +73,12 @@ export function TaskGroup({
    */
   const toggleRow = () => {
     if (isOpen) {
-      return setIsOpen(false);
+      setIsOpen(false);
+      onClose();
+      return;
     }
-    activateRow(name);
+    setIsOpen(true);
+    onOpen(name);
   };
   return (
     <>
@@ -91,16 +95,9 @@ export function TaskGroup({
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-      <Collapse
-        in={isOpen}
-        timeout="auto"
-        unmountOnExit
-        className={css.childWrapper}
-        onExited={toggleRow}
-        mountOnEnter
-        appear
-      >
-        <List component="div" disablePadding>
+
+      {isOpen && (
+        <List component="div" disablePadding className={css.childWrapper}>
           <FixedSizeList
             height={Math.min(ListHeight, sessions.length * ItemHeight)}
             width="100%"
@@ -119,7 +116,7 @@ export function TaskGroup({
             }}
           </FixedSizeList>
         </List>
-      </Collapse>
+      )}
     </>
   );
 }

@@ -54,7 +54,7 @@ const Loading = () => {
   return (
     <div className="home-sessions-skeleton">
       {doTimes(isSmallScreen ? 5 : 8)(i => (
-        <Skeleton height={46} key={i} />
+        <Skeleton height={ItemHeight} key={i} />
       ))}
     </div>
   );
@@ -69,12 +69,7 @@ const Loading = () => {
 /** @param {Props} props **/
 export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
-  const [openRow, setOpenRow] = useState('');
-  /** @type {(name:string) => any }*/
-  const activateRow = name => {
-    // const name = '' + e.currentTarget.getAttribute('data-name');
-    setOpenRow(name === openRow ? '' : name);
-  };
+  const openRow = useRef('');
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
   const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
   return (
@@ -83,12 +78,12 @@ export default function SessionsList({ sessions, startSession, editSession }) {
         data={sessions}
         itemSize={idx => {
           const sessionGroup = sessions[idx];
-          return sessionGroup.name === openRow
+          return sessionGroup.name === openRow.current
             ? CalculateListHeight(sessionGroup.sessions)
             : ItemHeight;
         }}
         row={props => {
-          const { index, style, data } = props;
+          const { index, style, data, resizeList } = props;
           const item = data[index];
 
           return (
@@ -97,8 +92,14 @@ export default function SessionsList({ sessions, startSession, editSession }) {
                 {...item}
                 startSession={start}
                 editSession={edit}
-                activeRow={openRow}
-                activateRow={activateRow}
+                onOpen={name => {
+                  openRow.current = name;
+                  resizeList();
+                }}
+                onClose={() => {
+                  openRow.current = '';
+                  resizeList();
+                }}
               />
             </div>
           );
@@ -136,12 +137,12 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
  * @param {VirtualProps<T>} props **/
 export function VirtualList({ data, row, itemSize }) {
   const list = useRef();
-  useLayoutEffect(() => {
+  const resizeList = () => {
     if (list.current) {
       // list.current.scrollToItem(refreshIdx, 'start');
       list.current.resetAfterIndex(0);
     }
-  });
+  };
   return data.length ? (
     <Autosizer>
       {({ height, width }) => (
@@ -157,7 +158,7 @@ export function VirtualList({ data, row, itemSize }) {
           itemKey={getIdOrName}
           ref={list}
         >
-          {row}
+          {props => row({ ...props, resizeList })}
         </VariableSizeList>
       )}
     </Autosizer>
