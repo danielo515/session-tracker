@@ -15,6 +15,11 @@ function diffDateStrings(start, end) {
   const b = new Date(end);
   return b.getTime() - a.getTime();
 }
+function getTodayISO() {
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  return today.toISOString();
+}
 
 /**
  *
@@ -22,6 +27,7 @@ function diffDateStrings(start, end) {
  * @returns {SessionGroup[]}
  */
 function selectGroupedSessions(sessions) {
+  const today = getTodayISO();
   const grouped = sessions.reduce(
     /**
      * @param {Grouped} result
@@ -30,7 +36,8 @@ function selectGroupedSessions(sessions) {
       const { name, startDate, endDate } = session;
       const group = result[name] || { name, sessions: [], total: 0, lastRun: startDate };
       group.sessions.push(session);
-      group.total = group.total + diffDateStrings(startDate, endDate);
+      group.total =
+        today <= startDate ? group.total + diffDateStrings(startDate, endDate) : group.total;
       result[name] = group;
       return result;
     },
