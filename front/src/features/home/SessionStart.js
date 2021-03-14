@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import useHandleChange from './hooks/useHandleChange';
-import Timer from './Timer';
 import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 
@@ -68,7 +67,6 @@ export default function SessionStart({ startSession }) {
         Icon={PlayArrowIcon}
         color="primary"
       />
-      <Timer isActive={false}></Timer>
     </div>
   );
 }

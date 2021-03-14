@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import CssTransition from 'react-transition-group/CSSTransition';
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff';
 import { msToHourMinSec } from './msToHourMinSec';
@@ -9,10 +10,14 @@ import { msToHourMinSec } from './msToHourMinSec';
  * @param {string} seconds
  */
 const renderTimer = (hours, minutes, seconds) => (
-  <div className="home-timer">
-    <h3> {hours} </h3>:<h3> {minutes} </h3>
-    <h3> : </h3>
-    <h3> {seconds} </h3>
+  <div className="home-timer-wrapper">
+    <CssTransition in appear unmountOnExit classNames="timer" timeout={1000}>
+      <div className="home-timer">
+        <h3> {hours} </h3>:<h3> {minutes} </h3>
+        <h3> : </h3>
+        <h3> {seconds} </h3>
+      </div>
+    </CssTransition>
   </div>
 );
 

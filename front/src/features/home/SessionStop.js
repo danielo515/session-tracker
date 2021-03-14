@@ -23,7 +23,8 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
     setVisible(false);
   };
   return (
-    <div className="home-session-start">
+    <div className="home-session-stop">
+      <Timer startDate={startDate}></Timer>
       <SessionForm
         onSubmit={stop}
         onChange={handleChange}
@@ -32,7 +33,6 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
         Icon={StopIcon}
         color="secondary"
       />
-      <Timer startDate={startDate}></Timer>
     </div>
   );
 }
