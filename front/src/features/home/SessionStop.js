@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import StopIcon from '@material-ui/icons/Stop';
-import Button from '@material-ui/core/Button';
 import useHandleChange from './hooks/useHandleChange';
 import Timer from './Timer';
-import Zoom from '@material-ui/core/Zoom';
 import { SessionForm } from './SessionStart';
 
 /** @typedef {Object} Props

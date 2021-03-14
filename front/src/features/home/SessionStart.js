@@ -7,6 +7,17 @@ import Timer from './Timer';
 import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 
+/** @typedef {Object} FormProps
+ * @property {string} sessionName
+ * @property {'primary'|'secondary'} color
+ * @property {boolean} visible
+ * @property {any} Icon
+ * @property {React.ChangeEventHandler<HTMLInputElement>} onChange
+ * @property {() => void} onSubmit
+ */
+
+/** @param {FormProps} props **/
+
 export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, color }) {
   return (
     <form noValidate onSubmit={onSubmit}>
