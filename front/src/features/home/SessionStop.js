@@ -26,7 +26,7 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
   };
   return (
     <div>
-      <form noValidate>
+      <form noValidate onSubmit={stop}>
         <TextField
           variant="outlined"
           margin="normal"

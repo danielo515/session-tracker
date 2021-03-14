@@ -21,7 +21,7 @@ export default function SessionStart({ startSession }) {
   };
   return (
     <div>
-      <form noValidate>
+      <form noValidate onSubmit={start}>
         <TextField
           variant="outlined"
           margin="normal"
