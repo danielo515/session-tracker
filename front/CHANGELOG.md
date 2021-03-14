@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.8.0...v1.8.1) (2021-03-14)
+
+
+### Bug Fixes
+
+* enter submits session ([8734647](https://github.com/danielo515/pento-tech-challenge/commit/8734647f92e322f393e6addb5103415d9608687f))
+
 # [1.8.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.7.0...v1.8.0) (2021-03-13)
 
 
