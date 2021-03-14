@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Fab from '@material-ui/core/Fab';
 import TimelineIcon from '@material-ui/icons/Timeline';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const variants = {
   color: {
-    'chart': 'default',
-    'play': 'primary',
-    'stop': 'secondary'
-  }
-}
+    chart: 'default',
+    play: 'primary',
+    stop: 'secondary',
+  },
+};
 export default class BigButton extends Component {
   static propTypes = {
     icon: PropTypes.node,
@@ -18,8 +18,8 @@ export default class BigButton extends Component {
   };
 
   static defaultProps = {
-    variant: 'play'
-  }
+    variant: 'play',
+  };
 
   render() {
     const { variant, onClick, icon } = this.props;
@@ -33,8 +33,7 @@ export default class BigButton extends Component {
         classes={{ root: 'home-big-button' }}
         onClick={onClick}
       >
-        <Icon className='home-big-button' />
-        {this.children}
+        <Icon className="home-big-button" />
       </Fab>
     );
   }

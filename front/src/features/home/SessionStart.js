@@ -1,11 +1,39 @@
 import React, { useState } from 'react';
-import BigButton from './BigButton';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import useHandleChange from './hooks/useHandleChange';
 import Timer from './Timer';
 import Zoom from '@material-ui/core/Zoom';
+import Button from '@material-ui/core/Button';
+
+export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, color }) {
+  return (
+    <form noValidate onSubmit={onSubmit}>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="session"
+        label="Session Name"
+        name="session-name"
+        autoComplete="session"
+        value={sessionName}
+        onChange={onChange}
+        className="input"
+        size="small"
+      />
+      <div className="button">
+        <Zoom in={visible}>
+          <Button onClick={onSubmit} color={color} variant="outlined">
+            <Icon />
+          </Button>
+        </Zoom>
+      </div>
+    </form>
+  );
+}
 
 /** @typedef {Object} Props
  * @property {(args: {name: string}) => any} startSession
@@ -20,26 +48,15 @@ export default function SessionStart({ startSession }) {
     setVisible(false);
   };
   return (
-    <div>
-      <form noValidate onSubmit={start}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="session"
-          label="Session Name"
-          name="session-name"
-          autoComplete="session"
-          value={sessionName}
-          onChange={handleChange}
-        />
-      </form>
-      <Zoom in={visible}>
-        <div>
-          <BigButton onClick={start} icon={PlayArrowIcon} />
-        </div>
-      </Zoom>
+    <div className="home-session-start">
+      <SessionForm
+        onSubmit={start}
+        onChange={handleChange}
+        sessionName={sessionName}
+        visible={visible}
+        Icon={PlayArrowIcon}
+        color="primary"
+      />
       <Timer isActive={false}></Timer>
     </div>
   );

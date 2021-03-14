@@ -16,8 +16,8 @@ const renderTimer = (hours, minutes, seconds) => (
   </div>
 );
 
-/** @typedef {{startDate: Date, isActive: true}} PropsA*/
-/** @typedef {{ isActive: false}} PropsB*/
+/** @typedef {{ startDate: Date, isActive: true }} PropsA*/
+/** @typedef {{ isActive: false }} PropsB*/
 /**
  * @param {PropsA | PropsB} props
  */

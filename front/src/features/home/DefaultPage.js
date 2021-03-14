@@ -1,17 +1,10 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Navigation from '../common/Navigation';
 import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 
 export class DefaultPage extends Component {
-  static propTypes = {
-    home: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
-
   render() {
     const { pathname } = this.props.location; // default to root page name
 
@@ -29,16 +22,13 @@ export class DefaultPage extends Component {
  * @param {import('rootReducer').RootState} state
  */
 function mapStateToProps(state) {
-  return {
-    home: state.home,
-  };
+  return {};
 }
 
 /* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions, setupApp }, dispatch),
-  };
-}
+const mapDispatchToProps = {
+  ...actions,
+  setupApp,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DefaultPage);

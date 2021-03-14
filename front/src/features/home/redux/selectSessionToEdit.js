@@ -14,7 +14,7 @@ function selectSessionToEdit(sessions, sessionId) {
     return;
   }
   const session = sessions.find(({ id }) => id === sessionId);
-  if (!session) throw new Error('Trying to edit non existing session');
+  // if (!session) throw new Error('Trying to edit non existing session');
   return session;
 }
 
