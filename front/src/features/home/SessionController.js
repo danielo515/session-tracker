@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { TransitionGroup } from 'react-transition-group';
 import { makeStyles } from '@material-ui/core/styles';
 import * as actions from './redux/actions';
 import SessionStart from './SessionStart';
@@ -22,7 +23,7 @@ export const SessionController = props => {
   const { runningSession } = props.home;
   const { startSession, stopSession } = props;
   return (
-    <div className={css.root}>
+    <TransitionGroup className={css.root}>
       {runningSession ? (
         <SessionStop
           stopSession={stopSession}
@@ -33,7 +34,7 @@ export const SessionController = props => {
       ) : (
         <SessionStart startSession={startSession} />
       )}
-    </div>
+    </TransitionGroup>
   );
 };
 
