@@ -1,31 +1,53 @@
 import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff';
 import { msToHourMinSec } from './msToHourMinSec';
 
 /**
- * @param {string} hours
- * @param {string} minutes
- * @param {string} seconds
+ * @param {{startDate: string}} props
  */
-const renderTimer = (hours, minutes, seconds) => (
-  <div className="home-timer">
-    <h3> {hours} </h3>:<h3> {minutes} </h3>
-    <h3> : </h3>
-    <h3> {seconds} </h3>
-  </div>
-);
-
-/** @typedef {{startDate: Date, isActive: true}} PropsA*/
-/** @typedef {{ isActive: false}} PropsB*/
-/**
- * @param {PropsA | PropsB} props
- */
-export default function Timer(props) {
-  if (!props.isActive) return renderTimer('00', '00', '00');
-  const diff = useTimeDiff(props.startDate);
+const RenderTimer = ({ startDate }) => {
+  const diff = useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToHourMinSec(diff);
-  return renderTimer(hours, minutes, seconds);
+  return (
+    <div className="home-timer">
+      <h3> {hours} </h3>:<h3> {minutes} </h3>
+      <h3> : </h3>
+      <h3> {seconds} </h3>
+    </div>
+  );
+};
+
+const initial = { maxWidth: 0, opacity: 0 };
+const exit = { maxWidth: 0, opacity: 0 };
+const animateTo = { maxWidth: 200, opacity: 1 };
+const style = { overflow: 'hidden' };
+
+/** @typedef {{ isActive: boolean, startDate?: string }} PropsB*/
+/**
+ * @param {PropsB} props
+ */
+export default function Timer({ startDate }) {
+  return (
+    <div className={`home-timer-wrapper ${!startDate ? 'empty' : ''}`}>
+      <AnimatePresence exitBeforeEnter>
+        {startDate && (
+          <motion.div
+            initial={initial}
+            animate={animateTo}
+            exit={exit}
+            key={startDate}
+            style={style}
+            transition={{ duration: 1 }}
+          >
+            <RenderTimer startDate={startDate} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 Timer.propTypes = {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchSessions } from '../home/redux/actions';
 import { setupApp } from '../common/redux/actions';
 import Dashboard from './Dashboard';
-import selectSessions from '../home/redux/selectSessions';
+import selectAllSessions from '../home/redux/selectAllSessions';
 
 /**
  * @param {import('rootReducer').RootState} state
@@ -11,7 +11,7 @@ import selectSessions from '../home/redux/selectSessions';
 function mapStateToProps(state) {
   return {
     stats: state.stats,
-    sessions: selectSessions(state),
+    sessions: selectAllSessions(state),
   };
 }
 

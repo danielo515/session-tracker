@@ -1,14 +1,52 @@
 @import '../../styles/mixins';
 
+.home-timer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  // when the timmer is not active make the padding keep the heigh
+  &.empty {
+    padding: 0;
+    height: 3rem;
+  }
+}
 .home-timer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Courier New", monospace;
-    font-size: 2em;
-    padding: 1em;
-    box-sizing: border-box;
-    h3 {
-        margin: 0;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  box-sizing: border-box;
+  overflow: hidden;
+  h3 {
+    margin: 0;
+  }
+}
+
+@transitionWithHeight: height 0.2s ease-in-out, width 0.5s ease-in-out 0.2s,
+  opacity 0.5s ease-in-out 0.2s;
+
+@time: 5s;
+
+.timer-appear,
+.timer-enter {
+  width: 0px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.timer-appear-active,
+.timer-enter-active,
+.timer-exit {
+  width: 200px;
+  opacity: 1;
+  transition: width @time ease-in-out, opacity @time ease-in-out;
+}
+.timer-exit-active {
+  width: 0px;
+  opacity: 0;
+  overflow: hidden;
+  transition: width @time ease-in-out, opacity @time ease-in-out;
 }

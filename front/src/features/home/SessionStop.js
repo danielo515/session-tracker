@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import BigButton from './BigButton';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import StopIcon from '@material-ui/icons/Stop';
 import useHandleChange from './hooks/useHandleChange';
-import Timer from './Timer';
-import Zoom from '@material-ui/core/Zoom';
+import { SessionForm } from './SessionStart';
 
 /** @typedef {Object} Props
  * @property {string} name
@@ -25,26 +22,15 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
     setVisible(false);
   };
   return (
-    <div>
-      <form noValidate onSubmit={stop}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          id="session"
-          label="Session Name"
-          name="session-name"
-          autoComplete="session"
-          value={name}
-          onChange={handleChange}
-        />
-      </form>
-      <Zoom in={visible} unmountOnExit>
-        <div>
-          <BigButton onClick={stop} icon={StopIcon} variant="stop" />
-        </div>
-      </Zoom>
-      <Timer startDate={startDate}></Timer>
+    <div className="home-session-stop">
+      <SessionForm
+        onSubmit={stop}
+        onChange={handleChange}
+        sessionName={name}
+        visible={visible}
+        Icon={StopIcon}
+        color="secondary"
+      />
     </div>
   );
 }
