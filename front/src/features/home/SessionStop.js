@@ -26,7 +26,7 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
       <SessionForm
         onSubmit={stop}
         onChange={handleChange}
-        sessionName={sessionName}
+        sessionName={name}
         visible={visible}
         Icon={StopIcon}
         color="secondary"
