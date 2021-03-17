@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff';
@@ -20,27 +20,32 @@ const RenderTimer = ({ startDate }) => {
   );
 };
 
-/** @typedef {{ isActive: true , startDate: string}} PropsA*/
-/** @typedef {{ isActive: false, startDate?: string }} PropsB*/
+const initial = { maxWidth: 0, opacity: 0 };
+const exit = { maxWidth: 0, opacity: 0 };
+const animateTo = { maxWidth: 200, opacity: 1 };
+const style = { overflow: 'hidden' };
+
+/** @typedef {{ isActive: boolean, startDate?: string }} PropsB*/
 /**
- * @param {PropsA | PropsB} props
+ * @param {PropsB} props
  */
-export default function Timer({ isActive, startDate }) {
+export default function Timer({ startDate }) {
   return (
     <div className="home-timer-wrapper">
-      <SwitchTransition mode="out-in">
-        <CSSTransition
-          // in={isActive}
-          appear
-          key={startDate || String(isActive)}
-          unmountOnExit
-          mountOnEnter
-          classNames="timer"
-          timeout={5000}
-        >
-          {startDate ? <RenderTimer startDate={startDate} /> : <span />}
-        </CSSTransition>
-      </SwitchTransition>
+      <AnimatePresence exitBeforeEnter>
+        {startDate && (
+          <motion.div
+            initial={initial}
+            animate={animateTo}
+            exit={exit}
+            key={startDate}
+            style={style}
+            transition={{ duration: 1 }}
+          >
+            <RenderTimer startDate={startDate} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

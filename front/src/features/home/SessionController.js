@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Timer from './Timer';
-import { TransitionGroup } from 'react-transition-group';
 import { makeStyles } from '@material-ui/core/styles';
 import * as actions from './redux/actions';
 import SessionStart from './SessionStart';

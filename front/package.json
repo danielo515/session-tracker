@@ -50,6 +50,7 @@
     "express-history-api-fallback": "^2.2.1",
     "file-loader": "^6.0.0",
     "firebase": "^8.2.9",
+    "framer-motion": "^3.10.5",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.6.3",
