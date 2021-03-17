@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    padding: '1rem 0',
   },
 }));
 
