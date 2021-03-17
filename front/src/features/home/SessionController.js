@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Timer from './Timer';
 import { TransitionGroup } from 'react-transition-group';
 import { makeStyles } from '@material-ui/core/styles';
 import * as actions from './redux/actions';
@@ -20,10 +21,10 @@ const useStyles = makeStyles(theme => ({
  */
 export const SessionController = props => {
   const css = useStyles();
-  const { runningSession } = props.home;
-  const { startSession, stopSession } = props;
+  const { runningSession, startSession, stopSession } = props;
   return (
-    <TransitionGroup className={css.root}>
+    <div className={css.root}>
+      <Timer startDate={runningSession?.startDate} isActive={Boolean(runningSession)} />
       {runningSession ? (
         <SessionStop
           stopSession={stopSession}
@@ -34,7 +35,7 @@ export const SessionController = props => {
       ) : (
         <SessionStart startSession={startSession} />
       )}
-    </TransitionGroup>
+    </div>
   );
 };
 
@@ -44,7 +45,7 @@ export const SessionController = props => {
  */
 function mapStateToProps(state) {
   return {
-    home: state.home,
+    runningSession: state.home.runningSession,
   };
 }
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StopIcon from '@material-ui/icons/Stop';
 import useHandleChange from './hooks/useHandleChange';
-import Timer from './Timer';
 import { SessionForm } from './SessionStart';
 
 /** @typedef {Object} Props
@@ -24,7 +23,6 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
   };
   return (
     <div className="home-session-stop">
-      <Timer startDate={startDate}></Timer>
       <SessionForm
         onSubmit={stop}
         onChange={handleChange}
