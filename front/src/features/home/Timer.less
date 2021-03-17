@@ -4,8 +4,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px;
-  font-size: 2em;
+  padding: 0.5rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  // when the timmer is not active make the padding keep the heigh
+  &.empty {
+    padding: 0;
+    height: 3rem;
+  }
 }
 .home-timer {
   display: flex;

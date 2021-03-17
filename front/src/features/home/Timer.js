@@ -31,7 +31,7 @@ const style = { overflow: 'hidden' };
  */
 export default function Timer({ startDate }) {
   return (
-    <div className="home-timer-wrapper">
+    <div className={`home-timer-wrapper ${!startDate ? 'empty' : ''}`}>
       <AnimatePresence exitBeforeEnter>
         {startDate && (
           <motion.div
