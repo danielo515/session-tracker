@@ -1,3 +1,14 @@
+# [1.9.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.8.1...v1.9.0) (2021-03-17)
+
+
+### Features
+
+* animate the timer appear ([4e63e3d](https://github.com/danielo515/pento-tech-challenge/commit/4e63e3deafb1a2d56c127ca1e56fdee616744722))
+* animated timer in out ([2827168](https://github.com/danielo515/pento-tech-challenge/commit/2827168438399bb5503a83fac641befb8f2c840d))
+* attempt to animate the timmer appear ([30ec105](https://github.com/danielo515/pento-tech-challenge/commit/30ec10586838babee936c62d249741f8ec376675))
+* make input and start/stop more compact ([6f009aa](https://github.com/danielo515/pento-tech-challenge/commit/6f009aa3ec366bfb70087065cac659e2b6db66d3))
+* select all sessions for stats ([b1be8ae](https://github.com/danielo515/pento-tech-challenge/commit/b1be8ae1f63aca1ee3ca2170abb1544d0cbbd272))
+
 ## [1.8.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.8.0...v1.8.1) (2021-03-14)
 
 
