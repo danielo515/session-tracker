@@ -1,36 +1,48 @@
 import PropTypes from 'prop-types';
-import CssTransition from 'react-transition-group/CSSTransition';
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
+
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff';
 import { msToHourMinSec } from './msToHourMinSec';
 
 /**
- * @param {string} hours
- * @param {string} minutes
- * @param {string} seconds
+ * @param {{startDate: string}} props
  */
-const renderTimer = (hours, minutes, seconds) => (
-  <div className="home-timer-wrapper">
-    <CssTransition in appear unmountOnExit classNames="timer" timeout={1000}>
-      <div className="home-timer">
-        <h3> {hours} </h3>:<h3> {minutes} </h3>
-        <h3> : </h3>
-        <h3> {seconds} </h3>
-      </div>
-    </CssTransition>
-  </div>
-);
+const RenderTimer = ({ startDate }) => {
+  const diff = useTimeDiff(startDate);
+  const [hours, minutes, seconds] = msToHourMinSec(diff);
+  return (
+    <div className="home-timer">
+      <h3> {hours} </h3>:<h3> {minutes} </h3>
+      <h3> : </h3>
+      <h3> {seconds} </h3>
+    </div>
+  );
+};
 
-/** @typedef {{ startDate: Date, isActive: true }} PropsA*/
-/** @typedef {{ isActive: false }} PropsB*/
+/** @typedef {{ isActive: true , startDate: string}} PropsA*/
+/** @typedef {{ isActive: false, startDate?: string }} PropsB*/
 /**
  * @param {PropsA | PropsB} props
  */
-export default function Timer(props) {
-  if (!props.isActive) return renderTimer('00', '00', '00');
-  const diff = useTimeDiff(props.startDate);
-  const [hours, minutes, seconds] = msToHourMinSec(diff);
-  return renderTimer(hours, minutes, seconds);
+export default function Timer({ isActive, startDate }) {
+  return (
+    <div className="home-timer-wrapper">
+      <SwitchTransition mode="out-in">
+        <CSSTransition
+          // in={isActive}
+          appear
+          key={startDate || String(isActive)}
+          unmountOnExit
+          mountOnEnter
+          classNames="timer"
+          timeout={5000}
+        >
+          {startDate ? <RenderTimer startDate={startDate} /> : <span />}
+        </CSSTransition>
+      </SwitchTransition>
+    </div>
+  );
 }
 
 Timer.propTypes = {
