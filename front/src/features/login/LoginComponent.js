@@ -37,11 +37,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/** @typedef {Object} Props
+ * @property {Function} login
+ * @property {string} error
+ */
+
+/** @param {Props} props **/
 export default function SignIn({ login, error }) {
   const classes = useStyles();
   const { email, setEmail, password, setPassword } = useLoginForm();
   const [rememberMe, setRememberMe] = useState(false);
+  /**
+   * @param {Function} set
+   * @returns {import('react').ChangeEventHandler<HTMLInputElement>}
+   */
   const handleCheck = set => ({ target }) => set(target.checked);
+  /** @param {boolean} isGoogleLogin */
   const handleSubmit = isGoogleLogin => login({ email, password, rememberMe, isGoogleLogin });
   const canSubmit = isValidEmail(email) && isValidPassword(password);
   return (
