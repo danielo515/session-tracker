@@ -52,7 +52,7 @@ export function switchTask({ name }) {
 
     runningSession && (await stopSession({ dispatch, token, ...runningSession }));
 
-    const { error: startError, response: startResp } = await api.startSession({ token, name });
+    const { error: startError, response: startResp } = await api.startSession({ name });
 
     if (startError) {
       dispatch({

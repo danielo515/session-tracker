@@ -9,18 +9,14 @@ import {
 import * as api from '../../../common/api';
 
 export function startSession({ name }) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
       type: HOME_START_SESSION_BEGIN,
     });
 
-    const {
-      login: { token },
-    } = getState();
     const { error, response } = await api.startSession({
       name: name || new Date().toDateString(),
-      token,
     });
     if (error) {
       dispatch({

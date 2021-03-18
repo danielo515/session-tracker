@@ -7,15 +7,30 @@ import {
 } from './constants';
 import * as api from '../../../common/api';
 
+/**
+ * @template T
+ * @template K
+ * @typedef {{ type: T, payload: K}} A*/
+/**
+ * @typedef {A<HOME_STOP_SESSION_BEGIN, void>
+ * |A<HOME_STOP_SESSION_DISMISS_ERROR, void>
+ * |A<HOME_STOP_SESSION_SUCCESS, void>
+ * |A<HOME_STOP_SESSION_FAILURE, {error: any}>} Actions
+ * */
+/**
+ * @param {{id: string, name: string}} args
+ * @returns { import('redux-thunk').ThunkAction<
+ * Promise<void>, import('rootReducer').RootState,unknown,Actions> }
+ **/
 export function stopSession({ id, name }) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
       type: HOME_STOP_SESSION_BEGIN,
+      payload: undefined,
     });
 
-    const { token } = getState().login;
-    const { error, response } = await api.stopSession({ token, id, name });
+    const { error, response } = await api.stopSession({ id, name });
     if (error) {
       dispatch({
         type: HOME_STOP_SESSION_FAILURE,
@@ -39,9 +54,12 @@ export function dismissStopSessionError() {
 }
 
 /** @typedef {typeof import('./initialState').default} State*/
-/** @type {import('redux').Reducer<State>} */
-export function reducer(state, { type, payload }) {
-  switch (type) {
+/**
+ * @param {State}  state
+ * @param {Actions} action
+ */
+export function reducer(state, action) {
+  switch (action.type) {
     case HOME_STOP_SESSION_BEGIN:
       // Just after a request is sent
       return {
@@ -65,7 +83,7 @@ export function reducer(state, { type, payload }) {
       return {
         ...state,
         stopSessionPending: false,
-        stopSessionError: payload.error,
+        stopSessionError: action.payload.error,
       };
 
     case HOME_STOP_SESSION_DISMISS_ERROR:

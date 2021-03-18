@@ -1,5 +1,6 @@
 // @ts-check
 
+/** @typedef {import('@types').Session} Session*/
 import firebase from '../fb';
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -66,7 +67,8 @@ export const googleLogin = () =>
 export const signUp = ({ email, password, name }) => {};
 
 /**
- * @typedef { {response: any, error: null} } apiResponse
+ * @template T
+ * @typedef { {response: T, error: null} } apiResponse
  */
 /**
  * @typedef { { error: {status: number}, response: null } } errorResponse
@@ -105,8 +107,8 @@ export const listSessions = withDb(db => {
     return { error: null, response: { all: [], current: currentSnap.val() } };
   });
 });
-/** @typedef { (args: import('../types').Session) => any } sessionCb*/
-/** @typedef { (args: import('../types').Session|null) => any } sessionCbNull*/
+/** @typedef { (args: Session) => any } sessionCb*/
+/** @typedef { (args: Session|null) => any } sessionCbNull*/
 /** @type { (args:{ onSessionAdded: sessionCb,
  *                  onRunningUpdate: sessionCbNull,
  *                  onSessionUpdate: sessionCb }) => void }
@@ -132,7 +134,7 @@ export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate, onS
 });
 
 /**
- * @type { (args: {name: string}) => Promise<apiResponse> }
+ * @type { (args: {name: string}) => Promise<apiResponse<Session>> }
  */
 export const startSession = withDb((db, { name }) => {
   const session = { name, startDate: new Date().toISOString() };
