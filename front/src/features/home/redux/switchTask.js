@@ -10,15 +10,19 @@ import * as api from '../../../common/api';
 /**
  * @typedef {import('rootReducer').RootState} RootState
  * @typedef {import('redux').Action<HOME_SWITCH_TASK_BEGIN>} SwitchTask
- * @typedef {import('redux').Action<HOME_SWITCH_TASK_FAILURE>} SwitchError
+ * @typedef {{type: HOME_SWITCH_TASK_FAILURE, payload: {error: any}}} SwitchError
  * @typedef {import('redux').Action<HOME_SWITCH_TASK_SUCCESS>} SwitchSUCCESS
  * @typedef {import('redux').Action<HOME_START_SESSION_SUCCESS>} START_SESSION_SUCCESS
- * @typedef {SwitchTask | SwitchError | SwitchSUCCESS|START_SESSION_SUCCESS} Actions
+ * @typedef {import('redux').Action<HOME_SWITCH_TASK_DISMISS_ERROR>} Dismiss
+ * @typedef {SwitchTask | SwitchError | SwitchSUCCESS | START_SESSION_SUCCESS | Dismiss } Actions
  *
  **/
 
-const stopSession = async ({ dispatch, id, name, token }) => {
-  const { error, response } = await api.stopSession({ token, id, name });
+/**
+ * @param {{id: string, name: string, dispatch: Function}} param0
+ */
+const stopSession = async ({ dispatch, id, name }) => {
+  const { error, response } = await api.stopSession({ id, name });
 
   if (error) {
     dispatch({
@@ -46,11 +50,10 @@ export function switchTask({ name }) {
     });
 
     const {
-      login: { token },
       home: { runningSession },
     } = getState();
 
-    runningSession && (await stopSession({ dispatch, token, ...runningSession }));
+    runningSession && (await stopSession({ dispatch, ...runningSession }));
 
     const { error: startError, response: startResp } = await api.startSession({ name });
 
