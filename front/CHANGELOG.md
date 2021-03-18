@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.9.0...v1.10.0) (2021-03-18)
+
+
+### Features
+
+* change window title to running session ([4c8c519](https://github.com/danielo515/pento-tech-challenge/commit/4c8c519d20131edd5a397582ac3ced6c006f979f)), closes [#56](https://github.com/danielo515/pento-tech-challenge/issues/56)
+
 # [1.9.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.8.1...v1.9.0) (2021-03-17)
 
 
