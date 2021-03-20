@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.10.0...v1.11.0) (2021-03-20)
+
+
+### Features
+
+* better approach to lazy route loading ([2d02b0b](https://github.com/danielo515/pento-tech-challenge/commit/2d02b0b4260f4d279ffdd73ffb33e2f9853e95e9))
+
 # [1.10.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.9.0...v1.10.0) (2021-03-18)
 
 
