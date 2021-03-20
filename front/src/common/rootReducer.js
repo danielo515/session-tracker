@@ -4,6 +4,7 @@ import commonReducer from '../features/common/redux/reducer';
 import loginReducer from '../features/login/redux/reducer';
 import statsReducer from '../features/stats/redux/reducer';
 import { connectRouter } from 'connected-react-router';
+import settingsReducer from '../features/settings/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -15,6 +16,7 @@ const reducerMap = {
   common: commonReducer,
   login: loginReducer,
   stats: statsReducer,
+  settings: settingsReducer,
 };
 
 /** @typedef {ReturnType<ReturnType<typeof rootReducer>>} RootState*/

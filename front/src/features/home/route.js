@@ -1,4 +1,4 @@
-import { DefaultPage } from './';
+import { DefaultPage } from './DefaultPage';
 import SettingsRoute from '../settings/route';
 import StatsRoute from '../stats/route';
 import makeAsyncPage from 'common/makeAsyncPage';

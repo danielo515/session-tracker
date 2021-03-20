@@ -6,7 +6,7 @@ import loginRoute from '../features/login/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
-/** @typedef { import('../types').Route } Route*/
+/** @typedef { import('@types').Route } Route*/
 /** @type {Route[]}*/
 const childRoutes = [loginRoute, commonRoute, homeRoute];
 
