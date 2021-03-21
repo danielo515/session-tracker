@@ -1,7 +1,6 @@
 import Box from '@material-ui/core/Box';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setupApp } from '../common/redux/actions';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import SessionsList from './SessionsList';
@@ -14,8 +13,8 @@ import selectGroupedSessions from './redux/selectGroupedSessions';
  */
 const SessionsPage = props => {
   useEffect(() => {
-    const { setupApp, fetchSessions } = props;
-    setupApp().then(fetchSessions);
+    const { fetchSessions } = props;
+    fetchSessions();
   }, []);
   const { switchTask, editSession, groupedSessions } = props;
   return (
@@ -47,7 +46,6 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 const mapDispatchToProps = {
   ...actions,
-  setupApp,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

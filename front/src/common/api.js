@@ -12,7 +12,7 @@ export function isUserLoggedIn() {
         resolve(user);
       },
       error => {
-        console.error('Failed cheking logged user', error);
+        console.error('Failed checking logged user', error);
         return resolve(null);
       },
     );

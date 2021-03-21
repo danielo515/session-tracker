@@ -23,7 +23,10 @@ export function setupApp() {
       });
 
       const loggedUser = await isUserLoggedIn();
-      if (!loggedUser) return history.replace('/login');
+      if (!loggedUser) {
+        dispatch({ type: COMMON_SETUP_APP_FAILURE, payload: { error: 'not_logged_ind' } });
+        return history.replace('/login');
+      }
       dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: loggedUser.uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
       dispatch(syncSessions());
     }
