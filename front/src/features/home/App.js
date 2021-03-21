@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { setupApp } from '../common/redux/actions';
+import { Redirect } from 'react-router-dom';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -25,12 +26,19 @@ class App extends Component {
   }
 
   render() {
-    const { isSetupPending } = this.props;
+    const { isSetupPending, isLoggedIn, location } = this.props;
+    const alreadyAtLoginPage = location.pathname === '/login';
     return (
       <React.Fragment>
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <div className="page-container">{isSetupPending ? null : this.props.children}</div>
+          <div className="page-container">
+            {isSetupPending ? null : !isLoggedIn && !alreadyAtLoginPage ? (
+              <Redirect to="login" />
+            ) : (
+              this.props.children
+            )}
+          </div>
         </MuiPickersUtilsProvider>
       </React.Fragment>
     );
@@ -43,6 +51,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     isSetupPending: state.common.setupAppPending,
+    isLoggedIn: state.common.loggedIn,
   };
 }
 
