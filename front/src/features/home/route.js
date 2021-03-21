@@ -11,7 +11,9 @@ export default {
     {
       path: 'timer',
       name: 'Default page',
-      component: makeAsyncPage(() => import('./SessionsPage')),
+      component: makeAsyncPage(() => {
+        return import('./SessionsPage');
+      }),
       isIndex: true,
     },
     StatsRoute,
