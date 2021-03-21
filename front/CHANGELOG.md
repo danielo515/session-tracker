@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.11.0...v1.12.0) (2021-03-21)
+
+
+### Features
+
+* handle auth redirect at App level ([fa0d96e](https://github.com/danielo515/pento-tech-challenge/commit/fa0d96e09ced97cd4b19e7f0dacd37ff67c9501d))
+
 # [1.11.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.10.0...v1.11.0) (2021-03-20)
 
 
