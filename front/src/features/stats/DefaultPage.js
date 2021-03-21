@@ -23,11 +23,11 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} Props
  */
-function DefaultPage({ fetchSessions, sessions }) {
+function StatsDefaultPage({ fetchSessions, sessions }) {
   useEffect(() => {
     fetchSessions();
   }, []);
   return <Dashboard sessions={sessions} />;
 }
 
-export default connector(DefaultPage);
+export default connector(StatsDefaultPage);

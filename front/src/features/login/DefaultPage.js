@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import Login from './LoginComponent';
 import SignUp from './SignUp';
 
-export class DefaultPage extends Component {
+export class LoginDefaultPage extends Component {
   static propTypes = {
     login: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -39,4 +39,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginDefaultPage);
