@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.12.0...v1.12.1) (2021-03-23)
+
+
+### Bug Fixes
+
+* handle change updates o new values ([8f0f4c2](https://github.com/danielo515/pento-tech-challenge/commit/8f0f4c24eb657a4cead0781b4e9ccc01f9d0c1b0)), closes [#66](https://github.com/danielo515/pento-tech-challenge/issues/66)
+
 # [1.12.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.11.0...v1.12.0) (2021-03-21)
 
 
