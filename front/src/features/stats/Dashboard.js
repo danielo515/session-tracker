@@ -15,6 +15,7 @@ import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 import minsToHoursMinutes from '../../common/minsToHoursMinutes';
 import { FooterWithVersion } from '../common/index';
+import DonutContainer from './Donut.container';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -103,7 +104,6 @@ function NavigationControls({ setValue, baseName, value, text, unit }) {
         <NavigateBeforeIcon />
       </IconButton>
       <Typography variant="button" align="center">
-        {' '}
         {text || (value === 0 ? baseName : `${value} ${unit} ago`)}
       </Typography>
       <IconButton onClick={next} disabled={value === 0}>
@@ -118,8 +118,9 @@ function NavigationControls({ setValue, baseName, value, text, unit }) {
  */
 const formatDaysAgo = ago => (ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today');
 
+/** @typedef {import('@types').SessionWithDuration} SessionWithDuration */
 /**
- * @param {{ sessions: import('../../types').Session[]}} args
+ * @param {{ sessions: import('@types').Session[]  }} args
  * @return {*}
  */
 export default function Dashboard({ sessions = [] }) {
@@ -131,7 +132,7 @@ export default function Dashboard({ sessions = [] }) {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const { dayData, weekData, monthData } = createChartData({
+  const { weekData, monthData } = createChartData({
     sessions,
     daysAgo,
     weeksAgo,
@@ -146,9 +147,8 @@ export default function Dashboard({ sessions = [] }) {
             {/* Day */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart
-                  sessions={dayData.data}
-                  names={dayData.names}
+                <DonutContainer
+                  daysAgo={daysAgo}
                   title={
                     <NavigationControls
                       value={daysAgo}
