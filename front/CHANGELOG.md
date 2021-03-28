@@ -1,3 +1,17 @@
+# [1.13.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.12.1...v1.13.0) (2021-03-28)
+
+
+### Bug Fixes
+
+* move days and weeks navigation to the store ([f5c11aa](https://github.com/danielo515/pento-tech-challenge/commit/f5c11aafd18300bdfd0a3ed0179b9769b8313421))
+* move month chart to a container ([8f1e889](https://github.com/danielo515/pento-tech-challenge/commit/8f1e889b1f63ad5b78bcf983bddb826b6b35aba6)), closes [#70](https://github.com/danielo515/pento-tech-challenge/issues/70)
+
+
+### Features
+
+* month chart picks it's own data ([e02cacb](https://github.com/danielo515/pento-tech-challenge/commit/e02cacb6dd6a70f91617f1694a70e999dd662f4e))
+* use Donut graph for today view (with unused) ([75a130b](https://github.com/danielo515/pento-tech-challenge/commit/75a130b77b4ed09a029e8154bbd4a92865fdeeb4))
+
 ## [1.12.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.12.0...v1.12.1) (2021-03-23)
 
 
