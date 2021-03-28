@@ -8,4 +8,12 @@ function minsToHoursMinutes(minutes) {
   return `${hours}:${mins.toString().padStart(2, '0')}`;
 }
 
+/**
+ * convert milliseconds into hours:minutes format
+ * @param {number} ms
+ */
+export function msToHoursMinutes(ms) {
+  return minsToHoursMinutes(ms / 60000);
+}
+
 export default minsToHoursMinutes;

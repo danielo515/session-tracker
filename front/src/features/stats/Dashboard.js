@@ -12,6 +12,7 @@ import { FooterWithVersion } from '../common/index';
 import DonutContainer from './Donut.container';
 import { DaysNavigator } from './NavigationControls';
 import WeekChart from './WeekChart';
+import MonthChart from './MonthChart';
 const drawerWidth = 240;
 
 export const useStyles = makeStyles(theme => ({
@@ -76,18 +77,11 @@ export const useStyles = makeStyles(theme => ({
  * @param {{ sessions: import('@types').Session[]  }} args
  * @return {*}
  */
-export default function Dashboard({ sessions = [] }) {
+export default function Dashboard() {
   // @ts-ignore
   const classes = useStyles();
-  const monthsAgo = 0;
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  const { monthData } = createChartData({
-    sessions,
-    weeksAgo: 0,
-    monthsAgo,
-  });
 
   return (
     <div className={classes.root}>
@@ -109,12 +103,7 @@ export default function Dashboard({ sessions = [] }) {
             {/* Month */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart
-                  formatter={minsToHoursMinutes}
-                  title="Month"
-                  names={monthData.names}
-                  sessions={monthData.data}
-                />
+                <MonthChart />
               </Paper>
             </Grid>
           </Grid>

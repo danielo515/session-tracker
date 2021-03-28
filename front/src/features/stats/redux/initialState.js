@@ -12,6 +12,7 @@ const initialState = {
   sessions: [],
   daysAgo: 0,
   weeksAgo: 0,
+  monthsAgo: 0,
 };
 
 export default initialState;

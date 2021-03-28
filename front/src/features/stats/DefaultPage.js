@@ -2,32 +2,21 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchSessions } from '../home/redux/actions';
 import Dashboard from './Dashboard';
-import selectAllSessions from '../home/redux/selectAllSessions';
-
-/**
- * @param {import('rootReducer').RootState} state
- */
-function mapStateToProps(state) {
-  return {
-    stats: state.stats,
-    sessions: selectAllSessions(state),
-  };
-}
 
 const mapDispatchToProps = {
   fetchSessions,
 };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} Props
  */
-function StatsDefaultPage({ fetchSessions, sessions }) {
+function StatsDefaultPage({ fetchSessions }) {
   useEffect(() => {
     fetchSessions();
   }, []);
-  return <Dashboard sessions={sessions} />;
+  return <Dashboard />;
 }
 
 export default connector(StatsDefaultPage);
