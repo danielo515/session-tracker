@@ -8,12 +8,20 @@
 
 import initialState from './initialState';
 import { reducer as getSessionsReducer } from './getSessions';
+import { default as navigateDaysReducer } from './navigateDays';
+import { default as navigateWeeksReducer } from './navigateWeeks';
 
-const reducers = [
-  getSessionsReducer,
-];
+const reducers = [getSessionsReducer, navigateDaysReducer, navigateWeeksReducer];
 
+/** @typedef {typeof import('./initialState').default} State  */
+
+/**
+ * @param {State} state
+ * @param {*} action
+ * @returns {State}
+ */
 export default function reducer(state = initialState, action) {
+  /** @type { State } */
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here

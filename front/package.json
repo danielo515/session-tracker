@@ -16,6 +16,7 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.39",
     "@material-ui/pickers": "^3.2.10",
+    "@reduxjs/toolkit": "^1.5.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@types/react-loadable": "^5.5.4",
@@ -115,7 +116,6 @@
       "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js",
       "<rootDir>/tests/setup.js"
     ],
     "testMatch": [
@@ -156,5 +156,8 @@
       "@semantic-release/npm",
       "@semantic-release/git"
     ]
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.22"
   }
 }

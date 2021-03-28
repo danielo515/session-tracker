@@ -16,7 +16,7 @@
     "baseUrl": "./src",
     "paths": {
       "rootReducer": ["common/rootReducer"],
-      "common": ["common/*"],
+      "@common/*": ["common/*"],
       "formatters": ["formatters"],
       "@types": ["types"]
     }

@@ -2,19 +2,9 @@
 /** @typedef {{[k: string]: SessionGroup | undefined }} Grouped */
 
 import { createSelector } from 'reselect';
+import { diffDateStrings } from './diffDateStrings';
 import selectSessions from './selectSessions';
 
-/**
- * @param {string} start
- * @param {string} [ end ]
- * @return {number}
- */
-function diffDateStrings(start, end) {
-  if (!end) return 0;
-  const a = new Date(start);
-  const b = new Date(end);
-  return b.getTime() - a.getTime();
-}
 function getTodayISO() {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);

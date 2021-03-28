@@ -14,6 +14,7 @@ import {
 import Title from './Title';
 import PropTypes from 'prop-types';
 import { stringToColour } from './stringToColour';
+import { noop } from '@common/noop';
 
 /**
  * @param {{ sessions: import('../../types').Session[],
@@ -65,7 +66,7 @@ export default function Chart({ sessions, title, names, formatter }) {
  * names: ['task1','task2']
  */
 Chart.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.node,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   formatter: PropTypes.func,
   sessions: PropTypes.arrayOf(
@@ -76,5 +77,5 @@ Chart.propTypes = {
 };
 Chart.defaultProps = {
   sessions: [],
-  formatter: i => i,
+  formatter: noop,
 };

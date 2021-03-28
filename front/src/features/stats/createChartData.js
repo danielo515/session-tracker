@@ -1,15 +1,13 @@
-import subDays from 'date-fns/subDays';
 import subWeeks from 'date-fns/subWeeks';
 import subMonths from 'date-fns/subMonths';
 import endOfDay from 'date-fns/endOfDay';
-import startOfDay from 'date-fns/startOfDay';
 import startOfWeek from 'date-fns/startOfWeek';
 import endOfWeek from 'date-fns/endOfWeek';
 import startOfMonth from 'date-fns/startOfMonth';
 import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
-/** @typedef {import('../../types').Session} Session*/
+/** @typedef {import('@types').Session} Session*/
 /** @typedef {{ startDate: string, [name: string]: number|string }}  Row hashmap of name-value indexed by formatted date**/
 /** @typedef {{names: Set<string>, [date:string]: Row|Set<string> }} MapRow **/
 /**
@@ -36,7 +34,6 @@ export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDat
   };
 };
 
-const makeDayRow = addToRow(format('HH:mm'), differenceInMinutes);
 const makeWeekRow = addToRow(format('E do MMM'), differenceInMinutes);
 const makeMonthRow = addToRow(format('Io'), differenceInMinutes);
 
@@ -49,13 +46,10 @@ const omitNamesProp = ({ names, ...rest }) => rest;
 
 /**
  *
- * @param {{ daysAgo: number, weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} } args
+ * @param {{  weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} } args
  */
-export function createChartData({ daysAgo, weeksAgo = 0, monthsAgo = 0, sessions }) {
+export function createChartData({ weeksAgo = 0, monthsAgo = 0, sessions }) {
   const today = endOfDay(new Date());
-
-  const dayRef = subDays(today, daysAgo);
-  const dayInterval = { start: startOfDay(dayRef), end: endOfDay(dayRef) };
 
   const weekRef = subWeeks(startOfWeek(today), weeksAgo);
   const weekInterval = { start: weekRef, end: endOfWeek(weekRef) };
@@ -66,7 +60,6 @@ export function createChartData({ daysAgo, weeksAgo = 0, monthsAgo = 0, sessions
   const chartData = sessions.reduce(
     (acc, session) => {
       const d = new Date(session.startDate);
-      if (isWithinInterval(d, dayInterval)) acc.d = makeDayRow(acc.d, session);
       if (isWithinInterval(d, weekInterval)) acc.w = makeWeekRow(acc.w, session);
       if (isWithinInterval(d, monthInterval)) acc.m = makeMonthRow(acc.m, session);
       return acc; // I don't usually mutate, but this is a big performance gain on this case
@@ -75,7 +68,6 @@ export function createChartData({ daysAgo, weeksAgo = 0, monthsAgo = 0, sessions
   ); // I was originally using longer names, but I think this is obvious
 
   return {
-    dayData: { data: Object.values(omitNamesProp(chartData.d)), names: [...chartData.d.names] },
     weekData: { data: Object.values(omitNamesProp(chartData.w)), names: [...chartData.w.names] },
     monthData: { data: Object.values(omitNamesProp(chartData.m)), names: [...chartData.m.names] },
   };

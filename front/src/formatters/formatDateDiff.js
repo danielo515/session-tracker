@@ -1,6 +1,6 @@
-import { differenceInMinutes } from 'date-fns';
 import { formatMinutes4Human } from './formatMinutes4Human';
 import format from 'date-fns/format';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 /** @typedef {Date|string|number} DateCompatible*/
 

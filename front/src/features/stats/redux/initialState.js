@@ -10,6 +10,9 @@ const initialState = {
   getSessionsError: null,
   /** @type { import("@types").Session[] }*/
   sessions: [],
+  daysAgo: 0,
+  weeksAgo: 0,
+  monthsAgo: 0,
 };
 
 export default initialState;
