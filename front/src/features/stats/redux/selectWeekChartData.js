@@ -37,7 +37,7 @@ function groupSessionsByDay(sessions) {
     ({ names, sessionsByDay }, { startDate, endDate, name }) => {
       const dateStr = formatDay(new Date(startDate));
       names.add(name);
-      const dayData = sessionsByDay[dateStr] || { [name]: 0, startDate };
+      const dayData = sessionsByDay[dateStr] || { [name]: 0, startDate: dateStr };
       const duration = diffDateStrings(startDate, endDate);
 
       return {

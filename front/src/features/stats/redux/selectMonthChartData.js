@@ -37,7 +37,7 @@ function groupSessionsByWeek(sessions) {
     ({ names, sessionsByWeek }, { startDate, endDate, name }) => {
       const dateStr = formatWeek(new Date(startDate));
       names.add(name);
-      const dayData = sessionsByWeek[dateStr] || { [name]: 0, startDate };
+      const dayData = sessionsByWeek[dateStr] || { [name]: 0, startDate: dateStr };
       const duration = diffDateStrings(startDate, endDate);
 
       return {
