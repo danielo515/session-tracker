@@ -45,37 +45,6 @@ function NavigationControlsBase({ next, back, baseName, value, text, unit }) {
     </div>
   );
 }
-/** @typedef {Object} NPropsA
- * @property {(n:number) => any} setValue
- * @property {never} [ baseName ]
- * @property {never} [ unit ]
- * @property {string} text
- * @property {number} value
- */
-/** @typedef {Object} NPropsB
- * @property {(n:number) => any} setValue
- * @property {string} baseName
- * @property {string} unit
- * @property {never} [ text ]
- * @property {number} value
- */
-/**
- * @param {NPropsA|NPropsB} props
- */
-export function NavigationControls({ setValue, baseName, value, text, unit }) {
-  const back = () => setValue(value + 1);
-  const next = () => setValue(value - 1);
-  return (
-    <NavigationControlsBase
-      baseName={baseName}
-      next={next}
-      back={back}
-      value={value}
-      text={text}
-      unit={unit}
-    />
-  );
-}
 
 /**
  * @param {number} ago
