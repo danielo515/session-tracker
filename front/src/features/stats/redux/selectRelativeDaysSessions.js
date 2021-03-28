@@ -3,8 +3,9 @@
 import selectAllSessions from 'features/home/redux/selectAllSessions';
 import { createSelector } from 'reselect';
 import subDays from 'date-fns/subDays';
-import { isWithinInterval, startOfDay } from 'date-fns';
-import { endOfDay } from 'date-fns/esm';
+import endOfDay from 'date-fns/endOfDay';
+import startOfDay from 'date-fns/startOfDay';
+import isWithinInterval from 'date-fns/isWithinInterval';
 
 /**
  * Given a number of days ago selects the sessions of that day.

@@ -80,7 +80,7 @@ export default function Dashboard({ sessions = [] }) {
   // @ts-ignore
   const classes = useStyles();
   const { weeksAgo } = useNavigateWeeks();
-  const [monthsAgo /*, setMonth*/] = React.useState(0);
+  const monthsAgo = 0;
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
