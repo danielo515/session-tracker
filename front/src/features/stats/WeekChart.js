@@ -9,7 +9,7 @@ import { WeeksNavigator } from './NavigationControls';
  * @typedef {import('rootReducer').RootState} State
  */
 
-export default function MonthChart() {
+export default function WeekChart() {
   const { names, sessions } = useSelector(
     /** @param {State} state */
     state => {

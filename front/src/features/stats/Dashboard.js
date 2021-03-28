@@ -11,7 +11,7 @@ import minsToHoursMinutes from '../../common/minsToHoursMinutes';
 import { FooterWithVersion } from '../common/index';
 import DonutContainer from './Donut.container';
 import { DaysNavigator } from './NavigationControls';
-import MonthChart from './MonthChart';
+import WeekChart from './WeekChart';
 const drawerWidth = 240;
 
 export const useStyles = makeStyles(theme => ({
@@ -103,7 +103,7 @@ export default function Dashboard({ sessions = [] }) {
             {/* Week */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <MonthChart />
+                <WeekChart />
               </Paper>
             </Grid>
             {/* Month */}
