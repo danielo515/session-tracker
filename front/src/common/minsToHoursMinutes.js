@@ -13,7 +13,7 @@ function minsToHoursMinutes(minutes) {
  * @param {number} ms
  */
 export function msToHoursMinutes(ms) {
-  return minsToHoursMinutes(ms / 60000);
+  return minsToHoursMinutes(Math.floor(ms / 60000));
 }
 
 export default minsToHoursMinutes;
