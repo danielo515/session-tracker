@@ -9,16 +9,15 @@ import selectDonutSessions from './redux/selectDonutSessions';
 
 /**
  * @typedef {Object} Props
- * @property {number} daysAgo
  * @property {any} title
  */
 
 /** @param {Props} props **/
-export default function DonutContainer({ daysAgo, title }) {
+export default function DonutContainer({ title }) {
   const sessions = useSelector(
     /** @param {State} state */
     state => {
-      return selectDonutSessions(state, daysAgo);
+      return selectDonutSessions(state, state.stats.daysAgo);
     },
   );
   return <Donut sessions={sessions} title={title} />;
