@@ -5,9 +5,6 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Chart from './Chart';
-import { createChartData } from './createChartData';
-import minsToHoursMinutes from '../../common/minsToHoursMinutes';
 import { FooterWithVersion } from '../common/index';
 import DonutContainer from './Donut.container';
 import { DaysNavigator } from './NavigationControls';
@@ -73,10 +70,6 @@ export const useStyles = makeStyles(theme => ({
 }));
 
 /** @typedef {import('@types').SessionWithDuration} SessionWithDuration */
-/**
- * @param {{ sessions: import('@types').Session[]  }} args
- * @return {*}
- */
 export default function Dashboard() {
   // @ts-ignore
   const classes = useStyles();

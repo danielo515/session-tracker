@@ -116,7 +116,6 @@
       "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js",
       "<rootDir>/tests/setup.js"
     ],
     "testMatch": [
@@ -157,5 +156,8 @@
       "@semantic-release/npm",
       "@semantic-release/git"
     ]
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.22"
   }
 }
