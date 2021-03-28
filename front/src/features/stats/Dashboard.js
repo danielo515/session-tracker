@@ -10,8 +10,8 @@ import { createChartData } from './createChartData';
 import minsToHoursMinutes from '../../common/minsToHoursMinutes';
 import { FooterWithVersion } from '../common/index';
 import DonutContainer from './Donut.container';
-import { DaysNavigator, WeeksNavigator } from './NavigationControls';
-import { useNavigateWeeks } from './redux/navigateWeeks';
+import { DaysNavigator } from './NavigationControls';
+import MonthChart from './MonthChart';
 const drawerWidth = 240;
 
 export const useStyles = makeStyles(theme => ({
@@ -79,14 +79,13 @@ export const useStyles = makeStyles(theme => ({
 export default function Dashboard({ sessions = [] }) {
   // @ts-ignore
   const classes = useStyles();
-  const { weeksAgo } = useNavigateWeeks();
   const monthsAgo = 0;
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const { weekData, monthData } = createChartData({
+  const { monthData } = createChartData({
     sessions,
-    weeksAgo,
+    weeksAgo: 0,
     monthsAgo,
   });
 
@@ -104,12 +103,7 @@ export default function Dashboard({ sessions = [] }) {
             {/* Week */}
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart
-                  formatter={minsToHoursMinutes}
-                  sessions={weekData.data}
-                  names={weekData.names}
-                  title={<WeeksNavigator />}
-                />
+                <MonthChart />
               </Paper>
             </Grid>
             {/* Month */}
