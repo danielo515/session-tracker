@@ -39,7 +39,7 @@ export default function Donut({ sessions, title }) {
             outerRadius={80}
             // @ts-ignore it actually accepts a function, types are wrong
             label={getName}
-            // label
+            paddingAngle={4}
           >
             {sessions.map(({ name }) => (
               <Cell key={name} fill={stringToColour(name)} />
