@@ -9,11 +9,12 @@ import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
 import { DatePicker, TimePicker } from '@material-ui/pickers';
-import intervalToDuration from 'date-fns/intervalToDuration';
-import { Slider } from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';
-import { addHours, addMinutes, subHours } from 'date-fns';
+import intervalToDuration from 'date-fns/intervalToDuration';
+import addHours from 'date-fns/addHours';
+import addMinutes from 'date-fns/addMinutes';
 
 /** @typedef {import('@types').Session} Session*/
 
@@ -34,7 +35,7 @@ function EditSession(props) {
   const { open, cancel, name, startDate, endDate = new Date(), id, onSubmit, onDelete } = props;
   const [date, setDate] = useState(new Date(startDate));
   const [dateEnd, setEndDate] = React.useState(new Date(endDate));
-  const { hours = 0, minutes } = intervalToDuration({ start: date, end: dateEnd });
+  const { hours = 0, minutes = 0 } = intervalToDuration({ start: date, end: dateEnd });
   const submit = () =>
     onSubmit({ id, name, startDate: date.toISOString(), endDate: dateEnd.toISOString() });
   const deleteCb = React.useCallback(() => onDelete(id), [onDelete, id]);
