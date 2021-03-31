@@ -12,9 +12,7 @@ import { DatePicker, TimePicker } from '@material-ui/pickers';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';
-import intervalToDuration from 'date-fns/intervalToDuration';
-import addHours from 'date-fns/addHours';
-import addMinutes from 'date-fns/addMinutes';
+import { addHours, addMinutes, intervalToDuration } from 'date-fns/esm';
 
 /** @typedef {import('@types').Session} Session*/
 
@@ -34,7 +32,7 @@ const minuteMarks = [
 function EditSession(props) {
   const { open, cancel, name, startDate, endDate = new Date(), id, onSubmit, onDelete } = props;
   const [date, setDate] = useState(new Date(startDate));
-  const [dateEnd, setEndDate] = React.useState(new Date(endDate));
+  const [dateEnd, setEndDate] = useState(new Date(endDate));
   const { hours = 0, minutes = 0 } = intervalToDuration({ start: date, end: dateEnd });
   const submit = () =>
     onSubmit({ id, name, startDate: date.toISOString(), endDate: dateEnd.toISOString() });
