@@ -9,6 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
 import { DatePicker, TimePicker } from '@material-ui/pickers';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
+import { useState } from 'react';
+import { addHours, addMinutes, intervalToDuration } from 'date-fns/esm';
 
 /** @typedef {import('@types').Session} Session*/
 
@@ -19,18 +23,38 @@ import { DatePicker, TimePicker } from '@material-ui/pickers';
  * @property {(session: Session)=> void} onSubmit
  */
 
+const minuteMarks = [
+  { value: 30, label: "30'" },
+  { value: 10, label: "10'" },
+];
+
 /** @param {import('type-fest').Merge<Session, Props>} props **/
 function EditSession(props) {
-  const { open, cancel, name, startDate, endDate, id, onSubmit, onDelete } = props;
-  const [date, setDate] = React.useState(startDate);
-  const [dateEnd, setEndDate] = React.useState(endDate);
-  const submit = React.useCallback(
-    () => onSubmit({ id, name, startDate: date, endDate: dateEnd }),
-    [onSubmit, dateEnd, date],
-  );
+  const { open, cancel, name, startDate, endDate = new Date(), id, onSubmit, onDelete } = props;
+  const [date, setDate] = useState(new Date(startDate));
+  const [dateEnd, setEndDate] = useState(new Date(endDate));
+  const { hours = 0, minutes = 0 } = intervalToDuration({ start: date, end: dateEnd });
+  const submit = () =>
+    onSubmit({ id, name, startDate: date.toISOString(), endDate: dateEnd.toISOString() });
   const deleteCb = React.useCallback(() => onDelete(id), [onDelete, id]);
+  /**
+   * @param {*} _
+   * @param {number|number[]} newHours
+   */
+  const handleHourSlider = (_, newHours) => {
+    if (Array.isArray(newHours)) return;
+    setEndDate(current => addHours(current, newHours - hours));
+  };
+  /**
+   * @param {*} _
+   * @param {number|number[]} value
+   */
+  const handleMinuteSlider = (_, value) => {
+    if (Array.isArray(value)) return;
+    setEndDate(current => addMinutes(current, value - minutes));
+  };
   return (
-    <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-title">
+    <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-edit">
       <DialogTitle id="edit-session-title">
         <Box display="flex" alignItems="center">
           <Box flex="1 1 auto" textAlign="center">
@@ -44,16 +68,48 @@ function EditSession(props) {
       <DialogContent>
         <Box pb={4} display="flex">
           <DatePicker label="Started at date" value={date} onChange={setDate} variant="inline" />
-          <TimePicker id="time-picker" label="time" value={date} onChange={setDate} ampm={false} />
+          <TimePicker
+            id="time-picker-start"
+            label="time"
+            value={date}
+            onChange={setDate}
+            ampm={false}
+          />
         </Box>
         <Box display="flex">
           <DatePicker label="Finished at" value={dateEnd} onChange={setEndDate} variant="inline" />
           <TimePicker
-            id="time-picker"
+            id="time-picker-end"
             label="time"
             value={dateEnd}
             onChange={setEndDate}
             ampm={false}
+          />
+        </Box>
+        <Box pt={2}>
+          <Typography id="discrete-slider" gutterBottom>
+            Hours:
+          </Typography>
+          <Slider
+            value={hours}
+            min={0}
+            max={8}
+            step={1}
+            onChange={handleHourSlider}
+            valueLabelDisplay="auto"
+            marks
+          />
+          <Typography id="discrete-slider" gutterBottom>
+            Minutes:
+          </Typography>
+          <Slider
+            value={minutes}
+            min={0}
+            max={59}
+            step={5}
+            valueLabelDisplay="auto"
+            onChange={handleMinuteSlider}
+            marks={minuteMarks}
           />
         </Box>
       </DialogContent>
