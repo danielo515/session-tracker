@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.13.0...v1.14.0) (2021-03-31)
+
+
+### Features
+
+* add sliders to the edit modal ([6251e4c](https://github.com/danielo515/pento-tech-challenge/commit/6251e4cf6212fa9f071c8e495af0cd28f9d66d21)), closes [#74](https://github.com/danielo515/pento-tech-challenge/issues/74) [#72](https://github.com/danielo515/pento-tech-challenge/issues/72)
+
 # [1.13.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.12.1...v1.13.0) (2021-03-28)
 
 
