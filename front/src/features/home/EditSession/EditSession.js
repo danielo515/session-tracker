@@ -25,8 +25,10 @@ import { addHours, addMinutes, intervalToDuration } from 'date-fns/esm';
  */
 
 const minuteMarks = [
-  { value: 30, label: "30'" },
   { value: 10, label: "10'" },
+  { value: 20, label: "20'" },
+  { value: 30, label: "30'" },
+  { value: 40, label: "40'" },
 ];
 
 /** @param {import('type-fest').Merge<Session, Props>} props **/
@@ -77,19 +79,19 @@ function EditSession(props) {
         </Box>
         <Box pt={2}>
           <Typography id="discrete-slider" gutterBottom>
-            Hours:
+            Hours: {hours}
           </Typography>
           <Slider
             value={hours}
             min={0}
-            max={8}
+            max={12}
             step={1}
             onChange={handleHourSlider}
             valueLabelDisplay="auto"
             marks
           />
           <Typography id="discrete-slider" gutterBottom>
-            Minutes:
+            Minutes: {minutes}
           </Typography>
           <Slider
             value={minutes}
