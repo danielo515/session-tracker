@@ -8,7 +8,8 @@ import Delete from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
-import { DatePicker, TimePicker } from '@material-ui/pickers';
+import { DatePicker } from '@material-ui/pickers';
+import TimePicker from './TimePicker';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';
@@ -68,23 +69,11 @@ function EditSession(props) {
       <DialogContent>
         <Box pb={4} display="flex">
           <DatePicker label="Started at date" value={date} onChange={setDate} variant="inline" />
-          <TimePicker
-            id="time-picker-start"
-            label="time"
-            value={date}
-            onChange={setDate}
-            ampm={false}
-          />
+          <TimePicker id="time-picker-start" label="time" value={date} onChange={setDate} />
         </Box>
         <Box display="flex">
           <DatePicker label="Finished at" value={dateEnd} onChange={setEndDate} variant="inline" />
-          <TimePicker
-            id="time-picker-end"
-            label="time"
-            value={dateEnd}
-            onChange={setEndDate}
-            ampm={false}
-          />
+          <TimePicker id="time-picker-end" label="time" value={dateEnd} onChange={setEndDate} />
         </Box>
         <Box pt={2}>
           <Typography id="discrete-slider" gutterBottom>
