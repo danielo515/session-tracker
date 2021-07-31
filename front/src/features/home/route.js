@@ -1,6 +1,7 @@
 import { DefaultPage } from './DefaultPage';
 import SettingsRoute from '../settings/route';
 import StatsRoute from '../stats/route';
+import TimerRoute from '../timer/route';
 import makeAsyncPage from 'common/makeAsyncPage';
 
 export default {
@@ -9,7 +10,7 @@ export default {
   component: DefaultPage,
   childRoutes: [
     {
-      path: 'timer',
+      path: 'list',
       name: 'Default page',
       component: makeAsyncPage(() => {
         return import('./SessionsPage');
@@ -18,5 +19,6 @@ export default {
     },
     StatsRoute,
     SettingsRoute,
+    TimerRoute,
   ],
 };
