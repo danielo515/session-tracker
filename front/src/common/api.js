@@ -170,7 +170,7 @@ export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
 export const updateRunningSession = withDb((db, { name, startDate }) => {
   return db
     .child('runningSession')
-    .update({ name, startDate })
+    .set({ name, startDate: startDate.toISOString() })
     .then(() => ({ response: { name, startDate }, error: null }));
 });
 

@@ -14,11 +14,8 @@ import { calculateSessionDuration } from '@common/calculateSessionDuration';
  * @param {String} sessionName
  * */
 const getSessionStatsReducer = sessionName => {
-  const { weekInterval, monthInterval } = getTodayIntervals();
-  const isToday = isWithinInterval({
-    start: startOfDay(new Date()),
-    end: new Date(new Date().setHours(23, 59, 59, 999)),
-  });
+  const { weekInterval, monthInterval, todayInterval } = getTodayIntervals();
+  const isToday = isWithinInterval(todayInterval);
   const isThisWeek = isWithinInterval(weekInterval);
   const isThisMonth = isWithinInterval(monthInterval);
   /**

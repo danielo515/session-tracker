@@ -9,7 +9,12 @@ import {
   COMMON_EDIT_RUNNING_SESSION_DISMISS_ERROR,
 } from './constants';
 
-export function editRunningSession({ name, startDate } = {}) {
+/**
+ * @param {Object} args
+ * @param {String} args.name
+ * @param {Date} args.startDate
+ **/
+export function editRunningSession({ name, startDate }) {
   return dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
@@ -17,10 +22,10 @@ export function editRunningSession({ name, startDate } = {}) {
     });
 
     return updateRunningSession({ name, startDate })
-      .then(runningSession => {
+      .then(({ error, response: runningSession }) => {
         dispatch({
           type: COMMON_EDIT_RUNNING_SESSION_SUCCESS,
-          data: { res: runningSession },
+          data: { runningSession },
         });
         return runningSession;
       })
@@ -52,8 +57,8 @@ export function useEditRunningSession() {
   );
 
   const boundAction = useCallback(
-    (...args) => {
-      return dispatch(editRunningSession(...args));
+    session => {
+      return dispatch(editRunningSession(session));
     },
     [dispatch],
   );
