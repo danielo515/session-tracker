@@ -25,7 +25,7 @@ function parseDate(originalDate, dateString) {
 
 /**
  *
- * @param {{value: Date, onChange: (d: Date) => any, id: string, label: string }} props
+ * @param {{value: Date, onChange: (d: Date) => any, id: string, label?: string }} props
  */
 export default function TimePickers({ value, onChange, id, label }) {
   const classes = useStyles();

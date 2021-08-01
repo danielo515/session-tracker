@@ -8,7 +8,7 @@ import { msToHourMinSec } from './msToHourMinSec';
 /**
  * @param {{startDate: string}} props
  */
-const RenderTimer = ({ startDate }) => {
+export const RenderTimer = ({ startDate }) => {
   const diff = useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToHourMinSec(diff);
   return (
