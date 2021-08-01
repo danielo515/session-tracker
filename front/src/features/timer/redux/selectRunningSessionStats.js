@@ -1,7 +1,6 @@
 /** @typedef {import("@types").Session} Session*/
 
 import { isWithinInterval } from 'date-fns/fp';
-import { startOfDay } from 'date-fns/esm';
 import selectRunningSession from 'features/home/redux/selectRunningSession';
 import selectSessions from 'features/home/redux/selectSessions';
 import { createSelector } from 'reselect';

@@ -12,7 +12,7 @@ import { msToHuman } from 'formatters/formatDateDiff';
 import format from 'date-fns/format';
 import EditIcon from '@material-ui/icons/Edit';
 import StopIcon from '@material-ui/icons/Stop';
-import FastRewindIcon from '@material-ui/icons/FastRewind';
+// import FastRewindIcon from '@material-ui/icons/FastRewind';
 import { subMinutes } from 'date-fns';
 import { Replay, Replay30, Replay5 } from '@material-ui/icons';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';

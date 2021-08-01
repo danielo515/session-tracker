@@ -9,7 +9,7 @@ import { msToHourMinSec } from './msToHourMinSec';
  * @param {{startDate: string}} props
  */
 export const RenderTimer = ({ startDate }) => {
-  const diff = useTimeDiff(startDate);
+  useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToHourMinSec(Date.now() - new Date(startDate).getTime());
   return (
     <div className="home-timer">
