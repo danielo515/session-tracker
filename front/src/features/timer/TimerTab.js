@@ -15,6 +15,7 @@ import StopIcon from '@material-ui/icons/Stop';
 import FastRewindIcon from '@material-ui/icons/FastRewind';
 import { subMinutes } from 'date-fns';
 import { Replay, Replay30, Replay5 } from '@material-ui/icons';
+import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 /**
  * Renders a date with a edit icon
  * @param {Object} props
@@ -42,6 +43,7 @@ function Started({ startDate }) {
 
 export default function TimerTab() {
   const { runningSession, editRunningSession } = useEditRunningSession();
+  const { stopRunningSession } = useStopRunningSession();
   const resetSession = () =>
     editRunningSession({ name: runningSession?.name, startDate: new Date() });
   const minus5min = () =>
@@ -88,7 +90,11 @@ export default function TimerTab() {
         <ButtonAction onClick={resetSession} icon={<Replay />} />
         <ButtonAction onClick={minus5min} icon={<Replay5 />} />
         <ButtonAction onClick={minus30min} icon={<Replay30 />} />
-        <ButtonAction icon={<StopIcon />} color="secondary"></ButtonAction>
+        <ButtonAction
+          icon={<StopIcon />}
+          color="secondary"
+          onClick={stopRunningSession}
+        ></ButtonAction>
       </Box>
     </Page>
   );

@@ -144,7 +144,7 @@ export const startSession = withDb((db, { name }) => {
     .then(() => ({ response: session, error: null }));
 });
 
-/** @type { (args: {id: string, name: string}) => Promise<apiResponse> }*/
+/** @type { () => Promise<apiResponse<Session>> }*/
 export const stopSession = withDb(async db => {
   const running = db.child('runningSession');
   const runningSnap = await running.get();
