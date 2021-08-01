@@ -8,9 +8,11 @@
 
 import initialState from './initialState';
 import { reducer as setupAppReducer } from './setupApp';
+import { reducer as editRunningSessionReducer } from './editRunningSession';
 
 const reducers = [
   setupAppReducer,
+  editRunningSessionReducer,
 ];
 
 export default function reducer(state = initialState, action) {

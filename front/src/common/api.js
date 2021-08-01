@@ -166,6 +166,13 @@ export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
     .update({ name, startDate, endDate })
     .then(() => ({ response: { id, name, startDate, endDate }, error: null }));
 });
+/** @type { (args: {name: string, startDate: Date}) => Promise<apiResponse> }*/
+export const updateRunningSession = withDb((db, { name, startDate }) => {
+  return db
+    .child('runningSession')
+    .update({ name, startDate })
+    .then(() => ({ response: { name, startDate }, error: null }));
+});
 
 export const deleteSession = withDb((db, { id }) => {
   return db
