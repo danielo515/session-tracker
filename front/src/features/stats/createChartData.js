@@ -1,12 +1,7 @@
-import subWeeks from 'date-fns/subWeeks';
-import subMonths from 'date-fns/subMonths';
-import endOfDay from 'date-fns/endOfDay';
-import startOfWeek from 'date-fns/startOfWeek';
-import endOfWeek from 'date-fns/endOfWeek';
-import startOfMonth from 'date-fns/startOfMonth';
 import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
+import { getTodayIntervals } from 'dateUtils/getIntervals';
 /** @typedef {import('@types').Session} Session*/
 /** @typedef {{ startDate: string, [name: string]: number|string }}  Row hashmap of name-value indexed by formatted date**/
 /** @typedef {{names: Set<string>, [date:string]: Row|Set<string> }} MapRow **/
@@ -49,13 +44,7 @@ const omitNamesProp = ({ names, ...rest }) => rest;
  * @param {{  weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} } args
  */
 export function createChartData({ weeksAgo = 0, monthsAgo = 0, sessions }) {
-  const today = endOfDay(new Date());
-
-  const weekRef = subWeeks(startOfWeek(today), weeksAgo);
-  const weekInterval = { start: weekRef, end: endOfWeek(weekRef) };
-
-  const monthRef = subMonths(startOfMonth(today), monthsAgo);
-  const monthInterval = { start: monthRef, end: today };
+  const { weekInterval, monthInterval } = getTodayIntervals({ weeksAgo, monthsAgo });
   // This was a series of filters and maps chained, but reduce is way more performant and powerful
   const chartData = sessions.reduce(
     (acc, session) => {

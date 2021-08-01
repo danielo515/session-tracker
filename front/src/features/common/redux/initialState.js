@@ -10,6 +10,8 @@ const initialState = {
   setupAppPending: true,
   setupAppError: null,
   loggedIn: false,
+  editRunningSessionPending: false,
+  editRunningSessionError: null,
 };
 
 export default initialState;
