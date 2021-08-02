@@ -113,13 +113,11 @@ function StatRow({ title, subtitle }) {
           display="flex"
           p={1}
           flexDirection="column"
-          alignItems="flex-start"
+          alignItems="center"
           justifyContent="flex-start"
         >
-          <Typography variant="h6">{title}</Typography>
-          <Box pl={1}>
-            <Typography variant="body2">{subtitle}</Typography>
-          </Box>
+          <Typography variant="subtitle2">{subtitle}</Typography>
+          <Typography variant="body2">{title}</Typography>
         </Box>
       </Card>
     </Box>

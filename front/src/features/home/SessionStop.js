@@ -6,7 +6,6 @@ import { SessionForm } from './SessionStart';
 
 /** @typedef {Object} Props
  * @property {string} name
- * @property {string} id
  * @property {string} startDate
  * @property {Function} stopSession
  */
@@ -14,11 +13,11 @@ import { SessionForm } from './SessionStart';
  * @export
  * @param {Props} Props
  */
-export default function SessionStop({ name: sessionName, id, stopSession, startDate }) {
+export default function SessionStop({ name: sessionName, stopSession, startDate }) {
   const [name, handleChange] = useHandleChange(sessionName);
   const [visible, setVisible] = useState(true);
   const stop = () => {
-    stopSession({ id, name });
+    stopSession({ name });
     setVisible(false);
   };
   return (
@@ -37,7 +36,6 @@ export default function SessionStop({ name: sessionName, id, stopSession, startD
 
 SessionStop.propTypes = {
   stopSession: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
   name: PropTypes.string,
   startDate: PropTypes.string.isRequired,
 };

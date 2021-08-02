@@ -51,7 +51,7 @@ export default function Timer({ startDate }) {
 }
 
 Timer.propTypes = {
-  startDate: PropTypes.string.isRequired,
+  startDate: PropTypes.string,
   isActive: PropTypes.bool,
 };
 Timer.defaultProps = {
