@@ -8,9 +8,9 @@ import { msToHourMinSec } from './msToHourMinSec';
 /**
  * @param {{startDate: string}} props
  */
-const RenderTimer = ({ startDate }) => {
-  const diff = useTimeDiff(startDate);
-  const [hours, minutes, seconds] = msToHourMinSec(diff);
+export const RenderTimer = ({ startDate }) => {
+  useTimeDiff(startDate);
+  const [hours, minutes, seconds] = msToHourMinSec(Date.now() - new Date(startDate).getTime());
   return (
     <div className="home-timer">
       <h3> {hours} </h3>:<h3> {minutes} </h3>
@@ -51,7 +51,7 @@ export default function Timer({ startDate }) {
 }
 
 Timer.propTypes = {
-  startDate: PropTypes.string.isRequired,
+  startDate: PropTypes.string,
   isActive: PropTypes.bool,
 };
 Timer.defaultProps = {

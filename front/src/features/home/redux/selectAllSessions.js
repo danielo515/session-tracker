@@ -1,6 +1,7 @@
 /** @typedef {import("@types").Session} Session*/
 
 import { createSelector } from 'reselect';
+import selectRunningSession from './selectRunningSession';
 import selectSessions from './selectSessions';
 
 /**
@@ -14,4 +15,4 @@ function selectAllSessions(sessions, runningSession) {
   return [...sessions, { ...runningSession, endDate: new Date().toISOString() }].reverse();
 }
 
-export default createSelector(selectSessions, ({ home }) => home.runningSession, selectAllSessions);
+export default createSelector(selectSessions, selectRunningSession, selectAllSessions);

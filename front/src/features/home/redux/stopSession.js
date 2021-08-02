@@ -14,7 +14,7 @@ import * as api from '../../../common/api';
 /**
  * @typedef {A<HOME_STOP_SESSION_BEGIN, void>
  * |A<HOME_STOP_SESSION_DISMISS_ERROR, void>
- * |A<HOME_STOP_SESSION_SUCCESS, void>
+ * |A<HOME_STOP_SESSION_SUCCESS, import('@types').Session>
  * |A<HOME_STOP_SESSION_FAILURE, {error: any}>} Actions
  * */
 /**
@@ -22,7 +22,7 @@ import * as api from '../../../common/api';
  * @returns { import('redux-thunk').ThunkAction<
  * Promise<void>, import('rootReducer').RootState,unknown,Actions> }
  **/
-export function stopSession({ id, name }) {
+export function stopSession() {
   return async dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
@@ -30,7 +30,7 @@ export function stopSession({ id, name }) {
       payload: undefined,
     });
 
-    const { error, response } = await api.stopSession({ id, name });
+    const { error, response } = await api.stopSession();
     if (error) {
       dispatch({
         type: HOME_STOP_SESSION_FAILURE,

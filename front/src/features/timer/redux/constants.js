@@ -1,0 +1,1 @@
+export const TIMER_OPEN_EDIT = 'TIMER_OPEN_EDIT';

@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Box from '@material-ui/core/Box';
 import { DatePicker } from '@material-ui/pickers';
-import TimePicker from './TimePicker';
+import TimePicker from '../../common/TimePicker';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';

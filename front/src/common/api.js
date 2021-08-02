@@ -144,7 +144,7 @@ export const startSession = withDb((db, { name }) => {
     .then(() => ({ response: session, error: null }));
 });
 
-/** @type { (args: {id: string, name: string}) => Promise<apiResponse> }*/
+/** @type { () => Promise<apiResponse<Session>> }*/
 export const stopSession = withDb(async db => {
   const running = db.child('runningSession');
   const runningSnap = await running.get();
@@ -165,6 +165,13 @@ export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
     .child(id)
     .update({ name, startDate, endDate })
     .then(() => ({ response: { id, name, startDate, endDate }, error: null }));
+});
+/** @type { (args: {name: string, startDate: Date}) => Promise<apiResponse> }*/
+export const updateRunningSession = withDb((db, { name, startDate }) => {
+  return db
+    .child('runningSession')
+    .set({ name, startDate: startDate.toISOString() })
+    .then(() => ({ response: { name, startDate }, error: null }));
 });
 
 export const deleteSession = withDb((db, { id }) => {

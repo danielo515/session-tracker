@@ -5,13 +5,8 @@
 // a quick view about what data is used for the feature, at any time.
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
-
 const initialState = {
-  setupAppPending: true,
-  setupAppError: null,
-  loggedIn: false,
-  editRunningSessionPending: false,
-  editRunningSessionError: null,
+  isEditing: false
 };
 
 export default initialState;
