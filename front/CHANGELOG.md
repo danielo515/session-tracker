@@ -1,3 +1,20 @@
+# [1.15.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.14.0...v1.15.0) (2021-08-06)
+
+
+### Bug Fixes
+
+* **ui:** better labels and morehours ([1f2a953](https://github.com/danielo515/pento-tech-challenge/commit/1f2a95308cd499e35370e2a12b6f0f35d2567e65))
+* **UI:** get rid of material time picker ([25e04be](https://github.com/danielo515/pento-tech-challenge/commit/25e04be3ac0ae08e942092a202138b92cf22b86d))
+
+
+### Features
+
+* edit running session action and reducer ([b957f8a](https://github.com/danielo515/pento-tech-challenge/commit/b957f8a0ebe7d6fad0413c35be444f06ae68acf8))
+* real time update of running session stats ([43980b8](https://github.com/danielo515/pento-tech-challenge/commit/43980b8a28dbc572a97a2e6307d23d9023d77dbb))
+* rewind and reset functionality ([7aa26d7](https://github.com/danielo515/pento-tech-challenge/commit/7aa26d72b6ee638c2c3c86747ecc482148b26048))
+* stop running session ([b0a1523](https://github.com/danielo515/pento-tech-challenge/commit/b0a1523c976a016c9686a40392f7b1e9ad8ffab6))
+* today session stats ([e78a151](https://github.com/danielo515/pento-tech-challenge/commit/e78a151e4629438d5d4f6aac30d8a9db753b26e7))
+
 # [1.14.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.13.0...v1.14.0) (2021-03-31)
 
 
