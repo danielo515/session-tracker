@@ -12,7 +12,7 @@ import { calculateSessionDuration } from '@common/calculateSessionDuration';
 /**
  * @param {String} sessionName
  * */
-const getSessionStatsReducer = sessionName => {
+export const getSessionStatsReducer = sessionName => {
   const { weekInterval, monthInterval, todayInterval } = getTodayIntervals();
   const isToday = isWithinInterval(todayInterval);
   const isThisWeek = isWithinInterval(weekInterval);
@@ -41,7 +41,10 @@ const getSessionStatsReducer = sessionName => {
 };
 
 /**
- *
+ * This selector is used to get the running session stats.
+ * However, if you need real time updates (e.g. to also include the running session and update the UI),
+ * this selector should not be used because it can experience caching issues.
+ * For that it's better to use selectSessionStatsByName and sum the duration of the running session.
  * @param {Session[]} sessions
  * @param {Session | null} runningSession
  * @returns {Stats}

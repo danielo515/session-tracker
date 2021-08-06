@@ -13,12 +13,12 @@ import selectSessions from './selectSessions';
  * @returns {Session[]}
  */
 function selectTodaySessions(sessions, runningSession) {
-  const todaySessions = sessions.filter(session => {
+  const todaySessions = sessions.filter(session =>
     isWithinInterval(new Date(session.startDate), {
       start: startOfDay(new Date()),
       end: new Date(new Date().setHours(23, 59, 59, 999)),
-    });
-  });
+    }),
+  );
   if (!runningSession) return todaySessions;
   return [...todaySessions, { ...runningSession, endDate: new Date().toISOString() }].reverse();
 }

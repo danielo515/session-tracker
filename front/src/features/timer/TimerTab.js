@@ -16,6 +16,7 @@ import StopIcon from '@material-ui/icons/Stop';
 import { subMinutes } from 'date-fns';
 import { Replay, Replay30, Replay5 } from '@material-ui/icons';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
+import { useInterval } from '@common/hooks/useInterval';
 /**
  * Renders a date with a edit icon
  * @param {Object} props
@@ -44,19 +45,25 @@ function Started({ startDate }) {
 export default function TimerTab() {
   const { runningSession, editRunningSession } = useEditRunningSession();
   const { stopRunningSession } = useStopRunningSession();
+  const runningStats = useRunningSessionStats();
+  // Tick every minute to update the UI
+  const [count, setCount] = React.useState(0);
+  useInterval(() => {
+    setCount(count + 1);
+  }, 60e3);
+
   const resetSession = () =>
     editRunningSession({ name: runningSession?.name, startDate: new Date() });
   const minus5min = () =>
     editRunningSession({
       name: runningSession?.name,
-      startDate: subMinutes(new Date(runningSession?.startDate), 5),
+      startDate: subMinutes(new Date(runningSession?.startDate || Date.now()), 5),
     });
   const minus30min = () =>
     editRunningSession({
       name: runningSession?.name,
-      startDate: subMinutes(new Date(runningSession?.startDate), 30),
+      startDate: subMinutes(new Date(runningSession?.startDate || Date.now()), 30),
     });
-  const runningStats = useRunningSessionStats();
   if (!runningSession) return null;
   const dateStart = new Date(runningSession.startDate);
   const name = runningSession.name;
@@ -105,6 +112,13 @@ export default function TimerTab() {
 TimerTab.propTypes = {};
 TimerTab.defaultProps = {};
 
+/**
+ *
+ *
+ * @param {Object} props
+ * @param {string}  props.title
+ * @param {string}  props.subtitle
+ */
 function StatRow({ title, subtitle }) {
   return (
     <Box pt={2}>

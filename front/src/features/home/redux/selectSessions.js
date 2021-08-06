@@ -2,6 +2,8 @@
 /**
  * @param {State} state
  */
-const selectSessions = state => state.home.sessions;
+function selectSessions(state) {
+  return state.home.sessions;
+}
 
 export default selectSessions;
