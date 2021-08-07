@@ -54,14 +54,6 @@ module.exports = {
             },
           },
           {
-            test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              cacheDirectory: true,
-            },
-          },
-          {
             test: /\.less$/,
             loader: 'style-loader!css-loader?sourceMap!less-loader?sourceMap',
           },
@@ -120,6 +112,6 @@ module.exports = {
     child_process: 'empty',
   },
   performance: {
-    hints: false,
+    hints: 'warning',
   },
 };

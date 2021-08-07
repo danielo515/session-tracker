@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'rootReducer';
 import { cancelEditSession, deleteSession, updateSession } from '../redux/actions';
 import selectSessionToEdit from '../redux/selectSessionToEdit';
 import EditSession from './EditSession';
@@ -8,9 +9,7 @@ import EditSession from './EditSession';
 
 export default function EditSessionConnect() {
   const sessionToEdit = useSelector(selectSessionToEdit);
-  const editing = useSelector(
-/** @param {RootState} state*/
-state => (state as any).home.editing);
+  const editing = useSelector((state: RootState) => state.home.editing);
   const dispatch = useDispatch();
   const [onCancel, onUpdate, onDelete] = useMemo(() => {
     return [

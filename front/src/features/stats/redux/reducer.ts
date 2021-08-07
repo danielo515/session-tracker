@@ -13,14 +13,14 @@ import { default as navigateWeeksReducer } from './navigateWeeks';
 
 const reducers = [getSessionsReducer, navigateDaysReducer, navigateWeeksReducer];
 
-/** @typedef {typeof import('./initialState').default} State  */
+type State = typeof initialState;
 
 /**
  * @param {State} state
  * @param {*} action
  * @returns {State}
  */
-export default function reducer(state = initialState, action: any) {
+export default function reducer(state: State = initialState, action: any) {
   /** @type { State } */
   let newState;
   switch (action.type) {

@@ -9,6 +9,7 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import { diffDateStrings } from 'features/home/redux/diffDateStrings';
 import endOfDay from 'date-fns/endOfDay';
+import { RootState } from 'rootReducer';
 
 /**
  * Given a number of months ago selects the sessions of that day.
@@ -19,9 +20,7 @@ function selectRelativeMonthsSessions(sessions: any, monthsAgo = 0) {
   const today = endOfDay(new Date());
   const monthRef = subMonths(startOfMonth(today), monthsAgo);
   const interval = { start: monthRef, end: endOfMonth(monthRef) };
-  return sessions.filter(({
-    startDate
-  }: any) => isWithinInterval(new Date(startDate), interval));
+  return sessions.filter(({ startDate }: any) => isWithinInterval(new Date(startDate), interval));
 }
 
 const formatWeek = format('Io');
@@ -36,14 +35,7 @@ function groupSessionsByWeek(sessions: any) {
   /** @type { {names: Set<string>, sessionsByWeek: SessionsByWeek} } */
   const initial = { names: new Set(), sessionsByWeek: {} };
   const { names, sessionsByWeek } = sessions.reduce(
-    ({
-      names,
-      sessionsByWeek
-    }: any, {
-      startDate,
-      endDate,
-      name
-    }: any) => {
+    ({ names, sessionsByWeek }: any, { startDate, endDate, name }: any) => {
       const dateStr = formatWeek(new Date(startDate));
       names.add(name);
       const dayData = sessionsByWeek[dateStr] || { [name]: 0, startDate: dateStr };
@@ -67,10 +59,12 @@ function groupSessionsByWeek(sessions: any) {
 
 export const selectMonthSessions = createSelector(
   selectAllSessions,
-  /**
-   * @param {import('rootReducer').RootState} state
-   */
-  state => state.stats.monthsAgo,
+  (
+    /**
+     * @param {import('rootReducer').RootState} state
+     */
+    state: RootState,
+  ) => state.stats.monthsAgo,
   selectRelativeMonthsSessions,
 );
 

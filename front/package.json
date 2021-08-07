@@ -161,7 +161,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^26.0.22",
-    "@types/redux-logger": "^3.0.9"
+    "@types/redux-logger": "^3.0.9",
+    "webpack-cli": "^4.7.2"
   }
 }

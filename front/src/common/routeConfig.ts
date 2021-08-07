@@ -4,6 +4,7 @@ import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';
 import loginRoute from '../features/login/route';
 import timerRoute from '../features/timer/route';
+import { Route } from '@types';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -11,18 +12,17 @@ import timerRoute from '../features/timer/route';
 /** @type {Route[]}*/
 const childRoutes = [loginRoute, commonRoute, homeRoute, timerRoute];
 
-/** @type { import('../types').Route[] }*/
-// @ts-expect-error ts-migrate(4023) FIXME: Exported variable 'routes' has or is using name 'A... Remove this comment to see the full error message
-const routes = [
-    {
-        path: '/',
-        component: App,
-        name: 'root',
-        childRoutes: [
-            { path: 'not-found', name: 'Page not found', component: PageNotFound },
-            ...childRoutes,
-        ].filter(r => (r as any).component || ((r as any).childRoutes && (r as any).childRoutes.length > 0)),
-    },
+const routes: Route[] = [
+  {
+    path: '/',
+    component: App,
+    name: 'root',
+    childRoutes: [
+      { path: 'not-found', name: 'Page not found', component: PageNotFound },
+      ...childRoutes,
+      //@ts-ignore
+    ].filter(r => r.component ?? (r.childRoutes && r.childRoutes.length > 0)),
+  },
 ];
 
 // Handle isIndex property of route config:

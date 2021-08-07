@@ -1,5 +1,6 @@
 /** @typedef {import("@types").Session} Session*/
 
+import { Session } from '@types';
 import { createSelector } from 'reselect';
 import selectRelativeDaysSessions from './selectRelativeDaysSessions';
 
@@ -8,21 +9,20 @@ const msInADay = 864e5;
  * @param {Date|string} start
  * @param {Date|string} end
  */
-function dateDiff(start: any, end = new Date()) {
+function dateDiff(start: Date | string, end: Date | string = new Date()) {
   return new Date(end).getTime() - new Date(start).getTime();
 }
 
+type ReduceMap = { all: Map<string, { name: string; duration: number }>; unused: number };
 /**
  * Reducer function that adds duration to a session and keeps
  * track of the amount of unused milliseconds
  * @param {{all: Map<string,{name: string, duration: number}>, unused: number}} param0
  * @param {Session} session
  */
-const addDurationToSessions = ({
-  all,
-  unused
-}: any, session: any) => {
+const addDurationToSessions = ({ all, unused }: ReduceMap, session: Session) => {
   const duration = dateDiff(session.startDate, session.endDate);
+  //@ts-expect-error
   const { name, duration: oldDuration = 0 } = all.get(session.name) || session;
   all.set(name, { ...session, duration: oldDuration + duration });
 

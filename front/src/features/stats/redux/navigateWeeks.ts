@@ -1,6 +1,7 @@
 import { bindActionCreators, createAction, createReducer } from '@reduxjs/toolkit';
 import initialState from './initialState';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'rootReducer';
 
 const empty = { payload: '' };
 const noop = () => empty;
@@ -12,11 +13,7 @@ const previousWeek = createAction('stats/previous-week', noop);
 export function useNavigateWeeks() {
   const dispatch = useDispatch();
 
-  const weeksAgo = useSelector(
-/**
- * @param {RootState} state
- */
-state => (state as any).stats.weeksAgo);
+  const weeksAgo = useSelector((state: RootState) => state.stats.weeksAgo);
 
   return {
     weeksAgo,
