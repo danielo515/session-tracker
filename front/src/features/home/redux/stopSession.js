@@ -18,7 +18,6 @@ import * as api from '../../../common/api';
  * |A<HOME_STOP_SESSION_FAILURE, {error: any}>} Actions
  * */
 /**
- * @param {{id: string, name: string}} args
  * @returns { import('redux-thunk').ThunkAction<
  * Promise<void>, import('rootReducer').RootState,unknown,Actions> }
  **/

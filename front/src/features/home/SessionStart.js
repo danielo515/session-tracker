@@ -6,7 +6,8 @@ import useHandleChange from './hooks/useHandleChange';
 import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 
-/** @typedef {Object} FormProps
+/**
+ * @typedef {Object} FormProps
  * @property {string} sessionName
  * @property {'primary'|'secondary'} color
  * @property {boolean} visible

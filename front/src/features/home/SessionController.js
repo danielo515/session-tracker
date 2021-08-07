@@ -29,7 +29,6 @@ export const SessionController = props => {
         <SessionStop
           stopSession={stopSession}
           name={runningSession.name}
-          id={runningSession.id}
           startDate={runningSession.startDate}
         />
       ) : (

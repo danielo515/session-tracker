@@ -64,15 +64,21 @@ export const googleLogin = () =>
 /**
  * @param {{ email: string, password: string, name: string}} args
  */
-export const signUp = ({ email, password, name }) => {};
+export const signUp = ({
+  email,
+  password,
+  name,
+}: {
+  email: string;
+  password: string;
+  name: string;
+}) => {};
 
 /**
  * @template T
  * @typedef { {response: T, error: null} } apiResponse
  */
-/**
- * @typedef { { error: {status: number}, response: null } } errorResponse
- */
+type errorResponse = { error: { status: number }; response: null };
 
 /**
  * Injects the user namespace on database Reference to the provided handler
@@ -81,7 +87,9 @@ export const signUp = ({ email, password, name }) => {};
  * @param {(db: firebase.database.Reference, args: T) => K} handler
  * @returns { (args:T) => Promise<K|errorResponse> }
  */
-const withDb = handler => async args => {
+const withDb = <T, K>(
+  handler: (db: firebase.database.Reference, args: T) => K,
+): ((args: T) => Promise<K | errorResponse>) => async args => {
   const userId = firebase.auth()?.currentUser?.uid;
   if (!userId) return { error: { status: 401 }, response: null };
   const db = firebase
@@ -152,7 +160,7 @@ export const stopSession = withDb(async db => {
     throw new Error('Stopping not existing session');
   }
   const push = await db.child('all').push();
-  const session = { ...runningSnap.val(), id: (push).key, endDate: new Date().toISOString() };
+  const session = { ...runningSnap.val(), id: push.key, endDate: new Date().toISOString() };
   await running.set(null);
   await push.set(session);
   return { response: session, error: null };

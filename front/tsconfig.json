@@ -6,10 +6,10 @@
     "allowJs": true,
     "checkJs": true,
     "resolveJsonModule": true,
-    "noEmit": true,
     "strict": true,
     "jsx": "react",
     "declaration": true,
+    "noImplicitAny": true,
     "declarationDir": "types",
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
@@ -22,6 +22,6 @@
     }
   },
   "typeAcquisition": { "enable": true },
-  "include": ["src/**/*.js", "src/**/*.d.ts"],
+  "include": ["src/**/*.js", "src/**/*.ts", "src/index.tsx"],
   "exclude": ["node_modules"]
 }
