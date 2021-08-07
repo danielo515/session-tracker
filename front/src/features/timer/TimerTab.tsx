@@ -22,7 +22,9 @@ import { useInterval } from '@common/hooks/useInterval';
  * @param {Object} props
  * @param {Date} props.startDate
  */
-function Started({ startDate }) {
+function Started({
+  startDate
+}: any) {
   const formattedDate = format(startDate, 'E. HH:mm');
 
   return (
@@ -119,7 +121,10 @@ TimerTab.defaultProps = {};
  * @param {string}  props.title
  * @param {string}  props.subtitle
  */
-function StatRow({ title, subtitle }) {
+function StatRow({
+  title,
+  subtitle
+}: any) {
   return (
     <Box pt={2}>
       <Card>
@@ -145,7 +150,11 @@ function StatRow({ title, subtitle }) {
  * @param {import('react').ReactNode} props.icon
  * @param {import('react').ReactEventHandler} props.onClick
  **/
-function ButtonAction({ onClick, icon, color = 'primary' }) {
+function ButtonAction({
+  onClick,
+  icon,
+  color = 'primary'
+}: any) {
   return (
     <Button variant="outlined" color={color} onClick={onClick} size="large">
       <Box fontSize="2rem" clone>

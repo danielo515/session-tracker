@@ -9,7 +9,7 @@ import differenceInMinutes from 'date-fns/differenceInMinutes';
  * @param {DateCompatible} start
  * @param {DateCompatible} end
  */
-export const formatDateDiff = (start, end) =>
+export const formatDateDiff = (start: any, end: any) =>
   formatMinutes4Human(differenceInMinutes(new Date(end), new Date(start)));
 
 const formatStart = 'yyy-MM-dd HH:mm';
@@ -18,13 +18,13 @@ const formatStart = 'yyy-MM-dd HH:mm';
  * Formats startdate including hours and minutes
  * @param {DateCompatible} date
  */
-export function formatStartDate(date) {
+export function formatStartDate(date: any) {
   return format(new Date(date), formatStart);
 }
 /**
  * Convert milliseconds to a human readable format with hours and minutes
  * @param {number} ms milliseconds
  */
-export function msToHuman(ms) {
+export function msToHuman(ms: any) {
   return formatMinutes4Human(ms / 60000);
 }

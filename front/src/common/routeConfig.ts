@@ -12,16 +12,17 @@ import timerRoute from '../features/timer/route';
 const childRoutes = [loginRoute, commonRoute, homeRoute, timerRoute];
 
 /** @type { import('../types').Route[] }*/
+// @ts-expect-error ts-migrate(4023) FIXME: Exported variable 'routes' has or is using name 'A... Remove this comment to see the full error message
 const routes = [
-  {
-    path: '/',
-    component: App,
-    name: 'root',
-    childRoutes: [
-      { path: 'not-found', name: 'Page not found', component: PageNotFound },
-      ...childRoutes,
-    ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
-  },
+    {
+        path: '/',
+        component: App,
+        name: 'root',
+        childRoutes: [
+            { path: 'not-found', name: 'Page not found', component: PageNotFound },
+            ...childRoutes,
+        ].filter(r => (r as any).component || ((r as any).childRoutes && (r as any).childRoutes.length > 0)),
+    },
 ];
 
 // Handle isIndex property of route config:
@@ -32,12 +33,12 @@ const routes = [
  *
  * @param {Route} route
  */
-function handleIndexRoute(route) {
+function handleIndexRoute(route: any) {
   if (!route.childRoutes || !route.childRoutes.length) {
     return;
   }
 
-  const indexRoute = route.childRoutes.find(child => child.isIndex);
+  const indexRoute = route.childRoutes.find((child: any) => child.isIndex);
   if (indexRoute) {
     const first = {
       ...indexRoute,

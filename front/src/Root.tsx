@@ -1,7 +1,6 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
@@ -15,15 +14,15 @@ import history from './common/history';
  * @param {route[]} routes
  * @param {string} contextPath
  */
-function renderRouteConfigV3(routes, contextPath) {
+function renderRouteConfigV3(routes: any, contextPath: any) {
   // Resolve route config object in React Router v3.
   /** @type { import('react').ReactNodeArray }*/
-  const children = []; // children component list
+  const children: any = []; // children component list
   /**
    * @param {route} item
    * @param {string} routeContextPath
    */
-  const renderRoute = (item, routeContextPath) => {
+  const renderRoute = (item: any, routeContextPath: any) => {
     let newContextPath = /^\//.test(item.path) ? item.path : `${routeContextPath}/${item.path}`;
     newContextPath = newContextPath.replace(/\/+/g, '/');
     if (item.component && item.childRoutes) {
@@ -41,11 +40,11 @@ function renderRouteConfigV3(routes, contextPath) {
         <Route key={newContextPath} component={item.component} path={newContextPath} exact />,
       );
     } else if (item.childRoutes) {
-      item.childRoutes.forEach(r => renderRoute(r, newContextPath));
+      item.childRoutes.forEach((r: any) => renderRoute(r, newContextPath));
     }
   };
 
-  routes.forEach(item => renderRoute(item, contextPath));
+  routes.forEach((item: any) => renderRoute(item, contextPath));
 
   // Use Switch so that only the first matched route is rendered.
   return (
@@ -56,11 +55,12 @@ function renderRouteConfigV3(routes, contextPath) {
   );
 }
 
-export default class Root extends React.Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
-    routeConfig: PropTypes.array.isRequired,
-  };
+type Props = {
+    store: any;
+    routeConfig: any[];
+};
+
+export default class Root extends React.Component<Props> {
   render() {
     const children = renderRouteConfigV3(this.props.routeConfig, '/');
 

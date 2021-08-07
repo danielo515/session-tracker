@@ -15,7 +15,7 @@ const reducers = [
   signUpReducer,
 ];
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   /** @type { typeof initialState }*/
   let newState;
   switch (action.type) {

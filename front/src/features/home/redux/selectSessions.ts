@@ -2,7 +2,7 @@
 /**
  * @param {State} state
  */
-function selectSessions(state) {
+function selectSessions(state: any) {
   return state.home.sessions;
 }
 

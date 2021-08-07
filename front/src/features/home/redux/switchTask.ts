@@ -21,7 +21,11 @@ import * as api from '../../../common/api';
 /**
  * @param {{id: string, name: string, dispatch: Function}} param0
  */
-const stopSession = async ({ dispatch, id, name }) => {
+const stopSession = async ({
+  dispatch,
+  id,
+  name
+}: any) => {
   const { error, response } = await api.stopSession({ id, name });
 
   if (error) {
@@ -43,8 +47,10 @@ const stopSession = async ({ dispatch, id, name }) => {
  * @param {{name: string}} args
  * @return {import('redux-thunk').ThunkAction<void,RootState,unknown, Actions>}
  */
-export function switchTask({ name }) {
-  return async (dispatch, getState) => {
+export function switchTask({
+  name
+}: any) {
+  return async (dispatch: any, getState: any) => {
     dispatch({
       type: HOME_SWITCH_TASK_BEGIN,
     });
@@ -55,6 +61,7 @@ export function switchTask({ name }) {
 
     runningSession && (await stopSession({ dispatch, ...runningSession }));
 
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'error' does not exist on type 'unknown'.
     const { error: startError, response: startResp } = await api.startSession({ name });
 
     if (startError) {
@@ -86,7 +93,7 @@ export function dismissSwitchTaskError() {
 
 /** @typedef {import('./types').State} State*/
 /** @type {import('react').Reducer<State,Actions>} */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_SWITCH_TASK_BEGIN:
       // Just after a request is sent

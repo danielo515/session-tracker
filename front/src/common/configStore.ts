@@ -13,7 +13,7 @@ const middlewares = [thunk, router, windowTitle];
 /**
  * @param {*} f
  */
-let devToolsExtension = f => f;
+let devToolsExtension = (f: any) => f;
 
 /* istanbul ignore if  */
 if (process.env.NODE_ENV === 'development') {
@@ -22,17 +22,16 @@ if (process.env.NODE_ENV === 'development') {
   const logger = createLogger({ collapsed: true });
   middlewares.push(logger);
 
-  // @ts-ignore
-  if (window.devToolsExtension) {
-    // @ts-ignore
-    devToolsExtension = window.devToolsExtension();
+  if ((window as any).devToolsExtension) {
+    devToolsExtension = (window as any).devToolsExtension();
   }
 }
 
 /**
  * @param {import('./rootReducer').RootState} initialState
  */
-export default function configureStore(initialState) {
+// @ts-expect-error ts-migrate(4058) FIXME: Return type of exported function has or is using n... Remove this comment to see the full error message
+export default function configureStore(initialState: any) {
   const store = createStore(
     rootReducer(history),
     initialState,
@@ -40,14 +39,12 @@ export default function configureStore(initialState) {
   );
 
   /* istanbul ignore if  */
-  // @ts-ignore
-  if (module.hot) {
+  if ((module as any).hot) {
     // Enable Webpack hot module replacement for reducers
-    // @ts-ignore
-    module.hot.accept('./rootReducer', () => {
-      const nextRootReducer = require('./rootReducer').default(history); // eslint-disable-line
-      store.replaceReducer(nextRootReducer);
-    });
+(module as any).hot.accept('./rootReducer', () => {
+    const nextRootReducer = require('./rootReducer').default(history); // eslint-disable-line
+    store.replaceReducer(nextRootReducer);
+});
   }
   return store;
 }

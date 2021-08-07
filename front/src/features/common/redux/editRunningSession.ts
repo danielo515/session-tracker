@@ -14,14 +14,18 @@ import {
  * @param {String} args.name
  * @param {Date} args.startDate
  **/
-export function editRunningSession({ name, startDate }) {
-  return dispatch => {
+export function editRunningSession({
+  name,
+  startDate
+}: any) {
+  return (dispatch: any) => {
     // optionally you can have getState as the second argument
     dispatch({
       type: COMMON_EDIT_RUNNING_SESSION_BEGIN,
     });
 
     return updateRunningSession({ name, startDate })
+      // @ts-expect-error ts-migrate(2345) FIXME: Argument of type '({ error, response: runningSessi... Remove this comment to see the full error message
       .then(({ error, response: runningSession }) => {
         dispatch({
           type: COMMON_EDIT_RUNNING_SESSION_SUCCESS,
@@ -47,14 +51,11 @@ export function dismissEditRunningSessionError() {
 export function useEditRunningSession() {
   const dispatch = useDispatch();
 
-  const { runningSession, editRunningSessionPending, editRunningSessionError } = useSelector(
-    state => ({
-      runningSession: selectRunningSession(state),
-      editRunningSessionPending: state.common.editRunningSessionPending,
-      editRunningSessionError: state.common.editRunningSessionError,
-    }),
-    shallowEqual,
-  );
+  const { runningSession, editRunningSessionPending, editRunningSessionError } = useSelector(state => ({
+    runningSession: selectRunningSession(state),
+    editRunningSessionPending: (state as any).common.editRunningSessionPending,
+    editRunningSessionError: (state as any).common.editRunningSessionError,
+}), shallowEqual);
 
   const boundAction = useCallback(
     session => {
@@ -76,7 +77,7 @@ export function useEditRunningSession() {
   };
 }
 
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case COMMON_EDIT_RUNNING_SESSION_BEGIN:
       // Just after a request is sent

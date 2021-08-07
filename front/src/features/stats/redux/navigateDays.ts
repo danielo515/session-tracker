@@ -12,11 +12,10 @@ export function useNavigateDays() {
   const dispatch = useDispatch();
 
   const daysAgo = useSelector(
-    /**
-     * @param {RootState} state
-     */
-    state => state.stats.daysAgo,
-  );
+/**
+ * @param {RootState} state
+ */
+state => (state as any).stats.daysAgo);
 
   return {
     daysAgo,

@@ -1,11 +1,11 @@
 import React, { useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { VariableSizeList } from 'react-window';
 import clsx from 'clsx';
 import Skeleton from '@material-ui/lab/Skeleton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import List from '@material-ui/core/List';
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
 
@@ -22,7 +22,7 @@ const ListHeight = ItemHeight + 3 * ItemHeight;
 /**
  * @param {any[]} items
  */
-export function CalculateListHeight(items) {
+export function CalculateListHeight(items: any) {
   return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
 }
 // const NestedItemHeight = 400;
@@ -43,7 +43,7 @@ export function CalculateListHeight(items) {
  * @param {number} times
  * @returns {(fn:cb) => T[]}
  */
-const doTimes = times => fn => {
+const doTimes = (times: any) => (fn: any) => {
   const res = [];
   for (; times; times--) res.push(fn(times));
   return res;
@@ -53,12 +53,19 @@ const Loading = () => {
   const isSmallScreen = useMediaQuery('(max-width: 600px');
   return (
     <div className="home-sessions-skeleton">
-      {doTimes(isSmallScreen ? 5 : 8)(i => (
-        <Skeleton height={ItemHeight} key={i} />
-      ))}
+      {doTimes(isSmallScreen ? 5 : 8)((i: any) => <Skeleton height={ItemHeight} key={i} />)}
     </div>
   );
 };
+
+type OwnSessionsListProps = {
+    sessions?: any[];
+    startSession: (...args: any[]) => any;
+    editSession: (...args: any[]) => any;
+};
+
+// @ts-expect-error ts-migrate(2565) FIXME: Property 'defaultProps' is used before being assig... Remove this comment to see the full error message
+type SessionsListProps = OwnSessionsListProps & typeof SessionsList.defaultProps;
 
 /** @typedef {Object} Props
  * @property {SessionGroup[]} sessions
@@ -67,7 +74,7 @@ const Loading = () => {
  */
 
 /** @param {Props} props **/
-export default function SessionsList({ sessions, startSession, editSession }) {
+export default function SessionsList({ sessions, startSession, editSession }: SessionsListProps) {
   const classes = useStyles();
   const openRow = useRef('');
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
@@ -76,13 +83,13 @@ export default function SessionsList({ sessions, startSession, editSession }) {
     <div className={clsx(classes.root, 'home-sessions-list')}>
       <VirtualList
         data={sessions}
-        itemSize={idx => {
+        itemSize={(idx: any) => {
           const sessionGroup = sessions[idx];
-          return sessionGroup.name === openRow.current
-            ? CalculateListHeight(sessionGroup.sessions)
-            : ItemHeight;
+          return (sessionGroup as any).name === openRow.current
+    ? CalculateListHeight((sessionGroup as any).sessions)
+    : ItemHeight;
         }}
-        row={props => {
+        row={(props: any) => {
           const { index, style, data, resizeList } = props;
           const item = data[index];
 
@@ -92,7 +99,7 @@ export default function SessionsList({ sessions, startSession, editSession }) {
                 {...item}
                 startSession={start}
                 editSession={edit}
-                onOpen={name => {
+                onOpen={(name: any) => {
                   openRow.current = name;
                   resizeList();
                 }}
@@ -108,12 +115,6 @@ export default function SessionsList({ sessions, startSession, editSession }) {
     </div>
   );
 }
-
-SessionsList.propTypes = {
-  sessions: PropTypes.array,
-  startSession: PropTypes.func.isRequired,
-  editSession: PropTypes.func.isRequired,
-};
 SessionsList.defaultProps = {
   sessions: [],
 };
@@ -124,7 +125,7 @@ SessionsList.defaultProps = {
  * @param {number} idx
  * @param {T[]} data
  */
-const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
+const getIdOrName = (idx: any, data: any) => data[idx].id || data[idx].name;
 /**
  * @template T
  * @typedef {Object} VirtualProps
@@ -135,17 +136,25 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
 /**
  * @template T
  * @param {VirtualProps<T>} props **/
-export function VirtualList({ data, row, itemSize }) {
+export function VirtualList({
+  data,
+  row,
+  itemSize
+}: any) {
   const list = useRef();
   const resizeList = () => {
     if (list.current) {
       // list.current.scrollToItem(refreshIdx, 'start');
+      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       list.current.resetAfterIndex(0);
     }
   };
   return data.length ? (
     <Autosizer>
-      {({ height, width }) => (
+      {({
+        height,
+        width
+      }: any) => (
         <VariableSizeList
           innerElementType={List}
           className={'home-sessions-list'}
@@ -156,6 +165,7 @@ export function VirtualList({ data, row, itemSize }) {
           itemCount={data.length}
           itemData={data}
           itemKey={getIdOrName}
+          // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
           ref={list}
         >
           {props => row({ ...props, resizeList })}

@@ -9,11 +9,13 @@ import selectSessions from './selectSessions';
  * @param {string} sessionId
  * @returns {Session|void}
  */
-function selectSessionToEdit(sessions, sessionId) {
+function selectSessionToEdit(sessions: any, sessionId: any) {
   if (!sessionId) {
     return;
   }
-  const session = sessions.find(({ id }) => id === sessionId);
+  const session = sessions.find(({
+    id
+  }: any) => id === sessionId);
   // if (!session) throw new Error('Trying to edit non existing session');
   return session;
 }

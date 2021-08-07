@@ -22,13 +22,14 @@ import * as api from '../../../common/api';
  * Promise<void>, import('rootReducer').RootState,unknown,Actions> }
  **/
 export function stopSession() {
-  return async dispatch => {
+  return async (dispatch: any) => {
     // optionally you can have getState as the second argument
     dispatch({
       type: HOME_STOP_SESSION_BEGIN,
       payload: undefined,
     });
 
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
     const { error, response } = await api.stopSession();
     if (error) {
       dispatch({
@@ -57,7 +58,7 @@ export function dismissStopSessionError() {
  * @param {State}  state
  * @param {Actions} action
  */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_STOP_SESSION_BEGIN:
       // Just after a request is sent

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import PropTypes from 'prop-types';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import useHandleChange from './hooks/useHandleChange';
 import Zoom from '@material-ui/core/Zoom';
@@ -18,7 +17,14 @@ import Button from '@material-ui/core/Button';
 
 /** @param {FormProps} props **/
 
-export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, color }) {
+export function SessionForm({
+  onSubmit,
+  onChange,
+  sessionName,
+  visible,
+  Icon,
+  color
+}: any) {
   return (
     <form noValidate onSubmit={onSubmit}>
       <TextField
@@ -46,12 +52,19 @@ export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, co
   );
 }
 
+type OwnSessionStartProps = {
+    startSession: (...args: any[]) => any;
+};
+
+// @ts-expect-error ts-migrate(2565) FIXME: Property 'defaultProps' is used before being assig... Remove this comment to see the full error message
+type SessionStartProps = OwnSessionStartProps & typeof SessionStart.defaultProps;
+
 /** @typedef {Object} Props
  * @property {(args: {name: string}) => any} startSession
  */
 
 /** @param {Props} props **/
-export default function SessionStart({ startSession }) {
+export default function SessionStart({ startSession }: SessionStartProps) {
   const [sessionName, handleChange] = useHandleChange('');
   const [visible, setVisible] = useState(true);
   const start = () => {
@@ -71,8 +84,4 @@ export default function SessionStart({ startSession }) {
     </div>
   );
 }
-
-SessionStart.propTypes = {
-  startSession: PropTypes.func.isRequired,
-};
 SessionStart.defaultProps = {};

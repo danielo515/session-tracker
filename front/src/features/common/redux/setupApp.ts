@@ -14,7 +14,7 @@ import { isUserLoggedIn } from '../../../common/api';
 /** @typedef {import('../../../common/rootReducer').RootState} RootState*/
 /** @returns { import('redux-thunk').ThunkAction<Promise<void>,RootState,void, any>}*/
 export function setupApp() {
-  return async (dispatch, getState) => {
+  return async (dispatch: any, getState: any) => {
     const { setupAppPending } = getState().common;
     // optionally you can have getState as the second argument
     if (setupAppPending) {
@@ -27,7 +27,8 @@ export function setupApp() {
         dispatch({ type: COMMON_SETUP_APP_FAILURE, payload: { error: 'not_logged_ind' } });
         return history.replace('/login');
       }
-      dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: loggedUser.uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
+      dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: (loggedUser as any).uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
+ // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
       dispatch(syncSessions());
     }
     dispatch({ type: COMMON_SETUP_APP_SUCCESS });
@@ -50,7 +51,10 @@ export function dismissSetupAppError() {
  * @param {{type: string, payload: Object}} action
  * @return {typeof import('./initialState').default}
  */
-export function reducer(state, { type, payload }) {
+export function reducer(state: any, {
+  type,
+  payload
+}: any) {
   switch (type) {
     case COMMON_SETUP_APP_BEGIN:
       // Just after a request is sent

@@ -15,5 +15,6 @@ export default function MonthChart() {
       return selectMonthChartData(state);
     },
   );
+  // @ts-expect-error ts-migrate(2322) FIXME: Type 'unknown[]' is not assignable to type '{ star... Remove this comment to see the full error message
   return <Chart formatter={msToHoursMinutes} sessions={sessions} names={names} title="Month" />;
 }

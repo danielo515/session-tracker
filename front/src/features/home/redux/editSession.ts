@@ -7,7 +7,7 @@ import { HOME_EDIT_SESSION } from './constants';
 /**
  * @param {string} id
  */
-export function editSession(id) {
+export function editSession(id: any) {
   return {
     type: HOME_EDIT_SESSION,
     payload: { id },
@@ -18,7 +18,7 @@ export function editSession(id) {
  * @param {import('./types').InitialState} state
  * @param {{type: HOME_EDIT_SESSION, payload: {id: string}}} action
  */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_EDIT_SESSION:
       return {

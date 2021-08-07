@@ -1,7 +1,6 @@
 import React from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Title from './Title';
-import PropTypes from 'prop-types';
 import { stringToColour } from './stringToColour';
 import { noop } from 'common/noop';
 import { msToHuman } from 'formatters/formatDateDiff';
@@ -9,16 +8,31 @@ import { msToHuman } from 'formatters/formatDateDiff';
 /**
  * @param {{name: string, duration: number }} param
  */
-function getName({ name, duration }) {
+function getName({
+  name,
+  duration
+}: any) {
   return `${name} - ${msToHuman(duration)}`;
 }
+
+type OwnProps = {
+    title?: React.ReactElement;
+    formatter?: (...args: any[]) => any;
+    sessions?: {
+        name?: string;
+        duration?: number;
+    }[];
+};
+
+// @ts-expect-error ts-migrate(2565) FIXME: Property 'defaultProps' is used before being assig... Remove this comment to see the full error message
+type Props = OwnProps & typeof Donut.defaultProps;
 
 /**
  * @param {{ sessions: { name: string, duration: number }[],
  *           title: React.ReactChild,
  *          }} props
  */
-export default function Donut({ sessions, title }) {
+export default function Donut({ sessions, title }: Props) {
   return (
     <React.Fragment>
       <Title>{title}</Title>
@@ -37,7 +51,6 @@ export default function Donut({ sessions, title }) {
             nameKey="name"
             innerRadius={60}
             outerRadius={80}
-            // @ts-ignore it actually accepts a function, types are wrong
             label={getName}
             paddingAngle={4}
           >
@@ -50,21 +63,6 @@ export default function Donut({ sessions, title }) {
     </React.Fragment>
   );
 }
-/**
- * The expected shape of the data is
- * sessions: {startDAte: String, task1: duration, task2: duration}
- * names: ['task1','task2']
- */
-Donut.propTypes = {
-  title: PropTypes.element,
-  formatter: PropTypes.func,
-  sessions: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      duration: PropTypes.number,
-    }),
-  ),
-};
 Donut.defaultProps = {
   sessions: [],
   formatter: noop,

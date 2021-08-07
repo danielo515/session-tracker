@@ -3,7 +3,8 @@ import Navigation from '../common/Navigation';
 
 export class DefaultPage extends Component {
   render() {
-    const { pathname } = this.props.location; // default to root page name
+    const { pathname } = (this.props as any).location; // default to root page name
+ // default to root page name
 
     return (
       <React.Fragment>

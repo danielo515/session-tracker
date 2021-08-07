@@ -8,13 +8,16 @@ import {
 } from './constants';
 import * as api from '../../../common/api';
 
-export function startSession({ name }) {
-  return async dispatch => {
+export function startSession({
+  name
+}: any) {
+  return async (dispatch: any) => {
     // optionally you can have getState as the second argument
     dispatch({
       type: HOME_START_SESSION_BEGIN,
     });
 
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'error' does not exist on type 'unknown'.
     const { error, response } = await api.startSession({
       name: name || new Date().toDateString(),
     });
@@ -40,7 +43,7 @@ export function dismissStartSessionError() {
   };
 }
 
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_START_SESSION_BEGIN:
       // Just after a request is sent

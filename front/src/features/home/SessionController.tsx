@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} props
  */
-export const SessionController = props => {
+export const SessionController = (props: any) => {
   const css = useStyles();
   const { runningSession, startSession, stopSession } = props;
   return (
@@ -42,7 +42,7 @@ export const SessionController = props => {
 /**
  * @param {import('rootReducer').RootState} state
  */
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     runningSession: state.home.runningSession,
   };

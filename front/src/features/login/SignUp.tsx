@@ -35,9 +35,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const isValidName = (name) => typeof name === 'string' && name.length > 3
+const isValidName = (name: any) => typeof name === 'string' && name.length > 3
 
-export default function SignUp({ signUp }) {
+export default function SignUp({
+  signUp
+}: any) {
   const classes = useStyles();
   const { email, setEmail, password, setPassword, verificationPassword, setVerificationPassword, name, setName } = useLoginForm({ isSignUp: true });
   const handleSubmit = () => signUp({ email, password, name })

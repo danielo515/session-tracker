@@ -8,7 +8,7 @@ import {
 import * as api from '../../../common/api';
 
 export function updateSession(session = {}) {
-  return async (dispatch, getState) => {
+  return async (dispatch: any, getState: any) => {
     dispatch({
       type: HOME_UPDATE_SESSION_BEGIN,
     });
@@ -17,6 +17,7 @@ export function updateSession(session = {}) {
       login: { token },
     } = getState();
 
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'error' does not exist on type 'unknown'.
     const { error, response } = await api.updateSession({ token, ...session });
 
     if (error) {
@@ -41,7 +42,7 @@ export function dismissUpdateSessionError() {
   };
 }
 
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_UPDATE_SESSION_BEGIN:
       // Just after a request is sent
@@ -53,7 +54,9 @@ export function reducer(state, action) {
 
     case HOME_UPDATE_SESSION_SUCCESS: {
       const { session } = action.payload;
-      const updatedIdx = state.sessions.findIndex(({ id }) => id === session.id);
+      const updatedIdx = state.sessions.findIndex(({
+        id
+      }: any) => id === session.id);
       const sessions = state.sessions
         .slice(0, updatedIdx)
         .concat([session])

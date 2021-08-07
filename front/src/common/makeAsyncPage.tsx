@@ -20,7 +20,7 @@ export const LoadingComponent = () => (
  * You must provide a function that imports the required component
  * @param {() => any} importFn
  */
-function makeAsyncPage(importFn) {
+function makeAsyncPage(importFn: any) {
   return loadable({
     loader: importFn,
     loading: LoadingComponent,

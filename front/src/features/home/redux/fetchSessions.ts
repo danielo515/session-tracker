@@ -24,7 +24,7 @@ import * as api from '../../../common/api';
  * @return {import('redux-thunk').ThunkAction<void,RootState,unknown,Actions>}
  */
 export function fetchSessions() {
-  return async (dispatch, getState) => {
+  return async (dispatch: any, getState: any) => {
     dispatch({
       type: HOME_FETCH_SESSIONS_BEGIN,
     });
@@ -57,22 +57,22 @@ export function fetchSessions() {
  * @return {import('redux-thunk').ThunkAction<void,void,unknown,Actions|ExternalAction>}
  */
 export function syncSessions() {
-  return dispatch => {
+  return (dispatch: any) => {
     api.syncData({
-      onRunningUpdate(session) {
+      onRunningUpdate(session: any) {
         dispatch({
           type: HOME_START_SESSION_SUCCESS,
           payload: session,
         });
       },
-      onSessionAdded: value => {
+      onSessionAdded: (value: any) => {
         value.endDate &&
           dispatch({
             type: HOME_PUSHED_SESSION,
             payload: value,
           });
       },
-      onSessionUpdate: value => {
+      onSessionUpdate: (value: any) => {
         dispatch({
           type: HOME_UPDATED_SESSION,
           payload: value,
@@ -97,7 +97,7 @@ export function dismissFetchSessionsError() {
  * @param {T[]} arr
  * @param {T|((x:T) => T)} newVal
  */
-function updateAtIdx(idx, arr, newVal) {
+function updateAtIdx(idx: any, arr: any, newVal: any) {
   const oldVAl = arr[idx];
   return [
     ...arr.slice(0, idx),
@@ -106,7 +106,7 @@ function updateAtIdx(idx, arr, newVal) {
   ];
 }
 /** @type {import('react').Reducer<State,Actions>} */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_FETCH_SESSIONS_BEGIN:
       // Just after a request is sent
@@ -129,7 +129,9 @@ export function reducer(state, action) {
     }
 
     case HOME_PUSHED_SESSION: {
-      const sessionIdx = state.sessions.findIndex(({ id }) => id === action.payload.id);
+      const sessionIdx = state.sessions.findIndex(({
+        id
+      }: any) => id === action.payload.id);
       return {
         ...state,
         sessions:
@@ -139,15 +141,17 @@ export function reducer(state, action) {
       };
     }
     case HOME_UPDATED_SESSION: {
-      const sessionIdx = state.sessions.findIndex(({ id }) => id === action.payload.id);
+      const sessionIdx = state.sessions.findIndex(({
+        id
+      }: any) => id === action.payload.id);
       return {
         ...state,
         sessions:
           sessionIdx >= 0
-            ? updateAtIdx(sessionIdx, state.sessions, oldSession => ({
-                ...oldSession,
-                ...action.payload,
-              }))
+            ? updateAtIdx(sessionIdx, state.sessions, (oldSession: any) => ({
+            ...oldSession,
+            ...action.payload
+          }))
             : state.sessions,
       };
     }

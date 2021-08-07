@@ -15,11 +15,13 @@ import endOfDay from 'date-fns/endOfDay';
  * @param {Session[]} sessions
  * @returns {Session[]}
  */
-function selectRelativeMonthsSessions(sessions, monthsAgo = 0) {
+function selectRelativeMonthsSessions(sessions: any, monthsAgo = 0) {
   const today = endOfDay(new Date());
   const monthRef = subMonths(startOfMonth(today), monthsAgo);
   const interval = { start: monthRef, end: endOfMonth(monthRef) };
-  return sessions.filter(({ startDate }) => isWithinInterval(new Date(startDate), interval));
+  return sessions.filter(({
+    startDate
+  }: any) => isWithinInterval(new Date(startDate), interval));
 }
 
 const formatWeek = format('Io');
@@ -30,11 +32,18 @@ const formatWeek = format('Io');
  *
  * @param {Session[]} sessions
  */
-function groupSessionsByWeek(sessions) {
+function groupSessionsByWeek(sessions: any) {
   /** @type { {names: Set<string>, sessionsByWeek: SessionsByWeek} } */
   const initial = { names: new Set(), sessionsByWeek: {} };
   const { names, sessionsByWeek } = sessions.reduce(
-    ({ names, sessionsByWeek }, { startDate, endDate, name }) => {
+    ({
+      names,
+      sessionsByWeek
+    }: any, {
+      startDate,
+      endDate,
+      name
+    }: any) => {
       const dateStr = formatWeek(new Date(startDate));
       names.add(name);
       const dayData = sessionsByWeek[dateStr] || { [name]: 0, startDate: dateStr };

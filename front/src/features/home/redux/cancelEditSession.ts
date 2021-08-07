@@ -16,7 +16,7 @@ export function cancelEditSession() {
  * @param {*} action
  * @return {State}
  */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_CANCEL_EDIT_SESSION:
       return {

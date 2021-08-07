@@ -16,8 +16,8 @@ import * as api from '../../../common/api';
  * @param {string} id
  * @return {(dispatch: Dispatch, getState: Function) => void} thunk
  */
-export function deleteSession(id) {
-  return async (dispatch, getState) => {
+export function deleteSession(id: any) {
+  return async (dispatch: any, getState: any) => {
     dispatch({
       type: HOME_DELETE_SESSION_BEGIN,
     });
@@ -26,6 +26,7 @@ export function deleteSession(id) {
       login: { token },
     } = getState();
 
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'error' does not exist on type 'unknown'.
     const { error, response } = await api.deleteSession({ token, id });
 
     if (error) {
@@ -60,7 +61,7 @@ export function dismissDeleteSessionError() {
  * @param {{type: Type, payload: { session: Session, error?: any}}} action
  * @return {State}
  */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case HOME_DELETE_SESSION_BEGIN:
       // Just after a request is sent
@@ -77,7 +78,9 @@ export function reducer(state, action) {
         editing: false,
         deleteSessionPending: false,
         deleteSessionError: null,
-        sessions: state.sessions.filter(({ id }) => id !== action.payload.session.id), // It will be better to use finIndex and then slice the array
+        sessions: state.sessions.filter(({
+          id
+        }: any) => id !== action.payload.session.id), // It will be better to use finIndex and then slice the array
       };
 
     case HOME_DELETE_SESSION_FAILURE:

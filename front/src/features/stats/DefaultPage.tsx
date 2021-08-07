@@ -12,7 +12,9 @@ const connector = connect(null, mapDispatchToProps);
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} Props
  */
-function StatsDefaultPage({ fetchSessions }) {
+function StatsDefaultPage({
+  fetchSessions
+}: any) {
   useEffect(() => {
     fetchSessions();
   }, []);

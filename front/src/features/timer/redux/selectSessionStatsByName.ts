@@ -9,7 +9,7 @@ import { getSessionStatsReducer } from './selectRunningSessionStats';
  * @param {any} _
  * @param {string} name
  * */
-function getNameFromProps(_, name) {
+function getNameFromProps(_: any, name: any) {
   return name;
 }
 
@@ -21,7 +21,7 @@ function getNameFromProps(_, name) {
  * @param {string} [ sessionName ]
  * @returns {Stats}
  */
-function selectSessionStatsByName(sessions, sessionName) {
+function selectSessionStatsByName(sessions: any, sessionName: any) {
   const initialStats = {
     today: 0,
     thisMonth: 0,

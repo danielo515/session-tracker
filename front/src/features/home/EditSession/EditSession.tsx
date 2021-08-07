@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -31,8 +30,20 @@ const minuteMarks = [
   { value: 40, label: "40'" },
 ];
 
+type Props = {
+    open?: boolean;
+    name?: string;
+    id: string;
+    startDate: string;
+    endDate: string;
+    onClose?: (...args: any[]) => any;
+    onSubmit: (...args: any[]) => any;
+    onDelete: (...args: any[]) => any;
+};
+
 /** @param {import('type-fest').Merge<Session, Props>} props **/
-function EditSession(props) {
+function EditSession(props: Props) {
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'cancel' does not exist on type 'Props'.
   const { open, cancel, name, startDate, endDate = new Date(), id, onSubmit, onDelete } = props;
   const [date, setDate] = useState(new Date(startDate));
   const [dateEnd, setEndDate] = useState(new Date(endDate));
@@ -44,7 +55,7 @@ function EditSession(props) {
    * @param {*} _
    * @param {number|number[]} newHours
    */
-  const handleHourSlider = (_, newHours) => {
+  const handleHourSlider = (_: any, newHours: any) => {
     if (Array.isArray(newHours)) return;
     setEndDate(current => addHours(current, newHours - hours));
   };
@@ -52,11 +63,12 @@ function EditSession(props) {
    * @param {*} _
    * @param {number|number[]} value
    */
-  const handleMinuteSlider = (_, value) => {
+  const handleMinuteSlider = (_: any, value: any) => {
     if (Array.isArray(value)) return;
     setEndDate(current => addMinutes(current, value - minutes));
   };
   return (
+    // @ts-expect-error ts-migrate(2322) FIXME: Type 'boolean | undefined' is not assignable to ty... Remove this comment to see the full error message
     <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-edit">
       <DialogTitle id="edit-session-title">
         <Box display="flex" alignItems="center">
@@ -70,10 +82,12 @@ function EditSession(props) {
       </DialogTitle>
       <DialogContent>
         <Box pb={4} display="flex">
+          {/* @ts-expect-error ts-migrate(2322) FIXME: Type 'Dispatch<SetStateAction<Date>>' is not assig... Remove this comment to see the full error message */}
           <DatePicker label="Started at date" value={date} onChange={setDate} variant="inline" />
           <TimePicker id="time-picker-start" label="time" value={date} onChange={setDate} />
         </Box>
         <Box display="flex">
+          {/* @ts-expect-error ts-migrate(2322) FIXME: Type 'Dispatch<SetStateAction<Date>>' is not assig... Remove this comment to see the full error message */}
           <DatePicker label="Finished at" value={dateEnd} onChange={setEndDate} variant="inline" />
           <TimePicker id="time-picker-end" label="time" value={dateEnd} onChange={setEndDate} />
         </Box>
@@ -115,16 +129,5 @@ function EditSession(props) {
     </Dialog>
   );
 }
-
-EditSession.propTypes = {
-  open: PropTypes.bool,
-  name: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
-  onClose: PropTypes.func,
-  onSubmit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
 
 export default EditSession;

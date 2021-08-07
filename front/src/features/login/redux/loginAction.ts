@@ -26,8 +26,13 @@ import history from '../../../common/history';
  * @param {Props & {isGoogleLogin: boolean}} args
  * @return {loginAction}
  */
-export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false }) {
-  return async dispatch => {
+export function loginAction({
+  email,
+  password,
+  rememberMe = false,
+  isGoogleLogin = false
+}: any) {
+  return async (dispatch: any) => {
     // optionally you can have getState as the second argument
     dispatch({
       type: LOGIN_LOGIN_ACTION_BEGIN,
@@ -54,6 +59,7 @@ export function loginAction({ email, password, rememberMe = false, isGoogleLogin
 
     dispatch({
       type: LOGIN_LOGIN_ACTION_SUCCESS,
+      // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
       payload: { token: response.token },
     });
     history.replace('/');
@@ -68,7 +74,7 @@ export function dismissLoginActionError() {
   };
 }
 
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case LOGIN_LOGIN_ACTION_BEGIN:
       // Just after a request is sent

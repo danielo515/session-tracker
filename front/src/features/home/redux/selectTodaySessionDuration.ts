@@ -10,10 +10,10 @@ import selectTodaySessions from './selectTodaySessions';
  * @param {String?} sessionName
  * @returns {number}
  */
-function selectTodaySessionDuration(todaySessions, sessionName) {
+function selectTodaySessionDuration(todaySessions: any, sessionName: any) {
   if (!sessionName) return 0;
   return todaySessions.reduce(
-    (total, session) =>
+    (total: any, session: any) =>
       session.name === sessionName ? total + calculateSessionDuration(session) : total,
     0,
   );
@@ -25,6 +25,6 @@ export default createSelector(
    * @param {unknown} _
    * @param {String?} sessionName
    **/
-  (_, sessionName) => sessionName,
+  (_: any, sessionName: any) => sessionName,
   selectTodaySessionDuration,
 );

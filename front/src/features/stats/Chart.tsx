@@ -12,9 +12,20 @@ import {
   Legend,
 } from 'recharts';
 import Title from './Title';
-import PropTypes from 'prop-types';
 import { stringToColour } from './stringToColour';
 import { noop } from '@common/noop';
+
+type OwnProps = {
+    title?: React.ReactNode;
+    names: string[];
+    formatter?: (...args: any[]) => any;
+    sessions?: {
+        startDate: string;
+    }[];
+};
+
+// @ts-expect-error ts-migrate(2565) FIXME: Property 'defaultProps' is used before being assig... Remove this comment to see the full error message
+type Props = OwnProps & typeof Chart.defaultProps;
 
 /**
  * @param {{ sessions: import('../../types').Session[],
@@ -22,7 +33,7 @@ import { noop } from '@common/noop';
  *           names: string[],
  *          formatter: import('recharts').TickFormatterFunction }} props
  */
-export default function Chart({ sessions, title, names, formatter }) {
+export default function Chart({ sessions, title, names, formatter }: Props) {
   const theme = useTheme();
   const Bars = names.map(x => (
     <Bar key={x} dataKey={x} name={x} stackId="a" fill={stringToColour(x)} />
@@ -60,21 +71,6 @@ export default function Chart({ sessions, title, names, formatter }) {
     </React.Fragment>
   );
 }
-/**
- * The expected shape of the data is
- * sessions: {startDAte: String, task1: duration, task2: duration}
- * names: ['task1','task2']
- */
-Chart.propTypes = {
-  title: PropTypes.node,
-  names: PropTypes.arrayOf(PropTypes.string).isRequired,
-  formatter: PropTypes.func,
-  sessions: PropTypes.arrayOf(
-    PropTypes.shape({
-      startDate: PropTypes.string.isRequired,
-    }),
-  ),
-};
 Chart.defaultProps = {
   sessions: [],
   formatter: noop,

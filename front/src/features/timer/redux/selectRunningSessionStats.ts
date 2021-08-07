@@ -12,7 +12,7 @@ import { calculateSessionDuration } from '@common/calculateSessionDuration';
 /**
  * @param {String} sessionName
  * */
-export const getSessionStatsReducer = sessionName => {
+export const getSessionStatsReducer = (sessionName: any) => {
   const { weekInterval, monthInterval, todayInterval } = getTodayIntervals();
   const isToday = isWithinInterval(todayInterval);
   const isThisWeek = isWithinInterval(weekInterval);
@@ -21,7 +21,7 @@ export const getSessionStatsReducer = sessionName => {
    * @param {Session} session
    * @param {Stats} acc}
    * */
-  return (acc, session) => {
+  return (acc: any, session: any) => {
     if (session.name !== sessionName) {
       return acc;
     }
@@ -49,7 +49,7 @@ export const getSessionStatsReducer = sessionName => {
  * @param {Session | null} runningSession
  * @returns {Stats}
  */
-function selectRunningSessionStats(sessions, runningSession) {
+function selectRunningSessionStats(sessions: any, runningSession: any) {
   const initialStats = { today: 0, thisMonth: 0, thisWeek: 0 };
   if (!runningSession) return initialStats;
   return [...sessions, { ...runningSession, endDate: new Date().toISOString() }].reduce(

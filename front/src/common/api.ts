@@ -22,7 +22,10 @@ export function isUserLoggedIn() {
 /**
  * @param {{ email: string, password: string}} args
  */
-export function login({ email, password }) {
+export function login({
+  email,
+  password
+}: any) {
   return { error: null, response: null };
 }
 
@@ -121,6 +124,7 @@ export const listSessions = withDb(db => {
  *                  onRunningUpdate: sessionCbNull,
  *                  onSessionUpdate: sessionCb }) => void }
  * */
+// @ts-expect-error ts-migrate(2345) FIXME: Argument of type '(db: Reference, { onSessionAdded... Remove this comment to see the full error message
 export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
   const all = db.child('all');
   const last = await all
@@ -144,6 +148,7 @@ export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate, onS
 /**
  * @type { (args: {name: string}) => Promise<apiResponse<Session>> }
  */
+// @ts-expect-error ts-migrate(2345) FIXME: Argument of type '(db: Reference, { name }: { name... Remove this comment to see the full error message
 export const startSession = withDb((db, { name }) => {
   const session = { name, startDate: new Date().toISOString() };
   return db
@@ -167,6 +172,7 @@ export const stopSession = withDb(async db => {
 });
 
 /** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => Promise<apiResponse> }*/
+// @ts-expect-error ts-migrate(2345) FIXME: Argument of type '(db: Reference, { id, name, star... Remove this comment to see the full error message
 export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
   return db
     .child('all')
@@ -175,6 +181,7 @@ export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
     .then(() => ({ response: { id, name, startDate, endDate }, error: null }));
 });
 /** @type { (args: {name: string, startDate: Date}) => Promise<apiResponse> }*/
+// @ts-expect-error ts-migrate(2345) FIXME: Argument of type '(db: Reference, { name, startDat... Remove this comment to see the full error message
 export const updateRunningSession = withDb((db, { name, startDate }) => {
   return db
     .child('runningSession')
@@ -182,6 +189,7 @@ export const updateRunningSession = withDb((db, { name, startDate }) => {
     .then(() => ({ response: { name, startDate }, error: null }));
 });
 
+// @ts-expect-error ts-migrate(2345) FIXME: Argument of type '(db: Reference, { id }: { id: an... Remove this comment to see the full error message
 export const deleteSession = withDb((db, { id }) => {
   return db
     .child('all')

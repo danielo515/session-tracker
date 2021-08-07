@@ -10,7 +10,7 @@ import selectSessions from './selectSessions';
  * @param {Session | null} runningSession
  * @returns {Session[]}
  */
-function selectAllSessions(sessions, runningSession) {
+function selectAllSessions(sessions: any, runningSession: any) {
   if (!runningSession) return sessions;
   return [...sessions, { ...runningSession, endDate: new Date().toISOString() }].reverse();
 }

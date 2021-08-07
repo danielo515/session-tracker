@@ -20,7 +20,7 @@ const reducers = [getSessionsReducer, navigateDaysReducer, navigateWeeksReducer]
  * @param {*} action
  * @returns {State}
  */
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   /** @type { State } */
   let newState;
   switch (action.type) {

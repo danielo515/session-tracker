@@ -12,11 +12,13 @@ import isWithinInterval from 'date-fns/isWithinInterval';
  * @param {Session[]} sessions
  * @returns {Session[]}
  */
-function selectRelativeDaysSessions(sessions, daysAgo = 0) {
+function selectRelativeDaysSessions(sessions: any, daysAgo = 0) {
   const today = endOfDay(new Date());
   const dayRef = subDays(today, daysAgo);
   const interval = { start: startOfDay(dayRef), end: endOfDay(dayRef) };
-  return sessions.filter(({ startDate }) => isWithinInterval(new Date(startDate), interval));
+  return sessions.filter(({
+   startDate
+  }: any) => isWithinInterval(new Date(startDate), interval));
 }
 
 export default createSelector(
@@ -26,6 +28,6 @@ export default createSelector(
    * @param {any} _
    * @param {number} props the props from the component
    */
-  (_, props) => props,
+  (_: any, props: any) => props,
   selectRelativeDaysSessions,
 );

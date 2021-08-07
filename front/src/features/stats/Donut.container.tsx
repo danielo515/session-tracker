@@ -14,13 +14,16 @@ import selectWeekChartData from './redux/selectWeekChartData';
  */
 
 /** @param {Props} props **/
-export default function DonutContainer({ title }) {
+export default function DonutContainer({
+  title
+}: any) {
   const sessions = useSelector(
     /** @param {State} state */
     state => {
       console.log(selectWeekChartData(state));
-      return selectDonutSessions(state, state.stats.daysAgo);
+      return selectDonutSessions(state, (state as any).stats.daysAgo);
     },
   );
+  // @ts-expect-error ts-migrate(2322) FIXME: Type 'any[]' is not assignable to type '{ name?: s... Remove this comment to see the full error message
   return <Donut sessions={sessions} title={title} />;
 }

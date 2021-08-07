@@ -2,7 +2,7 @@
  * convert minutes into hours:minutes format
  * @param {number} minutes
  */
-function minsToHoursMinutes(minutes) {
+function minsToHoursMinutes(minutes: any) {
   const hours = (minutes / 60) | 0;
   const mins = minutes % 60;
   return `${hours}:${mins.toString().padStart(2, '0')}`;
@@ -12,7 +12,7 @@ function minsToHoursMinutes(minutes) {
  * convert milliseconds into hours:minutes format
  * @param {number} ms
  */
-export function msToHoursMinutes(ms) {
+export function msToHoursMinutes(ms: any) {
   return minsToHoursMinutes(Math.floor(ms / 60000));
 }
 

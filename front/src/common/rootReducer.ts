@@ -27,9 +27,8 @@ const reducerMap = {
  * creates a root reducer injecting router reducer
  * @param {typeof import('../common/history').default} history
  */
-const rootReducer = history =>
-  combineReducers({
-    ...reducerMap,
-    router: connectRouter(history),
-  });
+const rootReducer = (history: any) => combineReducers({
+  ...reducerMap,
+  router: connectRouter(history),
+});
 export default rootReducer;

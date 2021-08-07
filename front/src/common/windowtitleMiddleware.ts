@@ -5,7 +5,7 @@ import {
 } from 'features/home/redux/constants';
 
 /** @type { import("redux").Middleware }*/
-const windowTitle = store => next => action => {
+const windowTitle = (store: any) => (next: any) => (action: any) => {
   next(action);
   switch (action.type) {
     case HOME_START_SESSION_SUCCESS:

@@ -17,6 +17,7 @@ export default function WeekChart() {
     },
   );
   return (
+    // @ts-expect-error ts-migrate(2322) FIXME: Type 'unknown[]' is not assignable to type '{ star... Remove this comment to see the full error message
     <Chart formatter={msToHuman} sessions={sessions} names={names} title={<WeeksNavigator />} />
   );
 }

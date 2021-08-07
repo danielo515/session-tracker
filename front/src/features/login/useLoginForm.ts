@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-const handleEvent = set => ({ target }) => set(target.value);
+const handleEvent = (set: any) => ({
+    target
+}: any) => set(target.value);
 
 const useSignUp = () => {
     const [verificationPassword, setVerificationPassword] = useState('');

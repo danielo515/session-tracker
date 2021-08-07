@@ -2,4 +2,4 @@
  * Does nothing
  * @param {*} args
  */
-export function noop(args) {}
+export function noop(args: any) {}

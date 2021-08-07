@@ -16,13 +16,13 @@ function getTodayISO() {
  * @param {import("@types").Session[]} sessions
  * @returns {SessionGroup[]}
  */
-function selectGroupedSessions(sessions) {
+function selectGroupedSessions(sessions: any) {
   const today = getTodayISO();
   const grouped = sessions.reduce(
     /**
      * @param {Grouped} result
      */
-    (result, session) => {
+    (result: any, session: any) => {
       const { name, startDate, endDate } = session;
       const group = result[name] || { name, sessions: [], total: 0, lastRun: startDate };
       group.sessions.push(session);

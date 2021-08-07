@@ -8,13 +8,13 @@ import {
 } from './constants';
 
 export function loadSessionSettings(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return (dispatch: any) => { // optionally you can have getState as the second argument
     dispatch({
       type: SETTINGS_LOAD_SESSION_SETTINGS_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = (args as any).error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then(
         (res) => {
           dispatch({
@@ -44,17 +44,14 @@ export function dismissLoadSessionSettingsError() {
   };
 }
 
-export function useLoadSessionSettings(params) {
+export function useLoadSessionSettings(params: any) {
   const dispatch = useDispatch();
 
-  const { home, loadSessionSettingsPending, loadSessionSettingsError } = useSelector(
-    state => ({
-      home: state.settings.home,
-      loadSessionSettingsPending: state.settings.loadSessionSettingsPending,
-      loadSessionSettingsError: state.settings.loadSessionSettingsError,
-    }),
-    shallowEqual,
-  );
+  const { home, loadSessionSettingsPending, loadSessionSettingsError } = useSelector(state => ({
+    home: (state as any).settings.home,
+    loadSessionSettingsPending: (state as any).settings.loadSessionSettingsPending,
+    loadSessionSettingsError: (state as any).settings.loadSessionSettingsError,
+}), shallowEqual);
 
   const boundAction = useCallback((...args) => {
     return dispatch(loadSessionSettings(...args));
@@ -77,7 +74,7 @@ export function useLoadSessionSettings(params) {
   };
 }
 
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case SETTINGS_LOAD_SESSION_SETTINGS_BEGIN:
       // Just after a request is sent

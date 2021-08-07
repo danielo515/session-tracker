@@ -11,7 +11,11 @@ import { getTodayIntervals } from 'dateUtils/getIntervals';
  * @param {(d:Date) => string} formatter should format the date to string
  * @returns {(map:MapRow, session:Session) => MapRow}
  */
-export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDate }) => {
+export const addToRow = (formatter: any, diffCalc: any) => (map: any, {
+  name,
+  startDate,
+  endDate
+}: any) => {
   const duration = diffCalc(new Date(endDate || Date.now()), new Date(startDate));
   const date = formatter(new Date(startDate));
 
@@ -37,17 +41,24 @@ const makeMonthRow = addToRow(format('Io'), differenceInMinutes);
  * @template {{names: Set<string>}} HasName
  * @param {HasName} args
  */
-const omitNamesProp = ({ names, ...rest }) => rest;
+const omitNamesProp = ({
+  names,
+  ...rest
+}: any) => rest;
 
 /**
  *
  * @param {{  weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} } args
  */
-export function createChartData({ weeksAgo = 0, monthsAgo = 0, sessions }) {
+export function createChartData({
+  weeksAgo = 0,
+  monthsAgo = 0,
+  sessions
+}: any) {
   const { weekInterval, monthInterval } = getTodayIntervals({ weeksAgo, monthsAgo });
   // This was a series of filters and maps chained, but reduce is way more performant and powerful
   const chartData = sessions.reduce(
-    (acc, session) => {
+    (acc: any, session: any) => {
       const d = new Date(session.startDate);
       if (isWithinInterval(d, weekInterval)) acc.w = makeWeekRow(acc.w, session);
       if (isWithinInterval(d, monthInterval)) acc.m = makeMonthRow(acc.m, session);

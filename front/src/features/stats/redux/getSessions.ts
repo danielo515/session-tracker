@@ -15,7 +15,7 @@ import * as api from '../../../common/api';
  * @return {GetSessionThunk}
  */
 export function getSessions() {
-  return async (dispatch, getState) => {
+  return async (dispatch: any, getState: any) => {
     dispatch({
       type: STATS_GET_SESSIONS_BEGIN,
     });
@@ -53,7 +53,10 @@ export function dismissGetSessionsError() {
  * @param {State} state
  * @param {{ type: string, payload: {all: Session[], error: string}}} action
  **/
-export function reducer(state, { type, payload }) {
+export function reducer(state: any, {
+  type,
+  payload
+}: any) {
   switch (type) {
     case STATS_GET_SESSIONS_BEGIN:
       // Just after a request is sent

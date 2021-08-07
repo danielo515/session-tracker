@@ -15,11 +15,13 @@ import { diffDateStrings } from 'features/home/redux/diffDateStrings';
  * @param {Session[]} sessions
  * @returns {Session[]}
  */
-function selectRelativeWeeksSessions(sessions, weeksAgo = 0) {
+function selectRelativeWeeksSessions(sessions: any, weeksAgo = 0) {
   const today = endOfDay(new Date());
   const weekRef = subWeeks(startOfWeek(today), weeksAgo);
   const interval = { start: weekRef, end: endOfWeek(weekRef) };
-  return sessions.filter(({ startDate }) => isWithinInterval(new Date(startDate), interval));
+  return sessions.filter(({
+    startDate
+  }: any) => isWithinInterval(new Date(startDate), interval));
 }
 
 const formatDay = format('E do MMM');
@@ -30,11 +32,18 @@ const formatDay = format('E do MMM');
  *
  * @param {Session[]} sessions
  */
-function groupSessionsByDay(sessions) {
+function groupSessionsByDay(sessions: any) {
   /** @type { {names: Set<string>, sessionsByDay: SessionsByDay} } */
   const initial = { names: new Set(), sessionsByDay: {} };
   const { names, sessionsByDay } = sessions.reduce(
-    ({ names, sessionsByDay }, { startDate, endDate, name }) => {
+    ({
+      names,
+      sessionsByDay
+    }: any, {
+      startDate,
+      endDate,
+      name
+    }: any) => {
       const dateStr = formatDay(new Date(startDate));
       names.add(name);
       const dayData = sessionsByDay[dateStr] || { [name]: 0, startDate: dateStr };

@@ -13,11 +13,10 @@ export function useNavigateWeeks() {
   const dispatch = useDispatch();
 
   const weeksAgo = useSelector(
-    /**
-     * @param {RootState} state
-     */
-    state => state.stats.weeksAgo,
-  );
+/**
+ * @param {RootState} state
+ */
+state => (state as any).stats.weeksAgo);
 
   return {
     weeksAgo,

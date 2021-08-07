@@ -13,7 +13,7 @@ const reducers = [
   loadSessionSettingsReducer,
 ];
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here

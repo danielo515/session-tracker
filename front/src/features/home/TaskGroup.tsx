@@ -58,8 +58,8 @@ export function TaskGroup({
   onOpen,
   onClose,
   startSession,
-  editSession,
-}) {
+  editSession
+}: any) {
   const css = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   /* This is tricky. 

@@ -16,12 +16,17 @@ import history from '../../../common/history';
  * @param  {{ email: string, password: string, name: string} } args
  * @return {(dispatch: Dispatch)=> Promise<*>}
  */
-export function signUp({ email, password, name }) {
-  return async dispatch => {
+export function signUp({
+  email,
+  password,
+  name
+}: any) {
+  return async (dispatch: any) => {
     dispatch({
       type: LOGIN_SIGN_UP_BEGIN,
     });
 
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'error' does not exist on type 'void'.
     const { error, response } = await api.signUp({ email, password, name });
 
     if (error) {
@@ -57,7 +62,7 @@ export function dismissSignUpError() {
  * @param {*} action
  * @return {State}
  */
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case LOGIN_SIGN_UP_BEGIN:
       // Just after a request is sent
