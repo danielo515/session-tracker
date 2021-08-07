@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-export default function configureStore(initialState: RootState) {
+export default function configureStore(initialState?: RootState): any {
   const store = createStore(
     rootReducer(history),
     initialState,

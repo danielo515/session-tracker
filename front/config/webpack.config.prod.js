@@ -87,14 +87,6 @@ module.exports = {
             },
           },
           {
-            test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              compact: true,
-            },
-          },
-          {
             test: /\.less$/,
             loader: 'style-loader!css-loader!less-loader',
           },

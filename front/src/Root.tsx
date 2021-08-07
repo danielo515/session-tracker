@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
+import { Route as AppRoute } from './types';
 import history from './common/history';
 
 /** @typedef { import('./types').Route } route*/
@@ -14,7 +15,7 @@ import history from './common/history';
  * @param {route[]} routes
  * @param {string} contextPath
  */
-function renderRouteConfigV3(routes: any, contextPath: any) {
+function renderRouteConfigV3(routes: AppRoute[], contextPath: string) {
   // Resolve route config object in React Router v3.
   /** @type { import('react').ReactNodeArray }*/
   const children: any = []; // children component list
@@ -56,8 +57,8 @@ function renderRouteConfigV3(routes: any, contextPath: any) {
 }
 
 type Props = {
-    store: any;
-    routeConfig: any[];
+  store: any;
+  routeConfig: any[];
 };
 
 export default class Root extends React.Component<Props> {
