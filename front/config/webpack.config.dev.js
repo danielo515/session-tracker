@@ -13,8 +13,6 @@ const publicPath = '/';
 const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 
-console.log('PUTOOO', paths.appIndexJs);
-
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
