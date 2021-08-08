@@ -17,6 +17,7 @@ import { subMinutes } from 'date-fns';
 import { Replay, Replay30, Replay5 } from '@material-ui/icons';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 import { useInterval } from '@common/hooks/useInterval';
+import QuickPick from '../common/QuickPick';
 /**
  * Renders a date with a edit icon
  * @param {Object} props
@@ -64,7 +65,12 @@ export default function TimerTab() {
       name: runningSession?.name,
       startDate: subMinutes(new Date(runningSession?.startDate || Date.now()), 30),
     });
-  if (!runningSession) return null;
+  if (!runningSession)
+    return (
+      <Page scroll>
+        <QuickPick />
+      </Page>
+    );
   const dateStart = new Date(runningSession.startDate);
   const name = runningSession.name;
   return (

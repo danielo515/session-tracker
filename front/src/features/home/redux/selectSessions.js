@@ -3,7 +3,7 @@
  * @param {State} state
  */
 function selectSessions(state) {
-  return state.home.sessions;
+  return state.home.sessions || [];
 }
 
 export default selectSessions;
