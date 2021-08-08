@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.15.0...v1.16.0) (2021-08-08)
+
+
+### Features
+
+* QuickPick a session UI ([7e43274](https://github.com/danielo515/pento-tech-challenge/commit/7e432742e6d94198f4776ad97cea954d403571c3))
+
 # [1.15.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.14.0...v1.15.0) (2021-08-06)
 
 
