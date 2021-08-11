@@ -6,7 +6,7 @@ import Page from '../common/Page';
 // import PropTypes from 'prop-types';
 import {} from './redux/hooks';
 import { useEditRunningSession } from 'features/common/redux/editRunningSession';
-import { Button, Card, Grid, IconButton, Typography } from '@material-ui/core';
+import { Button, Card, IconButton, Typography } from '@material-ui/core';
 import useRunningSessionStats from './useRunningSessionStats';
 import { msToHuman } from 'formatters/formatDateDiff';
 import format from 'date-fns/format';
@@ -14,16 +14,15 @@ import EditIcon from '@material-ui/icons/Edit';
 import StopIcon from '@material-ui/icons/Stop';
 // import FastRewindIcon from '@material-ui/icons/FastRewind';
 import { subMinutes } from 'date-fns';
-import { Replay, Add, Remove, Replay5 } from '@material-ui/icons';
+import { Replay, Replay30, Replay5, Plus } from '@material-ui/icons';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 import { useInterval } from '@common/hooks/useInterval';
-import QuickPick from '../common/QuickPick';
 /**
  * Renders a date with a edit icon
  * @param {Object} props
  * @param {Date} props.startDate
  */
-function Started({ startDate }) {
+function Started({ startDate }: any) {
   const formattedDate = format(startDate, 'E. HH:mm');
 
   return (
@@ -42,7 +41,6 @@ function Started({ startDate }) {
     </Box>
   );
 }
-
 const addMinutesToSession = (amount, edit, runningSession) => () =>
   edit({
     name: runningSession?.name,
@@ -92,21 +90,19 @@ export default function TimerTab() {
       >
         <Started startDate={dateStart} />
       </Box>
-      <Box display="flex" justifyContent="space-around" paddingBottom={2}>
+      <Box display="flex" justifyContent="space-around">
         <StatRow title="Today" subtitle={msToHuman(runningStats.today)} />
         <StatRow title="Week" subtitle={msToHuman(runningStats.thisWeek)} />
         <StatRow title="Month" subtitle={msToHuman(runningStats.thisMonth)} />
       </Box>
-      <Grid container spacing={1} alignContent="center" alignItems="center" justify="center">
-        <ButtonActionText onClick={add5min} icon={<Add />} text='+5"' />
-        <ButtonActionText onClick={add30min} icon={<Add />} text='+30"' />
-        <ButtonActionText onClick={remove30min} icon={<Remove />} text='-30"' />
-        <ButtonActionText onClick={remove5min} icon={<Remove />} text='-5"' />
-      </Grid>
-      <Box display="flex" justifyContent="center" alignItems="center" p={1}>
-        <Box paddingRight={1}>
-          <ButtonAction onClick={resetSession} icon={<Replay />} />
-        </Box>
+      <Box display="flex" justifyContent="space-around" alignItems="center" pt={4} p={3}>
+        <ButtonAction onClick={add5min} icon={<Replay5 />} />
+        <ButtonAction onClick={add30min} icon={<Replay30 />} />
+        <ButtonAction onClick={remove5min} icon={<Replay30 />} />
+        <ButtonAction onClick={remove30min} icon={<Replay30 />} />
+      </Box>
+      <Box display="flex" justifyContent="space-around" alignItems="center" pt={4} p={3}>
+        <ButtonAction onClick={resetSession} icon={<Replay />} />
         <ButtonAction
           icon={<StopIcon />}
           color="secondary"
@@ -127,7 +123,7 @@ TimerTab.defaultProps = {};
  * @param {string}  props.title
  * @param {string}  props.subtitle
  */
-function StatRow({ title, subtitle }) {
+function StatRow({ title, subtitle }: any) {
   return (
     <Box pt={2}>
       <Card>
@@ -153,36 +149,10 @@ function StatRow({ title, subtitle }) {
  * @param {import('react').ReactNode} props.icon
  * @param {import('react').ReactEventHandler} props.onClick
  **/
-function ButtonAction({ onClick, icon, color = 'primary' }) {
+function ButtonAction({ onClick, icon, color = 'primary' }: any) {
   return (
-    <Button variant="outlined" color={color} onClick={onClick} size="large">
-      <Box fontSize="2rem" clone>
-        {icon}
-      </Box>
+    <Button variant="outlined" color={color} onClick={onClick} startIcon={icon} size="large">
+      <Box fontSize="2rem" clone></Box>
     </Button>
-  );
-}
-
-/**
- * Renders a button with a label
- * @param {Object} props
- * @param {('primary'|'secondary')} [ props.color ]
- * @param {import('react').ReactNode} props.icon
- * @param {string} props.text
- * @param {import('react').ReactEventHandler} props.onClick
- **/
-function ButtonActionText({ onClick, icon, text, color = 'primary' }) {
-  return (
-    <Box padding={1}>
-      <Button
-        variant="outlined"
-        color={color}
-        onClick={onClick}
-        size="large"
-        // startIcon={icon}
-      >
-        <Box>{text}</Box>
-      </Button>
-    </Box>
   );
 }
