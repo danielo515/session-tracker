@@ -8,6 +8,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import List from '@material-ui/core/List';
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
+import { useSelectRow } from './redux/selectRow';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,7 +70,7 @@ const Loading = () => {
 /** @param {Props} props **/
 export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
-  const openRow = useRef('');
+  const { selectedRow } = useSelectRow();
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
   const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
   return (
@@ -78,7 +79,7 @@ export default function SessionsList({ sessions, startSession, editSession }) {
         data={sessions}
         itemSize={idx => {
           const sessionGroup = sessions[idx];
-          return sessionGroup.name === openRow.current
+          return sessionGroup.name === selectedRow
             ? CalculateListHeight(sessionGroup.sessions)
             : ItemHeight;
         }}
@@ -88,19 +89,7 @@ export default function SessionsList({ sessions, startSession, editSession }) {
 
           return (
             <div style={style} className="virtual-node">
-              <TaskGroup
-                {...item}
-                startSession={start}
-                editSession={edit}
-                onOpen={name => {
-                  openRow.current = name;
-                  resizeList();
-                }}
-                onClose={() => {
-                  openRow.current = '';
-                  resizeList();
-                }}
-              />
+              <TaskGroup {...item} startSession={start} editSession={edit} onToggle={resizeList} />
             </div>
           );
         }}

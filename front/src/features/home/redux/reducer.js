@@ -7,6 +7,7 @@ import { reducer as switchTaskReducer } from './switchTask';
 import { reducer as editSessionReducer } from './editSession';
 import { reducer as updateSessionReducer } from './updateSession';
 import { reducer as cancelEditSessionReducer } from './cancelEditSession';
+import { reducer as selectRowReducer } from './selectRow';
 
 const reducers = [
   startSessionReducer,
@@ -17,6 +18,7 @@ const reducers = [
   editSessionReducer,
   updateSessionReducer,
   cancelEditSessionReducer,
+  selectRowReducer,
 ];
 
 export default function reducer(state = initialState, action) {

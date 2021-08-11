@@ -17,6 +17,7 @@ const initialState = {
   updateSessionError: null,
   editing: false,
   sessionBeingEdited: '',
+  selectedRow: '',
 };
 
 export default initialState;
