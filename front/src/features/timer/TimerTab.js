@@ -14,7 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import StopIcon from '@material-ui/icons/Stop';
 // import FastRewindIcon from '@material-ui/icons/FastRewind';
 import { subMinutes } from 'date-fns';
-import { Replay, Add, Remove, Replay5 } from '@material-ui/icons';
+import { Replay, Add, Remove } from '@material-ui/icons';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 import { useInterval } from '@common/hooks/useInterval';
 import QuickPick from '../common/QuickPick';
@@ -66,7 +66,13 @@ export default function TimerTab() {
   const remove5min = addMinutesToSession(-5, editRunningSession, runningSession);
   const remove30min = addMinutesToSession(-30, editRunningSession, runningSession);
 
-  if (!runningSession) return null;
+  if (!runningSession)
+    return (
+      <Page scroll>
+        <QuickPick />
+      </Page>
+    );
+
   const dateStart = new Date(runningSession.startDate);
   const name = runningSession.name;
   return (
