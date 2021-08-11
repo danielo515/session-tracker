@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.16.0...v1.17.0) (2021-08-11)
+
+
+### Features
+
+* formatMinutes4Human allows short version ([df9d35e](https://github.com/danielo515/pento-tech-challenge/commit/df9d35e711b2e084d23cea1f9c90812419b989dd))
+
 # [1.16.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.15.0...v1.16.0) (2021-08-08)
 
 
