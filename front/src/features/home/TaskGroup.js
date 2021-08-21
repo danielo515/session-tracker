@@ -41,7 +41,7 @@ const ListHeight = 3 * ItemHeight;
 /** @typedef {Object} props
  * @property {React.MouseEventHandler<HTMLElement>} startSession
  * @property {React.MouseEventHandler<HTMLDivElement>} editSession
- * @property {() => any} onToggle
+ * @property {(sessionName: string) => any} onToggle
  */
 /** @typedef {import('type-fest').Merge<SessionGroup, props>} Props */
 
@@ -64,10 +64,11 @@ export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSessi
   const toggleRow = () => {
     if (isOpen) {
       selectRow('');
+      onToggle('');
     } else {
       selectRow(name);
+      onToggle(name);
     }
-    onToggle();
   };
   return (
     <>

@@ -70,7 +70,7 @@ const Loading = () => {
 /** @param {Props} props **/
 export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
-  const { selectedRow } = useSelectRow();
+  const selectedRow = useRef('');
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
   const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
   return (
@@ -79,7 +79,7 @@ export default function SessionsList({ sessions, startSession, editSession }) {
         data={sessions}
         itemSize={idx => {
           const sessionGroup = sessions[idx];
-          return sessionGroup.name === selectedRow
+          return sessionGroup.name === selectedRow.current
             ? CalculateListHeight(sessionGroup.sessions)
             : ItemHeight;
         }}
@@ -89,7 +89,15 @@ export default function SessionsList({ sessions, startSession, editSession }) {
 
           return (
             <div style={style} className="virtual-node">
-              <TaskGroup {...item} startSession={start} editSession={edit} onToggle={resizeList} />
+              <TaskGroup
+                {...item}
+                startSession={start}
+                editSession={edit}
+                onToggle={sessionName => {
+                  selectedRow.current = sessionName;
+                  resizeList();
+                }}
+              />
             </div>
           );
         }}
