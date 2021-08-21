@@ -53,13 +53,6 @@ const ListHeight = 3 * ItemHeight;
 export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSession, editSession }) {
   const css = useStyles();
   const { selectRow, selectedRow } = useSelectRow();
-  /* This is tricky. 
-     When it is closed and the function is called it will call the outer function
-     to activate this row.
-     When it is open and the function is called, it will mutate the internal state first
-     so the exit animation can happen and when the animation finishes it will call this
-     function again which will sync the internal state with the outher one
-   */
   const isOpen = name === selectedRow;
   const toggleRow = () => {
     if (isOpen) {
