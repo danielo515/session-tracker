@@ -8,7 +8,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import List from '@material-ui/core/List';
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
-import { useSelectRow } from './redux/selectRow';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,6 +69,9 @@ const Loading = () => {
 /** @param {Props} props **/
 export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
+  // We need to use a ref because using the hook will re-render the entire list which will kill the animation
+  // of each item esxpanding or collapsing. The child component will inform us on the onToggle handler.
+  // I don't like it, but it works for now
   const selectedRow = useRef('');
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
   const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
