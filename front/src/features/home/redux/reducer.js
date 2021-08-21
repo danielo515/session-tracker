@@ -21,6 +21,7 @@ const reducers = [
   selectRowReducer,
 ];
 
+/** @type {import('react').Reducer<import('./types').InitialState, *>} **/
 export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {

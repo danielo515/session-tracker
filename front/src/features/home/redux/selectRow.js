@@ -20,11 +20,7 @@ export function useSelectRow() {
   return { selectRow: boundAction, selectedRow };
 }
 
-/**
- * @param {Object} state
- * @param {Object} action
- * @param {string} action.payload
- **/
+/** @type {import('./types').Reducer} **/
 export function reducer(state, { type, payload }) {
   switch (type) {
     case HOME_SELECT_ROW:
