@@ -1,5 +1,5 @@
 const initialState = {
-  /** @type { import("@types").Session?  }*/
+  /** @type { import("@types").Session |null }*/
   runningSession: null,
   startSessionPending: false,
   startSessionError: null,
@@ -17,6 +17,7 @@ const initialState = {
   updateSessionError: null,
   editing: false,
   sessionBeingEdited: '',
+  selectedRow: '',
 };
 
 export default initialState;

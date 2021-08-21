@@ -8,6 +8,7 @@ import {
 } from './constants';
 import * as api from '../../../common/api';
 
+/** @type {import('redux').ActionCreator<{name: string}>} */
 export function startSession({ name }) {
   return async dispatch => {
     // optionally you can have getState as the second argument
@@ -40,6 +41,7 @@ export function dismissStartSessionError() {
   };
 }
 
+/** @type {import('./types').Reducer}>} */
 export function reducer(state, action) {
   switch (action.type) {
     case HOME_START_SESSION_BEGIN:

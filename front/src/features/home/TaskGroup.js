@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { FixedSizeList } from 'react-window';
 import { formatDateDiff, formatStartDate, msToHuman } from 'formatters/formatDateDiff';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
+import { useSelectRow } from './redux/selectRow';
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -40,8 +41,7 @@ const ListHeight = 3 * ItemHeight;
 /** @typedef {Object} props
  * @property {React.MouseEventHandler<HTMLElement>} startSession
  * @property {React.MouseEventHandler<HTMLDivElement>} editSession
- * @property {(name:string) => any} onOpen
- * @property {() => any} onClose
+ * @property {(sessionName: string) => any} onToggle
  */
 /** @typedef {import('type-fest').Merge<SessionGroup, props>} Props */
 
@@ -50,34 +50,26 @@ const ListHeight = 3 * ItemHeight;
  * that have the same name
  * @param {Props} props
  */
-export function TaskGroup({
-  name,
-  total,
-  lastRun,
-  sessions,
-  onOpen,
-  onClose,
-  startSession,
-  editSession,
-}) {
+export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSession, editSession }) {
   const css = useStyles();
-  const [isOpen, setIsOpen] = useState(false);
-  /* This is tricky. 
-     When it is closed and the function is called it will call the outer function
-     to activate this row.
-     When it is open and the function is called, it will mutate the internal state first
-     so the exit animation can happen and when the animation finishes it will call this
-     function again which will sync the internal state with the outher one
-   */
+  const { selectRow, selectedRow } = useSelectRow();
+  const isOpen = name === selectedRow;
   const toggleRow = () => {
     if (isOpen) {
-      setIsOpen(false);
-      onClose();
-      return;
+      selectRow('');
+      onToggle('');
+    } else {
+      selectRow(name);
+      onToggle(name);
     }
-    setIsOpen(true);
-    onOpen(name);
   };
+  // We need to inform if the session is selected on mount (just once for perf reasons)
+  // This is needed to keep the parent state on situations like page change, because the parent state is local
+  useEffect(() => {
+    if (isOpen) {
+      onToggle(name);
+    }
+  }, []);
   return (
     <>
       <ListItem button onClick={toggleRow} data-name={name} className={css.taskOverView}>

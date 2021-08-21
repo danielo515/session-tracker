@@ -69,7 +69,10 @@ const Loading = () => {
 /** @param {Props} props **/
 export default function SessionsList({ sessions, startSession, editSession }) {
   const classes = useStyles();
-  const openRow = useRef('');
+  // We need to use a ref because using the hook will re-render the entire list which will kill the animation
+  // of each item esxpanding or collapsing. The child component will inform us on the onToggle handler.
+  // I don't like it, but it works for now
+  const selectedRow = useRef('');
   const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
   const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
   return (
@@ -78,7 +81,7 @@ export default function SessionsList({ sessions, startSession, editSession }) {
         data={sessions}
         itemSize={idx => {
           const sessionGroup = sessions[idx];
-          return sessionGroup.name === openRow.current
+          return sessionGroup.name === selectedRow.current
             ? CalculateListHeight(sessionGroup.sessions)
             : ItemHeight;
         }}
@@ -92,12 +95,8 @@ export default function SessionsList({ sessions, startSession, editSession }) {
                 {...item}
                 startSession={start}
                 editSession={edit}
-                onOpen={name => {
-                  openRow.current = name;
-                  resizeList();
-                }}
-                onClose={() => {
-                  openRow.current = '';
+                onToggle={sessionName => {
+                  selectedRow.current = sessionName;
                   resizeList();
                 }}
               />
@@ -129,7 +128,7 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
  * @template T
  * @typedef {Object} VirtualProps
  * @property {T[]} data
- * @property { (props:{data: T[], style: Object, index: number}) => any } row
+ * @property { (props:{data: T[], style: Object, index: number, resizeList: () => any}) => any } row
  * @property {(i:number) => number} itemSize
  */
 /**
