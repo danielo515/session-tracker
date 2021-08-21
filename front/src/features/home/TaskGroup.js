@@ -63,6 +63,8 @@ export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSessi
       onToggle(name);
     }
   };
+  // We need to inform if the session is selected on mount (just once for perf reasons)
+  // This is needed to keep the parent state on situations like page change, because the parent state is local
   useEffect(() => {
     if (isOpen) {
       onToggle(name);
