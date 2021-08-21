@@ -118,7 +118,7 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
  * @template T
  * @typedef {Object} VirtualProps
  * @property {T[]} data
- * @property { (props:{data: T[], style: Object, index: number}) => any } row
+ * @property { (props:{data: T[], style: Object, index: number, resizeList: () => any}) => any } row
  * @property {(i:number) => number} itemSize
  */
 /**
