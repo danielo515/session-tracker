@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -70,6 +70,11 @@ export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSessi
       onToggle(name);
     }
   };
+  useEffect(() => {
+    if (isOpen) {
+      onToggle(name);
+    }
+  }, []);
   return (
     <>
       <ListItem button onClick={toggleRow} data-name={name} className={css.taskOverView}>
