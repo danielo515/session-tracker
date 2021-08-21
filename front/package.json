@@ -2,7 +2,7 @@
   "name": "time-traker",
   "version": "1.17.0",
   "private": true,
-  "homepage": "https://pento.danielo.es",
+  "homepage": "https://time.danielo.es",
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
@@ -105,7 +105,8 @@
     "s3-deploy": "a(){ aws s3 sync build s3://$1/; };a",
     "deploy": "yarn build && yarn s3-deploy",
     "//": "adds a component in form of feature/component",
-    "add-component": "npx rekit add component -t functional"
+    "add-component": "npx rekit add component -t functional",
+    "lint": "eslint src/"
   },
   "rekit": {
     "devPort": 6075,
