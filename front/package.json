@@ -106,6 +106,10 @@
     "deploy": "yarn build && yarn s3-deploy",
     "//": "adds a component in form of feature/component",
     "add-component": "npx rekit add component -t functional",
+    "///": "adds a page to a feature. Make sure to call it with url feature/name ",
+    "add-page": "npx rekit add component -t functional -c -u",
+    "////": "adds a new async action, feature/action",
+    "add-action": "npx rekit add action -a ",
     "lint": "eslint src/"
   },
   "rekit": {

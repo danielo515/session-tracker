@@ -41,6 +41,10 @@ function LinkTab({ label, ...props }) {
  * @param {string} props.page
  * */
 export default function Navigation({ page }) {
+  const knownRoute = ['/stats', '/timer', '/'].includes(page);
+  if (!knownRoute) {
+    return null;
+  }
   return (
     <AppBar position="static">
       <Tabs variant="fullWidth" value={page} aria-label="navigation" centered>
