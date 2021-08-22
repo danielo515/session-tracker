@@ -1,4 +1,12 @@
-import { Button, Container, Slider, TextField, Typography, withStyles } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Container,
+  Slider,
+  TextField,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
 import { HexColorPicker } from 'react-colorful';
 
 import { Page } from 'features/common';
@@ -9,9 +17,13 @@ import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
 import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
 
+const sliderMarks = Array.from(Array(12), (val, i) => {
+  const minuteValue = i * 60;
+  return { value: minuteValue, label: minuteValue / 60 };
+});
 const DurationSlider = withStyles(({ palette, spacing }) => ({
   wrapper: {
-    paddingTop: spacing(2),
+    padding: spacing(2),
   },
   markLabel: {
     transform: 'unset',
@@ -29,16 +41,14 @@ const DurationSlider = withStyles(({ palette, spacing }) => ({
   return (
     <div className={classes.wrapper}>
       <Slider
-        marks={[
-          { value: 0, label: '0 min' },
-          { value: 60 * 24, label: '24 h' },
-        ]}
+        marks={sliderMarks}
         onChange={(e, value) => onChange(value)}
         valueLabelDisplay={valueLabelDisplay}
         value={value}
         classes={classes}
-        min={1}
-        max={60 * 24}
+        min={0}
+        max={60 * 12}
+        step={5}
         valueLabelFormat={value => formatMinutes4Human(value)}
       />
     </div>
@@ -60,7 +70,7 @@ export default function Create() {
     });
   };
   return (
-    <Page className="session-definition-create">
+    <Page className="session-definition-create" scroll>
       <Container maxWidth="sm">
         <form onSubmit={submit}>
           <FormRow>
@@ -68,7 +78,16 @@ export default function Create() {
             <Typography variant="subtitle1">
               How sessions created with this template will be named
             </Typography>
-            <TextField type="text" variant="outlined" fullWidth value={name} onChange={setName} />
+            <TextField
+              type="text"
+              variant="filled"
+              id="session"
+              name="session-name"
+              autoComplete="session"
+              fullWidth
+              value={name}
+              onChange={setName}
+            />
           </FormRow>
           <FormRow>
             <Typography variant="h6">Color</Typography>
@@ -82,27 +101,29 @@ export default function Create() {
             <Typography variant="subtitle1">How much will this task usually last?</Typography>
             <DurationSlider value={duration} onChange={setDuration} valueLabelDisplay="on" />
           </FormRow>
-          <FormRow centered row>
-            <Button
-              disabled={createPending}
-              color="secondary"
-              variant="outlined"
-              size="large"
-              component={Link}
-              to="/"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={createPending}
-              color="primary"
-              variant="contained"
-              size="large"
-            >
-              Create
-            </Button>
-          </FormRow>
+          <Box pb={2}>
+            <FormRow centered row>
+              <Button
+                disabled={createPending}
+                color="secondary"
+                variant="outlined"
+                size="large"
+                component={Link}
+                to="/"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={createPending}
+                color="primary"
+                variant="contained"
+                size="large"
+              >
+                Create
+              </Button>
+            </FormRow>
+          </Box>
         </form>
       </Container>
     </Page>

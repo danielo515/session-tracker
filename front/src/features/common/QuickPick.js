@@ -13,6 +13,7 @@ import {
   makeStyles,
   Container,
 } from '@material-ui/core';
+import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 
 const useStyle = makeStyles({
   Button: {
@@ -22,11 +23,12 @@ const useStyle = makeStyles({
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
+    borderColor: ({ color }) => color,
   },
 });
 
-function ButtonCard({ onClick, children, id }) {
-  const style = useStyle();
+function ButtonCard({ onClick, children, id, color }) {
+  const style = useStyle({ color });
   return (
     <Card variant="outlined" className={style.Card}>
       <ButtonBase className={style.Button} onClick={onClick} data-session={id}>
@@ -44,8 +46,12 @@ export class QuickPick extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentDidMount() {
+    this.props.actions.fetchAllDefinitions();
+  }
+
   render() {
-    const { sessions, actions } = this.props;
+    const { sessions, actions, sessionDefinitions: definitions } = this.props;
     const startSession = e => {
       const name = e.currentTarget.dataset.session;
       actions.startSession({ name });
@@ -55,7 +61,7 @@ export class QuickPick extends Component {
         <Grid container spacing={2}>
           {sessions.map(session => (
             <Grid item xs={4} sm={3} key={session}>
-              <ButtonCard id={session} onClick={startSession}>
+              <ButtonCard id={session} onClick={startSession} color={definitions[session]?.color}>
                 {session}
               </ButtonCard>
             </Grid>
@@ -66,17 +72,20 @@ export class QuickPick extends Component {
   }
 }
 
-/* istanbul ignore next */
+/**
+ * @param {import('rootReducer').RootState} state
+ */
 function mapStateToProps(state) {
   return {
     sessions: selectSessionNames(state),
+    sessionDefinitions: state.sessionDefinition.byName,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ startSession }, dispatch),
+    actions: bindActionCreators({ startSession, fetchAllDefinitions }, dispatch),
   };
 }
 

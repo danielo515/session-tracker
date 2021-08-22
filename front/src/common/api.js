@@ -184,3 +184,19 @@ export const createSessionDefinition = withDb((
     .then(() => ({ response: sessionDefinition, error: null }))
     .catch(error => ({ error, response: null }));
 });
+
+/** @type { import('./api-types').ListDefinitions } */
+export const listDefinitions = withDb((/** @type { firebase.database.Reference } */ db) => {
+  return db
+    .child('definitions')
+    .orderByKey()
+    .get()
+    .then(snapshot => {
+      if (snapshot.exists())
+        return {
+          error: null,
+          response: Object.values(snapshot.val()),
+        };
+      return { error: null, response: [] };
+    });
+});

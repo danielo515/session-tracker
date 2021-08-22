@@ -8,9 +8,11 @@
 
 import initialState from './initialState';
 import { reducer as createReducer } from './create';
+import { reducer as fetchAllReducer } from './fetchAll';
 
 const reducers = [
   createReducer,
+  fetchAllReducer,
 ];
 
 export default function reducer(state = initialState, action) {

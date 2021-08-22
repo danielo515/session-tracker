@@ -26,9 +26,9 @@ export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, co
         required
         fullWidth
         id="session"
-        label="Session Name"
         name="session-name"
         autoComplete="session"
+        label="Session Name"
         value={sessionName}
         onChange={onChange}
         className="input"

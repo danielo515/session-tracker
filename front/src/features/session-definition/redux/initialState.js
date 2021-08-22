@@ -9,6 +9,9 @@ const initialState = {
   createPending: false,
   createError: null,
   byName: {},
+  all: [],
+  fetchAllPending: false,
+  fetchAllError: null,
 };
 
 export default initialState;

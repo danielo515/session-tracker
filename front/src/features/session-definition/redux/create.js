@@ -22,7 +22,7 @@ export function create(args) {
         .then(res => {
           dispatch({
             type: SESSION_DEFINITION_CREATE_SUCCESS,
-            data: res,
+            data: res.response,
           });
           resolve(res);
         })
@@ -98,6 +98,7 @@ export function reducer(state, action) {
           ...state.byName,
           [action.data.name]: action.data,
         },
+        all: [...state.all, action.data],
       };
 
     case SESSION_DEFINITION_CREATE_FAILURE:
