@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 /**
  * @param {string} initialValue
+ * @return {[string, import('react').ChangeEventHandler<HTMLInputElement>]}
  */
 function useHandleChange(initialValue) {
   const [value, setter] = useState(initialValue);

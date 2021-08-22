@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { useCreate } from './redux/hooks';
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
+import useHandleChange from 'features/home/hooks/useHandleChange';
 
 const DurationSlider = withStyles(({ palette, spacing }) => ({
   wrapper: {
@@ -48,13 +49,14 @@ export default function Create() {
   const { create, createPending } = useCreate();
   const [color, setColor] = useState('#b32aa9');
   const [duration, setDuration] = useState(60 * 8);
+  const [name, setName] = useHandleChange('');
 
   const submit = (/** @type { import('react').SyntheticEvent } */ e) => {
     e.preventDefault();
     create({
-      name: 'test',
-      color: '#cefec',
-      expectedDuration: 90000,
+      name,
+      color,
+      expectedDuration: duration,
     });
   };
   return (
@@ -66,7 +68,7 @@ export default function Create() {
             <Typography variant="subtitle1">
               How sessions created with this template will be named
             </Typography>
-            <TextField type="text" variant="outlined" fullWidth />
+            <TextField type="text" variant="outlined" fullWidth value={name} onChange={setName} />
           </FormRow>
           <FormRow centered>
             <Typography variant="h6">Color</Typography>
