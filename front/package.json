@@ -66,6 +66,7 @@
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react": "^16.2.0",
+    "react-colorful": "^5.3.0",
     "react-dev-utils": "9",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0",
@@ -106,6 +107,10 @@
     "deploy": "yarn build && yarn s3-deploy",
     "//": "adds a component in form of feature/component",
     "add-component": "npx rekit add component -t functional",
+    "///": "adds a page to a feature. Make sure to call it with url feature/name ",
+    "add-page": "npx rekit add component -t functional -c -u",
+    "////": "adds a new async action, feature/action",
+    "add-action": "npx rekit add action -a ",
     "lint": "eslint src/"
   },
   "rekit": {

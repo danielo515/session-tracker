@@ -6,6 +6,7 @@ import statsReducer from '../features/stats/redux/reducer';
 import { connectRouter } from 'connected-react-router';
 import settingsReducer from '../features/settings/redux/reducer';
 import timerReducer from '../features/timer/redux/reducer';
+import sessionDefinitionReducer from '../features/session-definition/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -19,6 +20,7 @@ const reducerMap = {
   stats: statsReducer,
   settings: settingsReducer,
   timer: timerReducer,
+  sessionDefinition: sessionDefinitionReducer,
 };
 
 /** @typedef {ReturnType<ReturnType<typeof rootReducer>>} RootState*/

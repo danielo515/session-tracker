@@ -70,17 +70,7 @@ export const signUp = ({ email, password, name }) => {};
  * @template T
  * @typedef { {response: T, error: null} } apiResponse
  */
-/**
- * @typedef { { error: {status: number}, response: null } } errorResponse
- */
 
-/**
- * Injects the user namespace on database Reference to the provided handler
- * @template T
- * @template K
- * @param {(db: firebase.database.Reference, args: T) => K} handler
- * @returns { (args:T) => Promise<K|errorResponse> }
- */
 const withDb = handler => async args => {
   const userId = firebase.auth()?.currentUser?.uid;
   if (!userId) return { error: { status: 401 }, response: null };
@@ -181,4 +171,32 @@ export const deleteSession = withDb((db, { id }) => {
     .set(null)
     .then(() => ({ response: { id }, error: null }))
     .catch(error => ({ error, response: null }));
+});
+
+/** @type { import('./api-types').CreateSessionDefinition } */
+export const createSessionDefinition = withDb((
+  /** @type { firebase.database.Reference } */ db,
+  /** @type {import('@types').SessionDefinition}*/ sessionDefinition,
+) => {
+  return db
+    .child('definitions')
+    .push(sessionDefinition)
+    .then(() => ({ response: sessionDefinition, error: null }))
+    .catch(error => ({ error, response: null }));
+});
+
+/** @type { import('./api-types').ListDefinitions } */
+export const listDefinitions = withDb((/** @type { firebase.database.Reference } */ db) => {
+  return db
+    .child('definitions')
+    .orderByKey()
+    .get()
+    .then(snapshot => {
+      if (snapshot.exists())
+        return {
+          error: null,
+          response: Object.values(snapshot.val()),
+        };
+      return { error: null, response: [] };
+    });
 });

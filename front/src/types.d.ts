@@ -11,6 +11,13 @@ export type Session = {
   id: string;
 };
 
+export type SessionDefinition = {
+  name: string;
+  color: string;
+  icon: string;
+  expectedDuration: number;
+};
+
 export type SessionWithDuration = {
   name: string;
   startDate: string;
