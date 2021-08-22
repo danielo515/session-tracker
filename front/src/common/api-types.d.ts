@@ -9,4 +9,4 @@ export type WithDb<T, K> = (
   handler: (db: firebase.database.Reference, args: T) => K,
 ) => (args: T) => Promise<K | errorResponse>;
 
-export type createSessionDefinition = ReturnType<WithDb<SessionDefinition, any>>;
+export type CreateSessionDefinition = ReturnType<WithDb<SessionDefinition, any>>;

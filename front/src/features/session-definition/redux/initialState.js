@@ -8,6 +8,7 @@
 const initialState = {
   createPending: false,
   createError: null,
+  byName: {},
 };
 
 export default initialState;

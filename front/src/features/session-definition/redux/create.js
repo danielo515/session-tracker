@@ -1,5 +1,7 @@
-import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { createSessionDefinition } from 'common/api';
+import useAppSelector from 'hooks/useSelector';
+import { useCallback } from 'react';
+import { useDispatch, shallowEqual } from 'react-redux';
 import {
   SESSION_DEFINITION_CREATE_BEGIN,
   SESSION_DEFINITION_CREATE_SUCCESS,
@@ -7,31 +9,30 @@ import {
   SESSION_DEFINITION_CREATE_DISMISS_ERROR,
 } from './constants';
 
-export function create(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+export function create(args) {
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: SESSION_DEFINITION_CREATE_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
-      doRequest.then(
-        (res) => {
+      const doRequest = createSessionDefinition(args);
+      doRequest
+        .then(res => {
           dispatch({
             type: SESSION_DEFINITION_CREATE_SUCCESS,
             data: res,
           });
           resolve(res);
-        },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        })
+        .catch(err => {
           dispatch({
             type: SESSION_DEFINITION_CREATE_FAILURE,
             data: { error: err },
           });
           reject(err);
-        },
-      );
+        });
     });
 
     return promise;
@@ -47,25 +48,28 @@ export function dismissCreateError() {
 export function useCreate() {
   const dispatch = useDispatch();
 
-  const { rabo, createPending, createError } = useSelector(
+  const { sessionDefinitions, createPending, createError } = useAppSelector(
     state => ({
-      rabo: state.sessionDefinition.rabo,
+      sessionDefinitions: state.sessionDefinition.byName,
       createPending: state.sessionDefinition.createPending,
       createError: state.sessionDefinition.createError,
     }),
     shallowEqual,
   );
 
-  const boundAction = useCallback((...args) => {
-    return dispatch(create(...args));
-  }, [dispatch]);
+  const boundAction = useCallback(
+    (...args) => {
+      return dispatch(create(...args));
+    },
+    [dispatch],
+  );
 
   const boundDismissError = useCallback(() => {
     return dispatch(dismissCreateError());
   }, [dispatch]);
 
   return {
-    rabo,
+    sessionDefinitions,
     create: boundAction,
     createPending,
     createError,
@@ -73,6 +77,7 @@ export function useCreate() {
   };
 }
 
+/** @type { import('./types').Reducer } */
 export function reducer(state, action) {
   switch (action.type) {
     case SESSION_DEFINITION_CREATE_BEGIN:
@@ -89,6 +94,10 @@ export function reducer(state, action) {
         ...state,
         createPending: false,
         createError: null,
+        byName: {
+          ...state.byName,
+          [action.data.name]: action.data,
+        },
       };
 
     case SESSION_DEFINITION_CREATE_FAILURE:

@@ -173,7 +173,7 @@ export const deleteSession = withDb((db, { id }) => {
     .catch(error => ({ error, response: null }));
 });
 
-/** @type { import('./api').createSessionDefinition } */
+/** @type { import('./api-types').CreateSessionDefinition } */
 export const createSessionDefinition = withDb((
   /** @type { firebase.database.Reference } */ db,
   /** @type {import('@types').SessionDefinition}*/ sessionDefinition,
