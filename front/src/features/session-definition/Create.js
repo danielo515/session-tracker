@@ -1,59 +1,13 @@
-import {
-  Box,
-  Button,
-  Container,
-  Slider,
-  TextField,
-  Typography,
-  withStyles,
-} from '@material-ui/core';
+import { DurationSlider } from './DurationSlider';
+import { Box, Button, Container, TextField, Typography } from '@material-ui/core';
 import { HexColorPicker } from 'react-colorful';
 
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
 import React, { useState } from 'react';
 import { useCreate } from './redux/hooks';
-import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
 import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
-
-const sliderMarks = Array.from(Array(12), (val, i) => {
-  const minuteValue = i * 60;
-  return { value: minuteValue, label: minuteValue / 60 };
-});
-const DurationSlider = withStyles(({ palette, spacing }) => ({
-  wrapper: {
-    padding: spacing(2),
-  },
-  markLabel: {
-    transform: 'unset',
-  },
-  valueLabel: {
-    top: -22,
-    '& *': {
-      width: '80px',
-      transform: 'unset',
-      background: 'transparent',
-      color: palette.text.secondary,
-    },
-  },
-}))(({ onChange, value, classes, valueLabelDisplay }) => {
-  return (
-    <div className={classes.wrapper}>
-      <Slider
-        marks={sliderMarks}
-        onChange={(e, value) => onChange(value)}
-        valueLabelDisplay={valueLabelDisplay}
-        value={value}
-        classes={classes}
-        min={0}
-        max={60 * 12}
-        step={5}
-        valueLabelFormat={value => formatMinutes4Human(value)}
-      />
-    </div>
-  );
-});
 
 export default function Create() {
   const { create, createPending } = useCreate();
