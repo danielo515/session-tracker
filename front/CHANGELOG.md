@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.17.0...v1.18.0) (2021-08-22)
+
+
+### Features
+
+* **UX:** sessionDefinition V1 ([48cfb88](https://github.com/danielo515/pento-tech-challenge/commit/48cfb88d75d4f878a4a58ff273698c3cd6be1a04))
+
 # [1.17.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.16.0...v1.17.0) (2021-08-11)
 
 
