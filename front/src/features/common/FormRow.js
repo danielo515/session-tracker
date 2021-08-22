@@ -8,11 +8,15 @@ import React from 'react';
  * @param {Object} props
  * @param {React.ReactNode} props.children
  * @param {boolean} [ props.centered ]
+ * @param {boolean} [ props.row ]
  * @return {*}
  */
-export default function FormRow({ children, centered }) {
+export default function FormRow({ children, centered, row }) {
   const props = {
-    alignItems: centered ? 'center' : 'flex-start',
+    alignItems: centered ? 'center' : 'stretch',
+    justifyContent: 'space-evenly',
+    display: 'flex',
+    flexDirection: row ? 'row' : 'column',
   };
   return (
     <Box pt={2} {...props}>

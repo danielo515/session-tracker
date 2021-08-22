@@ -4,10 +4,10 @@ import { HexColorPicker } from 'react-colorful';
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
 import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
 import { useCreate } from './redux/hooks';
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
 import useHandleChange from 'features/home/hooks/useHandleChange';
+import { Link } from 'react-router-dom';
 
 const DurationSlider = withStyles(({ palette, spacing }) => ({
   wrapper: {
@@ -70,7 +70,7 @@ export default function Create() {
             </Typography>
             <TextField type="text" variant="outlined" fullWidth value={name} onChange={setName} />
           </FormRow>
-          <FormRow centered>
+          <FormRow>
             <Typography variant="h6">Color</Typography>
             <Typography variant="subtitle1">
               Assigning a color will give you a visual help to find sessions of this type
@@ -82,7 +82,17 @@ export default function Create() {
             <Typography variant="subtitle1">How much will this task usually last?</Typography>
             <DurationSlider value={duration} onChange={setDuration} valueLabelDisplay="on" />
           </FormRow>
-          <FormRow>
+          <FormRow centered row>
+            <Button
+              disabled={createPending}
+              color="secondary"
+              variant="outlined"
+              size="large"
+              component={Link}
+              to="/"
+            >
+              Cancel
+            </Button>
             <Button
               type="submit"
               disabled={createPending}
