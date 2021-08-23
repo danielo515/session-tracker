@@ -98,7 +98,7 @@ export default function TimerTab() {
       >
         <Started startDate={dateStart} />
       </Box>
-      <Box display="flex" justifyContent="space-around" paddingBottom={2}>
+      <Box display="flex" justifyContent="center" paddingBottom={2} paddingTop={1}>
         <StatRow title="Today" subtitle={msToHuman(runningStats.today)} />
         <StatRow title="Week" subtitle={msToHuman(runningStats.thisWeek)} />
         <StatRow title="Month" subtitle={msToHuman(runningStats.thisMonth)} />
@@ -135,7 +135,7 @@ TimerTab.defaultProps = {};
  */
 function StatRow({ title, subtitle }) {
   return (
-    <Box pt={2}>
+    <Box p={1}>
       <Card>
         <Box
           display="flex"

@@ -1,6 +1,7 @@
 // @ts-check
 
 /** @typedef {import('@types').Session} Session*/
+/** @typedef {import('@types').SessionDefinition}  SessionDefinition*/
 import firebase from '../fb';
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -66,11 +67,7 @@ export const googleLogin = () =>
  */
 export const signUp = ({ email, password, name }) => {};
 
-/**
- * @template T
- * @typedef { {response: T, error: null} } apiResponse
- */
-
+/** @type { import('./api-types').WithDb } */
 const withDb = handler => async args => {
   const userId = firebase.auth()?.currentUser?.uid;
   if (!userId) return { error: { status: 401 }, response: null };
@@ -99,7 +96,8 @@ export const listSessions = withDb(db => {
 });
 /** @typedef { (args: Session) => any } sessionCb*/
 /** @typedef { (args: Session|null) => any } sessionCbNull*/
-/** @type { (args:{ onSessionAdded: sessionCb,
+/**
+ * @type { (args:{ onSessionAdded: sessionCb,
  *                  onRunningUpdate: sessionCbNull,
  *                  onSessionUpdate: sessionCb }) => void }
  * */
@@ -123,9 +121,6 @@ export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate, onS
   });
 });
 
-/**
- * @type { (args: {name: string}) => Promise<apiResponse<Session>> }
- */
 export const startSession = withDb((db, { name }) => {
   const session = { name, startDate: new Date().toISOString() };
   return db
@@ -173,7 +168,6 @@ export const deleteSession = withDb((db, { id }) => {
     .catch(error => ({ error, response: null }));
 });
 
-/** @type { import('./api-types').CreateSessionDefinition } */
 export const createSessionDefinition = withDb((
   /** @type { firebase.database.Reference } */ db,
   /** @type {import('@types').SessionDefinition}*/ sessionDefinition,
@@ -185,9 +179,9 @@ export const createSessionDefinition = withDb((
     .catch(error => ({ error, response: null }));
 });
 
-/** @type { import('./api-types').ListDefinitions } */
-export const listDefinitions = withDb((/** @type { firebase.database.Reference } */ db) => {
-  return db
+export const listDefinitions = withDb(db => {
+  /** @type { Promise<{ response: SessionDefinition[], error: null}> } */
+  const result = db
     .child('definitions')
     .orderByKey()
     .get()
@@ -195,8 +189,9 @@ export const listDefinitions = withDb((/** @type { firebase.database.Reference }
       if (snapshot.exists())
         return {
           error: null,
-          response: Object.values(snapshot.val()),
+          response: /** @type { SessionDefinition[] } */ Object.values(snapshot.val()),
         };
       return { error: null, response: [] };
     });
+  return result;
 });
