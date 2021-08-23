@@ -8,7 +8,7 @@ export default function Create() {
   return (
     <DefinitionForm
       definition={{
-        duration: 60 * 8,
+        expectedDuration: 60 * 8,
         name: '',
         color: '#b32aa9',
       }}

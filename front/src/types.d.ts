@@ -14,7 +14,7 @@ export type Session = {
 export type SessionDefinition = {
   name: string;
   color: string;
-  icon: string;
+  // icon: string;
   expectedDuration: number;
 };
 

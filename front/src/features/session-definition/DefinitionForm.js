@@ -8,9 +8,18 @@ import React, { useState } from 'react';
 import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
 
+/** @typedef {import('@types').SessionDefinition}  SessionDefinition*/
+
+/**
+ * @export
+ * @param {Object} props
+ * @param {boolean} props.isLoading
+ * @param {(a: SessionDefinition) => any} props.onSubmit
+ * @param {import('@types').SessionDefinition} props.definition
+ */
 export default function DefinitionForm({ definition, onSubmit, isLoading }) {
   const [color, setColor] = useState(definition.color);
-  const [duration, setDuration] = useState(definition.duration);
+  const [duration, setDuration] = useState(definition.expectedDuration);
   const [name, setName] = useHandleChange(definition.name);
 
   const submit = (/** @type { import('react').SyntheticEvent } */ e) => {
