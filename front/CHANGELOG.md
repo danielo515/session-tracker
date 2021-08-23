@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.18.0...v1.18.1) (2021-08-23)
+
+
+### Bug Fixes
+
+* better layout for bigger screens on timer ([d9700a2](https://github.com/danielo515/pento-tech-challenge/commit/d9700a2b08f60d4578a68ebf410be5a976133654))
+
 # [1.18.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.17.0...v1.18.0) (2021-08-22)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "time-traker",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "private": true,
   "homepage": "https://time.danielo.es",
   "dependencies": {
