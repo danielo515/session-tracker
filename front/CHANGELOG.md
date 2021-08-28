@@ -1,3 +1,11 @@
+# [1.19.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.18.1...v1.19.0) (2021-08-28)
+
+
+### Features
+
+* select icon on DefinitionForm ([3492667](https://github.com/danielo515/pento-tech-challenge/commit/3492667d76a079cb4f20bafc3e59c8e41c70858b))
+* **UX:** Added ability to display icon on quickPick ([cc3250c](https://github.com/danielo515/pento-tech-challenge/commit/cc3250c6272a7800a089a2a487f5f82af0ed1c1a))
+
 ## [1.18.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.18.0...v1.18.1) (2021-08-23)
 
 
