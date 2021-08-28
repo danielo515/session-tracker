@@ -541,4 +541,7 @@ export const CheckCircleOutlined = loadableIcon(() =>
   import('@material-ui/icons/CheckCircleOutlined'),
 );
 export const CheckOutlined = loadableIcon(() => import('@material-ui/icons/CheckOutlined'));
+export const ChildFriendlyOutlined = loadableIcon(() =>
+  import('@material-ui/icons/ChildFriendlyOutlined'),
+);
 export const Default = loadableIcon(() => import('@material-ui/icons/BlockOutlined'));

@@ -11,6 +11,7 @@ export default function Create() {
         expectedDuration: 60 * 8,
         name: '',
         color: '#b32aa9',
+        icon: 'Default',
       }}
       onSubmit={create}
       isLoading={createPending}
