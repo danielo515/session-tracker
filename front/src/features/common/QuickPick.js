@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core';
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 import * as Icons from 'common/Icon/Icon';
+import { useLongPress } from 'hooks/useLongPress';
+import { withRouter } from 'react-router';
 
 const useStyle = makeStyles(theme => ({
   Button: {
@@ -53,16 +55,18 @@ const useStyle = makeStyles(theme => ({
  * @param {string} props.id
  * @param {import('react').ReactNode} props.children
  * @param {() => any} props.onClick
+ * @param {() => any} props.onLongPress
  */
-function ButtonCard({ onClick, children, id, color, iconName }) {
+function ButtonCard({ onClick, children, id, color, iconName, onLongPress }) {
   const style = useStyle({ color });
   const Icon = Icons[iconName] || Icons.Default;
+  const longProps = useLongPress(onLongPress);
   return (
     <Card variant="outlined" className={style.Card}>
       <div className={style.Icon}>
         <Icon color={color} />
       </div>
-      <ButtonBase className={style.Button} onClick={onClick} data-session={id}>
+      <ButtonBase {...longProps} className={style.Button} onClick={onClick} data-session={id}>
         <CardContent>
           <Typography>{children}</Typography>
         </CardContent>
@@ -82,7 +86,7 @@ export class QuickPick extends Component {
   }
 
   render() {
-    const { sessions, actions, sessionDefinitions: definitions } = this.props;
+    const { sessions, actions, sessionDefinitions: definitions, history } = this.props;
     const startSession = e => {
       const name = e.currentTarget.dataset.session;
       actions.startSession({ name });
@@ -99,6 +103,7 @@ export class QuickPick extends Component {
                   onClick={startSession}
                   color={definition.color}
                   iconName={definition.icon}
+                  onLongPress={() => history.push(`/session-definitions/update/${session}`)}
                 >
                   {session}
                 </ButtonCard>
@@ -128,4 +133,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuickPick);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(QuickPick));
