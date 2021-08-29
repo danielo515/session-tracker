@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.19.0...v1.20.0) (2021-08-29)
+
+
+### Features
+
+* IconSelector ([6ead0ff](https://github.com/danielo515/pento-tech-challenge/commit/6ead0ffbe7144a529992693a0a9a9ad28eb47326))
+
 # [1.19.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.18.1...v1.19.0) (2021-08-28)
 
 
