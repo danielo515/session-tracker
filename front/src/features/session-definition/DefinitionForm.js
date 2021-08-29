@@ -8,6 +8,9 @@ import React, { useState } from 'react';
 import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
 
+const defaultDuration = 60;
+const defaultIcon = 'Default';
+
 /** @typedef {import('@types').SessionDefinition}  SessionDefinition*/
 
 /**
@@ -19,9 +22,9 @@ import { Link } from 'react-router-dom';
  */
 export default function DefinitionForm({ definition, onSubmit, isLoading }) {
   const [color, setColor] = useState(definition.color);
-  const [duration, setDuration] = useState(definition.expectedDuration);
+  const [duration, setDuration] = useState(definition.expectedDuration || defaultDuration);
   const [name, setName] = useHandleChange(definition.name);
-  const [icon, setIcon] = useState(definition.icon);
+  const [icon, setIcon] = useState(definition.icon || defaultIcon);
 
   const submit = (/** @type { import('react').SyntheticEvent } */ e) => {
     e.preventDefault();
@@ -50,6 +53,7 @@ export default function DefinitionForm({ definition, onSubmit, isLoading }) {
               fullWidth
               value={name}
               onChange={setName}
+              required
             />
           </FormRow>
           <FormRow>
