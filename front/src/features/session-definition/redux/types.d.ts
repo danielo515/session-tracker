@@ -5,6 +5,6 @@ type InitialState = typeof initialState;
 type state = {
   byName: Record<string, SessionDefinition>;
 };
-export type State = Merge<InitialState, state>;
+export type DefinitionsState = Merge<InitialState, state>;
 
-export type Reducer = (state: State, action: any) => State;
+export type Reducer = (state: DefinitionsState, action: any) => DefinitionsState;
