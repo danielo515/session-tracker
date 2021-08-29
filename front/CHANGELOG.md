@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.20.0...v1.21.0) (2021-08-29)
+
+
+### Features
+
+* **definitions:** ability to update definitions ([3ac6c94](https://github.com/danielo515/pento-tech-challenge/commit/3ac6c94b5f190861892accd9de5291c3293432ec))
+
 # [1.20.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.19.0...v1.20.0) (2021-08-29)
 
 
