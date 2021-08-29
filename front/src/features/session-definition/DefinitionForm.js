@@ -1,13 +1,12 @@
+import { IconSelector } from './Iconselector';
 import { DurationSlider } from './DurationSlider';
-import { Box, Button, Container, TextField, Typography, useTheme } from '@material-ui/core';
+import { Box, Button, Container, TextField, Typography } from '@material-ui/core';
 import { HexColorPicker } from 'react-colorful';
-
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
 import React, { useState } from 'react';
 import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
-import * as Icons from 'common/Icon/Icon';
 
 /** @typedef {import('@types').SessionDefinition}  SessionDefinition*/
 
@@ -23,7 +22,6 @@ export default function DefinitionForm({ definition, onSubmit, isLoading }) {
   const [duration, setDuration] = useState(definition.expectedDuration);
   const [name, setName] = useHandleChange(definition.name);
   const [icon, setIcon] = useState(definition.icon);
-  const theme = useTheme();
 
   const submit = (/** @type { import('react').SyntheticEvent } */ e) => {
     e.preventDefault();
@@ -69,21 +67,7 @@ export default function DefinitionForm({ definition, onSubmit, isLoading }) {
           <FormRow>
             <Typography variant="h6">Icon</Typography>
             <Typography variant="subtitle1">Assign an icon to this task</Typography>
-            <Box display="flex" flexDirection="row" flexWrap="wrap">
-              {Object.entries(Icons).map(([name, Icon]) => {
-                const selected = name === icon;
-                return (
-                  <Button
-                    key={name}
-                    onClick={() => setIcon(name)}
-                    color={selected ? 'primary' : 'secondary'}
-                    variant={selected ? 'outlined' : undefined}
-                  >
-                    <Icon color={selected ? theme.palette.primary.main : theme.palette.divider} />
-                  </Button>
-                );
-              })}
-            </Box>
+            <IconSelector icon={icon} onChange={setIcon} />
           </FormRow>
           <Box pb={2}>
             <FormRow centered row>

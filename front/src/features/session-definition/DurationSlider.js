@@ -26,9 +26,9 @@ export const DurationSlider = withStyles(({ palette, spacing }) => ({
       color: palette.text.secondary,
     },
   },
-}))(({ onChange, value, classes, valueLabelDisplay }) => {
+}))(({ onChange, value, classes: { wrapper, ...classes }, valueLabelDisplay }) => {
   return (
-    <div className={classes.wrapper}>
+    <div className={wrapper}>
       <Slider
         marks={sliderMarks}
         onChange={(e, value) => onChange(value)}
