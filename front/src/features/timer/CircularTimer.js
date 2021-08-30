@@ -1,4 +1,4 @@
-import { Box, CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { differenceInMinutes } from 'date-fns';
 import format from 'date-fns/format';

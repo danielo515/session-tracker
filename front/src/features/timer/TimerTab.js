@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Page from '../common/Page';
 import { useEditRunningSession } from 'features/common/redux/editRunningSession';
-import { Button, Card, Grid, Typography } from '@material-ui/core';
+import { Button, Card, Typography } from '@material-ui/core';
 import useRunningSessionStats from './useRunningSessionStats';
 import { msToHuman } from 'formatters/formatDateDiff';
 import StopIcon from '@material-ui/icons/Stop';
