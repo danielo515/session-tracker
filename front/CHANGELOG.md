@@ -1,3 +1,11 @@
+# [1.22.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.21.0...v1.22.0) (2021-08-30)
+
+
+### Features
+
+* circular timer ([cc7240b](https://github.com/danielo515/pento-tech-challenge/commit/cc7240be2fdf5681a9ecc5974b4ac594bdf7fbff))
+* display circular timer ([c5ec2ff](https://github.com/danielo515/pento-tech-challenge/commit/c5ec2fff52c1d202afb75545e2962686d84cc421))
+
 # [1.21.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.20.0...v1.21.0) (2021-08-29)
 
 
