@@ -69,6 +69,11 @@ export default function TimerTab() {
         justifyContent="space-between"
       ></Box>
       <Box display="flex" justifyContent="center" paddingBottom={2} paddingTop={1}>
+        <StatRow
+          title="Week Avg."
+          // For now, week average is fixed to business days
+          subtitle={msToHuman(runningStats.thisWeek / 5 || 0)}
+        />
         <StatRow title="Today" subtitle={msToHuman(runningStats.today)} />
         <StatRow title="Week" subtitle={msToHuman(runningStats.thisWeek)} />
         <StatRow title="Month" subtitle={msToHuman(runningStats.thisMonth)} />

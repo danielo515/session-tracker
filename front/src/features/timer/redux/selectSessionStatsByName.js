@@ -1,6 +1,6 @@
 import selectSessions from 'features/home/redux/selectSessions';
 import { createSelector } from 'reselect';
-import { getSessionStatsReducer } from './selectRunningSessionStats';
+import { getInitialValue, getSessionStatsReducer } from './selectRunningSessionStats';
 
 /** @typedef {import("@types").Session} Session*/
 /** @typedef {import('./selectRunningSessionStats').Stats} Stats */
@@ -22,11 +22,7 @@ function getNameFromProps(_, name) {
  * @returns {Stats}
  */
 function selectSessionStatsByName(sessions, sessionName) {
-  const initialStats = {
-    today: 0,
-    thisMonth: 0,
-    thisWeek: 0,
-  };
+  const initialStats = getInitialValue();
   if (!sessionName) return initialStats;
   return sessions.reduce(getSessionStatsReducer(sessionName), initialStats);
 }

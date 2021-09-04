@@ -7,7 +7,14 @@ import { createSelector } from 'reselect';
 import { getTodayIntervals } from 'dateUtils/getIntervals';
 import { calculateSessionDuration } from '@common/calculateSessionDuration';
 
-/** @typedef {{ today: number, thisWeek: number, thisMonth: number}} Stats */
+/**
+ * @typedef {{
+ *  today: number, todayCount: number,
+ *  thisWeek: number,
+ *  thisMonth: number,
+ *  allTime: number,
+ *  count: number
+ * }} Stats */
 
 /**
  * @param {String} sessionName
@@ -29,6 +36,7 @@ export const getSessionStatsReducer = sessionName => {
     const sessionDuration = calculateSessionDuration(session);
     if (isToday(sessionDate)) {
       acc.today += sessionDuration;
+      acc.todayCount += 1;
     }
     if (isThisWeek(sessionDate)) {
       acc.thisWeek += sessionDuration;
@@ -36,9 +44,24 @@ export const getSessionStatsReducer = sessionName => {
     if (isThisMonth(sessionDate)) {
       acc.thisMonth += sessionDuration;
     }
+    acc.allTime += sessionDuration;
+    acc.count += 1;
     return acc;
   };
 };
+
+/**
+ *
+ * @returns {Stats}
+ */
+export const getInitialValue = () => ({
+  today: 0,
+  todayCount: 0,
+  thisMonth: 0,
+  thisWeek: 0,
+  allTime: 0,
+  count: 0,
+});
 
 /**
  * This selector is used to get the running session stats.
@@ -50,7 +73,7 @@ export const getSessionStatsReducer = sessionName => {
  * @returns {Stats}
  */
 function selectRunningSessionStats(sessions, runningSession) {
-  const initialStats = { today: 0, thisMonth: 0, thisWeek: 0 };
+  const initialStats = getInitialValue();
   if (!runningSession) return initialStats;
   return [...sessions, { ...runningSession, endDate: new Date().toISOString() }].reduce(
     getSessionStatsReducer(runningSession.name),
