@@ -16,7 +16,15 @@ import { useInterval } from '@common/hooks/useInterval';
 import QuickPick from '../common/QuickPick';
 import useAppSelector from 'hooks/useSelector';
 import selectDefinition from 'features/session-definition/selectDefinition';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
+/**
+ *
+ *
+ * @param {number} amount
+ * @param {(args:{name: string, startDate: Date}) => any} edit
+ * @param {import('@types').RunningSession} runningSession
+ */
 const addMinutesToSession = (amount, edit, runningSession) => () =>
   edit({
     name: runningSession?.name,
@@ -38,10 +46,6 @@ export default function TimerTab() {
 
   const resetSession = () =>
     editRunningSession({ name: runningSession?.name, startDate: new Date() });
-  const add5min = addMinutesToSession(5, editRunningSession, runningSession);
-  const add30min = addMinutesToSession(30, editRunningSession, runningSession);
-  const remove5min = addMinutesToSession(-5, editRunningSession, runningSession);
-  const remove30min = addMinutesToSession(-30, editRunningSession, runningSession);
 
   if (!runningSession)
     return (
@@ -49,6 +53,20 @@ export default function TimerTab() {
         <QuickPick />
       </Page>
     );
+
+  if (!sessionDefinition) {
+    return (
+      <Alert severity="error">
+        <AlertTitle>Session definition not found</AlertTitle>
+        This is an impossible state, please reload your browser.
+      </Alert>
+    );
+  }
+
+  const add5min = addMinutesToSession(5, editRunningSession, runningSession);
+  const add30min = addMinutesToSession(30, editRunningSession, runningSession);
+  const remove5min = addMinutesToSession(-5, editRunningSession, runningSession);
+  const remove30min = addMinutesToSession(-30, editRunningSession, runningSession);
 
   const dateStart = new Date(runningSession.startDate);
   const name = runningSession.name;
@@ -58,8 +76,8 @@ export default function TimerTab() {
         <CircularTimer
           name={name}
           startDate={dateStart}
-          color={sessionDefinition?.color}
-          expectedDuration={sessionDefinition?.expectedDuration || 60}
+          color={sessionDefinition.color}
+          expectedDuration={sessionDefinition.expectedDuration || 60}
         />
       </Card>
       <Box
