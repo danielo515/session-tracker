@@ -7,7 +7,7 @@ import { getInitialValue, getSessionStatsReducer } from './selectRunningSessionS
 
 /**
  * @param {any} _
- * @param {string} name
+ * @param {string} [name]
  * */
 function getNameFromProps(_, name) {
   return name;
@@ -18,7 +18,7 @@ function getNameFromProps(_, name) {
  * It does not include the running session.
  * For that use selectRunningSessionStats, but we aware of possible caching issues.
  * @param {Session[]} sessions
- * @param {string} [ sessionName ]
+ * @param {string} [sessionName]
  * @returns {Stats}
  */
 function selectSessionStatsByName(sessions, sessionName) {

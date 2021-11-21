@@ -8,7 +8,7 @@ import useRunningSessionStats from './useRunningSessionStats';
 import { msToHuman } from 'formatters/formatDateDiff';
 import StopIcon from '@material-ui/icons/Stop';
 // import FastRewindIcon from '@material-ui/icons/FastRewind';
-import { subMinutes } from 'date-fns';
+import { getISODay, subMinutes } from 'date-fns';
 import { Replay, Add, Remove } from '@material-ui/icons';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 import { useInterval } from '@common/hooks/useInterval';
@@ -67,6 +67,8 @@ export default function TimerTab() {
   const add30min = addMinutesToSession(30, editRunningSession, runningSession);
   const remove5min = addMinutesToSession(-5, editRunningSession, runningSession);
   const remove30min = addMinutesToSession(-30, editRunningSession, runningSession);
+  // Business days only
+  const dayOfWeek = Math.min(getISODay(new Date()) + 1, 5);
 
   const dateStart = new Date(runningSession.startDate);
   const name = runningSession.name;
@@ -90,7 +92,7 @@ export default function TimerTab() {
         <StatRow
           title="Week Avg."
           // For now, week average is fixed to business days
-          subtitle={msToHuman(runningStats.thisWeek / 5 || 0)}
+          subtitle={msToHuman(runningStats.thisWeek / dayOfWeek || 0)}
         />
         <StatRow title="Today" subtitle={msToHuman(runningStats.today)} />
         <StatRow title="Week" subtitle={msToHuman(runningStats.thisWeek)} />
