@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.22.0...v1.22.1) (2021-11-21)
+
+
+### Bug Fixes
+
+* proper week average ([2fbfdfa](https://github.com/danielo515/pento-tech-challenge/commit/2fbfdfaecbab03cf6c94af366a807853c3328387))
+
 # [1.22.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.21.0...v1.22.0) (2021-08-30)
 
 
