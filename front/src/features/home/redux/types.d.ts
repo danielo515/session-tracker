@@ -5,6 +5,7 @@ type InitialState = typeof initialState;
 type state = {
   sessions: Session[];
   runningSession: void | RunningSession;
+  sessionsById: { [id: string]: Session };
 };
 export type State = Merge<InitialState, state>;
 

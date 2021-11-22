@@ -38,10 +38,11 @@ export function useFetchAll() {
 
 export const reducer = createReducer(initialState, builder => {
   builder.addCase(fetchAllDefinitions.fulfilled, (state, action) => {
-    state.byName = action.payload.reduce((acc, definition) => {
-      acc[definition.name] = definition;
-      return acc;
-    }, {});
+    state.byName =
+      action.payload?.reduce((acc, definition) => {
+        acc[definition.name] = definition;
+        return acc;
+      }, {}) || state.byName;
     state.all = action.payload;
   });
 });

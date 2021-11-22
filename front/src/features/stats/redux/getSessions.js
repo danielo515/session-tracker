@@ -49,6 +49,7 @@ export function dismissGetSessionsError() {
 }
 
 /** @typedef {typeof import('./initialState').default} State*/
+/** @typedef {import('@types').Session} Session*/
 /**
  * @param {State} state
  * @param {{ type: string, payload: {all: Session[], error: string}}} action
