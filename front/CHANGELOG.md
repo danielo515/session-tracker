@@ -1,3 +1,10 @@
+## [1.22.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.22.1...v1.22.2) (2021-11-22)
+
+
+### Bug Fixes
+
+* isoDate does not require +1 ([dd842f7](https://github.com/danielo515/pento-tech-challenge/commit/dd842f7719d51976c95eec6cd9e3db4520878ae1))
+
 ## [1.22.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.22.0...v1.22.1) (2021-11-21)
 
 
