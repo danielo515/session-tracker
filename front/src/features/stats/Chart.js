@@ -17,7 +17,7 @@ import { stringToColour } from './stringToColour';
 import { noop } from '@common/noop';
 
 /**
- * @param {{ sessions: import('../../types').Session[],
+ * @param {{ sessions: import('types').Session[],
  *           title: React.ReactChild,
  *           names: string[],
  *          formatter: import('recharts').TickFormatterFunction }} props
