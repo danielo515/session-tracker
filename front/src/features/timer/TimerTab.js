@@ -68,7 +68,7 @@ export default function TimerTab() {
   const remove5min = addMinutesToSession(-5, editRunningSession, runningSession);
   const remove30min = addMinutesToSession(-30, editRunningSession, runningSession);
   // Business days only
-  const dayOfWeek = Math.min(getISODay(new Date()) + 1, 5);
+  const dayOfWeek = Math.min(getISODay(new Date()), 5);
 
   const dateStart = new Date(runningSession.startDate);
   const name = runningSession.name;
