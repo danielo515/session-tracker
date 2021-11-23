@@ -18,6 +18,7 @@ import {
 /** @typedef {import('rootReducer').RootState} RootState*/
 
 import * as api from '../../../common/api';
+import { updateAtIdx } from './updateAtIdx';
 
 /**
  * Fetches all sessions
@@ -90,21 +91,6 @@ export function dismissFetchSessionsError() {
   };
 }
 
-/**
- * Updates a value in an array at the specified index
- * @template T
- * @param {number} idx
- * @param {T[]} arr
- * @param {T|((x:T) => T)} newVal
- */
-function updateAtIdx(idx, arr, newVal) {
-  const oldVAl = arr[idx];
-  return [
-    ...arr.slice(0, idx),
-    typeof newVal === 'function' ? newVal(oldVAl) : newVal,
-    ...arr.slice(idx + 1),
-  ];
-}
 /** @type {import('react').Reducer<State,Actions>} */
 export function reducer(state, action) {
   switch (action.type) {
@@ -125,6 +111,14 @@ export function reducer(state, action) {
         fetchSessionsError: null,
         runningSession: current,
         sessions: sessions, // skip runninng sessions
+        sessionsById: sessions.reduce((
+          /** @type {{[id:string]: Session}} */
+          acc,
+          session,
+        ) => {
+          acc[session.id] = session;
+          return acc;
+        }, {}),
       };
     }
 
