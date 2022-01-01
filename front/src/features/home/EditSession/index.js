@@ -1,13 +1,12 @@
-import React from 'react';
-import loadable from 'react-loadable';
+import React, { Suspense } from 'react';
+
+const EditSessionComponent = React.lazy(() => import('./EditSession.container'));
 
 const LoadingComponent = () => <h3>please wait...</h3>;
-const EditSessionPromise = () => {
-  return import('./EditSession.container');
-};
-const EditSession = loadable({
-  loader: EditSessionPromise,
-  loading: LoadingComponent,
-});
+const EditSession = () => (
+  <Suspense fallback={<LoadingComponent />}>
+    <EditSessionComponent />
+  </Suspense>
+);
 
 export default EditSession;

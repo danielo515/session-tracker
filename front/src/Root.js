@@ -1,11 +1,12 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import history from './common/history';
+import { LoadingComponent } from '@common/makeAsyncPage';
 
 /** @typedef { import('./types').Route } route*/
 
@@ -50,7 +51,7 @@ function renderRouteConfigV3(routes, contextPath) {
   // Use Switch so that only the first matched route is rendered.
   return (
     <Switch>
-      {children}
+      <Suspense fallback={<LoadingComponent />}>{children}</Suspense>
       <Redirect to="/not-found" />
     </Switch>
   );

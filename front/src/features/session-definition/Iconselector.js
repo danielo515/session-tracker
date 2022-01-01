@@ -1,5 +1,5 @@
 import { FixedSizeList as List } from 'react-window';
-import * as Icons from 'common/Icon/Icon';
+import * as Icons from '@common/Icon/Icon';
 import Autosizer from 'react-virtualized-auto-sizer';
 import React from 'react';
 import { Box, Button, useTheme } from '@material-ui/core';

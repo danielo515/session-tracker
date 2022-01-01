@@ -1,7 +1,7 @@
 import selectRunningSession from 'features/home/redux/selectRunningSession';
 import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { updateRunningSession } from 'common/api';
+import { updateRunningSession } from '@common/api';
 import {
   COMMON_EDIT_RUNNING_SESSION_BEGIN,
   COMMON_EDIT_RUNNING_SESSION_SUCCESS,

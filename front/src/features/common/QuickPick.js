@@ -14,7 +14,7 @@ import {
   Container,
 } from '@material-ui/core';
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
-import * as Icons from 'common/Icon/Icon';
+import * as Icons from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';
 import { withRouter } from 'react-router';
 

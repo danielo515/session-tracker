@@ -3,7 +3,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Title from './Title';
 import PropTypes from 'prop-types';
 import { stringToColour } from './stringToColour';
-import { noop } from 'common/noop';
+import { noop } from '@common/noop';
 import { msToHuman } from 'formatters/formatDateDiff';
 
 /**

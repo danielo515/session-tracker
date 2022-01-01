@@ -1,4 +1,5 @@
 import React from 'react';
+import { Suspense } from 'react';
 import loadable from 'react-loadable';
 
 export const LoadingComponent = () => (
@@ -21,10 +22,7 @@ export const LoadingComponent = () => (
  * @param {() => any} importFn
  */
 function makeAsyncPage(importFn) {
-  return loadable({
-    loader: importFn,
-    loading: LoadingComponent,
-  });
+  return React.lazy(importFn);
 }
 
 export default makeAsyncPage;

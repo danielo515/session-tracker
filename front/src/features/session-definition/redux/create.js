@@ -1,4 +1,4 @@
-import { createSessionDefinition } from 'common/api';
+import { createSessionDefinition } from '@common/api';
 import useAppSelector from 'hooks/useSelector';
 import { useCallback } from 'react';
 import { useDispatch, shallowEqual } from 'react-redux';
