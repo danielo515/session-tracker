@@ -6,13 +6,18 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 export default class NotImplemented extends Component {
   render() {
     return (
-      <div class="not-implemented">
+      <div className="not-implemented">
         <h2>I wanted to implement this feature but...</h2>
         <p>
-          <img src={meme} alt='not implemented meme'/>
+          <img src={meme} alt="not implemented meme" />
         </p>
         <h2>Didn't had time...</h2>
-        <Button variant="outlined" size="large" onClick={this.props.history.goBack} startIcon={<ArrowBackIcon />}>
+        <Button
+          variant="outlined"
+          size="large"
+          onClick={this.props.history.goBack}
+          startIcon={<ArrowBackIcon />}
+        >
           Back
         </Button>
       </div>

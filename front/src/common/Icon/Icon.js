@@ -1,11 +1,10 @@
-import React from 'react';
-import loadable from 'react-loadable';
+import React, { Suspense } from 'react';
 import CachedRoundedIcon from '@material-ui/icons/CachedRounded';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   colored: {
-    color: props => props.color || theme.palette.divider,
+    color: ({ color }) => color || theme.palette.divider,
   },
 }));
 
@@ -28,13 +27,19 @@ const Renderer = ({ color, className, Component }) => {
  * @param {() => any} importFn
  */
 function loadableIcon(importFn) {
-  return loadable({
-    loader: importFn,
-    loading: LoadingIcon,
-    render(loaded, props) {
-      return <Renderer {...props} Component={loaded.default} />;
-    },
+  const Inner = React.lazy(async () => {
+    const component = await importFn();
+    return {
+      default: props => {
+        return <Renderer {...props} Component={component.default} />;
+      },
+    };
   });
+  return props => (
+    <Suspense fallback={<LoadingIcon />}>
+      <Inner {...props} />
+    </Suspense>
+  );
 }
 
 /* scrapped from material-ui gh repo with
