@@ -50,10 +50,12 @@ function renderRouteConfigV3(routes, contextPath) {
 
   // Use Switch so that only the first matched route is rendered.
   return (
-    <Switch>
-      <Suspense fallback={<LoadingComponent />}>{children}</Suspense>
-      <Redirect to="/not-found" />
-    </Switch>
+    <Suspense fallback={<LoadingComponent />}>
+      <Switch>
+        {children}
+        <Redirect to="/not-found" />
+      </Switch>
+    </Suspense>
   );
 }
 

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Suspense } from 'react';
-import loadable from 'react-loadable';
 
 export const LoadingComponent = () => (
   <h3
