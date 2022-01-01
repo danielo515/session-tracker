@@ -9,7 +9,7 @@ import Root from './Root';
 const store = configStore();
 
 function renderApp(app) {
-  render(app, document.getElementById('root'));
+  render(<React.StrictMode>{app}</React.StrictMode>, document.getElementById('root'));
 }
 
 renderApp(<Root store={store} routeConfig={routeConfig} />);

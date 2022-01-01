@@ -6,13 +6,19 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { setupApp } from '../common/redux/actions';
 import { Redirect } from 'react-router-dom';
+import { RootState } from 'rootReducer';
 
 /*
   This is the root component of your app. Here you define the overall layout
   and the container of the react router.
   You should adjust it according to the requirement of your app.
 */
-class App extends Component {
+class App extends Component<{
+  isSetupPending: boolean;
+  isLoggedIn: boolean;
+  setupApp: () => void;
+  location: { pathName: string };
+}> {
   static propTypes = {
     children: PropTypes.node,
   };
@@ -44,11 +50,8 @@ class App extends Component {
     );
   }
 }
-/* istanbul ignore next */
-/**
- * @param {import('rootReducer').RootState} state
- */
-function mapStateToProps(state) {
+
+function mapStateToProps(state: RootState) {
   return {
     isSetupPending: state.common.setupAppPending,
     isLoggedIn: state.common.loggedIn,
