@@ -17,7 +17,7 @@ class App extends Component<{
   isSetupPending: boolean;
   isLoggedIn: boolean;
   setupApp: () => void;
-  location: { pathName: string };
+  location: { pathname: string };
 }> {
   static propTypes = {
     children: PropTypes.node,
