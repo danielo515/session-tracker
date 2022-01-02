@@ -17,15 +17,11 @@ import QuickPick from '../common/QuickPick';
 import useAppSelector from 'hooks/useSelector';
 import selectDefinition from 'features/session-definition/selectDefinition';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { RunningSession } from '@types';
 
-/**
- *
- *
- * @param {number} amount
- * @param {(args:{name: string, startDate: Date}) => any} edit
- * @param {import('@types').RunningSession} runningSession
- */
-const addMinutesToSession = (amount: number, edit: (args: { name: string; startDate: Date; }) => any, runningSession: import('@types').RunningSession) => () =>
+type editFn = (args: { name: string; startDate: Date }) => any;
+
+const addMinutesToSession = (amount: number, edit: editFn, runningSession: RunningSession) => () =>
   edit({
     name: runningSession?.name,
     startDate: subMinutes(new Date(runningSession?.startDate || Date.now()), amount),
@@ -128,10 +124,7 @@ TimerTab.defaultProps = {};
  * @param {string}  props.title
  * @param {string}  props.subtitle
  */
-function StatRow({ title, subtitle }: {
-    title: string;
-    subtitle: string;
-}) {
+function StatRow({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <Box p={1}>
       <Card>
@@ -152,15 +145,15 @@ function StatRow({ title, subtitle }: {
 
 /**
  * Renders a button with a label
- * @param {Object} props
- * @param {('primary'|'secondary')} [ props.color ]
- * @param {import('react').ReactNode} props.icon
- * @param {import('react').ReactEventHandler} props.onClick
  **/
-function ButtonAction({ onClick, icon, color = 'primary' }: {
-    color?: ('primary' | 'secondary');
-    icon: import('react').ReactNode;
-    onClick: import('react').ReactEventHandler;
+function ButtonAction({
+  onClick,
+  icon,
+  color = 'primary',
+}: {
+  color?: 'primary' | 'secondary';
+  icon: React.ReactNode;
+  onClick: React.ReactEventHandler;
 }) {
   return (
     <Button
@@ -179,17 +172,16 @@ function ButtonAction({ onClick, icon, color = 'primary' }: {
 
 /**
  * Renders a button with a label
- * @param {Object} props
- * @param {('primary'|'secondary')} [ props.color ]
- * @param {import('react').ReactNode} props.icon
- * @param {string} props.text
- * @param {import('react').ReactEventHandler} props.onClick
  **/
-function ButtonActionText({ onClick, icon, text, color = 'primary' }: {
-    color?: ('primary' | 'secondary');
-    icon: import('react').ReactNode;
-    text: string;
-    onClick: import('react').ReactEventHandler;
+function ButtonActionText({
+  onClick,
+  text,
+  color = 'primary',
+}: {
+  color?: 'primary' | 'secondary';
+  icon: React.ReactNode;
+  text: string;
+  onClick: React.ReactEventHandler;
 }) {
   return (
     <Box padding={1}>

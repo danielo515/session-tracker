@@ -6,16 +6,14 @@ import useHandleChange from './hooks/useHandleChange';
 import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 
-/** @typedef {Object} FormProps
- * @property {string} sessionName
- * @property {'primary'|'secondary'} color
- * @property {boolean} visible
- * @property {any} Icon
- * @property {React.ChangeEventHandler<HTMLInputElement>} onChange
- * @property {() => void} onSubmit
- */
-
-/** @param {FormProps} props **/
+type FormProps = {
+  sessionName: string;
+  color: 'primary' | 'secondary';
+  visible: boolean;
+  Icon: any;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onSubmit: () => void;
+};
 
 export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, color }: FormProps) {
   return (
@@ -45,11 +43,9 @@ export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, co
   );
 }
 
-/** @typedef {Object} Props
- * @property {(args: {name: string}) => any} startSession
- */
-
-/** @param {Props} props **/
+type Props = {
+  startSession: (args: { name: string }) => any;
+};
 export default function SessionStart({ startSession }: Props) {
   const [sessionName, handleChange] = useHandleChange('');
   const [visible, setVisible] = useState(true);

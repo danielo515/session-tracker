@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff';
 import { msToHourMinSec } from './msToHourMinSec';
 
-/**
- * @param {{startDate: string}} props
- */
-export const RenderTimer = ({ startDate }: { startDate: string; }) => {
+export const RenderTimer = ({ startDate }: { startDate: string }) => {
   useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToHourMinSec(Date.now() - new Date(startDate).getTime());
   return (
@@ -25,10 +21,10 @@ const exit = { maxWidth: 0, opacity: 0 };
 const animateTo = { maxWidth: 200, opacity: 1 };
 const style = { overflow: 'hidden' };
 
-/** @typedef {{ isActive: boolean, startDate?: string }} PropsB*/
-/**
- * @param {PropsB} props
- */
+type PropsB = {
+  isActive: boolean;
+  startDate?: string;
+};
 export default function Timer({ startDate }: PropsB) {
   return (
     <div className={`home-timer-wrapper ${!startDate ? 'empty' : ''}`}>
@@ -50,10 +46,6 @@ export default function Timer({ startDate }: PropsB) {
   );
 }
 
-Timer.propTypes = {
-  startDate: PropTypes.string,
-  isActive: PropTypes.bool,
-};
 Timer.defaultProps = {
   isActive: true,
 };

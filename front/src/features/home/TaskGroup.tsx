@@ -9,6 +9,8 @@ import { FixedSizeList } from 'react-window';
 import { formatDateDiff, formatStartDate, msToHuman } from 'formatters/formatDateDiff';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import { useSelectRow } from './redux/selectRow';
+import { SessionGroup } from '@types';
+import { Merge } from 'type-fest';
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -33,24 +35,29 @@ const useStyles = makeStyles(theme => ({
 }));
 const ItemHeight = 72;
 const ListHeight = 3 * ItemHeight;
-/**
- * @typedef {import('@types').SessionGroup} SessionGroup
- * @typedef {import('@types').Session} Session
- **/
 
-/** @typedef {Object} props
- * @property {React.MouseEventHandler<HTMLElement>} startSession
- * @property {React.MouseEventHandler<HTMLDivElement>} editSession
- * @property {(sessionName: string) => any} onToggle
- */
-/** @typedef {import('type-fest').Merge<SessionGroup, props>} Props */
+type Props = Merge<
+  SessionGroup,
+  {
+    startSession: React.MouseEventHandler<HTMLElement>;
+    editSession: React.MouseEventHandler<HTMLDivElement>;
+    onToggle: (sessionName: string) => any;
+  }
+>;
 
 /**
  * Renders a group of sesions. A group of sessions is a list of sessions
  * that have the same name
- * @param {Props} props
  */
-export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSession, editSession }: Props) {
+export function TaskGroup({
+  name,
+  total,
+  lastRun,
+  sessions,
+  onToggle,
+  startSession,
+  editSession,
+}: Props) {
   const css = useStyles();
   const { selectRow, selectedRow } = useSelectRow();
   const isOpen = name === selectedRow;

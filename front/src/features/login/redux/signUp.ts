@@ -7,16 +7,20 @@ import {
 
 import * as api from '../../../common/api';
 import history from '../../../common/history';
+import { State } from './initialState';
 
 /**
  * signs up the user
- *
- * @export
- * @template {import('redux').Dispatch<{type: string}>} Dispatch
- * @param  {{ email: string, password: string, name: string} } args
- * @return {(dispatch: Dispatch)=> Promise<*>}
  */
-export function signUp({ email, password, name }: { email: string; password: string; name: string; }) {
+export function signUp({
+  email,
+  password,
+  name,
+}: {
+  email: string;
+  password: string;
+  name: string;
+}) {
   return async dispatch => {
     dispatch({
       type: LOGIN_SIGN_UP_BEGIN,
@@ -48,15 +52,6 @@ export function dismissSignUpError() {
   };
 }
 
-/**
- *
- *
- * @export
- * @template {typeof import('./initialState').default} State
- * @param {State} state
- * @param {*} action
- * @return {State}
- */
 export function reducer(state: State, action: any) {
   switch (action.type) {
     case LOGIN_SIGN_UP_BEGIN:

@@ -4,20 +4,23 @@ import {
   HOME_DELETE_SESSION_FAILURE,
   HOME_DELETE_SESSION_DISMISS_ERROR,
 } from './constants';
+import { Session } from '@types';
+import * as api from '@common/api';
+import { State } from './initialState';
+import { Dispatch } from 'redux-thunk';
 
-import * as api from '../../../common/api';
+type Type =
+  | typeof HOME_DELETE_SESSION_BEGIN
+  | typeof HOME_DELETE_SESSION_SUCCESS
+  | typeof HOME_DELETE_SESSION_FAILURE
+  | typeof HOME_DELETE_SESSION_DISMISS_ERROR;
 
-/**@typedef { HOME_DELETE_SESSION_BEGIN | HOME_DELETE_SESSION_SUCCESS | HOME_DELETE_SESSION_FAILURE | HOME_DELETE_SESSION_DISMISS_ERROR} Type */
-
+type DeleteDispatch = Dispatch<{ type: Type; payload: {} }>;
 /**
- *
- * @template {import('redux').Dispatch<{type: Type, payload: {}}>} Dispatch
- * @export
- * @param {string} id
  * @return {(dispatch: Dispatch, getState: Function) => void} thunk
  */
 export function deleteSession(id: string) {
-  return async (dispatch, getState) => {
+  return async (dispatch: DeleteDispatch, getState) => {
     dispatch({
       type: HOME_DELETE_SESSION_BEGIN,
     });
@@ -50,17 +53,10 @@ export function dismissDeleteSessionError() {
   };
 }
 
-/**
- *
- *
- * @template {typeof import('./initialState').default} State
- * @template {import('../../../types').Session} Session
- * @export
- * @param {State} state
- * @param {{type: Type, payload: { session: Session, error?: any}}} action
- * @return {State}
- */
-export function reducer(state: State, action: { type: Type; payload: { session: Session; error?: any; }; }) {
+export function reducer(
+  state: State,
+  action: { type: Type; payload: { session: Session; error?: any } },
+) {
   switch (action.type) {
     case HOME_DELETE_SESSION_BEGIN:
       // Just after a request is sent

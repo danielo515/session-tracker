@@ -4,13 +4,11 @@ import Autosizer from 'react-virtualized-auto-sizer';
 import React from 'react';
 import { Box, Button, useTheme } from '@material-ui/core';
 
-/**
- * @typedef {Object} Props
- * @property {string} icon
- * @property {(icon:string)=>void} onChange
- */
+type Props = {
+  icon: string;
+  onChange: (icon: string) => void;
+};
 
-/** @param {Props} props **/
 export function IconSelector({ icon, onChange }: Props) {
   const data = Object.entries(Icons);
   const theme = useTheme();

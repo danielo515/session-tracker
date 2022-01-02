@@ -4,15 +4,11 @@ import StopIcon from '@material-ui/icons/Stop';
 import useHandleChange from './hooks/useHandleChange';
 import { SessionForm } from './SessionStart';
 
-/** @typedef {Object} Props
- * @property {string} name
- * @property {string} startDate
- * @property {Function} stopSession
- */
-/**
- * @export
- * @param {Props} Props
- */
+type Props = {
+  name: string;
+  startDate: string;
+  stopSession: ({ name }: { name: string }) => void;
+};
 export default function SessionStop({ name: sessionName, stopSession, startDate }: Props) {
   const [name, handleChange] = useHandleChange(sessionName);
   const [visible, setVisible] = useState(true);

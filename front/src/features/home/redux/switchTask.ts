@@ -9,7 +9,10 @@ import {
 import * as api from '../../../common/api';
 
 import { RootState } from 'rootReducer';
-import { ThunkAction } from 'react-redux';
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
+import { State } from './types';
+
 /**
  * @typedef {import('redux').Action<HOME_SWITCH_TASK_BEGIN>} SwitchTask
  * @typedef {{type: HOME_SWITCH_TASK_FAILURE, payload: {error: any}}} SwitchError
@@ -20,9 +23,14 @@ import { ThunkAction } from 'react-redux';
  *
  **/
 
-/**
- * @param {{id: string, name: string, dispatch: Function}} param0
- */
+type Actions =
+  | Action<typeof HOME_SWITCH_TASK_BEGIN>
+  | Action<typeof HOME_SWITCH_TASK_SUCCESS>
+  | Action<typeof HOME_SWITCH_TASK_FAILURE, { error: any }>
+  | Action<typeof HOME_SWITCH_TASK_DISMISS_ERROR>
+  | Action<typeof HOME_START_SESSION_SUCCESS>
+  | Action<typeof HOME_STOP_SESSION_SUCCESS>;
+
 const stopSession = async ({
   dispatch,
   id,
@@ -96,9 +104,7 @@ export function dismissSwitchTaskError() {
   };
 }
 
-/** @typedef {import('./types').State} State*/
-/** @type {import('react').Reducer<State,Actions>} */
-export function reducer(state, action) {
+export function reducer(state: State, action: Actions) {
   switch (action.type) {
     case HOME_SWITCH_TASK_BEGIN:
       // Just after a request is sent

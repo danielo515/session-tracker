@@ -9,27 +9,25 @@ import subDays from 'date-fns/subDays';
 import { useNavigateDays } from './redux/navigateDays';
 import { useNavigateWeeks } from './redux/navigateWeeks';
 
-/** @typedef {Object} PropsA
- * @property {() => any} next
- * @property {() => any} back
- * @property {never} [ baseName ]
- * @property {never} [ unit ]
- * @property {string} text
- * @property {number} value
- */
-/** @typedef {Object} PropsB
- * @property {() => any} next
- * @property {() => any} back
- * @property {string} baseName
- * @property {string} unit
- * @property {never} [ text ]
- * @property {number} value
- */
-/**
- * @param {PropsA|PropsB} props
- */
+type PropsA = {
+  next: () => any;
+  back: () => any;
+  baseName?: never;
+  unit: never;
+  text: string;
+  value: number;
+};
+
+type PropsB = {
+  next: () => any;
+  back: () => any;
+  baseName: string;
+  unit: string;
+  text?: never;
+  value: number;
+};
+
 function NavigationControlsBase({ next, back, baseName, value, text, unit }: PropsA | PropsB) {
-  // @ts-ignore
   const { navigation } = useStyles();
   return (
     <div className={navigation}>
@@ -46,10 +44,8 @@ function NavigationControlsBase({ next, back, baseName, value, text, unit }: Pro
   );
 }
 
-/**
- * @param {number} ago
- */
-const formatDaysAgo = (ago: number) => (ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today');
+const formatDaysAgo = (ago: number) =>
+  ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today';
 
 export function DaysNavigator() {
   const { nextDay, previousDay, daysAgo } = useNavigateDays();

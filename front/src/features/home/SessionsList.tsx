@@ -8,6 +8,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import List from '@material-ui/core/List';
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
+import { SessionGroup } from '@types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,30 +20,15 @@ const useStyles = makeStyles(theme => ({
 const ItemHeight = 72;
 const ListHeight = ItemHeight + 3 * ItemHeight;
 
-/**
- * @param {any[]} items
- */
 export function CalculateListHeight(items: any[]) {
   return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
 }
 // const NestedItemHeight = 400;
 // const formatHour = 'HH:mm';
-/**
- * @typedef {import('@types').Session} Session
- * @typedef {import('@types').SessionGroup} SessionGroup
- */
 
-/** @typedef {Object} PropsRender
- * @property {(item: {name: string}) => any} startSession
- * @property {(id:string) => any} editSession
- */
+type cb<T> = <T>(i: number) => T;
+type DoTimes<T> = (n: number, cb: cb<T>) => T[];
 
-/**
- * @template T
- * @template {(i:number) => T} cb
- * @param {number} times
- * @returns {(fn:cb) => T[]}
- */
 const doTimes = (times: number) => fn => {
   const res = [];
   for (; times; times--) res.push(fn(times));
@@ -60,13 +46,12 @@ const Loading = () => {
   );
 };
 
-/** @typedef {Object} Props
- * @property {SessionGroup[]} sessions
- * @property {(i:{name: string}) => any} startSession
- * @property {(id:string) => any} editSession
- */
+type Props = {
+  sessions: SessionGroup[];
+  startSession: (i: { name: string }) => any;
+  editSession: (id: string) => any;
+};
 
-/** @param {Props} props **/
 export default function SessionsList({ sessions, startSession, editSession }: Props) {
   const classes = useStyles();
   // We need to use a ref because using the hook will re-render the entire list which will kill the animation
@@ -117,13 +102,8 @@ SessionsList.defaultProps = {
   sessions: [],
 };
 
-/**
- *
- * @template {{name: string, id?: string}} T
- * @param {number} idx
- * @param {T[]} data
- */
-const getIdOrName = (idx: number, data: T[]) => data[idx].id || data[idx].name;
+const getIdOrName = <T extends { name: string; id?: string }>(idx: number, data: T[]) =>
+  data[idx].id || data[idx].name;
 /**
  * @template T
  * @typedef {Object} VirtualProps

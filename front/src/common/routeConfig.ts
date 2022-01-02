@@ -5,21 +5,14 @@ import commonRoute from '../features/common/route';
 import loginRoute from '../features/login/route';
 import timerRoute from '../features/timer/route';
 import sessionDefinitionRoute from '../features/session-definition/route';
+import { Route } from '@types';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
-/** @typedef { import('@types').Route } Route*/
 
-/**
- * Routes order matters. Everything after homeRoute will be shallowed by it because
- * homeRoute is defined as `/` so it can handle all the sub routes without a prefix.
- * If you want an app wide route, you should put it before homeRoute.
- * @type {Route[]}
- * */
-const childRoutes = [loginRoute, commonRoute, sessionDefinitionRoute, homeRoute, timerRoute];
+const childRoutes: Route = [loginRoute, commonRoute, sessionDefinitionRoute, homeRoute, timerRoute];
 
-/** @type { import('../types').Route[] }*/
-const routes = [
+const routes: Route = [
   {
     path: '/',
     component: App,
@@ -34,11 +27,6 @@ const routes = [
 // Handle isIndex property of route config:
 //  Duplicate it and put it as the first route rule.
 
-/**
- *
- *
- * @param {Route} route
- */
 function handleIndexRoute(route: Route) {
   if (!route.childRoutes || !route.childRoutes.length) {
     return;

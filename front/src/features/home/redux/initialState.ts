@@ -21,3 +21,5 @@ const initialState = {
 };
 
 export default initialState;
+
+export type State = typeof initialState;

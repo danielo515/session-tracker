@@ -6,7 +6,7 @@ import selectWeekChartData from './redux/selectWeekChartData';
 import { RootState } from 'rootReducer';
 
 type Props = {
-  title: React.Node;
+  title: React.ReactNode;
 };
 export default function DonutContainer({ title }: Props) {
   const sessions = useSelector((state: RootState) => {
