@@ -13,7 +13,7 @@ import { SessionForm } from './SessionStart';
  * @export
  * @param {Props} Props
  */
-export default function SessionStop({ name: sessionName, stopSession, startDate }) {
+export default function SessionStop({ name: sessionName, stopSession, startDate }: Props) {
   const [name, handleChange] = useHandleChange(sessionName);
   const [visible, setVisible] = useState(true);
   const stop = () => {

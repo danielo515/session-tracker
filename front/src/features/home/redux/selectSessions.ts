@@ -1,8 +1,5 @@
-/** @typedef {import('rootReducer').RootState} State*/
-/**
- * @param {State} state
- */
-function selectSessions(state) {
+import { RootState } from 'rootReducer';
+function selectSessions(state: RootState) {
   return state.home.sessions || [];
 }
 

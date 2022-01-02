@@ -14,7 +14,7 @@ import List from '@material-ui/icons/List';
 /**
  * @param {String} index
  */
-function a11yProps(index) {
+function a11yProps(index: string) {
   return {
     id: `nav-tab-${index}`,
     'aria-controls': `nav-tabpanel-${index}`,
@@ -29,7 +29,12 @@ function a11yProps(index) {
  * @param {any} props.icon
  * @param {String} props.value
  */
-function LinkTab({ label, ...props }) {
+function LinkTab({ label, ...props }: {
+    label: string;
+    to: string;
+    icon: any;
+    value: string;
+}) {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('xs'));
   const Label = smallScreen ? null : <Box display={{ xs: 'none', sm: 'block' }}>{label}</Box>;
@@ -40,7 +45,9 @@ function LinkTab({ label, ...props }) {
  * @param {Object} props
  * @param {string} props.page
  * */
-export default function Navigation({ page }) {
+export default function Navigation({ page }: {
+    page: string;
+}) {
   const knownRoute = ['/stats', '/timer', '/'].includes(page);
   if (!knownRoute) {
     return null;

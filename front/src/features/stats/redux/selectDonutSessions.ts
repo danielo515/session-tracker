@@ -1,5 +1,6 @@
 /** @typedef {import("@types").Session} Session*/
 
+import { Session } from '@types';
 import { createSelector } from 'reselect';
 import selectRelativeDaysSessions from './selectRelativeDaysSessions';
 
@@ -8,7 +9,7 @@ const msInADay = 864e5;
  * @param {Date|string} start
  * @param {Date|string} end
  */
-function dateDiff(start, end = new Date()) {
+function dateDiff(start: Date | string, end: Date | string = new Date()) {
   return new Date(end).getTime() - new Date(start).getTime();
 }
 
@@ -18,7 +19,10 @@ function dateDiff(start, end = new Date()) {
  * @param {{all: Map<string,{name: string, duration: number}>, unused: number}} param0
  * @param {Session} session
  */
-const addDurationToSessions = ({ all, unused }, session) => {
+const addDurationToSessions = (
+  { all, unused }: { all: Map<string, { name: string; duration: number }>; unused: number },
+  session: Session,
+) => {
   const duration = dateDiff(session.startDate, session.endDate);
   const { name, duration: oldDuration = 0 } = all.get(session.name) || session;
   all.set(name, { ...session, duration: oldDuration + duration });
@@ -34,7 +38,7 @@ const addDurationToSessions = ({ all, unused }, session) => {
  * @param {Session[]} sessions
  * @returns {{name: string, duration: number}[]}
  */
-function selectDonutSessions(sessions) {
+function selectDonutSessions(sessions: Session[]) {
   const initialValue = { all: new Map(), unused: msInADay };
   const { all, unused } = sessions.reduce(addDurationToSessions, initialValue);
 

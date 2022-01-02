@@ -9,7 +9,7 @@ import selectSessions from './selectSessions';
  * @param {string} sessionId
  * @returns {Session|void}
  */
-function selectSessionToEdit(sessions, sessionId) {
+function selectSessionToEdit(sessions: Session[], sessionId: string) {
   if (!sessionId) {
     return;
   }

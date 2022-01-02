@@ -2,10 +2,9 @@ import { calculateSessionDuration } from '@common/calculateSessionDuration';
 import selectRunningSession from 'features/home/redux/selectRunningSession';
 import useAppSelector from 'hooks/useSelector';
 import selectSessionStatsByName from './redux/selectSessionStatsByName';
-/**
- * @return {import('./redux/selectRunningSessionStats').Stats}
- */
-function useRunningSessionStats() {
+import { Stats } from './redux/selectRunningSessionStats';
+
+function useRunningSessionStats(): Stats {
   const runningSession = useAppSelector(selectRunningSession);
   // We use this selector because we want to get the cached stats not including the running session, so we can manually calculate the latest duration in real time and keep the UI up to date.
   const sessionStats = useAppSelector(state =>

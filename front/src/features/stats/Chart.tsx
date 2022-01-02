@@ -22,7 +22,7 @@ import { noop } from '@common/noop';
  *           names: string[],
  *          formatter: import('recharts').TickFormatterFunction }} props
  */
-export default function Chart({ sessions, title, names, formatter }) {
+export default function Chart({ sessions, title, names, formatter }: { sessions: import('types').Session[]; title: React.ReactChild; names: string[]; formatter: import('recharts').TickFormatterFunction; }) {
   const theme = useTheme();
   const Bars = names.map(x => (
     <Bar key={x} dataKey={x} name={x} stackId="a" fill={stringToColour(x)} />

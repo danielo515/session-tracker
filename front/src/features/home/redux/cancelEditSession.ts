@@ -3,6 +3,7 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da
 
 import { HOME_CANCEL_EDIT_SESSION } from './constants';
+import State from './initialState';
 
 export function cancelEditSession() {
   return {
@@ -11,12 +12,7 @@ export function cancelEditSession() {
 }
 /** @typedef {typeof import('./initialState').default} State*/
 
-/**
- * @param {State} state
- * @param {*} action
- * @return {State}
- */
-export function reducer(state, action) {
+export function reducer(state: typeof State, action: any) {
   switch (action.type) {
     case HOME_CANCEL_EDIT_SESSION:
       return {

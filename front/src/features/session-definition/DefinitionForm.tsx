@@ -20,7 +20,11 @@ const defaultIcon = 'Default';
  * @param {(a: SessionDefinition) => any} props.onSubmit
  * @param {import('@types').SessionDefinition} props.definition
  */
-export default function DefinitionForm({ definition, onSubmit, isLoading }) {
+export default function DefinitionForm({ definition, onSubmit, isLoading }: {
+    isLoading: boolean;
+    onSubmit: (a: SessionDefinition) => any;
+    definition: import('@types').SessionDefinition;
+}) {
   const [color, setColor] = useState(definition.color);
   const [duration, setDuration] = useState(definition.expectedDuration || defaultDuration);
   const [name, setName] = useHandleChange(definition.name);

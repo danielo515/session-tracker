@@ -58,7 +58,7 @@ export function dismissStopSessionError() {
  * @param {State}  state
  * @param {Actions} action
  */
-export function reducer(state, action) {
+export function reducer(state: State, action: Actions) {
   switch (action.type) {
     case HOME_STOP_SESSION_BEGIN:
       // Just after a request is sent

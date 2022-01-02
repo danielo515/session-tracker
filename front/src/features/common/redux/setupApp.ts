@@ -6,7 +6,7 @@ import {
 } from './constants';
 
 import { LOGIN_LOGIN_ACTION_SUCCESS } from '../../login/redux/constants';
-
+import { AppState } from './types';
 import history from '../../../common/history';
 import { syncSessions } from '../../home/redux/actions';
 import homeSetup from '../../home/redux/setup';
@@ -43,15 +43,10 @@ export function dismissSetupAppError() {
   };
 }
 
-/**
- *
- *
- * @export
- * @param {import('./types').AppState} state
- * @param {{type: string, payload: {error: string}}} action
- * @return {import('./types').AppState}
- */
-export function reducer(state, { type, payload }) {
+export function reducer(
+  state: AppState,
+  { type, payload }: { type: string; payload: { error: string } },
+) {
   switch (type) {
     case COMMON_SETUP_APP_BEGIN:
       // Just after a request is sent

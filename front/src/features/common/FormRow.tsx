@@ -11,7 +11,11 @@ import React from 'react';
  * @param {boolean} [ props.row ]
  * @return {*}
  */
-export default function FormRow({ children, centered, row }) {
+export default function FormRow({ children, centered, row }: {
+    children: React.ReactNode;
+    centered?: boolean;
+    row?: boolean;
+}) {
   const props = {
     alignItems: centered ? 'center' : 'stretch',
     justifyContent: 'space-evenly',

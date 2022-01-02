@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
  * @param {string} dateString
  * @return {Date}
  */
-function parseDate(originalDate, dateString) {
+function parseDate(originalDate: Date, dateString: string) {
   const [hours, minutes] = dateString.split(':');
   return setHours(setMinutes(originalDate, parseInt(minutes, 10)), parseInt(hours, 10));
 }
@@ -27,7 +27,7 @@ function parseDate(originalDate, dateString) {
  *
  * @param {{value: Date, onChange: (d: Date) => any, id: string, label?: string }} props
  */
-export default function TimePickers({ value, onChange, id, label }) {
+export default function TimePickers({ value, onChange, id, label }: { value: Date; onChange: (d: Date) => any; id: string; label?: string; }) {
   const classes = useStyles();
 
   const formattedValue = format(value, 'HH:mm');

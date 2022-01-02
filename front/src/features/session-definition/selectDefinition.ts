@@ -1,23 +1,22 @@
 import { createSelector } from 'reselect';
 
-function selectSessionDefinitions(/** @type {import('rootReducer').RootState} */ state) {
+import { RootState } from 'rootReducer';
+import { DefinitionsState } from './redux/types';
+
+function selectSessionDefinitions(state: RootState) {
   return state.sessionDefinition;
 }
-/**
- * @param {string|undefined}  sessionName
- * @param {import('./redux/types').DefinitionsState} state
- */
-function selectDefinition(sessionName, state) {
+function selectDefinition(sessionName: string | undefined, state: DefinitionsState) {
   if (!sessionName) return null;
   return state.byName[sessionName];
 }
 
-/**
- * @param {any} _
- * @param {Object} props
- * @param {string} [ props.name ]
- * */
-function selectName(_, props) {
+function selectName(
+  _: any,
+  props: {
+    name?: string;
+  },
+) {
   return props.name;
 }
 

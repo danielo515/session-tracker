@@ -1,4 +1,5 @@
 import isWithinInterval from 'date-fns/isWithinInterval';
+import { Session } from '@types';
 import format from 'date-fns/fp/format';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { getTodayIntervals } from 'dateUtils/getIntervals';
@@ -11,11 +12,14 @@ import { getTodayIntervals } from 'dateUtils/getIntervals';
  * @param {(d:Date) => string} formatter should format the date to string
  * @returns {(map:MapRow, session:Session) => MapRow}
  */
-export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDate }) => {
+export const addToRow = (formatter: (d: Date) => string, diffCalc: Function) => (
+  map,
+  { name, startDate, endDate },
+) => {
   const duration = diffCalc(new Date(endDate || Date.now()), new Date(startDate));
   const date = formatter(new Date(startDate));
 
-  const existing = /** @type { Row }*/ (map[date] || {});
+  const existing = /** @type { Row }*/ map[date] || {};
   const names = map.names || new Set();
   names.add(name);
   return {
@@ -32,18 +36,20 @@ export const addToRow = (formatter, diffCalc) => (map, { name, startDate, endDat
 const makeWeekRow = addToRow(format('E do MMM'), differenceInMinutes);
 const makeMonthRow = addToRow(format('Io'), differenceInMinutes);
 
-/**
- *
- * @template {{names: Set<string>}} HasName
- * @param {HasName} args
- */
-const omitNamesProp = ({ names, ...rest }) => rest;
+type HasName = {
+  names: Set<string>;
+};
+const omitNamesProp = ({ names, ...rest }: HasName) => rest;
 
-/**
- *
- * @param {{  weeksAgo: number , monthsAgo: number, sessions: import('../../types').Session[]} } args
- */
-export function createChartData({ weeksAgo = 0, monthsAgo = 0, sessions }) {
+export function createChartData({
+  weeksAgo = 0,
+  monthsAgo = 0,
+  sessions,
+}: {
+  weeksAgo: number;
+  monthsAgo: number;
+  sessions: Session[];
+}) {
   const { weekInterval, monthInterval } = getTodayIntervals({ weeksAgo, monthsAgo });
   // This was a series of filters and maps chained, but reduce is way more performant and powerful
   const chartData = sessions.reduce(

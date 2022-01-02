@@ -16,7 +16,7 @@ import * as api from '../../../common/api';
  * @param {string} id
  * @return {(dispatch: Dispatch, getState: Function) => void} thunk
  */
-export function deleteSession(id) {
+export function deleteSession(id: string) {
   return async (dispatch, getState) => {
     dispatch({
       type: HOME_DELETE_SESSION_BEGIN,
@@ -60,7 +60,7 @@ export function dismissDeleteSessionError() {
  * @param {{type: Type, payload: { session: Session, error?: any}}} action
  * @return {State}
  */
-export function reducer(state, action) {
+export function reducer(state: State, action: { type: Type; payload: { session: Session; error?: any; }; }) {
   switch (action.type) {
     case HOME_DELETE_SESSION_BEGIN:
       // Just after a request is sent

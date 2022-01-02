@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
  * @param {Object} props
  * @param {Date} props.startDate
  */
-function Started({ startDate }) {
+function Started({ startDate }: { startDate: Date }) {
   const css = useStyles();
   const formattedDate = format(startDate, 'E. HH:mm');
 
@@ -69,16 +69,15 @@ function Started({ startDate }) {
     </div>
   );
 }
-/**
- * @typedef {Object} Props
- * @property {string} name
- * @property {string} color
- * @property {number} expectedDuration
- * @property {Date} startDate
- */
 
-/** @param {Props} props **/
-export function CircularTimer({ name, startDate, color, expectedDuration }) {
+type Props = {
+  name: string;
+  color: string;
+  expectedDuration: number;
+  startDate: Date;
+};
+
+export function CircularTimer({ name, startDate, color, expectedDuration }: Props) {
   const css = useStyles({ color });
   const percentCompleted = differenceInMinutes(new Date(), startDate) / expectedDuration;
   return (

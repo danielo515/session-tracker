@@ -11,7 +11,7 @@ import { Box, Button, useTheme } from '@material-ui/core';
  */
 
 /** @param {Props} props **/
-export function IconSelector({ icon, onChange }) {
+export function IconSelector({ icon, onChange }: Props) {
   const data = Object.entries(Icons);
   const theme = useTheme();
   const itemWidth = 64;

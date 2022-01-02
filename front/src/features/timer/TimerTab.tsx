@@ -25,7 +25,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
  * @param {(args:{name: string, startDate: Date}) => any} edit
  * @param {import('@types').RunningSession} runningSession
  */
-const addMinutesToSession = (amount, edit, runningSession) => () =>
+const addMinutesToSession = (amount: number, edit: (args: { name: string; startDate: Date; }) => any, runningSession: import('@types').RunningSession) => () =>
   edit({
     name: runningSession?.name,
     startDate: subMinutes(new Date(runningSession?.startDate || Date.now()), amount),
@@ -128,7 +128,10 @@ TimerTab.defaultProps = {};
  * @param {string}  props.title
  * @param {string}  props.subtitle
  */
-function StatRow({ title, subtitle }) {
+function StatRow({ title, subtitle }: {
+    title: string;
+    subtitle: string;
+}) {
   return (
     <Box p={1}>
       <Card>
@@ -154,7 +157,11 @@ function StatRow({ title, subtitle }) {
  * @param {import('react').ReactNode} props.icon
  * @param {import('react').ReactEventHandler} props.onClick
  **/
-function ButtonAction({ onClick, icon, color = 'primary' }) {
+function ButtonAction({ onClick, icon, color = 'primary' }: {
+    color?: ('primary' | 'secondary');
+    icon: import('react').ReactNode;
+    onClick: import('react').ReactEventHandler;
+}) {
   return (
     <Button
       variant="outlined"
@@ -178,7 +185,12 @@ function ButtonAction({ onClick, icon, color = 'primary' }) {
  * @param {string} props.text
  * @param {import('react').ReactEventHandler} props.onClick
  **/
-function ButtonActionText({ onClick, icon, text, color = 'primary' }) {
+function ButtonActionText({ onClick, icon, text, color = 'primary' }: {
+    color?: ('primary' | 'secondary');
+    icon: import('react').ReactNode;
+    text: string;
+    onClick: import('react').ReactEventHandler;
+}) {
   return (
     <Box padding={1}>
       <Button

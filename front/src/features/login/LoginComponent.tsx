@@ -37,13 +37,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-/** @typedef {Object} Props
- * @property {Function} login
- * @property {string} error
- */
+type Props = {
+  login: Function;
+  error: string;
+};
 
-/** @param {Props} props **/
-export default function SignIn({ login, error }) {
+export default function SignIn({ login, error }: Props) {
   const classes = useStyles();
   const { email, setEmail, password, setPassword } = useLoginForm();
   const [rememberMe, setRememberMe] = useState(false);
@@ -51,9 +50,10 @@ export default function SignIn({ login, error }) {
    * @param {Function} set
    * @returns {import('react').ChangeEventHandler<HTMLInputElement>}
    */
-  const handleCheck = set => ({ target }) => set(target.checked);
+  const handleCheck = (set: Function) => ({ target }) => set(target.checked);
   /** @param {boolean} isGoogleLogin */
-  const handleSubmit = isGoogleLogin => login({ email, password, rememberMe, isGoogleLogin });
+  const handleSubmit = (isGoogleLogin: boolean) =>
+    login({ email, password, rememberMe, isGoogleLogin });
   const canSubmit = isValidEmail(email) && isValidPassword(password);
   return (
     <Container component="main" maxWidth="xs">

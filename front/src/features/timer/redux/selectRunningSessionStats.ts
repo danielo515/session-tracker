@@ -1,34 +1,26 @@
-/** @typedef {import("@types").Session} Session*/
-
 import isWithinInterval from 'date-fns/fp/isWithinInterval';
 import selectRunningSession from 'features/home/redux/selectRunningSession';
 import selectSessions from 'features/home/redux/selectSessions';
 import { createSelector } from 'reselect';
 import { getTodayIntervals } from 'dateUtils/getIntervals';
 import { calculateSessionDuration } from '@common/calculateSessionDuration';
+import { Session } from '@types';
 
-/**
- * @typedef {{
- *  today: number, todayCount: number,
- *  thisWeek: number,
- *  thisMonth: number,
- *  allTime: number,
- *  count: number
- * }} Stats */
+export type Stats = {
+  today: number;
+  todayCount: number;
+  thisWeek: number;
+  thisMonth: number;
+  allTime: number;
+  count: number;
+};
 
-/**
- * @param {String} sessionName
- * */
-export const getSessionStatsReducer = sessionName => {
+export const getSessionStatsReducer = (sessionName: string) => {
   const { weekInterval, monthInterval, todayInterval } = getTodayIntervals();
   const isToday = isWithinInterval(todayInterval);
   const isThisWeek = isWithinInterval(weekInterval);
   const isThisMonth = isWithinInterval(monthInterval);
-  /**
-   * @param {Session} session
-   * @param {Stats} acc}
-   * */
-  return (acc, session) => {
+  return (acc: Stats, session: Session) => {
     if (session.name !== sessionName) {
       return acc;
     }
@@ -50,11 +42,7 @@ export const getSessionStatsReducer = sessionName => {
   };
 };
 
-/**
- *
- * @returns {Stats}
- */
-export const getInitialValue = () => ({
+export const getInitialValue = (): Stats => ({
   today: 0,
   todayCount: 0,
   thisMonth: 0,
@@ -68,11 +56,8 @@ export const getInitialValue = () => ({
  * However, if you need real time updates (e.g. to also include the running session and update the UI),
  * this selector should not be used because it can experience caching issues.
  * For that it's better to use selectSessionStatsByName and sum the duration of the running session.
- * @param {Session[]} sessions
- * @param {Session | null} runningSession
- * @returns {Stats}
  */
-function selectRunningSessionStats(sessions, runningSession) {
+function selectRunningSessionStats(sessions: Session[], runningSession: Session | null): Stats {
   const initialStats = getInitialValue();
   if (!runningSession) return initialStats;
   return [...sessions, { ...runningSession, endDate: new Date().toISOString() }].reduce(

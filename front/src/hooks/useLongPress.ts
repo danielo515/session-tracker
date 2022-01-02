@@ -1,12 +1,12 @@
 // source: https://github.com/framer/snippets/blob/master/gestures/Long%20press.md
 import { useCallback, useRef } from 'react';
 
-/** @typedef { (e: MouseEvent | TouchEvent ) => void} CB */
+type CB = (e: MouseEvent | TouchEvent) => void;
 
-export function useLongPress(/** @type {CB} */ callback, duration = 500) {
+export function useLongPress(callback: CB, duration = 500) {
   // This will be a reference to our `setTimeout` counter, so we can clear it
   // if the user moves or releases their pointer.
-  const timeout = useRef(null);
+  const timeout = useRef<number | null>(null);
 
   // Create an event handler for mouse down and touch start events. We wrap the
   // handler in the `useCallback` hook and pass `callback` and `duration` as
@@ -30,7 +30,12 @@ export function useLongPress(/** @type {CB} */ callback, duration = 500) {
   // This function, when called, will cancel the timeout and thus end the
   // gesture. We provide an empty dependency array as we never want this
   // function to change for the lifecycle of the component.
-  const cancelTimeout = useCallback(() => clearTimeout(timeout.current), []);
+  const cancelTimeout = useCallback(() => {
+    if (!timeout.current) {
+      throw new Error('Can not cancel timeout, timeout.current is null');
+    }
+    return clearTimeout(timeout.current);
+  }, []);
 
   return {
     // Initiate the gesture on mouse down or touch start

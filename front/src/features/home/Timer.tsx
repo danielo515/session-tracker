@@ -8,7 +8,7 @@ import { msToHourMinSec } from './msToHourMinSec';
 /**
  * @param {{startDate: string}} props
  */
-export const RenderTimer = ({ startDate }) => {
+export const RenderTimer = ({ startDate }: { startDate: string; }) => {
   useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToHourMinSec(Date.now() - new Date(startDate).getTime());
   return (
@@ -29,7 +29,7 @@ const style = { overflow: 'hidden' };
 /**
  * @param {PropsB} props
  */
-export default function Timer({ startDate }) {
+export default function Timer({ startDate }: PropsB) {
   return (
     <div className={`home-timer-wrapper ${!startDate ? 'empty' : ''}`}>
       <AnimatePresence exitBeforeEnter>

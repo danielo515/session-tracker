@@ -39,7 +39,7 @@ const routes = [
  *
  * @param {Route} route
  */
-function handleIndexRoute(route) {
+function handleIndexRoute(route: Route) {
   if (!route.childRoutes || !route.childRoutes.length) {
     return;
   }

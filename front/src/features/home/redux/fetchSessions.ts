@@ -15,7 +15,8 @@ import {
 /** @typedef {{type: HOME_FETCH_SESSIONS_DISMISS_ERROR}} Dismiss*/
 /** @typedef {import('redux').Action<HOME_START_SESSION_SUCCESS>} ExternalAction*/
 /** @typedef { Success | Pushed | Begin | Fail | Dismiss | Updated} Actions*/
-/** @typedef {import('rootReducer').RootState} RootState*/
+
+import { RootState } from 'rootReducer';
 
 import * as api from '../../../common/api';
 
@@ -97,7 +98,7 @@ export function dismissFetchSessionsError() {
  * @param {T[]} arr
  * @param {T|((x:T) => T)} newVal
  */
-function updateAtIdx(idx, arr, newVal) {
+function updateAtIdx(idx: number, arr: T[], newVal: T | ((x: T) => T)) {
   const oldVAl = arr[idx];
   return [
     ...arr.slice(0, idx),

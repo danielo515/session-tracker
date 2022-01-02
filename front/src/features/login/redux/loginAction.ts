@@ -26,7 +26,7 @@ import history from '../../../common/history';
  * @param {Props & {isGoogleLogin: boolean}} args
  * @return {loginAction}
  */
-export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false }) {
+export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false }: Props & { isGoogleLogin: boolean; }) {
   return async dispatch => {
     // optionally you can have getState as the second argument
     dispatch({

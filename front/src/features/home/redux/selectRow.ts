@@ -6,7 +6,7 @@ import { HOME_SELECT_ROW } from './constants';
 /**
  * @param {string} sessionName
  **/
-export function selectRow(sessionName) {
+export function selectRow(sessionName: string) {
   return {
     type: HOME_SELECT_ROW,
     payload: sessionName,

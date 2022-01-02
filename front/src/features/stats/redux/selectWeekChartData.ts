@@ -1,5 +1,4 @@
-/** @typedef {import("@types").Session} Session*/
-
+import { Session } from '@types';
 import selectAllSessions from 'features/home/redux/selectAllSessions';
 import { createSelector } from 'reselect';
 import subWeeks from 'date-fns/subWeeks';
@@ -9,13 +8,12 @@ import endOfDay from 'date-fns/endOfDay';
 import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import { diffDateStrings } from 'features/home/redux/diffDateStrings';
+import { RootState } from 'rootReducer';
 
 /**
  * Given a number of weeks ago selects the sessions of that day.
- * @param {Session[]} sessions
- * @returns {Session[]}
  */
-function selectRelativeWeeksSessions(sessions, weeksAgo = 0) {
+function selectRelativeWeeksSessions(sessions: Session[], weeksAgo = 0) {
   const today = endOfDay(new Date());
   const weekRef = subWeeks(startOfWeek(today), weeksAgo);
   const interval = { start: weekRef, end: endOfWeek(weekRef) };
@@ -24,15 +22,14 @@ function selectRelativeWeeksSessions(sessions, weeksAgo = 0) {
 
 const formatDay = format('E do MMM');
 
-/** @typedef {{ [name:string]: number}} DayData */
-/** @typedef {{ [date:string]: DayData}} SessionsByDay */
-/**
- *
- * @param {Session[]} sessions
- */
-function groupSessionsByDay(sessions) {
-  /** @type { {names: Set<string>, sessionsByDay: SessionsByDay} } */
-  const initial = { names: new Set(), sessionsByDay: {} };
+type DayData = { [name: string]: number };
+type SessionsByDay = { [date: string]: DayData };
+
+function groupSessionsByDay(sessions: Session[]) {
+  const initial: { names: Set<string>; sessionsByDay: SessionsByDay } = {
+    names: new Set(),
+    sessionsByDay: {},
+  };
   const { names, sessionsByDay } = sessions.reduce(
     ({ names, sessionsByDay }, { startDate, endDate, name }) => {
       const dateStr = formatDay(new Date(startDate));
@@ -58,10 +55,7 @@ function groupSessionsByDay(sessions) {
 
 export const selectWeekSessions = createSelector(
   selectAllSessions,
-  /**
-   * @param {import('rootReducer').RootState} state
-   */
-  state => state.stats.weeksAgo,
+  (state: RootState) => state.stats.weeksAgo,
   selectRelativeWeeksSessions,
 );
 

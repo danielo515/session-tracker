@@ -14,7 +14,10 @@ import {
  * @param {String} args.name
  * @param {Date} args.startDate
  **/
-export function editRunningSession({ name, startDate }) {
+export function editRunningSession({ name, startDate }: {
+    name: string;
+    startDate: Date;
+}) {
   return dispatch => {
     // optionally you can have getState as the second argument
     dispatch({

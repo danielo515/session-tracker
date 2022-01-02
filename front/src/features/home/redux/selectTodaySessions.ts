@@ -1,5 +1,6 @@
 /** @typedef {import("@types").Session} Session*/
 
+import { Session } from '@types';
 import { isWithinInterval } from 'date-fns';
 import { startOfDay } from 'date-fns/esm';
 import { createSelector } from 'reselect';
@@ -12,7 +13,7 @@ import selectSessions from './selectSessions';
  * @param {Session | null} runningSession
  * @returns {Session[]}
  */
-function selectTodaySessions(sessions, runningSession) {
+function selectTodaySessions(sessions: Session[], runningSession: Session | null) {
   const todaySessions = sessions.filter(session =>
     isWithinInterval(new Date(session.startDate), {
       start: startOfDay(new Date()),

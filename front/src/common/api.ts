@@ -23,7 +23,7 @@ export function isUserLoggedIn() {
 /**
  * @param {{ email: string, password: string}} args
  */
-export function login({ email, password }) {
+export function login({ email, password }: { email: string; password: string; }) {
   return { error: null, response: null };
 }
 
@@ -65,7 +65,7 @@ export const googleLogin = () =>
 /**
  * @param {{ email: string, password: string, name: string}} args
  */
-export const signUp = ({ email, password, name }) => {};
+export const signUp = ({ email, password, name }: { email: string; password: string; name: string; }) => {};
 
 /** @type { import('./api-types').WithDb } */
 const withDb = handler => async args => {

@@ -1,27 +1,13 @@
 import selectSessions from 'features/home/redux/selectSessions';
 import { createSelector } from 'reselect';
-import { getInitialValue, getSessionStatsReducer } from './selectRunningSessionStats';
+import { getInitialValue, getSessionStatsReducer, Stats } from './selectRunningSessionStats';
+import { Session } from 'types';
 
-/** @typedef {import("@types").Session} Session*/
-/** @typedef {import('./selectRunningSessionStats').Stats} Stats */
-
-/**
- * @param {any} _
- * @param {string} [name]
- * */
-function getNameFromProps(_, name) {
+function getNameFromProps(_: any, name?: string) {
   return name;
 }
 
-/**
- * Selects the stats of the session with the given name.
- * It does not include the running session.
- * For that use selectRunningSessionStats, but we aware of possible caching issues.
- * @param {Session[]} sessions
- * @param {string} [sessionName]
- * @returns {Stats}
- */
-function selectSessionStatsByName(sessions, sessionName) {
+function selectSessionStatsByName(sessions: Session[], sessionName?: string): Stats {
   const initialStats = getInitialValue();
   if (!sessionName) return initialStats;
   return sessions.reduce(getSessionStatsReducer(sessionName), initialStats);

@@ -1,5 +1,4 @@
-/** @typedef {import("@types").Session} Session*/
-
+import { Session } from '@types';
 import selectAllSessions from 'features/home/redux/selectAllSessions';
 import { createSelector } from 'reselect';
 import subMonths from 'date-fns/subMonths';
@@ -9,13 +8,12 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import { diffDateStrings } from 'features/home/redux/diffDateStrings';
 import endOfDay from 'date-fns/endOfDay';
+import { RootState } from 'rootReducer';
 
 /**
  * Given a number of months ago selects the sessions of that day.
- * @param {Session[]} sessions
- * @returns {Session[]}
  */
-function selectRelativeMonthsSessions(sessions, monthsAgo = 0) {
+function selectRelativeMonthsSessions(sessions: Session[], monthsAgo = 0) {
   const today = endOfDay(new Date());
   const monthRef = subMonths(startOfMonth(today), monthsAgo);
   const interval = { start: monthRef, end: endOfMonth(monthRef) };
@@ -26,11 +24,7 @@ const formatWeek = format('Io');
 
 /** @typedef {{ [name:string]: number}} WeekData */
 /** @typedef {{ [date:string]: WeekData}} SessionsByWeek */
-/**
- *
- * @param {Session[]} sessions
- */
-function groupSessionsByWeek(sessions) {
+function groupSessionsByWeek(sessions: Session[]) {
   /** @type { {names: Set<string>, sessionsByWeek: SessionsByWeek} } */
   const initial = { names: new Set(), sessionsByWeek: {} };
   const { names, sessionsByWeek } = sessions.reduce(
@@ -58,10 +52,7 @@ function groupSessionsByWeek(sessions) {
 
 export const selectMonthSessions = createSelector(
   selectAllSessions,
-  /**
-   * @param {import('rootReducer').RootState} state
-   */
-  state => state.stats.monthsAgo,
+  (state: RootState) => state.stats.monthsAgo,
   selectRelativeMonthsSessions,
 );
 

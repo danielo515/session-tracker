@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 /**
  * @param {string | Date | number} startDate
  */
-const useTimeDiff = startDate => {
+const useTimeDiff = (startDate: string | Date | number) => {
   const originalDate = new Date(startDate);
   const [diff, setDiff] = useState(Date.now() - originalDate.getTime());
   useEffect(() => {

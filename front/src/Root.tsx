@@ -1,14 +1,12 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
-import React, { Suspense } from 'react';
-import PropTypes from 'prop-types';
+import React, { Suspense, ReactNodeArray } from 'react';
 import { Provider } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import history from './common/history';
 import { LoadingComponent } from '@common/makeAsyncPage';
-
-/** @typedef { import('./types').Route } route*/
+import { Route as route } from './types';
 
 /**
  *
@@ -16,15 +14,9 @@ import { LoadingComponent } from '@common/makeAsyncPage';
  * @param {route[]} routes
  * @param {string} contextPath
  */
-function renderRouteConfigV3(routes, contextPath) {
-  // Resolve route config object in React Router v3.
-  /** @type { import('react').ReactNodeArray }*/
-  const children = []; // children component list
-  /**
-   * @param {route} item
-   * @param {string} routeContextPath
-   */
-  const renderRoute = (item, routeContextPath) => {
+function renderRouteConfigV3(routes: route[], contextPath: string) {
+  const children: ReactNodeArray = []; // children component list
+  const renderRoute = (item: route, routeContextPath: string) => {
     let newContextPath = /^\//.test(item.path) ? item.path : `${routeContextPath}/${item.path}`;
     newContextPath = newContextPath.replace(/\/+/g, '/');
     if (item.component && item.childRoutes) {
@@ -59,18 +51,12 @@ function renderRouteConfigV3(routes, contextPath) {
   );
 }
 
-export default class Root extends React.Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
-    routeConfig: PropTypes.array.isRequired,
-  };
-  render() {
-    const children = renderRouteConfigV3(this.props.routeConfig, '/');
+export default function Root({ routeConfig, store }: { routeConfig: route[]; store: any }) {
+  const children = renderRouteConfigV3(routeConfig, '/');
 
-    return (
-      <Provider store={this.props.store}>
-        <ConnectedRouter history={history}>{children}</ConnectedRouter>
-      </Provider>
-    );
-  }
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+    </Provider>
+  );
 }

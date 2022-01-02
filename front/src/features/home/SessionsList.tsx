@@ -22,7 +22,7 @@ const ListHeight = ItemHeight + 3 * ItemHeight;
 /**
  * @param {any[]} items
  */
-export function CalculateListHeight(items) {
+export function CalculateListHeight(items: any[]) {
   return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
 }
 // const NestedItemHeight = 400;
@@ -43,7 +43,7 @@ export function CalculateListHeight(items) {
  * @param {number} times
  * @returns {(fn:cb) => T[]}
  */
-const doTimes = times => fn => {
+const doTimes = (times: number) => fn => {
   const res = [];
   for (; times; times--) res.push(fn(times));
   return res;
@@ -67,7 +67,7 @@ const Loading = () => {
  */
 
 /** @param {Props} props **/
-export default function SessionsList({ sessions, startSession, editSession }) {
+export default function SessionsList({ sessions, startSession, editSession }: Props) {
   const classes = useStyles();
   // We need to use a ref because using the hook will re-render the entire list which will kill the animation
   // of each item esxpanding or collapsing. The child component will inform us on the onToggle handler.
@@ -123,7 +123,7 @@ SessionsList.defaultProps = {
  * @param {number} idx
  * @param {T[]} data
  */
-const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
+const getIdOrName = (idx: number, data: T[]) => data[idx].id || data[idx].name;
 /**
  * @template T
  * @typedef {Object} VirtualProps
@@ -134,7 +134,7 @@ const getIdOrName = (idx, data) => data[idx].id || data[idx].name;
 /**
  * @template T
  * @param {VirtualProps<T>} props **/
-export function VirtualList({ data, row, itemSize }) {
+export function VirtualList({ data, row, itemSize }: VirtualProps<T>) {
   const list = useRef();
   const resizeList = () => {
     if (list.current) {

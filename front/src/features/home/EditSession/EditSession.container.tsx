@@ -9,17 +9,20 @@ import EditSession from './EditSession';
 export default function EditSessionConnect() {
   const sessionToEdit = useSelector(selectSessionToEdit);
   const editing = useSelector(
-    /** @param {RootState} state*/
-    state => state.home.editing,
+    (
+/** @param {RootState} state*/
+state: RootState) => state.home.editing,
   );
   const dispatch = useDispatch();
   const [onCancel, onUpdate, onDelete] = useMemo(() => {
     return [
       () => dispatch(cancelEditSession()),
-      /** @param {Session} session */
-      session => dispatch(updateSession(session)),
-      /** @param {string} id */
-      id => dispatch(deleteSession(id)),
+      (
+/** @param {Session} session */
+session: Session) => dispatch(updateSession(session)),
+      (
+/** @param {string} id */
+id: string) => dispatch(deleteSession(id)),
     ];
   }, [dispatch]);
   if (!sessionToEdit) return null;

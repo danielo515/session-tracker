@@ -57,7 +57,14 @@ const useStyle = makeStyles(theme => ({
  * @param {() => any} props.onClick
  * @param {() => any} props.onLongPress
  */
-function ButtonCard({ onClick, children, id, color, iconName, onLongPress }) {
+function ButtonCard({ onClick, children, id, color, iconName, onLongPress }: {
+    color: string;
+    iconName: string;
+    id: string;
+    children: import('react').ReactNode;
+    onClick: () => any;
+    onLongPress: () => any;
+}) {
   const style = useStyle({ color });
   const Icon = Icons[iconName] || Icons.Default;
   const longProps = useLongPress(onLongPress);
@@ -119,7 +126,7 @@ export class QuickPick extends Component {
 /**
  * @param {import('rootReducer').RootState} state
  */
-function mapStateToProps(state) {
+function mapStateToProps(state: import('rootReducer').RootState) {
   return {
     sessions: selectSessionNames(state),
     sessionDefinitions: state.sessionDefinition.byName,

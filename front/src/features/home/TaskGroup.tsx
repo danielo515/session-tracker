@@ -50,7 +50,7 @@ const ListHeight = 3 * ItemHeight;
  * that have the same name
  * @param {Props} props
  */
-export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSession, editSession }) {
+export function TaskGroup({ name, total, lastRun, sessions, onToggle, startSession, editSession }: Props) {
   const css = useStyles();
   const { selectRow, selectedRow } = useSelectRow();
   const isOpen = name === selectedRow;

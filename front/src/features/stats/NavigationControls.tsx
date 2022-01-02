@@ -28,7 +28,7 @@ import { useNavigateWeeks } from './redux/navigateWeeks';
 /**
  * @param {PropsA|PropsB} props
  */
-function NavigationControlsBase({ next, back, baseName, value, text, unit }) {
+function NavigationControlsBase({ next, back, baseName, value, text, unit }: PropsA | PropsB) {
   // @ts-ignore
   const { navigation } = useStyles();
   return (
@@ -49,7 +49,7 @@ function NavigationControlsBase({ next, back, baseName, value, text, unit }) {
 /**
  * @param {number} ago
  */
-const formatDaysAgo = ago => (ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today');
+const formatDaysAgo = (ago: number) => (ago > 0 ? format(subDays(new Date(), ago), 'E d MMM') : 'Today');
 
 export function DaysNavigator() {
   const { nextDay, previousDay, daysAgo } = useNavigateDays();

@@ -17,6 +17,7 @@
     "checkJs": true,
     "jsx": "react",
     "baseUrl": "./src",
+    "noImplicitAny": false,
     "paths": {
       "rootReducer": ["common/rootReducer"],
       "@common/*": ["common/*"],

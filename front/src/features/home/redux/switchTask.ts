@@ -7,8 +7,10 @@ import {
   HOME_START_SESSION_SUCCESS,
 } from './constants';
 import * as api from '../../../common/api';
+
+import { RootState } from 'rootReducer';
+import { ThunkAction } from 'react-redux';
 /**
- * @typedef {import('rootReducer').RootState} RootState
  * @typedef {import('redux').Action<HOME_SWITCH_TASK_BEGIN>} SwitchTask
  * @typedef {{type: HOME_SWITCH_TASK_FAILURE, payload: {error: any}}} SwitchError
  * @typedef {import('redux').Action<HOME_SWITCH_TASK_SUCCESS>} SwitchSUCCESS
@@ -21,7 +23,15 @@ import * as api from '../../../common/api';
 /**
  * @param {{id: string, name: string, dispatch: Function}} param0
  */
-const stopSession = async ({ dispatch, id, name }) => {
+const stopSession = async ({
+  dispatch,
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+  dispatch: Function;
+}) => {
   const { error, response } = await api.stopSession({ id, name });
 
   if (error) {
@@ -40,10 +50,12 @@ const stopSession = async ({ dispatch, id, name }) => {
 
 /**
  * Stops current task and starts a new one with the given name
- * @param {{name: string}} args
- * @return {import('redux-thunk').ThunkAction<void,RootState,unknown, Actions>}
  */
-export function switchTask({ name }) {
+export function switchTask({
+  name,
+}: {
+  name: string;
+}): ThunkAction<void, RootState, unknown, Actions> {
   return async (dispatch, getState) => {
     dispatch({
       type: HOME_SWITCH_TASK_BEGIN,

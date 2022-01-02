@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { fetchSessions } from '../home/redux/actions';
 import Dashboard from './Dashboard';
 
@@ -9,10 +9,7 @@ const mapDispatchToProps = {
 
 const connector = connect(null, mapDispatchToProps);
 
-/**
- * @param {import('react-redux').ConnectedProps<typeof connector>} Props
- */
-function StatsDefaultPage({ fetchSessions }) {
+function StatsDefaultPage({ fetchSessions }: ConnectedProps<typeof connector>) {
   useEffect(() => {
     fetchSessions();
   }, []);

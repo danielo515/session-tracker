@@ -4,17 +4,16 @@ import {
   STATS_GET_SESSIONS_FAILURE,
   STATS_GET_SESSIONS_DISMISS_ERROR,
 } from './constants';
-
+import { RootState } from 'rootReducer';
+import { Action } from 'redux';
+import { State } from './initialState';
+import { Session } from '@types';
+import { ThunkAction } from 'redux-thunk';
 import * as api from '../../../common/api';
 
-/** @typedef {import('../../../common/rootReducer').RootState} RootState*/
-/** @typedef {import('redux').Action} Action*/
-/** @typedef {import('redux-thunk').ThunkAction<Promise<void>,RootState,void,Action>} GetSessionThunk*/
+type GetSessionThunk = ThunkAction<Promise<void>, RootState, void, Action>;
 
-/**
- * @return {GetSessionThunk}
- */
-export function getSessions() {
+export function getSessions(): GetSessionThunk {
   return async (dispatch, getState) => {
     dispatch({
       type: STATS_GET_SESSIONS_BEGIN,
@@ -48,13 +47,10 @@ export function dismissGetSessionsError() {
   };
 }
 
-/** @typedef {typeof import('./initialState').default} State*/
-/** @typedef {import('@types').Session} Session*/
-/**
- * @param {State} state
- * @param {{ type: string, payload: {all: Session[], error: string}}} action
- **/
-export function reducer(state, { type, payload }) {
+export function reducer(
+  state: State,
+  { type, payload }: { type: string; payload: { all: Session[]; error: string } },
+) {
   switch (type) {
     case STATS_GET_SESSIONS_BEGIN:
       // Just after a request is sent

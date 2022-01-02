@@ -32,7 +32,7 @@ const minuteMarks = [
 ];
 
 /** @param {import('type-fest').Merge<Session, Props>} props **/
-function EditSession(props) {
+function EditSession(props: import('type-fest').Merge<Session, Props>) {
   const { open, cancel, name, startDate, endDate = new Date(), id, onSubmit, onDelete } = props;
   const [date, setDate] = useState(new Date(startDate));
   const [dateEnd, setEndDate] = useState(new Date(endDate));
@@ -44,7 +44,7 @@ function EditSession(props) {
    * @param {*} _
    * @param {number|number[]} newHours
    */
-  const handleHourSlider = (_, newHours) => {
+  const handleHourSlider = (_: any, newHours: number | number[]) => {
     if (Array.isArray(newHours)) return;
     setEndDate(current => addHours(current, newHours - hours));
   };
@@ -52,7 +52,7 @@ function EditSession(props) {
    * @param {*} _
    * @param {number|number[]} value
    */
-  const handleMinuteSlider = (_, value) => {
+  const handleMinuteSlider = (_: any, value: number | number[]) => {
     if (Array.isArray(value)) return;
     setEndDate(current => addMinutes(current, value - minutes));
   };

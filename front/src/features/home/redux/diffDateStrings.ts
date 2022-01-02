@@ -6,7 +6,7 @@
  * @param {string} [ end ]
  * @return {number}
  */
-export function diffDateStrings(start, end) {
+export function diffDateStrings(start: string, end?: string) {
   if (!end) return 0;
   const a = new Date(start);
   const b = new Date(end);

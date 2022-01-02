@@ -2,6 +2,6 @@
 /**
  * @param {State} state
  */
-const selectRunningSession = state => state.home.runningSession;
+const selectRunningSession = (state: State) => state.home.runningSession;
 
 export default selectRunningSession;

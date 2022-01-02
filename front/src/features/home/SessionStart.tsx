@@ -17,7 +17,7 @@ import Button from '@material-ui/core/Button';
 
 /** @param {FormProps} props **/
 
-export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, color }) {
+export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, color }: FormProps) {
   return (
     <form noValidate onSubmit={onSubmit}>
       <TextField
@@ -50,7 +50,7 @@ export function SessionForm({ onSubmit, onChange, sessionName, visible, Icon, co
  */
 
 /** @param {Props} props **/
-export default function SessionStart({ startSession }) {
+export default function SessionStart({ startSession }: Props) {
   const [sessionName, handleChange] = useHandleChange('');
   const [visible, setVisible] = useState(true);
   const start = () => {

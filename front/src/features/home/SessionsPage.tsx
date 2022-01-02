@@ -11,7 +11,7 @@ import selectGroupedSessions from './redux/selectGroupedSessions';
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} props
  */
-const SessionsPage = props => {
+const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connector>) => {
   useEffect(() => {
     const { fetchSessions } = props;
     fetchSessions();
@@ -37,7 +37,7 @@ const SessionsPage = props => {
 /**
  * @param {import('rootReducer').RootState} state
  */
-function mapStateToProps(state) {
+function mapStateToProps(state: import('rootReducer').RootState) {
   return {
     groupedSessions: selectGroupedSessions(state),
   };

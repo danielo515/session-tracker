@@ -26,7 +26,7 @@ export class LoginDefaultPage extends Component {
 /**
  * @param {import('rootReducer').RootState} state
  */
-function mapStateToProps(state) {
+function mapStateToProps(state: import('rootReducer').RootState) {
   return {
     login: state.login,
   };

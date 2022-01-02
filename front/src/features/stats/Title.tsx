@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 /**
  * @param {{children: import('react').ReactChild}} props
  */
-export default function Title(props) {
+export default function Title(props: { children: import('react').ReactChild; }) {
   return (
     <Typography component="h2" variant="h6" color="primary" gutterBottom>
       {props.children}

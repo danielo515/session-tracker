@@ -16,7 +16,7 @@ import history from '../../../common/history';
  * @param  {{ email: string, password: string, name: string} } args
  * @return {(dispatch: Dispatch)=> Promise<*>}
  */
-export function signUp({ email, password, name }) {
+export function signUp({ email, password, name }: { email: string; password: string; name: string; }) {
   return async dispatch => {
     dispatch({
       type: LOGIN_SIGN_UP_BEGIN,
@@ -57,7 +57,7 @@ export function dismissSignUpError() {
  * @param {*} action
  * @return {State}
  */
-export function reducer(state, action) {
+export function reducer(state: State, action: any) {
   switch (action.type) {
     case LOGIN_SIGN_UP_BEGIN:
       // Just after a request is sent
