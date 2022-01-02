@@ -1,35 +1,32 @@
 {
   "compilerOptions": {
-    "lib": ["es2020", "DOM"],
-    "moduleResolution": "node",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": ["vite/client"],
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
     "allowJs": true,
     "checkJs": true,
-    "resolveJsonModule": true,
-    "noEmit": true,
-    "strict": true,
     "jsx": "react",
-    "declaration": true,
-    "declarationDir": "types",
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
     "baseUrl": "./src",
     "paths": {
       "rootReducer": ["common/rootReducer"],
       "@common/*": ["common/*"],
       "formatters": ["formatters"],
       "@types": ["types"]
-    },
-    "target": "esnext"
+    }
   },
   "typeAcquisition": {
     "enable": true
   },
-  "include": [
-    "src/**/*.js",
-    "src/**/*.d.ts",
-    "src/features/home/index.ts",
-    "src/features/home/App.tsx"
-  ],
+  "include": ["./src"],
   "exclude": ["node_modules", "node_modules/**"]
 }
