@@ -45,14 +45,6 @@ export function deleteSession(id: string) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissDeleteSessionError() {
-  return {
-    type: HOME_DELETE_SESSION_DISMISS_ERROR,
-  };
-}
-
 export function reducer(
   state: State,
   action: { type: Type; payload: { session: Session; error?: any } },

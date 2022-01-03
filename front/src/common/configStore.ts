@@ -13,7 +13,7 @@ const middlewares = [thunk, router, windowTitle];
 /**
  * @param {*} f
  */
-let devToolsExtension = (f: any) => f;
+const devToolsExtension = (f: any) => f;
 
 /* istanbul ignore if  */
 if (process.env.NODE_ENV === 'development') {

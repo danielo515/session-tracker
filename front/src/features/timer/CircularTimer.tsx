@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     transform: 'translateY(-33%)',
   },
   circle: {
-    color: ({ color = theme.palette.primary.main }) => color,
+    color: ({ color = theme.palette.primary.main }: { color?: string }) => color,
   },
   bottom: {
     position: 'absolute',
