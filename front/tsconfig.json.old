@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": ["vite/client"],
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "react",
+    "baseUrl": "./src",
+    "noImplicitAny": false,
+    "paths": {
+      "rootReducer": ["common/rootReducer"],
+      "@common/*": ["common/*"],
+      "formatters": ["formatters"],
+      "@types": ["types"]
+    }
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules", "node_modules/**"]
+}

@@ -1,8 +1,6 @@
-// @ts-check
-
-/** @typedef {import('@types').Session} Session*/
-/** @typedef {import('@types').SessionDefinition}  SessionDefinition*/
+import { Session, SessionDefinition } from '@types';
 import firebase from '../fb';
+import { WithDb } from './api-types';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -20,10 +18,7 @@ export function isUserLoggedIn() {
   });
 }
 
-/**
- * @param {{ email: string, password: string}} args
- */
-export function login({ email, password }: { email: string; password: string; }) {
+export function login({ email, password }: { email: string; password: string }) {
   return { error: null, response: null };
 }
 
@@ -62,13 +57,17 @@ export const googleLogin = () =>
       };
     });
 
-/**
- * @param {{ email: string, password: string, name: string}} args
- */
-export const signUp = ({ email, password, name }: { email: string; password: string; name: string; }) => {};
+export const signUp = ({
+  email,
+  password,
+  name,
+}: {
+  email: string;
+  password: string;
+  name: string;
+}) => {};
 
-/** @type { import('./api-types').WithDb } */
-const withDb = handler => async args => {
+const withDb: WithDb = handler => async args => {
   const userId = firebase.auth()?.currentUser?.uid;
   if (!userId) return { error: { status: 401 }, response: null };
   const db = firebase
@@ -94,34 +93,36 @@ export const listSessions = withDb(db => {
     return { error: null, response: { all: [], current: currentSnap.val() } };
   });
 });
-/** @typedef { (args: Session) => any } sessionCb*/
-/** @typedef { (args: Session|null) => any } sessionCbNull*/
-/**
- * @type { (args:{ onSessionAdded: sessionCb,
- *                  onRunningUpdate: sessionCbNull,
- *                  onSessionUpdate: sessionCb }) => void }
- * */
-export const syncData = withDb(async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
-  const all = db.child('all');
-  const last = await all
-    .orderByKey()
-    .limitToLast(1)
-    .once('child_added');
-  all
-    .orderByKey()
-    .startAfter(last.key)
-    .on('child_added', snapshot => {
-      if (snapshot.exists()) return onSessionAdded(snapshot.val());
+type sessionCb = (args: Session) => any;
+type sessionCbNull = (args: Session | null) => any;
+type SyncArgs = {
+  onSessionAdded: sessionCb;
+  onRunningUpdate: sessionCbNull;
+  onSessionUpdate: sessionCb;
+};
+export const syncData = withDb<SyncArgs, unknown>(
+  async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
+    const all = db.child('all');
+    const last = await all
+      .orderByKey()
+      .limitToLast(1)
+      .once('child_added');
+    all
+      .orderByKey()
+      .startAfter(last.key)
+      .on('child_added', snapshot => {
+        if (snapshot.exists()) return onSessionAdded(snapshot.val());
+      });
+    all.on('child_changed', snap => {
+      if (snap.exists() && snap.val().id) onSessionUpdate(snap.val());
     });
-  all.on('child_changed', snap => {
-    if (snap.exists() && snap.val().id) onSessionUpdate(snap.val());
-  });
-  db.child('runningSession').on('value', snapshot => {
-    return onRunningUpdate(snapshot.val());
-  });
-});
+    db.child('runningSession').on('value', snapshot => {
+      return onRunningUpdate(snapshot.val());
+    });
+  },
+);
 
-export const startSession = withDb((db, { name }) => {
+export const startSession = withDb<{ name: string }, Omit<Session, 'id'>>((db, { name }) => {
   const session = { name, startDate: new Date().toISOString() };
   return db
     .child('runningSession')
@@ -137,29 +138,32 @@ export const stopSession = withDb(async db => {
     throw new Error('Stopping not existing session');
   }
   const push = await db.child('all').push();
-  const session = { ...runningSnap.val(), id: (push).key, endDate: new Date().toISOString() };
+  const session = { ...runningSnap.val(), id: push.key, endDate: new Date().toISOString() };
   await running.set(null);
   await push.set(session);
   return { response: session, error: null };
 });
 
-/** @type { (args: {id: string, name: string, startDate: Date, endDate: Date}) => Promise<apiResponse> }*/
-export const updateSession = withDb((db, { id, name, startDate, endDate }) => {
+export const updateSession = withDb<Session, Session>((db, { id, name, startDate, endDate }) => {
   return db
     .child('all')
     .child(id)
     .update({ name, startDate, endDate })
     .then(() => ({ response: { id, name, startDate, endDate }, error: null }));
 });
+
 /** @type { (args: {name: string, startDate: Date}) => Promise<apiResponse<Session>> }*/
-export const updateRunningSession = withDb((db, { name, startDate }) => {
+export const updateRunningSession = withDb<
+  { name: string; startDate: Date },
+  { name: string; startDate: Date }
+>((db, { name, startDate }) => {
   return db
     .child('runningSession')
     .set({ name, startDate: startDate.toISOString() })
     .then(() => ({ response: { name, startDate }, error: null }));
 });
 
-export const deleteSession = withDb((db, { id }) => {
+export const deleteSession = withDb<{ id: string }, { id: string }>((db, { id }) => {
   return db
     .child('all')
     .child(id)
@@ -179,8 +183,7 @@ export const createSessionDefinition = withDb((
     .catch(error => ({ error, response: null }));
 });
 
-export const listDefinitions = withDb(db => {
-  /** @type { Promise<{ response: SessionDefinition[], error: null}> } */
+export const listDefinitions = withDb<any, SessionDefinition[]>(db => {
   const result = db
     .child('definitions')
     .orderByKey()
@@ -189,7 +192,7 @@ export const listDefinitions = withDb(db => {
       if (snapshot.exists())
         return {
           error: null,
-          response: /** @type { SessionDefinition[] } */ Object.values(snapshot.val()),
+          response: Object.values(snapshot.val()) as SessionDefinition[],
         };
       return { error: null, response: [] };
     });
