@@ -22,7 +22,7 @@ export function useLongPress(callback: CB, duration = 500) {
 
       // Start a timeout that, after the provided `duration`, will fire the
       // supplied callbacl.
-      timeout.current = setTimeout(() => callback(event), duration);
+      timeout.current = window.setTimeout(() => callback(event), duration);
     },
     [callback, duration],
   );

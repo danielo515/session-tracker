@@ -4,6 +4,8 @@ import * as path from 'path';
 import vitePluginReactJsSupport from 'vite-plugin-react-js-support';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
+import pkg from './package.json';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // @see https://cn.vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -17,22 +19,12 @@ export default ({ command, mode }) => {
     optimizeDeps.entries = false;
   }
 
-  let alias = {
-    '@common': path.resolve(__dirname, './src/common'),
-    dateUtils: path.resolve(__dirname, './src/dateUtils'),
-    features: path.resolve(__dirname, './src/features'),
-    formatters: path.resolve(__dirname, './src/formatters'),
-    hooks: path.resolve(__dirname, './src/hooks'),
-    images: path.resolve(__dirname, './src/images'),
-    styles: path.resolve(__dirname, './src/styles'),
-  };
-
   let proxy = {};
 
   let define = {
     'process.env.APP_IS_LOCAL': command === 'serve' ? '"true"' : '"false"',
     'process.env.REACT_APP_IS_LOCAL': command === 'serve' ? '"true"' : '"false"',
-    'process.env.APP_VERSION': "'1.0.0'",
+    'process.env.APP_VERSION': JSON.stringify(pkg.version),
   };
 
   let esbuild = {};
@@ -43,9 +35,6 @@ export default ({ command, mode }) => {
   return {
     base: './',
     root: './',
-    resolve: {
-      alias,
-    },
     define: define,
     server: {
       // 代理
@@ -62,6 +51,7 @@ export default ({ command, mode }) => {
     esbuild,
     optimizeDeps,
     plugins: [
+      tsconfigPaths(),
       envCompatible({
         prefix: 'REACT_APP_',
       }),

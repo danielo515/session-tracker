@@ -6,6 +6,9 @@ import {
   HOME_STOP_SESSION_DISMISS_ERROR,
 } from './constants';
 import * as api from '../../../common/api';
+import { Action } from '@reduxjs/toolkit';
+import { State } from './initialState';
+import { Session } from '@types';
 
 /**
  * @template T
@@ -17,6 +20,13 @@ import * as api from '../../../common/api';
  * |A<HOME_STOP_SESSION_SUCCESS, import('@types').Session>
  * |A<HOME_STOP_SESSION_FAILURE, {error: any}>} Actions
  * */
+
+type Actions =
+  | Action<typeof HOME_STOP_SESSION_BEGIN>
+  | Action<typeof HOME_STOP_SESSION_DISMISS_ERROR>
+  | { type: typeof HOME_STOP_SESSION_SUCCESS; payload: { session: Session } }
+  | { type: typeof HOME_STOP_SESSION_FAILURE; payload: { error: any } };
+
 /**
  * @param {{id: string, name: string}} args
  * @returns { import('redux-thunk').ThunkAction<
@@ -24,7 +34,6 @@ import * as api from '../../../common/api';
  **/
 export function stopSession() {
   return async dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_STOP_SESSION_BEGIN,
       payload: undefined,
@@ -53,11 +62,6 @@ export function dismissStopSessionError() {
   };
 }
 
-/** @typedef {typeof import('./initialState').default} State*/
-/**
- * @param {State}  state
- * @param {Actions} action
- */
 export function reducer(state: State, action: Actions) {
   switch (action.type) {
     case HOME_STOP_SESSION_BEGIN:
