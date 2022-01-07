@@ -4,7 +4,7 @@ import { Box, Button, Container, TextField, Typography } from '@material-ui/core
 import { HexColorPicker } from 'react-colorful';
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
-import React, { useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
 import { SessionDefinition } from '@types';
@@ -23,10 +23,10 @@ export default function DefinitionForm({
 }) {
   const [color, setColor] = useState(definition.color);
   const [duration, setDuration] = useState(definition.expectedDuration || defaultDuration);
-  const [name, setName] = useHandleChange(definition.name);
+  const [name, setName] = useState(definition.name);
   const [icon, setIcon] = useState(definition.icon || defaultIcon);
 
-  const submit = (/** @type { import('react').SyntheticEvent } */ e) => {
+  const submit = (e: SyntheticEvent) => {
     e.preventDefault();
     onSubmit({
       name,
@@ -52,7 +52,7 @@ export default function DefinitionForm({
               autoComplete="session"
               fullWidth
               value={name}
-              onChange={setName}
+              onChange={e => setName(e.target.value)}
               required
             />
           </FormRow>

@@ -1,5 +1,3 @@
-// @ts-check
-
 import {
   LOGIN_LOGIN_ACTION_BEGIN,
   LOGIN_LOGIN_ACTION_SUCCESS,
@@ -26,7 +24,12 @@ import history from '../../../common/history';
  * @param {Props & {isGoogleLogin: boolean}} args
  * @return {loginAction}
  */
-export function loginAction({ email, password, rememberMe = false, isGoogleLogin = false }: Props & { isGoogleLogin: boolean; }) {
+export function loginAction({
+  email,
+  password,
+  rememberMe = false,
+  isGoogleLogin = false,
+}: Props & { isGoogleLogin: boolean }) {
   return async dispatch => {
     // optionally you can have getState as the second argument
     dispatch({

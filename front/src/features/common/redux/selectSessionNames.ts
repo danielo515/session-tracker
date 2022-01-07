@@ -1,10 +1,8 @@
+import { Session } from '@types';
 import { createSelector } from 'reselect';
 import selectSessions from '../../home/redux/selectSessions';
 
-/**
- * @param {Session[]} Sessions
- */
-function selectSessionsNames(sessions) {
+function selectSessionsNames(sessions: Session[]) {
   return Array.from(new Set(sessions.map(({ name }) => name)));
 }
 

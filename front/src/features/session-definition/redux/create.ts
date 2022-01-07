@@ -77,7 +77,6 @@ export function useCreate() {
   };
 }
 
-/** @type { import('./types').Reducer } */
 export function reducer(state, action) {
   switch (action.type) {
     case SESSION_DEFINITION_CREATE_BEGIN:

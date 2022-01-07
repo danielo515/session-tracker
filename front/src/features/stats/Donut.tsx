@@ -9,7 +9,7 @@ import { msToHuman } from 'formatters/formatDateDiff';
 /**
  * @param {{name: string, duration: number }} param
  */
-function getName({ name, duration }: { name: string; duration: number; }) {
+function getName({ name, duration }: { name: string; duration: number }) {
   return `${name} - ${msToHuman(duration)}`;
 }
 
@@ -18,7 +18,13 @@ function getName({ name, duration }: { name: string; duration: number; }) {
  *           title: React.ReactChild,
  *          }} props
  */
-export default function Donut({ sessions, title }: { sessions: { name: string; duration: number; }[]; title: React.ReactChild; }) {
+export default function Donut({
+  sessions,
+  title,
+}: {
+  sessions: { name: string; duration: number }[];
+  title: React.ReactChild;
+}) {
   return (
     <React.Fragment>
       <Title>{title}</Title>
@@ -37,7 +43,6 @@ export default function Donut({ sessions, title }: { sessions: { name: string; d
             nameKey="name"
             innerRadius={60}
             outerRadius={80}
-            // @ts-ignore it actually accepts a function, types are wrong
             label={getName}
             paddingAngle={4}
           >

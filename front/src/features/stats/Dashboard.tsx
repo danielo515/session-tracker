@@ -71,7 +71,6 @@ export const useStyles = makeStyles(theme => ({
 
 /** @typedef {import('@types').SessionWithDuration} SessionWithDuration */
 export default function Dashboard() {
-  // @ts-ignore
   const classes = useStyles();
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);

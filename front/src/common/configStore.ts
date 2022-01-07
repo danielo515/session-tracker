@@ -20,9 +20,7 @@ if (process.env.NODE_ENV === 'development') {
   // const { createLogger } = require('redux-logger');
   // const logger = createLogger({ collapsed: true });
   // middlewares.push(logger);
-  // // @ts-ignore
   // if (window.devToolsExtension) {
-  //   // @ts-ignore
   //   devToolsExtension = window.devToolsExtension();
   // }
 }

@@ -10,9 +10,15 @@ import { Route } from '@types';
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
 
-const childRoutes: Route = [loginRoute, commonRoute, sessionDefinitionRoute, homeRoute, timerRoute];
+const childRoutes: Route[] = [
+  loginRoute,
+  commonRoute,
+  sessionDefinitionRoute,
+  homeRoute,
+  timerRoute,
+];
 
-const routes: Route = [
+const routes: Route[] = [
   {
     path: '/',
     component: App,
@@ -23,6 +29,8 @@ const routes: Route = [
     ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
   },
 ];
+
+console.log({ App });
 
 // Handle isIndex property of route config:
 //  Duplicate it and put it as the first route rule.

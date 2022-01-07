@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, MouseEventHandler, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import selectSessionNames from './redux/selectSessionNames';
 import { startSession } from '../home/redux/actions';
 import {
@@ -17,6 +17,7 @@ import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 import * as Icons from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';
 import { withRouter } from 'react-router';
+import useAppSelector from 'hooks/useSelector';
 
 const useStyle = makeStyles(theme => ({
   Button: {
@@ -46,24 +47,20 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-/**
- *
- *
- * @param {Object} props
- * @param {string} props.color
- * @param {string} props.iconName
- * @param {string} props.id
- * @param {import('react').ReactNode} props.children
- * @param {() => any} props.onClick
- * @param {() => any} props.onLongPress
- */
-function ButtonCard({ onClick, children, id, color, iconName, onLongPress }: {
-    color: string;
-    iconName: string;
-    id: string;
-    children: import('react').ReactNode;
-    onClick: () => any;
-    onLongPress: () => any;
+function ButtonCard({
+  onClick,
+  children,
+  id,
+  color,
+  iconName,
+  onLongPress,
+}: {
+  color: string;
+  iconName: string;
+  id: string;
+  children: import('react').ReactNode;
+  onClick: MouseEventHandler<any>;
+  onLongPress: () => any;
 }) {
   const style = useStyle({ color });
   const Icon = Icons[iconName] || Icons.Default;
@@ -82,56 +79,47 @@ function ButtonCard({ onClick, children, id, color, iconName, onLongPress }: {
   );
 }
 
-export class QuickPick extends Component {
-  static propTypes = {
-    sessions: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
+export const QuickPick = props => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllDefinitions());
+  }, []);
+  const { actions, history } = props;
+  const { sessionNames: sessions, definitions } = useAppSelector(state => ({
+    sessionNames: selectSessionNames(state),
+    definitions: state.sessionDefinition.definitions,
+  }));
+
+  const startSession = e => {
+    const name = e.currentTarget.dataset.session;
+    actions.startSession({
+      name,
+    });
   };
 
-  componentDidMount() {
-    this.props.actions.fetchAllDefinitions();
-  }
-
-  render() {
-    const { sessions, actions, sessionDefinitions: definitions, history } = this.props;
-    const startSession = e => {
-      const name = e.currentTarget.dataset.session;
-      actions.startSession({ name });
-    };
-    return (
-      <Container maxWidth="sm">
-        <Grid container spacing={2}>
-          {sessions.map(session => {
-            const definition = definitions[session] || {};
-            return (
-              <Grid item xs={4} sm={3} key={session}>
-                <ButtonCard
-                  id={session}
-                  onClick={startSession}
-                  color={definition.color}
-                  iconName={definition.icon}
-                  onLongPress={() => history.push(`/session-definitions/update/${session}`)}
-                >
-                  {session}
-                </ButtonCard>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Container>
-    );
-  }
-}
-
-/**
- * @param {import('rootReducer').RootState} state
- */
-function mapStateToProps(state: import('rootReducer').RootState) {
-  return {
-    sessions: selectSessionNames(state),
-    sessionDefinitions: state.sessionDefinition.byName,
-  };
-}
+  return (
+    <Container maxWidth="sm">
+      <Grid container spacing={2}>
+        {sessions.map(session => {
+          const definition = definitions[session] || {};
+          return (
+            <Grid item xs={4} sm={3} key={session}>
+              <ButtonCard
+                id={session}
+                onClick={startSession}
+                color={definition.color}
+                iconName={definition.icon}
+                onLongPress={() => history.push(`/session-definitions/update/${session}`)}
+              >
+                {session}
+              </ButtonCard>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Container>
+  );
+};
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
@@ -140,4 +128,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(QuickPick));
+export default withRouter(QuickPick);
