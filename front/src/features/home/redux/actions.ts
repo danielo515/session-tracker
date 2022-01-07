@@ -1,4 +1,4 @@
-export { startSession, dismissStartSessionError } from './startSession';
+export { startSession } from './startSession';
 export { stopSession } from './stopSession';
 export { fetchSessions, syncSessions, dismissFetchSessionsError } from './fetchSessions';
 export { deleteSession } from './deleteSession';

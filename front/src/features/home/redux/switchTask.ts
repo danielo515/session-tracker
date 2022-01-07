@@ -4,7 +4,6 @@ import {
   HOME_SWITCH_TASK_FAILURE,
   HOME_SWITCH_TASK_DISMISS_ERROR,
   HOME_STOP_SESSION_SUCCESS,
-  HOME_START_SESSION_SUCCESS,
 } from './constants';
 import * as api from '../../../common/api';
 
@@ -12,6 +11,7 @@ import { RootState } from 'rootReducer';
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
 import { State } from './types';
+import { addedSession } from './startSession';
 
 /**
  * @typedef {import('redux').Action<HOME_SWITCH_TASK_BEGIN>} SwitchTask
@@ -26,9 +26,7 @@ import { State } from './types';
 type Actions =
   | Action<typeof HOME_SWITCH_TASK_BEGIN>
   | Action<typeof HOME_SWITCH_TASK_SUCCESS>
-  | Action<typeof HOME_SWITCH_TASK_FAILURE, { error: any }>
   | Action<typeof HOME_SWITCH_TASK_DISMISS_ERROR>
-  | Action<typeof HOME_START_SESSION_SUCCESS>
   | Action<typeof HOME_STOP_SESSION_SUCCESS>;
 
 const stopSession = async ({
@@ -75,23 +73,20 @@ export function switchTask({
 
     runningSession && (await stopSession({ dispatch, ...runningSession }));
 
-    const { error: startError, response: startResp } = await api.startSession({ name });
+    const response = await api.startSession({ name });
 
-    if (startError) {
+    if (response.error) {
       dispatch({
         type: HOME_SWITCH_TASK_FAILURE,
-        payload: { error: startError },
+        payload: { error: response.error },
       });
       return;
     }
 
-    dispatch({
-      type: HOME_START_SESSION_SUCCESS,
-      payload: startResp,
-    });
+    dispatch(addedSession(response.response));
     dispatch({
       type: HOME_SWITCH_TASK_SUCCESS,
-      payload: startResp,
+      payload: response.response,
     });
   };
 }

@@ -1,7 +1,6 @@
 import {
   HOME_FETCH_SESSIONS_BEGIN,
   HOME_FETCH_SESSIONS_SUCCESS,
-  HOME_START_SESSION_SUCCESS,
   HOME_PUSHED_SESSION,
   HOME_FETCH_SESSIONS_FAILURE,
   HOME_FETCH_SESSIONS_DISMISS_ERROR,
@@ -19,6 +18,7 @@ import {
 import { RootState } from 'rootReducer';
 
 import * as api from '../../../common/api';
+import { addedSession } from './startSession';
 
 /**
  * Fetches all sessions
@@ -61,10 +61,7 @@ export function syncSessions() {
   return dispatch => {
     api.syncData({
       onRunningUpdate(session) {
-        dispatch({
-          type: HOME_START_SESSION_SUCCESS,
-          payload: session,
-        });
+        dispatch(addedSession(session));
       },
       onSessionAdded: value => {
         value.endDate &&
