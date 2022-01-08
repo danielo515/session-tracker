@@ -5,9 +5,9 @@ import {
   LOGIN_LOGIN_ACTION_DISMISS_ERROR,
 } from './constants';
 
+import { push } from 'connected-react-router';
 import * as api from '../../../common/api';
 import { getErrorData } from '../../../common/getErrorData';
-import history from '../../../common/history';
 
 /** @typedef {Object} Props
  * @property {string} email
@@ -59,7 +59,7 @@ export function loginAction({
       type: LOGIN_LOGIN_ACTION_SUCCESS,
       payload: { token: response.token },
     });
-    history.replace('/');
+    dispatch(push('/'));
   };
 }
 
