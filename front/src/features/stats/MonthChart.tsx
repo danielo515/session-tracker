@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Chart from './Chart';
 import selectMonthChartData from './redux/selectMonthChartData';
 import { msToHoursMinutes } from '@common/minsToHoursMinutes';
-import { RootState } from 'rootReducer';
+import { RootState } from '@common/configStore';
 
 export default function MonthChart() {
   const { names, sessions } = useSelector((state: RootState) => {

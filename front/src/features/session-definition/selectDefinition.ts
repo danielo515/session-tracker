@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { RootState } from 'rootReducer';
+import { RootState } from '@common/configStore';
 import { DefinitionsState } from './redux/types';
 
 function selectSessionDefinitions(state: RootState) {

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Chart from './Chart';
 import selectWeekChartData from './redux/selectWeekChartData';
 import { WeeksNavigator } from './NavigationControls';
-import { RootState } from 'rootReducer';
+import { RootState } from '@common/configStore';
 
 export default function WeekChart() {
   const { names, sessions } = useSelector((state: RootState) => {

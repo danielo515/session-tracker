@@ -6,14 +6,12 @@ import {
 } from './constants';
 
 import { LOGIN_LOGIN_ACTION_SUCCESS } from '../../login/redux/constants';
-import { AppState } from './types';
+import { State } from './initialState';
 import history from '../../../common/history';
 import { syncSessions } from '../../home/redux/actions';
 import homeSetup from '../../home/redux/setup';
 import { isUserLoggedIn } from '../../../common/api';
 
-/** @typedef {import('rootReducer').RootState} RootState*/
-/** @returns { import('redux-thunk').ThunkAction<Promise<void>,RootState,void, any>}*/
 export function setupApp() {
   return async (dispatch, getState) => {
     const { setupAppPending } = getState().common;
@@ -44,7 +42,7 @@ export function dismissSetupAppError() {
 }
 
 export function reducer(
-  state: AppState,
+  state: State,
   { type, payload }: { type: string; payload: { error: string } },
 ) {
   switch (type) {

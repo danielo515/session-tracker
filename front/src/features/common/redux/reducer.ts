@@ -4,19 +4,15 @@
 //   2. Write cross-topic reducers. If a reducer is not bound to some specific action.
 //      Then it could be written here.
 // Learn more from the introduction of this approach:
-// https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
-import initialState from './initialState';
+import initialState, { State } from './initialState';
 import { reducer as setupAppReducer } from './setupApp';
 import { reducer as editRunningSessionReducer } from './editRunningSession';
 
-const reducers = [
-  setupAppReducer,
-  editRunningSessionReducer,
-];
+const reducers = [setupAppReducer, editRunningSessionReducer];
 
 export default function reducer(state = initialState, action) {
-  let newState;
+  let newState: State;
   switch (action.type) {
     // Handle cross-topic actions here
     default:

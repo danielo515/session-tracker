@@ -1,4 +1,4 @@
-import initialState from './initialState';
+import initialState, { State } from './initialState';
 import { reducer as startSessionReducer } from './startSession';
 import { reducer as stopSessionReducer } from './stopSession';
 import { reducer as fetchSessionsReducer } from './fetchSessions';
@@ -19,9 +19,9 @@ const reducers = [
   updateSessionReducer,
   cancelEditSessionReducer,
   selectRowReducer,
-];
+] as const;
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action): State {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here

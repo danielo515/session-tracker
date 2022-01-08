@@ -1,12 +1,10 @@
-import React, { Component, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { setupApp } from '../common/redux/actions';
 import { Redirect } from 'react-router-dom';
-import { RootState } from 'rootReducer';
 import useAppSelector from 'hooks/useSelector';
 
 type Props = {

@@ -15,14 +15,12 @@ import {
 /** @typedef {import('redux').Action<HOME_START_SESSION_SUCCESS>} ExternalAction*/
 /** @typedef { Success | Pushed | Begin | Fail | Dismiss | Updated} Actions*/
 
-import { RootState } from 'rootReducer';
-
 import * as api from '../../../common/api';
 import { addedSession } from './startSession';
+import { AppDispatch } from '@common/configStore';
 
 /**
  * Fetches all sessions
- * @return {import('redux-thunk').ThunkAction<void,RootState,unknown,Actions>}
  */
 export function fetchSessions() {
   return async (dispatch, getState) => {
@@ -55,10 +53,9 @@ export function fetchSessions() {
 
 /**
  * Starts the process of syncing sessions
- * @return {import('redux-thunk').ThunkAction<void,void,unknown,Actions|ExternalAction>}
  */
 export function syncSessions() {
-  return dispatch => {
+  return (dispatch: AppDispatch) => {
     api.syncData({
       onRunningUpdate(session) {
         dispatch(addedSession(session));
@@ -90,12 +87,8 @@ export function dismissFetchSessionsError() {
 
 /**
  * Updates a value in an array at the specified index
- * @template T
- * @param {number} idx
- * @param {T[]} arr
- * @param {T|((x:T) => T)} newVal
  */
-function updateAtIdx(idx: number, arr: T[], newVal: T | ((x: T) => T)) {
+function updateAtIdx<T>(idx: number, arr: T[], newVal: T | ((x: T) => T)) {
   const oldVAl = arr[idx];
   return [
     ...arr.slice(0, idx),

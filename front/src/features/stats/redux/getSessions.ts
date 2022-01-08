@@ -4,7 +4,7 @@ import {
   STATS_GET_SESSIONS_FAILURE,
   STATS_GET_SESSIONS_DISMISS_ERROR,
 } from './constants';
-import { RootState } from 'rootReducer';
+import { RootState } from '@common/configStore';
 import { Action } from 'redux';
 import { State } from './initialState';
 import { Session } from '@types';

@@ -15,7 +15,7 @@ type State = typeof initialState;
 
 const reducers = [getSessionsReducer, navigateDaysReducer, navigateWeeksReducer];
 
-export default function reducer(state: State = initialState, action: any) {
+export default function reducer(state: State = initialState, action: any): State {
   /** @type { State } */
   let newState;
   switch (action.type) {

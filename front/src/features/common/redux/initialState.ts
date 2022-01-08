@@ -8,10 +8,12 @@
 
 const initialState = {
   setupAppPending: true,
-  setupAppError: null,
+  setupAppError: null as string | null,
   loggedIn: false,
   editRunningSessionPending: false,
-  editRunningSessionError: null,
+  editRunningSessionError: null as string | null,
 };
+
+export type State = typeof initialState;
 
 export default initialState;

@@ -10,4 +10,6 @@ const initialState = {
   loadSessionSettingsError: null,
 };
 
+export type State = typeof initialState;
+
 export default initialState;

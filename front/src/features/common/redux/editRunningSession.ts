@@ -1,6 +1,6 @@
 import selectRunningSession from 'features/home/redux/selectRunningSession';
 import { useCallback } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { updateRunningSession } from '@common/api';
 import {
   COMMON_EDIT_RUNNING_SESSION_BEGIN,
@@ -8,18 +8,12 @@ import {
   COMMON_EDIT_RUNNING_SESSION_FAILURE,
   COMMON_EDIT_RUNNING_SESSION_DISMISS_ERROR,
 } from './constants';
+import useAppSelector from 'hooks/useSelector';
+import { AppDispatch, useAppDispatch } from '@common/configStore';
+import { State } from './initialState';
 
-/**
- * @param {Object} args
- * @param {String} args.name
- * @param {Date} args.startDate
- **/
-export function editRunningSession({ name, startDate }: {
-    name: string;
-    startDate: Date;
-}) {
-  return dispatch => {
-    // optionally you can have getState as the second argument
+export function editRunningSession({ name, startDate }: { name: string; startDate: Date }) {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: COMMON_EDIT_RUNNING_SESSION_BEGIN,
     });
@@ -48,9 +42,9 @@ export function dismissEditRunningSessionError() {
 }
 
 export function useEditRunningSession() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { runningSession, editRunningSessionPending, editRunningSessionError } = useSelector(
+  const { runningSession, editRunningSessionPending, editRunningSessionError } = useAppSelector(
     state => ({
       runningSession: selectRunningSession(state),
       editRunningSessionPending: state.common.editRunningSessionPending,
@@ -79,7 +73,7 @@ export function useEditRunningSession() {
   };
 }
 
-export function reducer(state, action) {
+export function reducer(state: State, action) {
   switch (action.type) {
     case COMMON_EDIT_RUNNING_SESSION_BEGIN:
       // Just after a request is sent

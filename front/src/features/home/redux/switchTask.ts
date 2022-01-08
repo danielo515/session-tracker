@@ -7,7 +7,7 @@ import {
 } from './constants';
 import * as api from '../../../common/api';
 
-import { RootState } from 'rootReducer';
+import { RootState } from '@common/configStore';
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
 import { State } from './types';

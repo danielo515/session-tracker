@@ -8,7 +8,7 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import format from 'date-fns/fp/format';
 import { diffDateStrings } from 'features/home/redux/diffDateStrings';
 import endOfDay from 'date-fns/endOfDay';
-import { RootState } from 'rootReducer';
+import { RootState } from '@common/configStore';
 
 /**
  * Given a number of months ago selects the sessions of that day.
