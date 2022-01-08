@@ -5,6 +5,6 @@ export type errorResponse = {
 };
 export type apiResponse<K> = { error: null; response: K };
 
-export type WithDb = <T, K>(
-  handler: (db: firebase.database.Reference, args: T) => Promise<apiResponse<K>>,
-) => (args: T) => Promise<apiResponse<K> | errorResponse>;
+export type WithDb = <ApiArgs, Resp>(
+  handler: (db: firebase.database.Reference, args: ApiArgs) => Promise<apiResponse<Resp>>,
+) => (args: ApiArgs) => Promise<apiResponse<Resp> | errorResponse>;

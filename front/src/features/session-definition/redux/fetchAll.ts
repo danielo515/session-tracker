@@ -43,6 +43,6 @@ export const reducer = createReducer(initialState, builder => {
         acc[definition.name] = definition;
         return acc;
       }, {}) || state.byName;
-    state.all = action.payload;
+    state.all = action.payload || [];
   });
 });

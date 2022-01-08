@@ -12,7 +12,6 @@ import { reducer as fetchAllReducer } from './fetchAll';
 
 const reducers = [createReducer, fetchAllReducer];
 
-/** @type { import('redux').Reducer<import('./types').DefinitionsState> } */
 export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {

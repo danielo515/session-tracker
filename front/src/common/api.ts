@@ -183,7 +183,7 @@ export const createSessionDefinition = withDb((
     .catch(error => ({ error, response: null }));
 });
 
-export const listDefinitions = withDb<any, SessionDefinition[]>(db => {
+export const listDefinitions = withDb<undefined, SessionDefinition[]>(db => {
   const result = db
     .child('definitions')
     .orderByKey()

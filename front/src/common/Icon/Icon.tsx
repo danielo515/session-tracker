@@ -24,7 +24,6 @@ const Renderer = ({ color, className, Component }: Props) => {
 
 /**
  * Creates a react-loadable  Icon component.
- * @param {() => any} importFn
  */
 function loadableIcon(importFn: () => any) {
   const Inner = React.lazy(async () => {

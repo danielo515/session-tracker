@@ -1,7 +1,5 @@
-import React, { Component, MouseEventHandler, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch } from 'react-redux';
+import React, { MouseEventHandler, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import selectSessionNames from './redux/selectSessionNames';
 import { startSession } from '../home/redux/actions';
 import {
@@ -84,29 +82,32 @@ export const QuickPick = props => {
   useEffect(() => {
     dispatch(fetchAllDefinitions());
   }, []);
-  const { actions, history } = props;
+  const { history } = props;
   const { sessionNames: sessions, definitions } = useAppSelector(state => ({
     sessionNames: selectSessionNames(state),
-    definitions: state.sessionDefinition.definitions,
+    definitions: state.sessionDefinition.byName,
   }));
 
-  const startSession = e => {
+  const startSessionOnClick = e => {
     const name = e.currentTarget.dataset.session;
-    actions.startSession({
-      name,
-    });
+    dispatch(
+      startSession({
+        name,
+      }),
+    );
   };
 
   return (
     <Container maxWidth="sm">
       <Grid container spacing={2}>
         {sessions.map(session => {
+          console.log({ definitions });
           const definition = definitions[session] || {};
           return (
             <Grid item xs={4} sm={3} key={session}>
               <ButtonCard
                 id={session}
-                onClick={startSession}
+                onClick={startSessionOnClick}
                 color={definition.color}
                 iconName={definition.icon}
                 onLongPress={() => history.push(`/session-definitions/update/${session}`)}
@@ -120,12 +121,5 @@ export const QuickPick = props => {
     </Container>
   );
 };
-
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ startSession, fetchAllDefinitions }, dispatch),
-  };
-}
 
 export default withRouter(QuickPick);
