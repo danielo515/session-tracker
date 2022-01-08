@@ -1,42 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from './redux/actions';
 import Login from './LoginComponent';
 import SignUp from './SignUp';
+import { loginAction } from './redux/loginAction';
+import { signUp } from './redux/actions';
+import useAppSelector from 'hooks/useSelector';
+import { useAppDispatch } from '@common/configStore';
 
-export class LoginDefaultPage extends Component {
-  static propTypes = {
-    login: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
+const useLogin = () => {
+  const dispatch = useAppDispatch();
 
-  render() {
-    const { actions, location, login } = this.props;
-    const isLoginPage = location.pathname === '/login';
-    return isLoginPage ? (
-      <Login login={actions.loginAction} error={login.loginActionError} />
-    ) : (
-      <SignUp signUp={actions.signUp} error={login.signUpError} />
-    );
-  }
-}
-
-/**
- * @param {import('rootReducer').RootState} state
- */
-function mapStateToProps(state: import('rootReducer').RootState) {
   return {
-    login: state.login,
+    ...useAppSelector(state => ({ login: state.login })),
+    ...bindActionCreators(
+      {
+        loginAction: loginAction,
+        signUp: signUp,
+      },
+      dispatch,
+    ),
   };
-}
+};
 
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginDefaultPage);
+export const LoginDefaultPage = ({ location }) => {
+  const { loginAction, signUp, login } = useLogin();
+  const isLoginPage = location.pathname === '/login';
+  return isLoginPage ? (
+    <Login login={loginAction} error={login.loginActionError} />
+  ) : (
+    <SignUp signUp={signUp} error={login.signUpError} />
+  );
+};
+export default LoginDefaultPage;

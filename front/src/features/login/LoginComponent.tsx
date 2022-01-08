@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 type Props = {
   login: Function;
-  error: string;
+  error: string | null;
 };
 
 export default function SignIn({ login, error }: Props) {
