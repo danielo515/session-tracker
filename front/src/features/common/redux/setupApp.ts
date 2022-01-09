@@ -11,6 +11,7 @@ import history from '../../../common/history';
 import { syncSessions } from '../../home/redux/actions';
 import homeSetup from '../../home/redux/setup';
 import { isUserLoggedIn } from '../../../common/api';
+import { fetchAllDefinitions } from 'features/session-definition/redux/fetchAll';
 
 export function setupApp() {
   return async (dispatch, getState) => {
@@ -27,6 +28,7 @@ export function setupApp() {
       }
       dispatch({ type: LOGIN_LOGIN_ACTION_SUCCESS, payload: { token: loggedUser.uid } }); // save the user id on the store. Previously it was a token, but since we moved to firestore is just the userID
       dispatch(syncSessions());
+      dispatch(fetchAllDefinitions());
       dispatch(homeSetup());
     }
     dispatch({ type: COMMON_SETUP_APP_SUCCESS });
