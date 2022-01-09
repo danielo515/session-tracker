@@ -173,16 +173,15 @@ export const deleteSession = withDb<DeleteInfo, DeleteInfo>((db, { id }) => {
     .catch(error => ({ error, response: null }));
 });
 
-export const createSessionDefinition = withDb((
-  /** @type { firebase.database.Reference } */ db,
-  /** @type {import('@types').SessionDefinition}*/ sessionDefinition,
-) => {
-  return db
-    .child('definitions')
-    .push(sessionDefinition)
-    .then(() => ({ response: sessionDefinition, error: null }))
-    .catch(error => ({ error, response: null }));
-});
+export const createSessionDefinition = withDb<SessionDefinition, SessionDefinition>(
+  (db, sessionDefinition) => {
+    return db
+      .child('definitions')
+      .push(sessionDefinition)
+      .then(() => ({ response: sessionDefinition, error: null }))
+      .catch(error => ({ error, response: null }));
+  },
+);
 
 export const listDefinitions = withDb<undefined, SessionDefinition[]>(db => {
   const result = db

@@ -1,6 +1,7 @@
 /** @typedef {import("@types").Session} Session*/
 
 import { calculateSessionDuration } from '@common/calculateSessionDuration';
+import { Session } from '@types';
 import { createSelector } from 'reselect';
 import selectTodaySessions from './selectTodaySessions';
 

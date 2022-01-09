@@ -1,5 +1,6 @@
+import useAppSelector from 'hooks/useSelector';
 import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, shallowEqual } from 'react-redux';
 import {
   SETTINGS_LOAD_SESSION_SETTINGS_BEGIN,
   SETTINGS_LOAD_SESSION_SETTINGS_SUCCESS,
@@ -8,7 +9,8 @@ import {
 } from './constants';
 
 export function loadSessionSettings(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: SETTINGS_LOAD_SESSION_SETTINGS_BEGIN,
     });
@@ -16,7 +18,7 @@ export function loadSessionSettings(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: SETTINGS_LOAD_SESSION_SETTINGS_SUCCESS,
             data: res,
@@ -24,7 +26,7 @@ export function loadSessionSettings(args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: SETTINGS_LOAD_SESSION_SETTINGS_FAILURE,
             data: { error: err },
@@ -47,18 +49,20 @@ export function dismissLoadSessionSettingsError() {
 export function useLoadSessionSettings(params) {
   const dispatch = useDispatch();
 
-  const { home, loadSessionSettingsPending, loadSessionSettingsError } = useSelector(
+  const { loadSessionSettingsPending, loadSessionSettingsError } = useAppSelector(
     state => ({
-      home: state.settings.home,
       loadSessionSettingsPending: state.settings.loadSessionSettingsPending,
       loadSessionSettingsError: state.settings.loadSessionSettingsError,
     }),
     shallowEqual,
   );
 
-  const boundAction = useCallback((...args) => {
-    return dispatch(loadSessionSettings(...args));
-  }, [dispatch]);
+  const boundAction = useCallback(
+    (...args) => {
+      return dispatch(loadSessionSettings(...args));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (params) boundAction(...(params || []));
@@ -69,8 +73,6 @@ export function useLoadSessionSettings(params) {
   }, [dispatch]);
 
   return {
-    home,
-    loadSessionSettings: boundAction,
     loadSessionSettingsPending,
     loadSessionSettingsError,
     dismissLoadSessionSettingsError: boundDismissError,
