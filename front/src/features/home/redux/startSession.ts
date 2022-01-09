@@ -6,7 +6,7 @@ import { SetOptional } from 'type-fest';
 
 export const startSession = createAsyncThunk(
   'HOME_START_SESSION',
-  async ({ name }: { name: string }, { rejectWithValue, dispatch }) => {
+  async ({ name }: { name?: string }, { rejectWithValue, dispatch }) => {
     const { error, response } = await api.startSession({
       name: name || new Date().toDateString(),
     });

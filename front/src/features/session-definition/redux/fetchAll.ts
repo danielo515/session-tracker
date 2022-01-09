@@ -8,7 +8,7 @@ import initialState from './initialState';
 export const fetchAllDefinitions = createAsyncThunk(
   'SESSION-DEFINITION/FETCH-ALL',
   async (arg, thunkApi) => {
-    const response = await listDefinitions();
+    const response = await listDefinitions(undefined);
     if (response.error) thunkApi.rejectWithValue(response.error);
     return response.response;
   },
@@ -44,5 +44,17 @@ export const reducer = createReducer(initialState, builder => {
         return acc;
       }, {}) || state.byName;
     state.all = action.payload || [];
+    state.fetchAllError = null;
+    state.fetchAllPending = false;
+  });
+  builder.addCase(fetchAllDefinitions.pending, state => {
+    state.fetchAllPending = true;
+  });
+  builder.addCase(fetchAllDefinitions.rejected, (state, action) => {
+    return {
+      ...state,
+      fetchAllError: action.error.message || 'Non reported error',
+      fetchAllPending: false,
+    };
   });
 });
