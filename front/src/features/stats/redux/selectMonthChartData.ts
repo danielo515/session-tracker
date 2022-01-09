@@ -22,11 +22,12 @@ function selectRelativeMonthsSessions(sessions: Session[], monthsAgo = 0) {
 
 const formatWeek = format('Io');
 
-/** @typedef {{ [name:string]: number}} WeekData */
-/** @typedef {{ [date:string]: WeekData}} SessionsByWeek */
+type WeekData = { [name: string]: number };
+type SessionsByWeek = { [date: string]: WeekData };
+type Initial = { names: Set<string>; sessionsByWeek: SessionsByWeek };
+
 function groupSessionsByWeek(sessions: Session[]) {
-  /** @type { {names: Set<string>, sessionsByWeek: SessionsByWeek} } */
-  const initial = { names: new Set(), sessionsByWeek: {} };
+  const initial: Initial = { names: new Set(), sessionsByWeek: {} };
   const { names, sessionsByWeek } = sessions.reduce(
     ({ names, sessionsByWeek }, { startDate, endDate, name }) => {
       const dateStr = formatWeek(new Date(startDate));

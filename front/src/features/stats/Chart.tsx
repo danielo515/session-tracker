@@ -10,19 +10,19 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  TickFormatterFunction,
 } from 'recharts';
 import Title from './Title';
-import PropTypes from 'prop-types';
 import { stringToColour } from './stringToColour';
 import { noop } from '@common/noop';
 
-/**
- * @param {{ sessions: import('types').Session[],
- *           title: React.ReactChild,
- *           names: string[],
- *          formatter: import('recharts').TickFormatterFunction }} props
- */
-export default function Chart({ sessions, title, names, formatter }: { sessions: import('types').Session[]; title: React.ReactChild; names: string[]; formatter: import('recharts').TickFormatterFunction; }) {
+interface ChartProps {
+  sessions: { [name: string]: number }[];
+  title: React.ReactChild;
+  names: string[];
+  formatter: TickFormatterFunction;
+}
+export default function Chart({ sessions, title, names, formatter }: ChartProps) {
   const theme = useTheme();
   const Bars = names.map(x => (
     <Bar key={x} dataKey={x} name={x} stackId="a" fill={stringToColour(x)} />
@@ -60,21 +60,7 @@ export default function Chart({ sessions, title, names, formatter }: { sessions:
     </React.Fragment>
   );
 }
-/**
- * The expected shape of the data is
- * sessions: {startDAte: String, task1: duration, task2: duration}
- * names: ['task1','task2']
- */
-Chart.propTypes = {
-  title: PropTypes.node,
-  names: PropTypes.arrayOf(PropTypes.string).isRequired,
-  formatter: PropTypes.func,
-  sessions: PropTypes.arrayOf(
-    PropTypes.shape({
-      startDate: PropTypes.string.isRequired,
-    }),
-  ),
-};
+
 Chart.defaultProps = {
   sessions: [],
   formatter: noop,

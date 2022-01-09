@@ -13,7 +13,7 @@ type PropsA = {
   next: () => any;
   back: () => any;
   baseName?: never;
-  unit: never;
+  unit?: never;
   text: string;
   value: number;
 };

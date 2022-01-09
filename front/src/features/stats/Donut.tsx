@@ -6,9 +6,6 @@ import { stringToColour } from './stringToColour';
 import { noop } from '@common/noop';
 import { msToHuman } from 'formatters/formatDateDiff';
 
-/**
- * @param {{name: string, duration: number }} param
- */
 function getName({ name, duration }: { name: string; duration: number }) {
   return `${name} - ${msToHuman(duration)}`;
 }
@@ -23,7 +20,7 @@ export default function Donut({
   title,
 }: {
   sessions: { name: string; duration: number }[];
-  title: React.ReactChild;
+  title: React.ReactNode;
 }) {
   return (
     <React.Fragment>
