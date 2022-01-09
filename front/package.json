@@ -10,20 +10,25 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
+    "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.10.2",
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.39",
     "@material-ui/pickers": "^3.2.10",
-    "@reduxjs/toolkit": "^1.5.1",
+    "@reduxjs/toolkit": "^1.7.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
+    "@types/history": "^4.7.9",
     "@types/react-loadable": "^5.5.4",
-    "@types/react-redux": "^7.1.16",
+    "@types/react-redux": "^7.1.21",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-window": "^1.8.2",
     "@types/recharts": "^1.8.19",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "@vitejs/plugin-react": "^1.1.3",
     "autoprefixer": "7.1.6",
     "axios": "^0.21.1",
     "babel-core": "^7.0.0-bridge.0",
@@ -41,11 +46,12 @@
     "dotenv-expand": "4.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^7.1.0",
+    "eslint": "7",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.4.0",
     "express-history-api-fallback": "^2.2.1",
@@ -87,9 +93,11 @@
     "semantic-release": "^17.0.4",
     "style-loader": "^1.2.1",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "type-fest": "^0.21.2",
-    "typescript": "^4.2.2",
+    "type-fest": "^2.9.0",
+    "typescript": "^4.5.4",
     "url-loader": "^4.1.0",
+    "vite-plugin-env-compatible": "^1.1.1",
+    "vite-tsconfig-paths": "^3.3.17",
     "webpack": "^4.43.0",
     "webpack-async-chunk-names-plugin": "^0.1.1",
     "webpack-bundle-analyzer": "^4.4.0",
@@ -99,8 +107,8 @@
     "workbox-webpack-plugin": "^5.1.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start-webpack": "node scripts/start.js",
+    "build-webpack": "node scripts/build.js",
     "build-types": "tsc  --noEmit false --emitDeclarationOnly true",
     "test": "node scripts/test.js --env=jsdom",
     "s3-deploy": "a(){ aws s3 sync build s3://$1/; };a",
@@ -111,7 +119,11 @@
     "add-page": "npx rekit add component -t functional -c -u",
     "////": "adds a new async action, feature/action",
     "add-action": "npx rekit add action -a ",
-    "lint": "eslint src/"
+    "lint": "eslint --ext ts,tsx src",
+    "dev": "vite",
+    "start": "vite",
+    "preview": "vite preview",
+    "build": "vite build"
   },
   "rekit": {
     "devPort": 6075,
@@ -153,7 +165,17 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "react",
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:jest/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ]
   },
   "description": "time-traker created by Rekit.",
   "release": {
@@ -166,6 +188,10 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^26.0.22"
+    "@types/jest": "^26.0.22",
+    "@vitejs/plugin-legacy": "^1.4.4",
+    "@vitejs/plugin-react-refresh": "^1.3.5",
+    "vite": "2",
+    "vite-plugin-react-js-support": "latest"
   }
 }
