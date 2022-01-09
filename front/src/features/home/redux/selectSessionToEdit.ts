@@ -1,5 +1,7 @@
 /** @typedef {import("@types").Session} Session*/
 
+import { RootState } from '@common/configStore';
+import { Session } from '@types';
 import { createSelector } from 'reselect';
 import selectSessions from './selectSessions';
 
@@ -20,6 +22,6 @@ function selectSessionToEdit(sessions: Session[], sessionId: string) {
 
 export default createSelector(
   selectSessions,
-  ({ home }) => home.sessionBeingEdited,
+  ({ home }: RootState) => home.sessionBeingEdited,
   selectSessionToEdit,
 );
