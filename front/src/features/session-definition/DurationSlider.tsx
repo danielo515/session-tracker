@@ -10,6 +10,36 @@ export const sliderMarks = Array.from(Array(12), (_, i) => {
   };
 });
 
+interface DurationSliderProps {
+  onChange: (value: number) => void;
+  value: number;
+  valueLabelDisplay?: 'auto' | 'on' | 'off';
+  classes: { wrapper: string };
+}
+const DurationSlider_ = ({
+  onChange,
+  value,
+  classes: { wrapper, ...classes },
+  valueLabelDisplay,
+}: DurationSliderProps) => {
+  return (
+    <div className={wrapper}>
+      <Slider
+        marks={sliderMarks}
+        // @ts-expect-error wrong library typings?
+        onChange={(e, value: number) => onChange(value)}
+        valueLabelDisplay={valueLabelDisplay}
+        value={value}
+        classes={classes}
+        min={0}
+        max={60 * 12}
+        step={5}
+        valueLabelFormat={value => formatMinutes4Human(value)}
+      />
+    </div>
+  );
+};
+
 export const DurationSlider = withStyles(({ palette, spacing }) => ({
   wrapper: {
     padding: spacing(2),
@@ -26,20 +56,4 @@ export const DurationSlider = withStyles(({ palette, spacing }) => ({
       color: palette.text.secondary,
     },
   },
-}))(({ onChange, value, classes: { wrapper, ...classes }, valueLabelDisplay }) => {
-  return (
-    <div className={wrapper}>
-      <Slider
-        marks={sliderMarks}
-        onChange={(e, value) => onChange(value)}
-        valueLabelDisplay={valueLabelDisplay}
-        value={value}
-        classes={classes}
-        min={0}
-        max={60 * 12}
-        step={5}
-        valueLabelFormat={value => formatMinutes4Human(value)}
-      />
-    </div>
-  );
-});
+}))(DurationSlider_);

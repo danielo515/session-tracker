@@ -9,29 +9,18 @@ import { push } from 'connected-react-router';
 import * as api from '../../../common/api';
 import { getErrorData } from '../../../common/getErrorData';
 
-/** @typedef {Object} Props
- * @property {string} email
- * @property {string} password
- * @property {boolean} rememberMe
- */
+type Props = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
 
-/** @typedef {import('redux-thunk').ThunkAction<void,import('../../../common/rootReducer').RootState,unknown,import('redux').Action>} loginAction*/
-
-/**
- *
- *
- * @export
- * @param {Props & {isGoogleLogin: boolean}} args
- * @return {loginAction}
- */
 export function loginAction({
   email,
   password,
-  rememberMe = false,
   isGoogleLogin = false,
 }: Props & { isGoogleLogin: boolean }) {
   return async dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: LOGIN_LOGIN_ACTION_BEGIN,
     });
