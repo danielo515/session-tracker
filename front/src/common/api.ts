@@ -5,7 +5,7 @@ import { WithDb } from './api-types';
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export function isUserLoggedIn() {
-  return new Promise(resolve => {
+  return new Promise<firebase.User | null>(resolve => {
     firebase.auth().onAuthStateChanged(
       user => {
         resolve(user);
@@ -65,7 +65,9 @@ export const signUp = ({
   email: string;
   password: string;
   name: string;
-}) => {};
+}) => {
+  console.log('Not used anymore');
+};
 
 const withDb: WithDb = handler => async args => {
   const userId = firebase.auth()?.currentUser?.uid;
@@ -100,7 +102,7 @@ type SyncArgs = {
   onRunningUpdate: sessionCbNull;
   onSessionUpdate: sessionCb;
 };
-export const syncData = withDb<SyncArgs, unknown>(
+export const syncData = withDb<SyncArgs, void>(
   async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
     const all = db.child('all');
     const last = await all
@@ -130,7 +132,6 @@ export const startSession = withDb<{ name: string }, Omit<Session, 'id'>>((db, {
     .then(() => ({ response: session, error: null }));
 });
 
-/** @type { () => Promise<apiResponse<Session>> }*/
 export const stopSession = withDb(async db => {
   const running = db.child('runningSession');
   const runningSnap = await running.get();
@@ -152,18 +153,18 @@ export const updateSession = withDb<Session, Session>((db, { id, name, startDate
     .then(() => ({ response: { id, name, startDate, endDate }, error: null }));
 });
 
-/** @type { (args: {name: string, startDate: Date}) => Promise<apiResponse<Session>> }*/
-export const updateRunningSession = withDb<
-  { name: string; startDate: Date },
-  { name: string; startDate: Date }
->((db, { name, startDate }) => {
+type UpdateInfo = { name: string; startDate: Date };
+
+export const updateRunningSession = withDb<UpdateInfo, UpdateInfo>((db, { name, startDate }) => {
   return db
     .child('runningSession')
     .set({ name, startDate: startDate.toISOString() })
     .then(() => ({ response: { name, startDate }, error: null }));
 });
 
-export const deleteSession = withDb<{ id: string }, { id: string }>((db, { id }) => {
+type DeleteInfo = { id: string };
+
+export const deleteSession = withDb<DeleteInfo, DeleteInfo>((db, { id }) => {
   return db
     .child('all')
     .child(id)

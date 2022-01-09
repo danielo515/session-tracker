@@ -1,6 +1,6 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
-import React, { Suspense, ReactNodeArray } from 'react';
+import React, { Suspense, ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
@@ -15,7 +15,7 @@ import { Route as route } from './types';
  * @param {string} contextPath
  */
 function renderRouteConfigV3(routes: route[], contextPath: string) {
-  const children: ReactNodeArray = []; // children component list
+  const children: ReactNode[] = []; // children component list
   const renderRoute = (item: route, routeContextPath: string) => {
     let newContextPath = /^\//.test(item.path) ? item.path : `${routeContextPath}/${item.path}`;
     newContextPath = newContextPath.replace(/\/+/g, '/');
