@@ -6,10 +6,10 @@ import { SessionForm } from './SessionStart';
 
 type Props = {
   name: string;
-  startDate: string;
+  startDate?: string;
   stopSession: ({ name }: { name: string }) => void;
 };
-export default function SessionStop({ name: sessionName, stopSession, startDate }: Props) {
+export default function SessionStop({ name: sessionName, stopSession }: Props) {
   const [name, handleChange] = useHandleChange(sessionName);
   const [visible, setVisible] = useState(true);
   const stop = () => {

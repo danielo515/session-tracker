@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 
-/**
- * @param {string} initialValue
- * @return {[string, import('react').ChangeEventHandler<HTMLInputElement>]}
- */
 function useHandleChange(initialValue: string) {
   const [value, setter] = useState(initialValue);
-  /** @type {import('react').ChangeEventHandler<HTMLInputElement>}  */
-  const handleChange = event => setter(event.target.value);
+  const handleChange: ChangeEventHandler<HTMLInputElement> = event => setter(event.target.value);
   useEffect(() => {
     setter(initialValue);
   }, [initialValue]);
-  return [value, handleChange];
+  return [value, handleChange] as const;
 }
 
 export default useHandleChange;
