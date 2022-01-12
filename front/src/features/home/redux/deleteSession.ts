@@ -3,7 +3,8 @@ import initialState from './initialState';
 import { createAsyncReducer } from './createAsyncReducer';
 
 export const { action: deleteSession, reducer } = createAsyncReducer({
-  prefix: 'HOME_DELETE_SESSION',
+  actionName: 'HOME_DELETE_SESSION',
+  prefix: 'deleteSession',
   initialState: initialState,
   payloadCreator: (id: string) => api.deleteSession({ id }),
   onFulfilled: (state, action) => {
