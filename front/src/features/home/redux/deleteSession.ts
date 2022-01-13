@@ -10,6 +10,8 @@ export const { action: deleteSession, reducer } = createAsyncReducer({
   onFulfilled: (state, action) => {
     return {
       ...state,
+      deleteSessionError: null,
+      deleteSessionPending: false,
       sessions: state.sessions.filter(({ id }) => id !== action.meta.arg), // It will be better to use finIndex and then slice the array
     };
   },

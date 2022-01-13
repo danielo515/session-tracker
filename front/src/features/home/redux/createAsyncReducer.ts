@@ -15,13 +15,12 @@ type Arguments<State, Args, Returned, Prefix extends string> = {
         action: PayloadAction<
             Returned,
             string,
-            { arg: Args; requestId: string; requestStatus: 'fulfilled' },
-            never
+            { arg: Args; requestId: string; requestStatus: 'fulfilled' }
         >,
     ) => LoadingState<State,Prefix>;
 };
 
-export function createAsyncReducer<State, Args, Returned, Prefix extends string>({
+export function createAsyncReducer<State extends object, Args, Returned, Prefix extends string>({
     prefix,
     payloadCreator,
     initialState,
@@ -35,8 +34,11 @@ export function createAsyncReducer<State, Args, Returned, Prefix extends string>
 
     const reducer = createReducer(initialState, builder => {
         builder.addCase(action.pending, state => {
-            state[pendingKey] = true;
-            state[errorKey] = null;
+            return {
+                ...state,
+            [pendingKey]: true,
+            [errorKey]: null,
+            }
         });
         builder.addCase(action.rejected, (state, { error }) => {
             return {
