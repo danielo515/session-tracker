@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     transform: 'translateY(-33%)',
   },
   circle: {
-    color: ({ color = theme.palette.primary.main }: { color?: string }) => color,
+    color: ({ color = theme.palette.primary.main }: { color?: string } = {}) => color,
   },
   bottom: {
     position: 'absolute',
@@ -89,7 +89,7 @@ export function CircularTimer({ name, startDate, color, expectedDuration }: Prop
           size={250}
           variant="determinate"
           value={percentCompleted * 100}
-          classes={{ circle: css.circle, svg: css.svg }}
+          classes={{ circle: css.circle }}
         />
         <div className={css.timer}>
           <RenderTimer startDate={startDate.toISOString()} />

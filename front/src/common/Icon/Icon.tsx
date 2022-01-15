@@ -4,19 +4,18 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   colored: {
-    color: ({ color }) => color || theme.palette.divider,
+    color: ({ color }: { color: string }) => color || theme.palette.divider,
   },
 }));
 
 const LoadingIcon = () => <CachedRoundedIcon />;
-/**
- * @typedef {Object} Props
- * @property {string} color
- * @property {string} className
- * @property {any} Component
- */
 
-/** @param {Props} props **/
+type Props = {
+  color: string;
+  className: string;
+  Component: any;
+};
+
 const Renderer = ({ color, className, Component }: Props) => {
   const classes = useStyles({ color });
   return <Component className={`${classes.colored} ${className}`}></Component>;
