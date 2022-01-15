@@ -6,7 +6,7 @@ import { stringToColour } from './stringToColour';
 import { noop } from '@common/noop';
 import { msToHuman } from 'formatters/formatDateDiff';
 
-function getName({ name, duration }: { name: string; duration: number }) {
+function getName({ name, duration = 0 }: { name: string; duration?: number }) {
   return `${name} - ${msToHuman(duration)}`;
 }
 

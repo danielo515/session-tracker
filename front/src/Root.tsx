@@ -21,10 +21,11 @@ function renderRouteConfigV3(routes: route[], contextPath: string) {
     newContextPath = newContextPath.replace(/\/+/g, '/');
     if (item.component && item.childRoutes) {
       const childRoutes = renderRouteConfigV3(item.childRoutes, newContextPath);
+      const Component = item.component;
       children.push(
         <Route
           key={newContextPath}
-          render={props => <item.component {...props}>{childRoutes}</item.component>}
+          render={(props) => <Component {...props}>{childRoutes}</Component>}
           path={newContextPath}
           exact={item.exact}
         />,
@@ -34,11 +35,11 @@ function renderRouteConfigV3(routes: route[], contextPath: string) {
         <Route key={newContextPath} component={item.component} path={newContextPath} exact />,
       );
     } else if (item.childRoutes) {
-      item.childRoutes.forEach(r => renderRoute(r, newContextPath));
+      item.childRoutes.forEach((r) => renderRoute(r, newContextPath));
     }
   };
 
-  routes.forEach(item => renderRoute(item, contextPath));
+  routes.forEach((item) => renderRoute(item, contextPath));
 
   // Use Switch so that only the first matched route is rendered.
   return (
