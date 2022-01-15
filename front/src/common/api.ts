@@ -1,6 +1,6 @@
 import { Session, SessionDefinition } from '@types';
 import firebase from '../fb';
-import { WithDb } from './api-types';
+import { withDb } from './api-types';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -57,26 +57,8 @@ export const googleLogin = () =>
       };
     });
 
-export const signUp = ({
-  email,
-  password,
-  name,
-}: {
-  email: string;
-  password: string;
-  name: string;
-}) => {
+export const signUp = (args: { email: string; password: string; name: string }): any => {
   console.log('Not used anymore');
-};
-
-const withDb: WithDb = handler => async args => {
-  const userId = firebase.auth()?.currentUser?.uid;
-  if (!userId) return { error: { status: 401 }, response: null };
-  const db = firebase
-    .database()
-    .ref('/tasks')
-    .child(userId);
-  return handler(db, args);
 };
 
 export const listSessions = withDb(db => {
@@ -102,7 +84,7 @@ type SyncArgs = {
   onRunningUpdate: sessionCbNull;
   onSessionUpdate: sessionCb;
 };
-export const syncData = withDb<SyncArgs, void>(
+export const syncData = withDb<SyncArgs, never>(
   async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
     const all = db.child('all');
     const last = await all
