@@ -34,8 +34,6 @@ const routes: Route[] = [
   },
 ];
 
-console.log({ App });
-
 // Handle isIndex property of route config:
 //  Duplicate it and put it as the first route rule.
 
@@ -58,5 +56,4 @@ function handleIndexRoute(route: Route) {
 }
 
 routes.forEach(handleIndexRoute);
-console.log({ routes });
 export default routes;
