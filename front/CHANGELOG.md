@@ -1,3 +1,18 @@
+# [1.23.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.22.2...v1.23.0) (2022-01-15)
+
+
+### Bug Fixes
+
+* account for other states on fetch all ([d8a49d1](https://github.com/danielo515/pento-tech-challenge/commit/d8a49d183f06de34ae42ea59674588285d5d0bd7))
+* fetch all definitions on app startup ([61bea09](https://github.com/danielo515/pento-tech-challenge/commit/61bea0992311065337d8e4dada1d3fb6b1f59a2e))
+* migrate create to rxtk ([9b66134](https://github.com/danielo515/pento-tech-challenge/commit/9b66134edd788022fae39fe7f2547e4f78fb7ad0))
+* no typescript errors ([d7dec6a](https://github.com/danielo515/pento-tech-challenge/commit/d7dec6a86751865e76f0b23b99515cb4e114debd))
+
+
+### Features
+
+* createAsyncReducer added and used for deleteSession ([735e86b](https://github.com/danielo515/pento-tech-challenge/commit/735e86b847d8664a6a8bac10c048bb6b37ef6b8b))
+
 ## [1.22.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.22.1...v1.22.2) (2021-11-22)
 
 
