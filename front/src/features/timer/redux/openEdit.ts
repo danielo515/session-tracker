@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  TIMER_OPEN_EDIT,
-} from './constants';
+import { TIMER_OPEN_EDIT } from './constants';
 
 export function openEdit() {
   return {
@@ -12,7 +10,7 @@ export function openEdit() {
 
 export function useOpenEdit() {
   const dispatch = useDispatch();
-  const boundAction = useCallback((...params) => dispatch(openEdit(...params)), [dispatch]);
+  const boundAction = useCallback(() => dispatch(openEdit()), [dispatch]);
   return { openEdit: boundAction };
 }
 

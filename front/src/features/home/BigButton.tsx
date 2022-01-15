@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import TimelineIcon from '@material-ui/icons/Timeline';
-import PropTypes from 'prop-types';
 
 const variants = {
   color: {
@@ -9,32 +8,31 @@ const variants = {
     play: 'primary',
     stop: 'secondary',
   },
+} as const;
+
+type Props = {
+  variant: keyof typeof variants.color;
+  onClick: () => void;
+  icon: React.ComponentType;
 };
-export default class BigButton extends Component {
-  static propTypes = {
-    icon: PropTypes.node,
-    onClick: PropTypes.func.isRequired,
-    variant: PropTypes.oneOf(Object.keys(variants.color)),
-  };
 
-  static defaultProps = {
-    variant: 'play',
-  };
+const BigButton = (props: Props) => {
+  const { variant = 'play', onClick, icon } = props;
+  const color = variants.color[variant];
+  const Icon = variant === 'chart' ? TimelineIcon : icon;
+  return (
+    <Fab
+      variant="extended"
+      color={color}
+      aria-label="add"
+      classes={{
+        root: 'home-big-button',
+      }}
+      onClick={onClick}
+    >
+      <Icon className="home-big-button" />
+    </Fab>
+  );
+};
 
-  render() {
-    const { variant, onClick, icon } = this.props;
-    const color = variants.color[variant];
-    const Icon = variant === 'chart' ? TimelineIcon : icon;
-    return (
-      <Fab
-        variant="extended"
-        color={color}
-        aria-label="add"
-        classes={{ root: 'home-big-button' }}
-        onClick={onClick}
-      >
-        <Icon className="home-big-button" />
-      </Fab>
-    );
-  }
-}
+export default BigButton;

@@ -1,18 +1,20 @@
-import { Session } from '@types';
+import { RunningSession, Session } from '@types';
+
+type Nullable<T> = T | null;
 
 const initialState = {
-  runningSession: null as Session | null,
+  runningSession: null as RunningSession | null,
   startSessionPending: false,
-  startSessionError: null,
+  startSessionError: null as Nullable<string>,
   stopSessionPending: false,
   stopSessionError: null as string | null,
   fetchSessionsPending: false,
-  fetchSessionsError: null,
+  fetchSessionsError: null as Nullable<string>,
   sessions: [] as Session[],
   deleteSessionPending: false,
-  deleteSessionError: null,
+  deleteSessionError: null as Nullable<string>,
   switchTaskPending: false,
-  switchTaskError: null,
+  switchTaskError: null as Nullable<string>,
   updateSessionPending: false,
   updateSessionError: null as string | null,
   editing: false,

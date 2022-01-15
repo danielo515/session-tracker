@@ -32,7 +32,7 @@ export function useLongPress(callback: CB, duration = 500) {
   // function to change for the lifecycle of the component.
   const cancelTimeout = useCallback(() => {
     if (!timeout.current) {
-      throw new Error('Can not cancel timeout, timeout.current is null');
+      return console.error('Can not cancel timeout, timeout.current is null');
     }
     return clearTimeout(timeout.current);
   }, []);

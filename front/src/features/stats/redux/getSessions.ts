@@ -14,16 +14,12 @@ import * as api from '../../../common/api';
 type GetSessionThunk = ThunkAction<Promise<void>, RootState, void, Action>;
 
 export function getSessions(): GetSessionThunk {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     dispatch({
       type: STATS_GET_SESSIONS_BEGIN,
     });
 
-    const {
-      login: { token },
-    } = getState();
-
-    const { error, response } = await api.listSessions({ token });
+    const { error, response } = await api.listSessions();
 
     if (error) {
       dispatch({
@@ -62,12 +58,11 @@ export function reducer(
 
     case STATS_GET_SESSIONS_SUCCESS:
       // The request is success
-      const { all } = payload;
       return {
         ...state,
         getSessionsPending: false,
         getSessionsError: null,
-        sessions: all,
+        sessions: payload.all,
       };
 
     case STATS_GET_SESSIONS_FAILURE:

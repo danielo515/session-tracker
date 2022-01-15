@@ -22,7 +22,7 @@ const useLogin = () => {
   };
 };
 
-export const LoginDefaultPage = ({ location }) => {
+export const LoginDefaultPage = ({ location }: { location: { pathname: string } }) => {
   const { loginAction, signUp, login } = useLogin();
   const isLoginPage = location.pathname === '/login';
   return isLoginPage ? (

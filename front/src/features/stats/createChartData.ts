@@ -3,19 +3,15 @@ import { Session } from '@types';
 import format from 'date-fns/fp/format';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { getTodayIntervals } from 'dateUtils/getIntervals';
-/** @typedef {import('@types').Session} Session*/
-/** @typedef {{ startDate: string, [name: string]: number|string }}  Row hashmap of name-value indexed by formatted date**/
-/** @typedef {{names: Set<string>, [date:string]: Row|Set<string> }} MapRow **/
-/**
- *
- * @param {Function} diffCalc
- * @param {(d:Date) => string} formatter should format the date to string
- * @returns {(map:MapRow, session:Session) => MapRow}
- */
-export const addToRow = (formatter: (d: Date) => string, diffCalc: Function) => (
-  map,
-  { name, startDate, endDate },
-) => {
+
+type Row = { startDate: string; [name: string]: number | string };
+type MapRow = { names: Set<string>; [date: string]: Row | Set<string> };
+type AddToRow = (
+  formatter: (d: Date) => string,
+  diffCalc: (a: Date, b: Date) => number,
+) => (map: MapRow, session: Session) => MapRow;
+
+export const addToRow: AddToRow = (formatter, diffCalc) => (map, { name, startDate, endDate }) => {
   const duration = diffCalc(new Date(endDate || Date.now()), new Date(startDate));
   const date = formatter(new Date(startDate));
 
@@ -59,7 +55,11 @@ export function createChartData({
       if (isWithinInterval(d, monthInterval)) acc.m = makeMonthRow(acc.m, session);
       return acc; // I don't usually mutate, but this is a big performance gain on this case
     },
-    { d: { names: new Set() }, w: { names: new Set() }, m: { names: new Set() } },
+    {
+      d: { names: new Set<string>() },
+      w: { names: new Set<string>() },
+      m: { names: new Set<string>() },
+    },
   ); // I was originally using longer names, but I think this is obvious
 
   return {

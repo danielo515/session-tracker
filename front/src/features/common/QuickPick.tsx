@@ -14,7 +14,7 @@ import {
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 import * as Icons from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';
-import { withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import useAppSelector from 'hooks/useSelector';
 
 const useStyle = makeStyles(theme => ({
@@ -25,7 +25,7 @@ const useStyle = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
-    borderColor: ({ color }) => color || theme.palette.divider,
+    borderColor: ({ color }: { color: string }) => color || theme.palette.divider,
     position: 'relative',
     overflow: 'visible',
   },
@@ -41,7 +41,7 @@ const useStyle = makeStyles(theme => ({
     borderRadius: '50%',
     height: '30px',
     width: '30px',
-    border: ({ color }) => `1px solid ${color || theme.palette.divider}`,
+    border: ({ color }: { color: string }) => `1px solid ${color || theme.palette.divider}`,
   },
 }));
 
@@ -77,7 +77,11 @@ function ButtonCard({
   );
 }
 
-export const QuickPick = props => {
+interface QuickPickProps {
+  history: RouteComponentProps['history'];
+}
+
+export const QuickPick = (props: QuickPickProps) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllDefinitions());
@@ -101,7 +105,6 @@ export const QuickPick = props => {
     <Container maxWidth="sm">
       <Grid container spacing={2}>
         {sessions.map(session => {
-          console.log({ definitions });
           const definition = definitions[session] || {};
           return (
             <Grid item xs={4} sm={3} key={session}>

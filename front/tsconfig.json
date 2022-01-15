@@ -19,7 +19,7 @@
       "formatters": ["formatters"],
       "@types": ["types"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
-    "types": ["vite/client"],
+    "types": ["vite/client", "node", "@types/jest"],
     "resolveJsonModule": true /* Enable importing .json files */,
 
     /* Emit */

@@ -6,33 +6,22 @@ import {
   HOME_FETCH_SESSIONS_DISMISS_ERROR,
   HOME_UPDATED_SESSION,
 } from './constants';
-/** @typedef {{type: HOME_FETCH_SESSIONS_SUCCESS, payload: {sessions: Session[], current: void | import('../../../types').RunningSession } }} Success*/
-/** @typedef {{type: HOME_PUSHED_SESSION, payload: Session}} Pushed*/
-/** @typedef {{type: HOME_UPDATED_SESSION, payload: Session}} Updated*/
-/** @typedef {{type: HOME_FETCH_SESSIONS_BEGIN }} Begin*/
-/** @typedef {{type: HOME_FETCH_SESSIONS_FAILURE, payload: {error: any} }} Fail*/
-/** @typedef {{type: HOME_FETCH_SESSIONS_DISMISS_ERROR}} Dismiss*/
-/** @typedef {import('redux').Action<HOME_START_SESSION_SUCCESS>} ExternalAction*/
-/** @typedef { Success | Pushed | Begin | Fail | Dismiss | Updated} Actions*/
 
 import * as api from '../../../common/api';
 import { addedSession } from './startSession';
 import { AppDispatch } from '@common/configStore';
+import { State } from './initialState';
 
 /**
  * Fetches all sessions
  */
 export function fetchSessions() {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     dispatch({
       type: HOME_FETCH_SESSIONS_BEGIN,
     });
 
-    const {
-      login: { token },
-    } = getState();
-
-    const result = await api.listSessions({ token });
+    const result = await api.listSessions();
 
     if (result.error) {
       dispatch({
@@ -92,12 +81,11 @@ function updateAtIdx<T>(idx: number, arr: T[], newVal: T | ((x: T) => T)) {
   const oldVAl = arr[idx];
   return [
     ...arr.slice(0, idx),
-    typeof newVal === 'function' ? newVal(oldVAl) : newVal,
+    newVal instanceof Function ? newVal(oldVAl) : newVal,
     ...arr.slice(idx + 1),
   ];
 }
-/** @type {import('react').Reducer<State,Actions>} */
-export function reducer(state, action) {
+export function reducer(state: State, action) {
   switch (action.type) {
     case HOME_FETCH_SESSIONS_BEGIN:
       // Just after a request is sent

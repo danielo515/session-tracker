@@ -1,13 +1,14 @@
 import selectRunningSession from 'features/home/redux/selectRunningSession';
 import { stopSession } from 'features/home/redux/stopSession';
+import useAppSelector from 'hooks/useSelector';
 import { useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch } from 'react-redux';
 
 export function useStopRunningSession() {
   const dispatch = useDispatch();
 
-  const { runningSession } = useSelector(
-    state => ({
+  const { runningSession } = useAppSelector(
+    (state) => ({
       runningSession: selectRunningSession(state),
     }),
     shallowEqual,

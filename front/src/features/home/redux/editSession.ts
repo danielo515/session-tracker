@@ -3,10 +3,8 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da
 
 import { HOME_EDIT_SESSION } from './constants';
+import { State } from './initialState';
 
-/**
- * @param {string} id
- */
 export function editSession(id: string) {
   return {
     type: HOME_EDIT_SESSION,
@@ -14,11 +12,10 @@ export function editSession(id: string) {
   };
 }
 
-/**
- * @param {import('./types').InitialState} state
- * @param {{type: HOME_EDIT_SESSION, payload: {id: string}}} action
- */
-export function reducer(state: import('./types').InitialState, action: { type: HOME_EDIT_SESSION; payload: { id: string; }; }) {
+export function reducer(
+  state: State,
+  action: { type: typeof HOME_EDIT_SESSION; payload: { id: string } },
+) {
   switch (action.type) {
     case HOME_EDIT_SESSION:
       return {

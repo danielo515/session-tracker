@@ -1,6 +1,6 @@
 /** @typedef {import("@types").Session} Session*/
 
-import { Session } from '@types';
+import { Session, SessionWithAllDates } from '@types';
 import { createSelector } from 'reselect';
 import selectRelativeDaysSessions from './selectRelativeDaysSessions';
 
@@ -16,16 +16,17 @@ function dateDiff(start: Date | string, end: Date | string = new Date()) {
 /**
  * Reducer function that adds duration to a session and keeps
  * track of the amount of unused milliseconds
- * @param {{all: Map<string,{name: string, duration: number}>, unused: number}} param0
- * @param {Session} session
  */
 const addDurationToSessions = (
   { all, unused }: { all: Map<string, { name: string; duration: number }>; unused: number },
-  session: Session,
+  session: SessionWithAllDates,
 ) => {
   const duration = dateDiff(session.startDate, session.endDate);
-  const { name, duration: oldDuration = 0 } = all.get(session.name) || session;
-  all.set(name, { ...session, duration: oldDuration + duration });
+  const { name, duration: oldDuration } = all.get(session.name) || {
+    duration: 0,
+    name: session.name,
+  };
+  all.set(name, { ...session, duration: (oldDuration || 0) + duration });
 
   return {
     unused: unused - duration,
@@ -38,7 +39,7 @@ const addDurationToSessions = (
  * @param {Session[]} sessions
  * @returns {{name: string, duration: number}[]}
  */
-function selectDonutSessions(sessions: Session[]) {
+function selectDonutSessions(sessions: Omit<Session, 'id'>[]) {
   const initialValue = { all: new Map(), unused: msInADay };
   const { all, unused } = sessions.reduce(addDurationToSessions, initialValue);
 

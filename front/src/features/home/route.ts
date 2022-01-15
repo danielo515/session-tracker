@@ -3,6 +3,7 @@ import SettingsRoute from '../settings/route';
 import StatsRoute from '../stats/route';
 import TimerRoute from '../timer/route';
 import makeAsyncPage from '@common/makeAsyncPage';
+import SessionsPage from './SessionsPage';
 
 export default {
   path: '/',
@@ -14,7 +15,7 @@ export default {
       name: 'Default page',
       component: makeAsyncPage(() => {
         return import('./SessionsPage');
-      }),
+      }) as (props: Parameters<typeof SessionsPage>) => JSX.Element,
       isIndex: true,
     },
     StatsRoute,

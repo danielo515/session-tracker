@@ -1,52 +1,23 @@
 import { createSessionDefinition } from '@common/api';
+import { useAppDispatch } from '@common/configStore';
+import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
+import { SessionDefinition } from '@types';
 import useAppSelector from 'hooks/useSelector';
 import { useCallback } from 'react';
-import { useDispatch, shallowEqual } from 'react-redux';
-import {
-  SESSION_DEFINITION_CREATE_BEGIN,
-  SESSION_DEFINITION_CREATE_SUCCESS,
-  SESSION_DEFINITION_CREATE_FAILURE,
-  SESSION_DEFINITION_CREATE_DISMISS_ERROR,
-} from './constants';
+import { shallowEqual } from 'react-redux';
+import initialState from './initialState';
 
-export function create(args) {
-  return dispatch => {
-    // optionally you can have getState as the second argument
-    dispatch({
-      type: SESSION_DEFINITION_CREATE_BEGIN,
-    });
-
-    const promise = new Promise((resolve, reject) => {
-      const doRequest = createSessionDefinition(args);
-      doRequest
-        .then(res => {
-          dispatch({
-            type: SESSION_DEFINITION_CREATE_SUCCESS,
-            data: res.response,
-          });
-          resolve(res);
-        })
-        .catch(err => {
-          dispatch({
-            type: SESSION_DEFINITION_CREATE_FAILURE,
-            data: { error: err },
-          });
-          reject(err);
-        });
-    });
-
-    return promise;
-  };
-}
-
-export function dismissCreateError() {
-  return {
-    type: SESSION_DEFINITION_CREATE_DISMISS_ERROR,
-  };
-}
+const create = createAsyncThunk(
+  'SESSION_DEFINITION_CREATE',
+  async (definition: SessionDefinition, { rejectWithValue }) => {
+    const response = await createSessionDefinition(definition);
+    if (response.error) return rejectWithValue(response.error);
+    return response.response;
+  },
+);
 
 export function useCreate() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { sessionDefinitions, createPending, createError } = useAppSelector(
     state => ({
@@ -58,64 +29,45 @@ export function useCreate() {
   );
 
   const boundAction = useCallback(
-    (...args) => {
-      return dispatch(create(...args));
+    (sessionDefinition: SessionDefinition) => {
+      return dispatch(create(sessionDefinition));
     },
     [dispatch],
   );
-
-  const boundDismissError = useCallback(() => {
-    return dispatch(dismissCreateError());
-  }, [dispatch]);
 
   return {
     sessionDefinitions,
     create: boundAction,
     createPending,
     createError,
-    dismissCreateError: boundDismissError,
   };
 }
 
-export function reducer(state, action) {
-  switch (action.type) {
-    case SESSION_DEFINITION_CREATE_BEGIN:
-      // Just after a request is sent
-      return {
-        ...state,
-        createPending: true,
-        createError: null,
-      };
-
-    case SESSION_DEFINITION_CREATE_SUCCESS:
-      // The request is success
-      return {
-        ...state,
-        createPending: false,
-        createError: null,
-        byName: {
-          ...state.byName,
-          [action.data.name]: action.data,
-        },
-        all: [...state.all, action.data],
-      };
-
-    case SESSION_DEFINITION_CREATE_FAILURE:
-      // The request is failed
-      return {
-        ...state,
-        createPending: false,
-        createError: action.data.error,
-      };
-
-    case SESSION_DEFINITION_CREATE_DISMISS_ERROR:
-      // Dismiss the request failure error
-      return {
-        ...state,
-        createError: null,
-      };
-
-    default:
-      return state;
-  }
-}
+export const reducer = createReducer(initialState, builder => {
+  builder.addCase(create.pending, state => {
+    return {
+      ...state,
+      createPending: true,
+      createError: null,
+    };
+  });
+  builder.addCase(create.fulfilled, (state, { payload }) => {
+    return {
+      ...state,
+      createPending: false,
+      createError: null,
+      byName: {
+        ...state.byName,
+        [payload.name]: payload,
+      },
+      all: [...state.all, payload],
+    };
+  });
+  builder.addCase(create.rejected, (state, action) => {
+    return {
+      ...state,
+      createPending: false,
+      createError: action.error.message || 'Unknown error',
+    };
+  });
+});

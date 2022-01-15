@@ -1,6 +1,6 @@
 /** @typedef {import("@types").Session} Session*/
 
-import { Session } from '@types';
+import { SessionWithAllDates } from '@types';
 import selectAllSessions from 'features/home/redux/selectAllSessions';
 import { createSelector } from 'reselect';
 import subDays from 'date-fns/subDays';
@@ -10,10 +10,11 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 
 /**
  * Given a number of days ago selects the sessions of that day.
- * @param {Session[]} sessions
- * @returns {Session[]}
  */
-function selectRelativeDaysSessions(sessions: Session[], daysAgo = 0) {
+function selectRelativeDaysSessions(
+  sessions: SessionWithAllDates[],
+  daysAgo = 0,
+): SessionWithAllDates[] {
   const today = endOfDay(new Date());
   const dayRef = subDays(today, daysAgo);
   const interval = { start: startOfDay(dayRef), end: endOfDay(dayRef) };
@@ -22,11 +23,6 @@ function selectRelativeDaysSessions(sessions: Session[], daysAgo = 0) {
 
 export default createSelector(
   selectAllSessions,
-  /**
-   * stupid function to provide the props to the selector
-   * @param {any} _
-   * @param {number} props the props from the component
-   */
-  (_: any, props: number) => props,
+  (_: unknown, props: number) => props,
   selectRelativeDaysSessions,
 );

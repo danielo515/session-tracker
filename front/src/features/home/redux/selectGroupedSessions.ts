@@ -1,6 +1,8 @@
-/** @typedef {import("@types").SessionGroup} SessionGroup*/
-/** @typedef {{[k: string]: SessionGroup | undefined }} Grouped */
+type Grouped = {
+  [k: string]: SessionGroup;
+};
 
+import { Session, SessionGroup } from '@types';
 import { createSelector } from 'reselect';
 import { diffDateStrings } from './diffDateStrings';
 import selectSessions from './selectSessions';
@@ -11,28 +13,17 @@ function getTodayISO() {
   return today.toISOString();
 }
 
-/**
- *
- * @param {import("@types").Session[]} sessions
- * @returns {SessionGroup[]}
- */
-function selectGroupedSessions(sessions: import("@types").Session[]) {
+function selectGroupedSessions(sessions: Session[]) {
   const today = getTodayISO();
-  const grouped = sessions.reduce(
-    /**
-     * @param {Grouped} result
-     */
-    (result: Grouped, session) => {
-      const { name, startDate, endDate } = session;
-      const group = result[name] || { name, sessions: [], total: 0, lastRun: startDate };
-      group.sessions.push(session);
-      group.total =
-        today <= startDate ? group.total + diffDateStrings(startDate, endDate) : group.total;
-      result[name] = group;
-      return result;
-    },
-    {},
-  );
+  const grouped = sessions.reduce((result: Grouped, session) => {
+    const { name, startDate, endDate } = session;
+    const group = result[name] || { name, sessions: [], total: 0, lastRun: startDate };
+    group.sessions.push(session);
+    group.total =
+      today <= startDate ? group.total + diffDateStrings(startDate, endDate) : group.total;
+    result[name] = group;
+    return result;
+  }, {});
   return Object.values(grouped);
 }
 

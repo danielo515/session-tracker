@@ -1,3 +1,5 @@
+import { ComponentClass } from 'react';
+
 export type Session = {
   name: string;
   /**
@@ -7,7 +9,7 @@ export type Session = {
   /**
    * Iso date format
    */
-  endDate?: string;
+  endDate: string;
   id: string;
 };
 
@@ -31,6 +33,12 @@ export type RunningSession = {
   startDate: string;
 };
 
+export type SessionWithAllDates = {
+  name: string;
+  startDate: string;
+  endDate: string;
+};
+
 export interface SessionGroup {
   name: string;
   total: number;
@@ -42,7 +50,7 @@ export interface Route {
   path: string;
   name: string;
   isIndex?: boolean;
-  component?: any;
+  component?: ComponentClass<unknown> | ((args: any) => JSX.Element);
   childRoutes?: Route[];
   exact?: boolean;
 }
