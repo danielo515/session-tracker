@@ -37,8 +37,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+type LoginArgs = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  isGoogleLogin: boolean;
+};
+
 type Props = {
-  login: Function;
+  login({ email, password, rememberMe }: LoginArgs): void;
   error: string | null;
 };
 
@@ -46,12 +53,7 @@ export default function SignIn({ login, error }: Props) {
   const classes = useStyles();
   const { email, setEmail, password, setPassword } = useLoginForm();
   const [rememberMe, setRememberMe] = useState(false);
-  /**
-   * @param {Function} set
-   * @returns {import('react').ChangeEventHandler<HTMLInputElement>}
-   */
-  const handleCheck = (set: Function) => ({ target }) => set(target.checked);
-  /** @param {boolean} isGoogleLogin */
+  const handleCheck = (set: (arg: boolean) => unknown) => ({ target }) => set(target.checked);
   const handleSubmit = (isGoogleLogin: boolean) =>
     login({ email, password, rememberMe, isGoogleLogin });
   const canSubmit = isValidEmail(email) && isValidPassword(password);
@@ -110,7 +112,7 @@ export default function SignIn({ login, error }: Props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(false)}
             disabled={!canSubmit}
           >
             Sign In
