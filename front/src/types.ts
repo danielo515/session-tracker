@@ -9,7 +9,7 @@ export type Session = {
   /**
    * Iso date format
    */
-  endDate?: string;
+  endDate: string;
   id: string;
 };
 

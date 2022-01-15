@@ -1,16 +1,16 @@
-import { Session, SessionDefinition } from '@types';
+import { RunningSession, Session, SessionDefinition } from '@types';
 import firebase from '../fb';
 import { withDb } from './api-types';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export function isUserLoggedIn() {
-  return new Promise<firebase.User | null>(resolve => {
+  return new Promise<firebase.User | null>((resolve) => {
     firebase.auth().onAuthStateChanged(
-      user => {
+      (user) => {
         resolve(user);
       },
-      error => {
+      (error) => {
         console.error('Failed checking logged user', error);
         return resolve(null);
       },
@@ -38,7 +38,7 @@ export const googleLogin = () =>
         },
       };
     })
-    .catch(error => {
+    .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -61,21 +61,17 @@ export const signUp = (args: { email: string; password: string; name: string }):
   console.log('Not used anymore');
 };
 
-export const listSessions = withDb(db => {
-  return Promise.all([
-    db
-      .child('all')
-      .orderByKey()
-      .get(),
-    db.child('runningSession').get(),
-  ]).then(([snapshot, currentSnap]) => {
-    if (snapshot.exists())
-      return {
-        error: null,
-        response: { all: Object.values(snapshot.val()).reverse(), current: currentSnap.val() },
-      };
-    return { error: null, response: { all: [], current: currentSnap.val() } };
-  });
+export const listSessions = withDb((db) => {
+  return Promise.all([db.child('all').orderByKey().get(), db.child('runningSession').get()]).then(
+    ([snapshot, currentSnap]) => {
+      if (snapshot.exists())
+        return {
+          error: null,
+          response: { all: Object.values(snapshot.val()).reverse(), current: currentSnap.val() },
+        };
+      return { error: null, response: { all: [], current: currentSnap.val() } };
+    },
+  );
 });
 type sessionCb = (args: Session) => any;
 type sessionCbNull = (args: Session | null) => any;
@@ -87,26 +83,23 @@ type SyncArgs = {
 export const syncData = withDb<SyncArgs, never>(
   async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
     const all = db.child('all');
-    const last = await all
-      .orderByKey()
-      .limitToLast(1)
-      .once('child_added');
+    const last = await all.orderByKey().limitToLast(1).once('child_added');
     all
       .orderByKey()
       .startAfter(last.key)
-      .on('child_added', snapshot => {
+      .on('child_added', (snapshot) => {
         if (snapshot.exists()) return onSessionAdded(snapshot.val());
       });
-    all.on('child_changed', snap => {
+    all.on('child_changed', (snap) => {
       if (snap.exists() && snap.val().id) onSessionUpdate(snap.val());
     });
-    db.child('runningSession').on('value', snapshot => {
+    db.child('runningSession').on('value', (snapshot) => {
       return onRunningUpdate(snapshot.val());
     });
   },
 );
 
-export const startSession = withDb<{ name: string }, Omit<Session, 'id'>>((db, { name }) => {
+export const startSession = withDb<{ name: string }, RunningSession>((db, { name }) => {
   const session = { name, startDate: new Date().toISOString() };
   return db
     .child('runningSession')
@@ -114,7 +107,7 @@ export const startSession = withDb<{ name: string }, Omit<Session, 'id'>>((db, {
     .then(() => ({ response: session, error: null }));
 });
 
-export const stopSession = withDb(async db => {
+export const stopSession = withDb(async (db) => {
   const running = db.child('runningSession');
   const runningSnap = await running.get();
   if (!runningSnap.exists()) {
@@ -152,7 +145,7 @@ export const deleteSession = withDb<DeleteInfo, DeleteInfo>((db, { id }) => {
     .child(id)
     .set(null)
     .then(() => ({ response: { id }, error: null }))
-    .catch(error => ({ error, response: null }));
+    .catch((error) => ({ error, response: null }));
 });
 
 export const createSessionDefinition = withDb<SessionDefinition, SessionDefinition>(
@@ -161,16 +154,16 @@ export const createSessionDefinition = withDb<SessionDefinition, SessionDefiniti
       .child('definitions')
       .push(sessionDefinition)
       .then(() => ({ response: sessionDefinition, error: null }))
-      .catch(error => ({ error, response: null }));
+      .catch((error) => ({ error, response: null }));
   },
 );
 
-export const listDefinitions = withDb<undefined, SessionDefinition[]>(db => {
+export const listDefinitions = withDb<undefined, SessionDefinition[]>((db) => {
   const result = db
     .child('definitions')
     .orderByKey()
     .get()
-    .then(snapshot => {
+    .then((snapshot) => {
       if (snapshot.exists())
         return {
           error: null,
