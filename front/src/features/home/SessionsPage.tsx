@@ -7,6 +7,7 @@ import SessionsList from './SessionsList';
 import EditSession from './EditSession';
 import { FooterWithVersion } from '../common/index';
 import selectGroupedSessions from './redux/selectGroupedSessions';
+import { RootState } from '@common/configStore';
 
 /**
  * @param {import('react-redux').ConnectedProps<typeof connector>} props
@@ -33,11 +34,7 @@ const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connect
   );
 };
 
-/* istanbul ignore next */
-/**
- * @param {import('rootReducer').RootState} state
- */
-function mapStateToProps(state: import('rootReducer').RootState) {
+function mapStateToProps(state: RootState) {
   return {
     groupedSessions: selectGroupedSessions(state),
   };
