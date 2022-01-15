@@ -28,16 +28,17 @@ function loadableIcon(importFn: () => any) {
   const Inner = React.lazy(async () => {
     const component = await importFn();
     return {
-      default: props => {
+      default(props) {
         return <Renderer {...props} Component={component.default} />;
       },
     };
   });
-  return props => (
+  const SuspendedIcon = props => (
     <Suspense fallback={<LoadingIcon />}>
       <Inner {...props} />
     </Suspense>
   );
+  return SuspendedIcon;
 }
 
 /* scrapped from material-ui gh repo with

@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
 import { SessionGroup } from '@types';
+import { doTimes } from './doTimes';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,20 +21,11 @@ const useStyles = makeStyles(theme => ({
 const ItemHeight = 72;
 const ListHeight = ItemHeight + 3 * ItemHeight;
 
-export function CalculateListHeight(items: any[]) {
+export function CalculateListHeight(items: unknown[]) {
   return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
 }
 // const NestedItemHeight = 400;
 // const formatHour = 'HH:mm';
-
-type cb<T> = <T>(i: number) => T;
-type DoTimes<T> = (n: number, cb: cb<T>) => T[];
-
-const doTimes = (times: number) => fn => {
-  const res = [];
-  for (; times; times--) res.push(fn(times));
-  return res;
-};
 
 const Loading = () => {
   const isSmallScreen = useMediaQuery('(max-width: 600px');
@@ -70,8 +62,7 @@ export default function SessionsList({ sessions, startSession, editSession }: Pr
             ? CalculateListHeight(sessionGroup.sessions)
             : ItemHeight;
         }}
-        row={props => {
-          const { index, style, data, resizeList } = props;
+        row={({ index, style, data, resizeList }) => {
           const item = data[index];
 
           return (
@@ -111,11 +102,20 @@ const getIdOrName = <T extends { name: string; id?: string }>(idx: number, data:
  * @property { (props:{data: T[], style: Object, index: number, resizeList: () => any}) => any } row
  * @property {(i:number) => number} itemSize
  */
-/**
- * @template T
- * @param {VirtualProps<T>} props **/
-export function VirtualList({ data, row, itemSize }: VirtualProps<T>) {
-  const list = useRef();
+
+type VirtualProps<T> = {
+  data: T[];
+  row: (props: {
+    data: T[];
+    style: React.CSSProperties;
+    index: number;
+    resizeList: () => any;
+  }) => any;
+  itemSize: (i: number) => number;
+};
+
+export function VirtualList<T>({ data, row, itemSize }: VirtualProps<T>) {
+  const list = useRef<{ resetAfterIndex: (idx: number) => void }>();
   const resizeList = () => {
     if (list.current) {
       // list.current.scrollToItem(refreshIdx, 'start');
@@ -135,6 +135,7 @@ export function VirtualList({ data, row, itemSize }: VirtualProps<T>) {
           itemCount={data.length}
           itemData={data}
           itemKey={getIdOrName}
+          //@ts-expect-error stupid wrong types
           ref={list}
         >
           {props => row({ ...props, resizeList })}
