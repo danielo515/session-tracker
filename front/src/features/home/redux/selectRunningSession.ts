@@ -1,7 +1,5 @@
-/** @typedef {import('rootReducer').RootState} State*/
-/**
- * @param {State} state
- */
-const selectRunningSession = (state: State) => state.home.runningSession;
+import { RootState } from '@common/configStore';
+
+const selectRunningSession = (state: RootState) => state.home.runningSession;
 
 export default selectRunningSession;

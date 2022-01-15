@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import Timer from './Timer';
 import { makeStyles } from '@material-ui/core/styles';
 import * as actions from './redux/actions';
@@ -7,7 +7,7 @@ import SessionStart from './SessionStart';
 import SessionStop from './SessionStop';
 import { RootState } from '@common/configStore';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
@@ -17,12 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-/**
- * @param {import('react-redux').ConnectedProps<typeof connector>} props
- */
-export const SessionController = (
-  props: import('react-redux').ConnectedProps<typeof connector>,
-) => {
+export const SessionController = (props: ConnectedProps<typeof connector>) => {
   const css = useStyles();
   const { runningSession, startSession, stopSession } = props;
   return (
@@ -32,7 +27,6 @@ export const SessionController = (
         <SessionStop
           stopSession={stopSession}
           name={runningSession.name}
-          id={runningSession.id}
           startDate={runningSession.startDate}
         />
       ) : (

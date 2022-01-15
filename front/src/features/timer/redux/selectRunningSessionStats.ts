@@ -4,7 +4,7 @@ import selectSessions from 'features/home/redux/selectSessions';
 import { createSelector } from 'reselect';
 import { getTodayIntervals } from 'dateUtils/getIntervals';
 import { calculateSessionDuration } from '@common/calculateSessionDuration';
-import { Session } from '@types';
+import { RunningSession, Session } from '@types';
 
 export type Stats = {
   today: number;
@@ -20,7 +20,7 @@ export const getSessionStatsReducer = (sessionName: string) => {
   const isToday = isWithinInterval(todayInterval);
   const isThisWeek = isWithinInterval(weekInterval);
   const isThisMonth = isWithinInterval(monthInterval);
-  return (acc: Stats, session: Session) => {
+  return (acc: Stats, session: Pick<Session, 'name' | 'startDate' | 'endDate'>) => {
     if (session.name !== sessionName) {
       return acc;
     }
@@ -57,7 +57,10 @@ export const getInitialValue = (): Stats => ({
  * this selector should not be used because it can experience caching issues.
  * For that it's better to use selectSessionStatsByName and sum the duration of the running session.
  */
-function selectRunningSessionStats(sessions: Session[], runningSession: Session | null): Stats {
+function selectRunningSessionStats(
+  sessions: Session[],
+  runningSession: RunningSession | null,
+): Stats {
   const initialStats = getInitialValue();
   if (!runningSession) return initialStats;
   return [...sessions, { ...runningSession, endDate: new Date().toISOString() }].reduce(
