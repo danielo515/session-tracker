@@ -14,15 +14,15 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';
 import { addHours, addMinutes, intervalToDuration } from 'date-fns/esm';
+import { Session } from '@types';
+import { Merge } from 'type-fest';
 
-/** @typedef {import('@types').Session} Session*/
-
-/** @typedef {Object} Props
- * @property {boolean} open
- * @property {(x:any) => void} cancel
- * @property {(id:string)=> void} onDelete
- * @property {(session: Session)=> void} onSubmit
- */
+type Props = {
+  open: boolean;
+  cancel: () => void;
+  onDelete: (id: string) => void;
+  onSubmit: (session: Session) => void;
+};
 
 const minuteMarks = [
   { value: 10, label: "10'" },
@@ -31,8 +31,7 @@ const minuteMarks = [
   { value: 40, label: "40'" },
 ];
 
-/** @param {import('type-fest').Merge<Session, Props>} props **/
-function EditSession(props: import('type-fest').Merge<Session, Props>) {
+function EditSession(props: Merge<Session, Props>) {
   const { open, cancel, name, startDate, endDate = new Date(), id, onSubmit, onDelete } = props;
   const [date, setDate] = useState(new Date(startDate));
   const [dateEnd, setEndDate] = useState(new Date(endDate));
@@ -46,7 +45,7 @@ function EditSession(props: import('type-fest').Merge<Session, Props>) {
    */
   const handleHourSlider = (_: any, newHours: number | number[]) => {
     if (Array.isArray(newHours)) return;
-    setEndDate(current => addHours(current, newHours - hours));
+    setEndDate((current) => addHours(current, newHours - hours));
   };
   /**
    * @param {*} _
@@ -54,7 +53,7 @@ function EditSession(props: import('type-fest').Merge<Session, Props>) {
    */
   const handleMinuteSlider = (_: any, value: number | number[]) => {
     if (Array.isArray(value)) return;
-    setEndDate(current => addMinutes(current, value - minutes));
+    setEndDate((current) => addMinutes(current, value - minutes));
   };
   return (
     <Dialog open={open} onClose={cancel} aria-labelledby="form-dialog-edit">
@@ -70,11 +69,21 @@ function EditSession(props: import('type-fest').Merge<Session, Props>) {
       </DialogTitle>
       <DialogContent>
         <Box pb={4} display="flex">
-          <DatePicker label="Started at date" value={date} onChange={setDate} variant="inline" />
+          <DatePicker
+            label="Started at date"
+            value={date}
+            onChange={(newDate) => setDate(newDate || new Date())}
+            variant="inline"
+          />
           <TimePicker id="time-picker-start" label="time" value={date} onChange={setDate} />
         </Box>
         <Box display="flex">
-          <DatePicker label="Finished at" value={dateEnd} onChange={setEndDate} variant="inline" />
+          <DatePicker
+            label="Finished at"
+            value={dateEnd}
+            onChange={(newDate) => setEndDate(newDate || new Date())}
+            variant="inline"
+          />
           <TimePicker id="time-picker-end" label="time" value={dateEnd} onChange={setEndDate} />
         </Box>
         <Box pt={2}>

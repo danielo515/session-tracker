@@ -1,4 +1,4 @@
-import { Session } from '@types';
+import { Session, SessionWithAllDates } from '@types';
 import selectAllSessions from 'features/home/redux/selectAllSessions';
 import { createSelector } from 'reselect';
 import subWeeks from 'date-fns/subWeeks';
@@ -13,7 +13,10 @@ import { RootState } from '@common/configStore';
 /**
  * Given a number of weeks ago selects the sessions of that day.
  */
-function selectRelativeWeeksSessions(sessions: Session[], weeksAgo = 0) {
+function selectRelativeWeeksSessions(
+  sessions: SessionWithAllDates[],
+  weeksAgo = 0,
+): SessionWithAllDates[] {
   const today = endOfDay(new Date());
   const weekRef = subWeeks(startOfWeek(today), weeksAgo);
   const interval = { start: weekRef, end: endOfWeek(weekRef) };
@@ -25,7 +28,7 @@ const formatDay = format('E do MMM');
 type DayData = { [name: string]: number };
 type SessionsByDay = { [date: string]: DayData };
 
-function groupSessionsByDay(sessions: Session[]) {
+function groupSessionsByDay(sessions: SessionWithAllDates[]) {
   const initial: { names: Set<string>; sessionsByDay: SessionsByDay } = {
     names: new Set(),
     sessionsByDay: {},

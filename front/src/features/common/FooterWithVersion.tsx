@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React from 'react';
 import { Copyright } from '../common/Copyright';
 import { Version } from '../common/Version';
 
-export default class FooterWithVersion extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-  };
-
-  render() {
-    const classNames = ["common-footer-with-version", this.props.className].join(' ')
-    return (
-      <div className={classNames}>
-        <Copyright />
-        <Version />
-      </div>
-    );
-  }
-}
-
-FooterWithVersion.defaultProps = {
-  className: ''
+type Props = {
+  className?: string;
 };
+
+const FooterWithVersion = (props: Props) => {
+  const classNames = ['common-footer-with-version', props.className].join(' ');
+  return (
+    <div className={classNames}>
+      <Copyright />
+      <Version />
+    </div>
+  );
+};
+
+export default FooterWithVersion;

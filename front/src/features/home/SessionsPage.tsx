@@ -9,9 +9,6 @@ import { FooterWithVersion } from '../common/index';
 import selectGroupedSessions from './redux/selectGroupedSessions';
 import { RootState } from '@common/configStore';
 
-/**
- * @param {import('react-redux').ConnectedProps<typeof connector>} props
- */
 const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connector>) => {
   useEffect(() => {
     const { fetchSessions } = props;
