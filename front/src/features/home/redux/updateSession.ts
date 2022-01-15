@@ -6,18 +6,15 @@ import {
 } from './constants';
 
 import * as api from '../../../common/api';
+import { Session } from '@types';
 
-export function updateSession(session = {}) {
-  return async (dispatch, getState) => {
+export function updateSession(session: Session) {
+  return async dispatch => {
     dispatch({
       type: HOME_UPDATE_SESSION_BEGIN,
     });
 
-    const {
-      login: { token },
-    } = getState();
-
-    const { error, response } = await api.updateSession({ token, ...session });
+    const { error, response } = await api.updateSession(session);
 
     if (error) {
       dispatch({

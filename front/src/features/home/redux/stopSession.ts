@@ -3,7 +3,6 @@ import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import initialState from './initialState';
 
 export const stopSession = createAsyncThunk('HOME_STOP_SESSION', async (_, { rejectWithValue }) => {
-  //@ts-expect-error it does not need any argument
   const { error, response } = await api.stopSession();
   if (error) {
     return rejectWithValue(error);

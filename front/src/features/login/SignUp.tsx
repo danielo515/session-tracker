@@ -10,10 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
-import isValidEmail from '../../common/isValidEmail'
-import isValidPassword from '../../common/isValidPassword'
+import isValidEmail from '../../common/isValidEmail';
+import isValidPassword from '../../common/isValidPassword';
 import { Copyright } from '../common/Copyright';
 import { useLoginForm } from './useLoginForm';
+import { Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,19 +37,37 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const isValidName = (name) => typeof name === 'string' && name.length > 3
+const isValidName = (name): name is string => typeof name === 'string' && name.length > 3;
 
-export default function SignUp({ signUp }) {
+type Props = {
+  error: string | null;
+  signUp: ({ email, password, name }: { email: string; password: string; name: string }) => void;
+};
+
+export default function SignUp({ signUp, error }: Props) {
   const classes = useStyles();
-  const { email, setEmail, password, setPassword, verificationPassword, setVerificationPassword, name, setName } = useLoginForm({ isSignUp: true });
-  const handleSubmit = () => signUp({ email, password, name })
-  const canSubmit = isValidEmail(email)
-    && isValidPassword(password)
-    && password === verificationPassword
-    && isValidName(name)
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    verificationPassword,
+    setVerificationPassword,
+    name,
+    setName,
+  } = useLoginForm({ isSignUp: true });
+  const canSubmit =
+    isValidEmail(email) &&
+    isValidPassword(password) &&
+    password === verificationPassword &&
+    isValidName(name);
+  const handleSubmit = () => canSubmit && signUp({ email, password, name });
 
   return (
     <Container component="main" maxWidth="xs">
+      <Snackbar open={!!error} autoHideDuration={6000}>
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -68,7 +88,7 @@ export default function SignUp({ signUp }) {
             value={name}
             onChange={setName}
             autoFocus
-            helperText='Min length 3 characters'
+            helperText="Min length 3 characters"
           />
           <TextField
             variant="outlined"
@@ -122,13 +142,13 @@ export default function SignUp({ signUp }) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to='/not-implemented' variant="body2" component={RouterLink}>
+              <Link to="/not-implemented" variant="body2" component={RouterLink}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to='/login' variant="body2" component={RouterLink}>
-                {"Already have an account? Sign in"}
+              <Link to="/login" variant="body2" component={RouterLink}>
+                {'Already have an account? Sign in'}
               </Link>
             </Grid>
           </Grid>
