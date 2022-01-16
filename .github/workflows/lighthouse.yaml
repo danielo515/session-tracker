@@ -1,5 +1,5 @@
 name: Lighthouse CI for Netlify sites
-on: 
+on:
   push:
     branches:
       - master
@@ -33,3 +33,4 @@ jobs:
             ${{ steps.netlify.outputs.url }}/products/
           # budgetPath: ./budget.json
           uploadArtifacts: true
+          temporaryPublicStorage: true
