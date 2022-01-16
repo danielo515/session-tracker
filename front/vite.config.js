@@ -1,7 +1,5 @@
 /* eslint-disable */
 import legacyPlugin from '@vitejs/plugin-legacy';
-import * as path from 'path';
-import vitePluginReactJsSupport from 'vite-plugin-react-js-support';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
@@ -37,15 +35,14 @@ export default ({ command, mode }) => {
     root: './',
     define: define,
     server: {
-      // 代理
       proxy,
     },
     build: {
       target: 'es2015',
-      minify: 'terser', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
-      manifest: false, // 是否产出maifest.json
-      sourcemap: false, // 是否产出soucemap.json
-      outDir: 'build', // 产出目录
+      minify: 'terser',
+      manifest: false,
+      sourcemap: false,
+      outDir: 'build',
       rollupOptions,
     },
     esbuild,
@@ -65,15 +62,11 @@ export default ({ command, mode }) => {
           'Edge >= 15',
         ],
       }),
-      vitePluginReactJsSupport([], {
-        jsxInject: false,
-      }),
       react(),
     ],
     css: {
       preprocessorOptions: {
         less: {
-          // 支持内联 JavaScript
           javascriptEnabled: true,
         },
       },
