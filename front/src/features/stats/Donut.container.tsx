@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Donut from './Donut';
 import selectDonutSessions from './redux/selectDonutSessions';
-import selectWeekChartData from './redux/selectWeekChartData';
 import { RootState } from '@common/configStore';
 
 type Props = {
