@@ -1,5 +1,5 @@
 import { createSessionDefinition } from '@common/api';
-import { useAppDispatch } from '@common/configStore';
+import { useAppThunkDispatch } from '@common/configStore';
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import { SessionDefinition } from '@types';
 import useAppSelector from 'hooks/useSelector';
@@ -17,10 +17,10 @@ const create = createAsyncThunk(
 );
 
 export function useCreate() {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppThunkDispatch();
 
   const { sessionDefinitions, createPending, createError } = useAppSelector(
-    state => ({
+    (state) => ({
       sessionDefinitions: state.sessionDefinition.byName,
       createPending: state.sessionDefinition.createPending,
       createError: state.sessionDefinition.createError,
@@ -43,8 +43,8 @@ export function useCreate() {
   };
 }
 
-export const reducer = createReducer(initialState, builder => {
-  builder.addCase(create.pending, state => {
+export const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(create.pending, (state) => {
     return {
       ...state,
       createPending: true,

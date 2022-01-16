@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, ThunkDispatch, Action } from '@reduxjs/toolkit';
 import { createRouterReducer, createRouterMiddleware } from '@lagunovsky/redux-react-router';
 import { useDispatch } from 'react-redux';
 import history from './history';
@@ -24,5 +24,8 @@ const store = configureStore({
 export type RootState = Simplify<ReturnType<typeof store.getState>>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export type ThunkAppDispatch = ThunkDispatch<RootState, void, Action>;
+export const useAppThunkDispatch = () => useDispatch<ThunkAppDispatch>();
 
 export default store;

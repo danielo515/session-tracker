@@ -1,4 +1,5 @@
-import React from 'react';
+import { LoadingComponent } from '@common/makeAsyncPage';
+import React, { Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navigation from '../common/Navigation';
 
@@ -8,7 +9,10 @@ export const DefaultPage = () => {
   return (
     <React.Fragment>
       <Navigation page={pathname} />
-      <Outlet />
+
+      <Suspense fallback={<LoadingComponent />}>
+        <Outlet />
+      </Suspense>
     </React.Fragment>
   );
 };
