@@ -1,20 +1,14 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navigation from '../common/Navigation';
 
-type Props = {
-  location: {
-    pathname: string;
-  };
-  children: ReactNode;
-};
-
-export const DefaultPage = (props: Props) => {
-  const { pathname } = props.location; // default to root page name
+export const DefaultPage = () => {
+  const { pathname } = useLocation();
 
   return (
     <React.Fragment>
       <Navigation page={pathname} />
-      {props.children}
+      <Outlet />
     </React.Fragment>
   );
 };

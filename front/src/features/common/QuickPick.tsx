@@ -14,10 +14,10 @@ import {
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 import * as Icons from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';
-import { RouteComponentProps, withRouter } from 'react-router';
 import useAppSelector from 'hooks/useSelector';
+import { push } from '@lagunovsky/redux-react-router';
 
-const useStyle = makeStyles(theme => ({
+const useStyle = makeStyles((theme) => ({
   Button: {
     width: '100%',
   },
@@ -58,7 +58,7 @@ function ButtonCard({
   id: string;
   children: import('react').ReactNode;
   onClick: MouseEventHandler<any>;
-  onLongPress: () => any;
+  onLongPress: () => unknown;
 }) {
   const style = useStyle({ color });
   const Icon = Icons[iconName] || Icons.Default;
@@ -77,22 +77,17 @@ function ButtonCard({
   );
 }
 
-interface QuickPickProps {
-  history: RouteComponentProps['history'];
-}
-
-export const QuickPick = (props: QuickPickProps) => {
+export const QuickPick = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllDefinitions());
   }, []);
-  const { history } = props;
-  const { sessionNames: sessions, definitions } = useAppSelector(state => ({
+  const { sessionNames: sessions, definitions } = useAppSelector((state) => ({
     sessionNames: selectSessionNames(state),
     definitions: state.sessionDefinition.byName,
   }));
 
-  const startSessionOnClick = e => {
+  const startSessionOnClick = (e) => {
     const name = e.currentTarget.dataset.session;
     dispatch(
       startSession({
@@ -104,7 +99,7 @@ export const QuickPick = (props: QuickPickProps) => {
   return (
     <Container maxWidth="sm">
       <Grid container spacing={2}>
-        {sessions.map(session => {
+        {sessions.map((session) => {
           const definition = definitions[session] || {};
           return (
             <Grid item xs={4} sm={3} key={session}>
@@ -113,7 +108,7 @@ export const QuickPick = (props: QuickPickProps) => {
                 onClick={startSessionOnClick}
                 color={definition.color}
                 iconName={definition.icon}
-                onLongPress={() => history.push(`/session-definitions/update/${session}`)}
+                onLongPress={() => dispatch(push(`/session-definitions/update/${session}`))}
               >
                 {session}
               </ButtonCard>
@@ -125,4 +120,4 @@ export const QuickPick = (props: QuickPickProps) => {
   );
 };
 
-export default withRouter(QuickPick);
+export default QuickPick;

@@ -4,25 +4,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { setupApp } from '../common/redux/actions';
-import { Redirect } from 'react-router-dom';
+import { Navigate, Outlet, Route, useMatch } from 'react-router-dom';
 import useAppSelector from 'hooks/useSelector';
 
-type Props = {
-  isSetupPending: boolean;
-  isLoggedIn: boolean;
-  setupApp: () => void;
-  children: React.ReactNode;
-  location: {
-    pathname: string;
-  };
-};
 /*
   This is the root component of your app. Here you define the overall layout
   and the container of the react router.
-  You should adjust it according to the requirement of your app.
 */
-const App = (props: Props) => {
-  const { isSetupPending, isLoggedIn } = useAppSelector(state => ({
+const App = () => {
+  const { isSetupPending, isLoggedIn } = useAppSelector((state) => ({
     isSetupPending: state.common.setupAppPending,
     isLoggedIn: state.common.loggedIn,
   }));
@@ -30,17 +20,16 @@ const App = (props: Props) => {
   useEffect(() => {
     dispatch(setupApp());
   }, []);
-  const { children, location } = props;
-  const alreadyAtLoginPage = location.pathname === '/login';
+  const alreadyAtLoginPage = useMatch('/login');
   return (
     <React.Fragment>
       <CssBaseline />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div className="page-container">
           {isSetupPending ? null : !isLoggedIn && !alreadyAtLoginPage ? (
-            <Redirect to="login" />
+            <Route element={<Navigate to="/login" />} />
           ) : (
-            children
+            <Outlet />
           )}
         </div>
       </MuiPickersUtilsProvider>
