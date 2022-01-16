@@ -14,7 +14,6 @@ import routes, { renderRoutes } from '@common/routeConfig';
 function RenderRouteConfig() {
   const memoizedRoutes = useMemo(() => renderRoutes(routes), []);
   const children = useRoutes(memoizedRoutes);
-  console.log({ routes: memoizedRoutes, children });
   return <Suspense fallback={<LoadingComponent />}>{children}</Suspense>;
 }
 

@@ -10,7 +10,6 @@ type Props = {
 };
 export default function DonutContainer({ title }: Props) {
   const sessions = useSelector((state: RootState) => {
-    console.log(selectWeekChartData(state));
     return selectDonutSessions(state, state.stats.daysAgo);
   });
   return <Donut sessions={sessions} title={title} />;

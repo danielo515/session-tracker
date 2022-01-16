@@ -13,7 +13,7 @@ export function useLongPress(callback: CB, duration = 500) {
   // dependencies so it only creates a new callback if either of these changes.
   /** @type { CB } */
   const onPressStart = useCallback(
-    event => {
+    (event) => {
       // Prevent the browser's default response to this event. On mobile browsers
       // long presses are used . This will also block touch scrolling - a more
       // robust implementation will take this into account, but this is fine
@@ -32,7 +32,7 @@ export function useLongPress(callback: CB, duration = 500) {
   // function to change for the lifecycle of the component.
   const cancelTimeout = useCallback(() => {
     if (!timeout.current) {
-      return console.error('Can not cancel timeout, timeout.current is null');
+      return;
     }
     return clearTimeout(timeout.current);
   }, []);
