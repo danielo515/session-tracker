@@ -20,6 +20,8 @@ import {
   set,
   startAfter,
   update,
+  Query,
+  DataSnapshot,
 } from 'firebase/database';
 import { withDb } from './api-types';
 
@@ -105,12 +107,26 @@ type SyncArgs = {
   onRunningUpdate: sessionCbNull;
   onSessionUpdate: sessionCb;
 };
+
+const childOnce = (query: Query) => {
+  return new Promise<DataSnapshot>((resolve) => {
+    onChildAdded(
+      query,
+      (snapshot) => {
+        resolve(snapshot);
+      },
+      { onlyOnce: true },
+    );
+  });
+};
+
 export const syncData = withDb<SyncArgs, never>(
   async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
     const all = child(db, 'all');
-    const last = await get(query(all, orderByKey(), limitToLast(1)));
-    const addedQuery = query(all, startAfter(last.key));
+    const last = await childOnce(query(all, orderByKey(), limitToLast(1)));
+    const addedQuery = query(all, orderByKey(), startAfter(last.key));
     onChildAdded(addedQuery, (snapshot) => {
+      console.log('Child added', snapshot.key);
       if (snapshot.exists()) return onSessionAdded(snapshot.val());
     });
     onChildChanged(all, (snap) => {
