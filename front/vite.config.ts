@@ -1,22 +1,16 @@
 /* eslint-disable */
 import legacyPlugin from '@vitejs/plugin-legacy';
-import * as path from 'path';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vite';
 
 // @see https://cn.vitejs.dev/config/
-export default ({ command, mode }) => {
-  let rollupOptions = {};
-  if (command === 'serve') {
-    rollupOptions.input = [];
-  }
-
-  let optimizeDeps = {};
-  if (command === 'serve') {
-    optimizeDeps.entries = false;
-  }
+export default defineConfig(({ command, mode }) => {
+  const rollupOptions = {
+    input: command === 'serve' ? [] : undefined,
+  };
 
   let proxy = {};
 
@@ -48,9 +42,11 @@ export default ({ command, mode }) => {
       rollupOptions,
     },
     esbuild,
-    optimizeDeps,
+    optimizeDeps: {
+      include: ['@material-ui/core/*', '@material-ui/icons/*'],
+    },
     preview: {
-      browser: true,
+      open: true,
     },
     plugins: [
       tsconfigPaths(),
@@ -71,4 +67,4 @@ export default ({ command, mode }) => {
       },
     },
   };
-};
+});
