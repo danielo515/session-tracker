@@ -1,7 +1,6 @@
 /* eslint-disable */
 import legacyPlugin from '@vitejs/plugin-legacy';
 import * as path from 'path';
-import vitePluginReactJsSupport from 'vite-plugin-react-js-support';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
@@ -60,9 +59,6 @@ export default ({ command, mode }) => {
       }),
       legacyPlugin({
         targets: ['Android > 39', 'Chrome >= 60', 'iOS >= 10.3', 'Firefox >= 54', 'Edge >= 15'],
-      }),
-      vitePluginReactJsSupport([], {
-        jsxInject: false,
       }),
       react(),
     ],
