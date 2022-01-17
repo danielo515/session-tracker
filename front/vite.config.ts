@@ -43,7 +43,13 @@ export default defineConfig(({ command, mode }) => {
     },
     esbuild,
     optimizeDeps: {
-      include: ['@material-ui/core/*', '@material-ui/icons/*'],
+      include: [
+        '@material-ui/core',
+        '@material-ui/icons',
+        '@material-ui/styles',
+        'react-dom',
+        'react',
+      ],
     },
     preview: {
       open: true,
