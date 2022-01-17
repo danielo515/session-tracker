@@ -4,6 +4,5 @@ import makeAsyncPage from '@common/makeAsyncPage';
 
 export default {
   path: 'timer',
-  name: 'timer',
-  component: makeAsyncPage(() => import('./TimerTab')),
+  element: makeAsyncPage(() => import('./TimerTab')),
 };

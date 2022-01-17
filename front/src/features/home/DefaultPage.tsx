@@ -1,20 +1,18 @@
-import React, { ReactNode } from 'react';
+import { LoadingComponent } from '@common/makeAsyncPage';
+import React, { Suspense } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navigation from '../common/Navigation';
 
-type Props = {
-  location: {
-    pathname: string;
-  };
-  children: ReactNode;
-};
-
-export const DefaultPage = (props: Props) => {
-  const { pathname } = props.location; // default to root page name
+export const DefaultPage = () => {
+  const { pathname } = useLocation();
 
   return (
     <React.Fragment>
       <Navigation page={pathname} />
-      {props.children}
+
+      <Suspense fallback={<LoadingComponent />}>
+        <Outlet />
+      </Suspense>
     </React.Fragment>
   );
 };

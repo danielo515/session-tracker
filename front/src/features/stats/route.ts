@@ -4,6 +4,5 @@ import makeAsyncPage from '@common/makeAsyncPage';
 
 export default {
   path: 'stats',
-  name: 'Stats',
-  component: makeAsyncPage(() => import('./DefaultPage')),
+  element: makeAsyncPage(() => import('./DefaultPage')),
 };

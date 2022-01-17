@@ -5,7 +5,7 @@ import {
   LOGIN_LOGIN_ACTION_DISMISS_ERROR,
 } from './constants';
 
-import { push } from 'connected-react-router';
+import { push } from '@lagunovsky/redux-react-router';
 import * as api from '../../../common/api';
 import { getErrorData } from '../../../common/getErrorData';
 
@@ -20,7 +20,7 @@ export function loginAction({
   password,
   isGoogleLogin = false,
 }: Props & { isGoogleLogin: boolean }) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: LOGIN_LOGIN_ACTION_BEGIN,
     });

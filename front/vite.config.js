@@ -1,7 +1,6 @@
 /* eslint-disable */
 import legacyPlugin from '@vitejs/plugin-legacy';
 import * as path from 'path';
-import vitePluginReactJsSupport from 'vite-plugin-react-js-support';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
@@ -42,31 +41,24 @@ export default ({ command, mode }) => {
     },
     build: {
       target: 'es2015',
-      minify: 'terser', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
+      minify: 'esbuild', // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
       manifest: false, // 是否产出maifest.json
-      sourcemap: false, // 是否产出soucemap.json
+      sourcemap: 'inline', // 是否产出soucemap.json
       outDir: 'build', // 产出目录
       rollupOptions,
     },
     esbuild,
     optimizeDeps,
+    preview: {
+      browser: true,
+    },
     plugins: [
       tsconfigPaths(),
       envCompatible({
         prefix: 'REACT_APP_',
       }),
       legacyPlugin({
-        targets: [
-          'Android > 39',
-          'Chrome >= 60',
-          'Safari >= 10.1',
-          'iOS >= 10.3',
-          'Firefox >= 54',
-          'Edge >= 15',
-        ],
-      }),
-      vitePluginReactJsSupport([], {
-        jsxInject: false,
+        targets: ['Android > 39', 'Chrome >= 60', 'iOS >= 10.3', 'Firefox >= 54', 'Edge >= 15'],
       }),
       react(),
     ],

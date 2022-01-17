@@ -4,11 +4,7 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 import { LoginDefaultPage } from './';
 
-export default {
-  path: 'login',
-  name: 'Login',
-  childRoutes: [
-    { path: '/login', name: 'Login', component: LoginDefaultPage },
-    { path: '/signup', name: 'Sign up', component: LoginDefaultPage },
-  ],
-};
+export default [
+  { path: 'login', element: LoginDefaultPage },
+  { path: 'signup', element: LoginDefaultPage },
+];

@@ -1,63 +1,28 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
-import React, { Suspense, ReactNode } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Provider } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
+import { useRoutes } from 'react-router-dom';
+import { ReduxRouter } from '@lagunovsky/redux-react-router';
 import history from './common/history';
 import { LoadingComponent } from '@common/makeAsyncPage';
-import { Route as route } from './types';
+import { Store } from '@reduxjs/toolkit';
+import routes, { renderRoutes } from '@common/routeConfig';
 
-/**
- *
- *
- * @param {route[]} routes
- * @param {string} contextPath
- */
-function renderRouteConfigV3(routes: route[], contextPath: string) {
-  const children: ReactNode[] = []; // children component list
-  const renderRoute = (item: route, routeContextPath: string) => {
-    let newContextPath = /^\//.test(item.path) ? item.path : `${routeContextPath}/${item.path}`;
-    newContextPath = newContextPath.replace(/\/+/g, '/');
-    if (item.component && item.childRoutes) {
-      const childRoutes = renderRouteConfigV3(item.childRoutes, newContextPath);
-      const Component = item.component;
-      children.push(
-        <Route
-          key={newContextPath}
-          render={(props) => <Component {...props}>{childRoutes}</Component>}
-          path={newContextPath}
-          exact={item.exact}
-        />,
-      );
-    } else if (item.component) {
-      children.push(
-        <Route key={newContextPath} component={item.component} path={newContextPath} exact />,
-      );
-    } else if (item.childRoutes) {
-      item.childRoutes.forEach((r) => renderRoute(r, newContextPath));
-    }
-  };
-
-  routes.forEach((item) => renderRoute(item, contextPath));
-
-  // Use Switch so that only the first matched route is rendered.
-  return (
-    <Suspense fallback={<LoadingComponent />}>
-      <Switch>
-        {children}
-        <Redirect to="/not-found" />
-      </Switch>
-    </Suspense>
-  );
+// This ridiculous separation is needed because useRoutes can only be used inside
+// the scope of a Router provider
+function RenderRouteConfig() {
+  const memoizedRoutes = useMemo(() => renderRoutes(routes), []);
+  const children = useRoutes(memoizedRoutes);
+  return <Suspense fallback={<LoadingComponent />}>{children}</Suspense>;
 }
 
-export default function Root({ routeConfig, store }: { routeConfig: route[]; store: any }) {
-  const children = renderRouteConfigV3(routeConfig, '/');
-
+export default function Root({ store }: { store: Store }) {
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+      <ReduxRouter history={history} store={store}>
+        <RenderRouteConfig />
+      </ReduxRouter>
     </Provider>
   );
 }

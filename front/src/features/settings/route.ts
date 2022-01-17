@@ -5,6 +5,5 @@ import { SettingsPage } from './';
 
 export default {
   path: 'settings',
-  name: 'Settings page',
-  component: SettingsPage,
+  element: SettingsPage,
 };

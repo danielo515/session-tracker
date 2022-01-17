@@ -6,12 +6,13 @@ import { loginAction } from './redux/loginAction';
 import { signUp } from './redux/actions';
 import useAppSelector from 'hooks/useSelector';
 import { useAppDispatch } from '@common/configStore';
+import { useMatch } from 'react-router-dom';
 
 const useLogin = () => {
   const dispatch = useAppDispatch();
 
   return {
-    ...useAppSelector(state => ({ login: state.login })),
+    ...useAppSelector((state) => ({ login: state.login })),
     ...bindActionCreators(
       {
         loginAction: loginAction,
@@ -22,9 +23,9 @@ const useLogin = () => {
   };
 };
 
-export const LoginDefaultPage = ({ location }: { location: { pathname: string } }) => {
+export const LoginDefaultPage = () => {
   const { loginAction, signUp, login } = useLogin();
-  const isLoginPage = location.pathname === '/login';
+  const isLoginPage = useMatch('/login');
   return isLoginPage ? (
     <Login login={loginAction} error={login.loginActionError} />
   ) : (

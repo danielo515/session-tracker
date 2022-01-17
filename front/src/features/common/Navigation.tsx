@@ -29,12 +29,7 @@ function a11yProps(index: string) {
  * @param {any} props.icon
  * @param {String} props.value
  */
-function LinkTab({ label, ...props }: {
-    label: string;
-    to: string;
-    icon: any;
-    value: string;
-}) {
+function LinkTab({ label, ...props }: { label: string; to: string; icon: any; value: string }) {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('xs'));
   const Label = smallScreen ? null : <Box display={{ xs: 'none', sm: 'block' }}>{label}</Box>;
@@ -45,9 +40,7 @@ function LinkTab({ label, ...props }: {
  * @param {Object} props
  * @param {string} props.page
  * */
-export default function Navigation({ page }: {
-    page: string;
-}) {
+export default function Navigation({ page }: { page: string }) {
   const knownRoute = ['/stats', '/timer', '/'].includes(page);
   if (!knownRoute) {
     return null;
@@ -55,7 +48,7 @@ export default function Navigation({ page }: {
   return (
     <AppBar position="static">
       <Tabs variant="fullWidth" value={page} aria-label="navigation" centered>
-        <LinkTab label="Timer" icon={<List />} to="/" value="/" {...a11yProps('timer')} />
+        <LinkTab label="List" icon={<List />} to="/" value="/" {...a11yProps('timer')} />
         <LinkTab
           label="Stats"
           icon={<BarChart />}
