@@ -27,7 +27,7 @@ export function withDb(handler) {
   return async (args) => {
     const userId = auth.currentUser?.uid;
     if (!userId) return { error: { status: 401 }, response: null };
-    const db = ref(database, '/tasks' + userId);
+    const db = ref(database, '/tasks/' + userId);
     return handler(db, args);
   };
 }
