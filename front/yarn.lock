@@ -62,7 +62,7 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
-"@babel/core@^7.13.10", "@babel/core@^7.14.8", "@babel/core@^7.16.0":
+"@babel/core@^7.14.8", "@babel/core@^7.16.0":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.16.7.tgz#db990f931f6d40cb9b87a0dc7d2adc749f1dcbcf"
   integrity sha512-aeLaqcqThRNZYmbMqtulsetOQZ/5gbR/dWruUCJcpas4Qoyy+QeagfDsPdMrqwsPRDNxJvBlRiZxxX7THO7qtA==
@@ -929,7 +929,7 @@
     "@babel/plugin-syntax-jsx" "^7.12.13"
     "@babel/types" "^7.12.17"
 
-"@babel/plugin-transform-react-jsx@^7.13.12", "@babel/plugin-transform-react-jsx@^7.16.0", "@babel/plugin-transform-react-jsx@^7.16.7":
+"@babel/plugin-transform-react-jsx@^7.16.0", "@babel/plugin-transform-react-jsx@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-jsx/-/plugin-transform-react-jsx-7.16.7.tgz#86a6a220552afd0e4e1f0388a68a372be7add0d4"
   integrity sha512-8D16ye66fxiE8m890w0BpPpngG9o9OVBBy0gH2E+2AR7qMR2ZpTYJEqLxAsoroenMId0p/wMW+Blc0meDgu0Ag==
@@ -14860,14 +14860,6 @@ vite-plugin-env-compatible@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-env-compatible/-/vite-plugin-env-compatible-1.1.1.tgz#2e11b059a5f3e8fc609d6a4bba84ca497081ee20"
   integrity sha512-4lqhBWhOzP+SaCPoCVdmpM5cXzjKQV5jgFauxea488oOeElXo/kw6bXkMIooZhrh9q7gclTl8en6N9NmnqUwRQ==
-
-vite-plugin-react-js-support@latest:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/vite-plugin-react-js-support/-/vite-plugin-react-js-support-1.0.7.tgz#4d94cd4c5276e57b09ba06edf01d31109816c134"
-  integrity sha512-yo9513wqA1Ba9MbgqdBXJr4RB3A4mFAhUe867A2te2TEcN30nb0iDpmQvFH+NiiMZFp85fJGD6+ZOKZbOLZD4A==
-  dependencies:
-    "@babel/core" "^7.13.10"
-    "@babel/plugin-transform-react-jsx" "^7.13.12"
 
 vite-tsconfig-paths@^3.3.17:
   version "3.3.17"

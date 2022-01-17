@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { setupApp } from '../common/redux/actions';
 import { Navigate, Outlet, Route, useMatch } from 'react-router-dom';
 import useAppSelector from 'hooks/useSelector';
+import { push } from '@lagunovsky/redux-react-router';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -21,17 +22,18 @@ const App = () => {
     dispatch(setupApp());
   }, []);
   const alreadyAtLoginPage = useMatch('/login');
+
+  useEffect(() => {
+    if (!isSetupPending && !alreadyAtLoginPage && !isLoggedIn) {
+      dispatch(push('/login'));
+    }
+  }, [isSetupPending, alreadyAtLoginPage, isLoggedIn]);
+
   return (
     <React.Fragment>
       <CssBaseline />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <div className="page-container">
-          {isSetupPending ? null : !isLoggedIn && !alreadyAtLoginPage ? (
-            <Route element={<Navigate to="/login" />} />
-          ) : (
-            <Outlet />
-          )}
-        </div>
+        <div className="page-container">{isSetupPending ? null : <Outlet />}</div>
       </MuiPickersUtilsProvider>
     </React.Fragment>
   );
