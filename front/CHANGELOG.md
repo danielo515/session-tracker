@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.23.0...v1.24.0) (2022-01-18)
+
+
+### Features
+
+* upgraded to firebase 9 ([883a7bc](https://github.com/danielo515/pento-tech-challenge/commit/883a7bcd1e5bebaf06af5155c5a77d879864c42b))
+
 # [1.23.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.22.2...v1.23.0) (2022-01-15)
 
 
