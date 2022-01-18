@@ -5,7 +5,6 @@ import { HexColorPicker } from 'react-colorful';
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
 import React, { SyntheticEvent, useState } from 'react';
-import useHandleChange from 'features/home/hooks/useHandleChange';
 import { Link } from 'react-router-dom';
 import { SessionDefinition } from '@types';
 
@@ -52,7 +51,7 @@ export default function DefinitionForm({
               autoComplete="session"
               fullWidth
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </FormRow>
