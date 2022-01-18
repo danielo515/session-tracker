@@ -1,4 +1,5 @@
 import { RunningSession, Session, SessionDefinition } from '@types';
+import firebase from 'fb';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -23,11 +24,11 @@ import {
   Query,
   DataSnapshot,
 } from 'firebase/database';
-import { withDb } from './api-types';
+import { withDb } from './withDb';
 
 const provider = new GoogleAuthProvider();
 
-const auth = getAuth();
+const auth = getAuth(firebase);
 
 export function isUserLoggedIn() {
   return new Promise<User | null>((resolve) => {
@@ -199,7 +200,7 @@ export const createSessionDefinition = withDb<SessionDefinition, SessionDefiniti
 );
 
 export const listDefinitions = withDb<undefined, SessionDefinition[]>((db) => {
-  const definitionsQuery = query(child(db, 'sessionDefinitions'), orderByKey());
+  const definitionsQuery = query(child(db, 'definitions'), orderByKey());
   const result = get(definitionsQuery).then((snapshot) => {
     if (snapshot.exists())
       return {
