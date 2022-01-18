@@ -2778,7 +2778,7 @@
     "@typescript-eslint/types" "5.9.0"
     eslint-visitor-keys "^3.0.0"
 
-"@vitejs/plugin-legacy@^1.4.4":
+"@vitejs/plugin-legacy@^1.6.4":
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-legacy/-/plugin-legacy-1.6.4.tgz#36cf0cc10bd1f32902719d62c8f23c9d433eb3a8"
   integrity sha512-geH2F3hTRN++E4n9NZ0JFumxIWUKqW4FA9PAgM7Q6RvUOUUYW4tlURhEmCBYfZSN24H/yX3mEolX+wFVErsAYQ==
