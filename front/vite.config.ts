@@ -18,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
    *  * @type {import('vite').UserConfig}
    */
   return {
-    base: './',
+    base: '/',
     root: './',
     define,
     logLevel: 'info',
