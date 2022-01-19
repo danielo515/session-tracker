@@ -4,9 +4,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { setupApp } from '../common/redux/actions';
-import { Navigate, Outlet, Route, useMatch } from 'react-router-dom';
+import { Outlet, useMatch } from 'react-router-dom';
 import useAppSelector from 'hooks/useSelector';
 import { push } from '@lagunovsky/redux-react-router';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -30,12 +33,12 @@ const App = () => {
   }, [isSetupPending, alreadyAtLoginPage, isLoggedIn]);
 
   return (
-    <React.Fragment>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div className="page-container">{isSetupPending ? null : <Outlet />}</div>
       </MuiPickersUtilsProvider>
-    </React.Fragment>
+    </ThemeProvider>
   );
 };
 
