@@ -1,3 +1,11 @@
+# [1.25.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.24.0...v1.25.0) (2022-01-19)
+
+
+### Features
+
+* internal icons tool ([12a1d28](https://github.com/danielo515/pento-tech-challenge/commit/12a1d28fa9c33dc655437a31cdf1fd9af32654a9))
+* remove lots of useless icons ([b8cf342](https://github.com/danielo515/pento-tech-challenge/commit/b8cf3426bb3f887707de416121fdb68af70c4782))
+
 # [1.24.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.23.0...v1.24.0) (2022-01-18)
 
 
