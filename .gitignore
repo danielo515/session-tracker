@@ -23,3 +23,6 @@ yarn-error.log*
 # types are just a test
 types
 stats.html
+# Firebase Hosting
+.firebase
+firebase-debug.log
