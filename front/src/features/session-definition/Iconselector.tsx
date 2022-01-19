@@ -1,25 +1,34 @@
 import { FixedSizeList as List } from 'react-window';
 import * as Icons from '@common/Icon/Icon';
 import Autosizer from 'react-virtualized-auto-sizer';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, useTheme } from '@material-ui/core';
 
 type Props = {
   icon: string;
   onChange: (icon: string) => void;
+  fixedHeight?: boolean;
 };
 
-export function IconSelector({ icon, onChange }: Props) {
-  const data = Object.entries(Icons);
+const data = Object.entries(Icons);
+
+export function IconSelector({ icon, onChange, fixedHeight = true }: Props) {
+  const [toDelete, setDelete] = useState<string[]>([]);
+  useEffect(() => {
+    if (toDelete.length > 15) {
+      console.log(`.*(${toDelete.join(' |')}).*\\n`);
+      setDelete([]);
+    }
+  }, [toDelete]);
   const theme = useTheme();
   const itemWidth = 64;
   return (
-    <Autosizer defaultHeight={300} disableHeight>
+    <Autosizer defaultHeight={300} disableHeight={fixedHeight}>
       {({ height, width }) => {
         const rowSize = Math.floor(width / itemWidth);
         return (
           <List
-            height={300}
+            height={fixedHeight ? 300 : height}
             itemCount={Math.round(data.length / rowSize)}
             itemSize={itemWidth}
             width={width}
@@ -35,7 +44,10 @@ export function IconSelector({ icon, onChange }: Props) {
                     return (
                       <Button
                         key={name}
-                        onClick={() => onChange(name)}
+                        onClick={() => {
+                          setDelete(toDelete.concat(name));
+                          return onChange(name);
+                        }}
                         color={selected ? 'primary' : 'secondary'}
                         variant={selected ? 'outlined' : undefined}
                       >
