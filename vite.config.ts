@@ -40,15 +40,6 @@ export default defineConfig(({ command, mode }) => {
         ],
       },
     },
-    optimizeDeps: {
-      include: [
-        '@material-ui/core',
-        '@material-ui/icons',
-        '@material-ui/styles',
-        'react-dom',
-        'react',
-      ],
-    },
     preview: {
       open: true,
     },

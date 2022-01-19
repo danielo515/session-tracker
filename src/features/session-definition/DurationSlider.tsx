@@ -28,7 +28,7 @@ const DurationSlider_ = ({
     <div className={wrapper}>
       <Slider
         marks={sliderMarks}
-        onChange={(e, value: number) => onChange(value)}
+        onChange={(e, value) => onChange(value as number)}
         valueLabelDisplay={valueLabelDisplay}
         value={value}
         classes={classes}
