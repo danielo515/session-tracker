@@ -98,6 +98,7 @@ function EditSession(props: Merge<Session, Props>) {
             onChange={handleHourSlider}
             valueLabelDisplay="auto"
             marks
+            size="small"
           />
           <Typography id="discrete-slider" gutterBottom>
             Minutes: {minutes}
@@ -110,6 +111,7 @@ function EditSession(props: Merge<Session, Props>) {
             valueLabelDisplay="auto"
             onChange={handleMinuteSlider}
             marks={minuteMarks}
+            size="small"
           />
         </Box>
       </DialogContent>

@@ -28,7 +28,6 @@ const DurationSlider_ = ({
     <div className={wrapper}>
       <Slider
         marks={sliderMarks}
-        // @ts-expect-error wrong library typings?
         onChange={(e, value: number) => onChange(value)}
         valueLabelDisplay={valueLabelDisplay}
         value={value}
@@ -36,7 +35,8 @@ const DurationSlider_ = ({
         min={0}
         max={60 * 12}
         step={5}
-        valueLabelFormat={value => formatMinutes4Human(value)}
+        valueLabelFormat={(value) => formatMinutes4Human(value)}
+        size="small"
       />
     </div>
   );
@@ -50,12 +50,10 @@ export const DurationSlider = withStyles(({ palette, spacing }) => ({
     transform: 'unset',
   },
   valueLabel: {
-    top: -22,
-    '& *': {
-      width: '80px',
-      transform: 'unset',
-      background: 'transparent',
-      color: palette.text.secondary,
-    },
+    top: '0px',
+    width: '80px',
+    transform: 'unset',
+    background: 'transparent',
+    color: palette.text.secondary,
   },
 }))(DurationSlider_);
