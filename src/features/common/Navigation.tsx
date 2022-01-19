@@ -47,7 +47,14 @@ export default function Navigation({ page }: { page: string }) {
   }
   return (
     <AppBar position="static">
-      <Tabs variant="fullWidth" value={page} aria-label="navigation" centered>
+      <Tabs
+        variant="fullWidth"
+        value={page}
+        aria-label="navigation"
+        centered
+        indicatorColor="primary"
+        textColor="inherit"
+      >
         <LinkTab label="List" icon={<List />} to="/" value="/" {...a11yProps('timer')} />
         <LinkTab
           label="Stats"
