@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.25.0...v1.26.0) (2022-01-19)
+
+
+### Features
+
+* service worker workbox ([611e793](https://github.com/danielo515/pento-tech-challenge/commit/611e793006da5c6a0e50ddd8af17c40835597ff9))
+
 # [1.25.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.24.0...v1.25.0) (2022-01-19)
 
 
