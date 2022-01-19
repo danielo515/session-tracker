@@ -24,7 +24,7 @@ interface ChartProps {
 }
 export default function Chart({ sessions, title, names, formatter }: ChartProps) {
   const theme = useTheme();
-  const Bars = names.map(x => (
+  const Bars = names.map((x) => (
     <Bar key={x} dataKey={x} name={x} stackId="a" fill={stringToColour(x)} />
   ));
   return (
