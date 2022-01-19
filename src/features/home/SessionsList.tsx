@@ -1,11 +1,11 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { VariableSizeList } from 'react-window';
 import clsx from 'clsx';
-import Skeleton from '@material-ui/lab/Skeleton';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import List from '@material-ui/core/List';
+import Skeleton from '@mui/material/Skeleton';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import List from '@mui/material/List';
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
 import { SessionGroup } from '@types';

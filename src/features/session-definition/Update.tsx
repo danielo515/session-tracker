@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useCreate } from './redux/hooks';
 import DefinitionForm from './DefinitionForm';
-import { Alert } from '@material-ui/lab';
-import { Snackbar } from '@material-ui/core';
+import { Alert } from '@mui/material';
+import { Snackbar } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 export default function Update() {

@@ -1,8 +1,8 @@
 import React from 'react';
-import IconButton from '@material-ui/core/Button';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import Typography from '@material-ui/core/Typography';
+import IconButton from '@mui/material/Button';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import Typography from '@mui/material/Typography';
 import { useStyles } from './Dashboard';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
@@ -31,13 +31,13 @@ function NavigationControlsBase({ next, back, baseName, value, text, unit }: Pro
   const { navigation } = useStyles();
   return (
     <div className={navigation}>
-      <IconButton onClick={back}>
+      <IconButton onClick={back} size="large">
         <NavigateBeforeIcon />
       </IconButton>
       <Typography variant="button" align="center">
         {text || (value === 0 ? baseName : `${value} ${unit} ago`)}
       </Typography>
-      <IconButton onClick={next} disabled={value === 0}>
+      <IconButton onClick={next} disabled={value === 0} size="large">
         <NavigateNextIcon />
       </IconButton>
     </div>

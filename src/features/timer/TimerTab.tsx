@@ -1,22 +1,22 @@
 import { CircularTimer } from './CircularTimer';
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import Page from '../common/Page';
 import { useEditRunningSession } from 'features/common/redux/editRunningSession';
-import { Button, Card, Typography } from '@material-ui/core';
+import { Button, Card, Typography } from '@mui/material';
 import useRunningSessionStats from './useRunningSessionStats';
 import { msToHuman } from 'formatters/formatDateDiff';
-import StopIcon from '@material-ui/icons/Stop';
-// import FastRewindIcon from '@material-ui/icons/FastRewind';
+import StopIcon from '@mui/icons-material/Stop';
+// import FastRewindIcon from '@mui/icons-material/FastRewind';
 import { getISODay, subMinutes } from 'date-fns';
-import { Replay, Add, Remove } from '@material-ui/icons';
+import { Replay, Add, Remove } from '@mui/icons-material';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 import { useInterval } from '@common/hooks/useInterval';
 
 import QuickPick from '../common/QuickPick';
 import useAppSelector from 'hooks/useSelector';
 import selectDefinition from 'features/session-definition/selectDefinition';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 import { RunningSession } from '@types';
 
 type editFn = (args: { name: string; startDate: Date }) => any;
@@ -31,7 +31,7 @@ export default function TimerTab() {
   const { runningSession, editRunningSession } = useEditRunningSession();
   const { stopRunningSession } = useStopRunningSession();
   const runningStats = useRunningSessionStats();
-  const sessionDefinition = useAppSelector(state =>
+  const sessionDefinition = useAppSelector((state) =>
     selectDefinition(state, { name: runningSession?.name }),
   );
   // Tick every minute to update the UI
@@ -163,7 +163,7 @@ function ButtonAction({
       size="large"
       style={{ width: '62px' }}
     >
-      <Box fontSize="2rem" clone>
+      <Box sx={{ fontSize: '2rem' }} clone>
         {icon}
       </Box>
     </Button>

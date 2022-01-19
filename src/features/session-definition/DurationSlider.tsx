@@ -1,6 +1,8 @@
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
 import React from 'react';
-import { Slider, withStyles } from '@material-ui/core';
+import { Slider } from '@mui/material';
+
+import withStyles from '@mui/styles/withStyles';
 
 export const sliderMarks = Array.from(Array(12), (_, i) => {
   const minuteValue = i * 60;

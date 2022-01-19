@@ -1,10 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import makeStyles from '@mui/styles/makeStyles';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import { FooterWithVersion } from '../common/index';
 import DonutContainer from './Donut.container';
 import { DaysNavigator } from './NavigationControls';
@@ -60,7 +60,7 @@ export const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height: 440,
-    [theme.breakpoints.down('xs')]: { height: 400 },
+    [theme.breakpoints.down('sm')]: { height: 400 },
   },
   navigation: {
     display: 'flex',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import Timer from './Timer';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import * as actions from './redux/actions';
 import SessionStart from './SessionStart';
 import SessionStop from './SessionStop';

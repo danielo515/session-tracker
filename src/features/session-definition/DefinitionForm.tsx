@@ -1,6 +1,6 @@
 import { IconSelector } from './Iconselector';
 import { DurationSlider } from './DurationSlider';
-import { Box, Button, Container, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { HexColorPicker } from 'react-colorful';
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';

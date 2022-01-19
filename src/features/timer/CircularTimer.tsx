@@ -1,5 +1,6 @@
-import { CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { CircularProgress, IconButton, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import EditIcon from '@mui/icons-material/Edit';
 import { differenceInMinutes } from 'date-fns';
 import format from 'date-fns/format';
 import React from 'react';
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   bottom: {
     position: 'absolute',
     top: 0,
-    color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    color: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 700],
   },
   // Editable date
   startDate: {

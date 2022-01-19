@@ -2,15 +2,8 @@ import React, { MouseEventHandler, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import selectSessionNames from './redux/selectSessionNames';
 import { startSession } from '../home/redux/actions';
-import {
-  Card,
-  Grid,
-  Typography,
-  CardContent,
-  ButtonBase,
-  makeStyles,
-  Container,
-} from '@material-ui/core';
+import { Card, Grid, Typography, CardContent, ButtonBase, Container } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 import * as Icons from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';

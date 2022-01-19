@@ -1,15 +1,15 @@
 import React from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import BarChart from '@material-ui/icons/BarChart';
-import Timer from '@material-ui/icons/Timer';
-import Box from '@material-ui/core/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import BarChart from '@mui/icons-material/BarChart';
+import Timer from '@mui/icons-material/Timer';
+import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { Link as RouterLink } from 'react-router-dom';
-import List from '@material-ui/icons/List';
+import List from '@mui/icons-material/List';
 
 /**
  * @param {String} index
@@ -31,7 +31,7 @@ function a11yProps(index: string) {
  */
 function LinkTab({ label, ...props }: { label: string; to: string; icon: any; value: string }) {
   const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down('xs'));
+  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const Label = smallScreen ? null : <Box display={{ xs: 'none', sm: 'block' }}>{label}</Box>;
   return <Tab component={RouterLink} label={Label} {...props} />;
 }

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
+import makeStyles from '@mui/styles/makeStyles';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import IconButton from '@mui/material/IconButton';
 import { FixedSizeList } from 'react-window';
 import { formatDateDiff, formatStartDate, msToHuman } from 'formatters/formatDateDiff';
-import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
+import PlayCircleOutline from '@mui/icons-material/PlayCircleOutline';
 import { useSelectRow } from './redux/selectRow';
 import { SessionGroup } from '@types';
 import { Merge } from 'type-fest';
@@ -77,43 +77,46 @@ export function TaskGroup({
       onToggle(name);
     }
   }, []);
-  return (
-    <>
-      <ListItem button onClick={toggleRow} data-name={name} className={css.taskOverView}>
-        <ListItemText
-          primary={name}
-          secondary={formatStartDate(lastRun)}
-          classes={{ root: css.leftItem }}
-        />
-        <ListItemText primary="Today" secondary={msToHuman(total)} className={css.rightItem} />
-        <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="delete" id={name} onClick={startSession}>
-            <PlayCircleOutline />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
+  return <>
+    <ListItem button onClick={toggleRow} data-name={name} className={css.taskOverView}>
+      <ListItemText
+        primary={name}
+        secondary={formatStartDate(lastRun)}
+        classes={{ root: css.leftItem }}
+      />
+      <ListItemText primary="Today" secondary={msToHuman(total)} className={css.rightItem} />
+      <ListItemSecondaryAction>
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          id={name}
+          onClick={startSession}
+          size="large">
+          <PlayCircleOutline />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
 
-      {isOpen && (
-        <List component="div" disablePadding className={css.childWrapper}>
-          <FixedSizeList
-            height={Math.min(ListHeight, sessions.length * ItemHeight)}
-            width="100%"
-            itemSize={ItemHeight}
-            itemCount={sessions.length}
-            itemData={sessions}
-          >
-            {({ index, style, data }) => {
-              const { id, startDate: start, endDate: end = Date.now() } = data[index];
-              return (
-                <ListItem style={style} id={id} onClick={editSession} button className={css.nested}>
-                  <ListItemText primary="Started" secondary={formatStartDate(start)} />
-                  <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
-                </ListItem>
-              );
-            }}
-          </FixedSizeList>
-        </List>
-      )}
-    </>
-  );
+    {isOpen && (
+      <List component="div" disablePadding className={css.childWrapper}>
+        <FixedSizeList
+          height={Math.min(ListHeight, sessions.length * ItemHeight)}
+          width="100%"
+          itemSize={ItemHeight}
+          itemCount={sessions.length}
+          itemData={sessions}
+        >
+          {({ index, style, data }) => {
+            const { id, startDate: start, endDate: end = Date.now() } = data[index];
+            return (
+              <ListItem style={style} id={id} onClick={editSession} button className={css.nested}>
+                <ListItemText primary="Started" secondary={formatStartDate(start)} />
+                <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
+              </ListItem>
+            );
+          }}
+        </FixedSizeList>
+      </List>
+    )}
+  </>;
 }

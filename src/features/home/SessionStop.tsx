@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import StopIcon from '@material-ui/icons/Stop';
+import StopIcon from '@mui/icons-material/Stop';
 import useHandleChange from './hooks/useHandleChange';
 import { SessionForm } from './SessionStart';
 
