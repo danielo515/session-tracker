@@ -1,5 +1,6 @@
 import { visualizer } from 'rollup-plugin-visualizer';
-import legacyPlugin from '@vitejs/plugin-legacy';
+import { VitePWA } from 'vite-plugin-pwa';
+// import legacyPlugin from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
@@ -59,6 +60,7 @@ export default defineConfig(({ command, mode }) => {
       //   targets: ['defaults', 'not IE 11'],
       // }),
       react(),
+      VitePWA(),
     ],
     css: {
       preprocessorOptions: {
