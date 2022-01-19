@@ -1,4 +1,4 @@
-/* eslint-disable */
+import { visualizer } from 'rollup-plugin-visualizer';
 import legacyPlugin from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
@@ -8,7 +8,7 @@ import { defineConfig } from 'vite';
 
 // @see https://cn.vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  let define = {
+  const define = {
     'process.env.APP_IS_LOCAL': command === 'serve' ? '"true"' : '"false"',
     'process.env.REACT_APP_IS_LOCAL': command === 'serve' ? '"true"' : '"false"',
     'process.env.APP_VERSION': JSON.stringify(pkg.version),
@@ -22,12 +22,21 @@ export default defineConfig(({ command, mode }) => {
     root: './',
     define,
     logLevel: 'info',
+
     build: {
       target: 'es2015',
       minify: 'esbuild',
       manifest: false,
       sourcemap: 'inline',
       outDir: 'build',
+      rollupOptions: {
+        plugins: [
+          visualizer({
+            open: false,
+            template: 'treemap',
+          }),
+        ],
+      },
     },
     optimizeDeps: {
       include: [

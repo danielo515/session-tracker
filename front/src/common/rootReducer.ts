@@ -5,6 +5,7 @@ import statsReducer from '../features/stats/redux/reducer';
 import settingsReducer from '../features/settings/redux/reducer';
 import timerReducer from '../features/timer/redux/reducer';
 import sessionDefinitionReducer from '../features/session-definition/redux/reducer';
+import { ManageIconsReducer } from 'features/Internal/redux';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -19,4 +20,5 @@ export const reducerMap = {
   settings: settingsReducer,
   timer: timerReducer,
   sessionDefinition: sessionDefinitionReducer,
+  manageIcons: ManageIconsReducer,
 } as const;

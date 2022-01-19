@@ -22,3 +22,4 @@ yarn-debug.log*
 yarn-error.log*
 # types are just a test
 types
+stats.html
