@@ -6,6 +6,7 @@ import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vite';
+import Manifest from './public/manifest.json';
 
 // @see https://cn.vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -63,6 +64,7 @@ export default defineConfig(({ command, mode }) => {
       VitePWA({
         strategies: 'generateSW',
         registerType: 'autoUpdate',
+        manifest: Manifest,
       }),
     ],
     css: {
