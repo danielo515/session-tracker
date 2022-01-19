@@ -5,7 +5,7 @@ import {
   LOGIN_LOGIN_ACTION_DISMISS_ERROR,
 } from './constants';
 
-import { push } from '@lagunovsky/redux-react-router';
+import { replace } from '@lagunovsky/redux-react-router';
 import * as api from '../../../common/api';
 import { getErrorData } from '../../../common/getErrorData';
 
@@ -48,7 +48,7 @@ export function loginAction({
       type: LOGIN_LOGIN_ACTION_SUCCESS,
       payload: { token: response.token },
     });
-    dispatch(push('/'));
+    dispatch(replace('/'));
   };
 }
 
