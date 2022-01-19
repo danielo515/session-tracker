@@ -9,10 +9,12 @@ import {
 } from '@material-ui/core';
 import * as Icons from '@common/Icon/Icon';
 import useAppSelector from 'hooks/useSelector';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { resetSelection, selectIcon } from './redux';
 import { useAppDispatch } from '@common/configStore';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import { replace } from '@lagunovsky/redux-react-router';
 
 const allIcons = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
 
@@ -60,7 +62,7 @@ const Controls = () => {
       <Box py={2}>
         <Card>
           <CardContent>
-            <pre>
+            <pre style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
               <code>{regex}</code>
             </pre>
           </CardContent>
@@ -71,15 +73,28 @@ const Controls = () => {
 };
 
 export const ManageIcons = () => {
+  const dispatch = useAppDispatch();
   return (
     <Container maxWidth="xl">
-      <div style={{ height: '100vh' }}>
-        <h1>Manage Icons</h1>
+      <Box style={{ height: '100vh' }} pt={1}>
+        <Box>
+          <Button
+            variant="text"
+            color="default"
+            startIcon={<ArrowBack />}
+            onClick={() => dispatch(replace('/'))}
+          >
+            back
+          </Button>
+          <Typography variant="h1" color="initial">
+            Managge icons
+          </Typography>
+        </Box>
         <Controls />
         {allIcons.map(([name, Icon]) => (
           <IconBtn key={name} Icon={Icon} name={name} />
         ))}
-      </div>
+      </Box>
     </Container>
   );
 };
