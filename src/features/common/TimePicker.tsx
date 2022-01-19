@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { setHours, setMinutes, format } from 'date-fns';
 // https://codesandbox.io/s/ie3eh?file=/demo.js:0-900
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -27,7 +27,17 @@ function parseDate(originalDate: Date, dateString: string) {
  *
  * @param {{value: Date, onChange: (d: Date) => any, id: string, label?: string }} props
  */
-export default function TimePickers({ value, onChange, id, label }: { value: Date; onChange: (d: Date) => any; id: string; label?: string; }) {
+export default function TimePickers({
+  value,
+  onChange,
+  id,
+  label,
+}: {
+  value: Date;
+  onChange: (d: Date) => any;
+  id: string;
+  label?: string;
+}) {
   const classes = useStyles();
 
   const formattedValue = format(value, 'HH:mm');
@@ -37,9 +47,10 @@ export default function TimePickers({ value, onChange, id, label }: { value: Dat
       <TextField
         id={id}
         value={formattedValue}
-        onChange={e => onChange(parseDate(value, e.target.value))}
+        onChange={(e) => onChange(parseDate(value, e.target.value))}
         label={label}
         type="time"
+        variant="standard"
         InputLabelProps={{
           shrink: true,
         }}
