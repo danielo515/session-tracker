@@ -163,9 +163,7 @@ function ButtonAction({
       size="large"
       style={{ width: '62px' }}
     >
-      <Box sx={{ fontSize: '2rem' }} clone>
-        {icon}
-      </Box>
+      <Box sx={{ fontSize: '2rem' }}>{icon}</Box>
     </Button>
   );
 }
