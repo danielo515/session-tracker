@@ -60,7 +60,10 @@ export default defineConfig(({ command, mode }) => {
       //   targets: ['defaults', 'not IE 11'],
       // }),
       react(),
-      VitePWA(),
+      VitePWA({
+        strategies: 'generateSW',
+        registerType: 'autoUpdate',
+      }),
     ],
     css: {
       preprocessorOptions: {
