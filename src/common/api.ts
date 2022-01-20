@@ -1,4 +1,4 @@
-import { RunningSession, Session, SessionDefinition } from '@types';
+import { RunningSession, Session, SessionDefinition, SessionDefinitionFromDb } from '@types';
 import firebase from 'fb';
 import {
   getAuth,
@@ -84,8 +84,8 @@ export const googleLogin = () =>
       };
     });
 
-export const signUp = (args: { email: string; password: string; name: string }): any => {
-  console.log('Not used anymore');
+export const signUp = (args: { email: string; password: string; name: string }) => {
+  console.log('Not used anymore', args);
 };
 
 export const listSessions = withDb((db) => {
@@ -101,8 +101,8 @@ export const listSessions = withDb((db) => {
     },
   );
 });
-type sessionCb = (args: Session) => any;
-type sessionCbNull = (args: Session | null) => any;
+type sessionCb = (args: Session) => unknown;
+type sessionCbNull = (args: Session | null) => unknown;
 type SyncArgs = {
   onSessionAdded: sessionCb;
   onRunningUpdate: sessionCbNull;
@@ -199,15 +199,28 @@ export const createSessionDefinition = withDb<SessionDefinition, SessionDefiniti
   },
 );
 
-export const listDefinitions = withDb<undefined, SessionDefinition[]>((db) => {
+export const listDefinitions = withDb((db) => {
   const definitionsQuery = query(child(db, 'definitions'), orderByKey());
   const result = get(definitionsQuery).then((snapshot) => {
-    if (snapshot.exists())
+    if (snapshot.exists()) {
+      const definitionsCollection: { [id: string]: SessionDefinition } = snapshot.val();
       return {
         error: null,
-        response: Object.values(snapshot.val()) as SessionDefinition[],
+        response: Object.entries(definitionsCollection).map(([id, definition]) => {
+          return { ...definition, id };
+        }),
       };
+    }
     return { error: null, response: [] };
   });
   return result;
 });
+
+export const updateDefinition = withDb<SessionDefinitionFromDb, SessionDefinitionFromDb>(
+  (db, { id, ...definition }) => {
+    return setValue(db, 'sessionDefinitions/' + id, definition).then(() => ({
+      response: { id, ...definition },
+      error: null,
+    }));
+  },
+);
