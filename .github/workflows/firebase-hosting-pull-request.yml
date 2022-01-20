@@ -13,16 +13,14 @@ jobs:
       - name: Read bundle stats
         id: bundled
         run: |
-          OUTPUT=$(cat stats.html)
+          OUTPUT="$(cat stats.html)"
           echo "::set-output name=result::$OUTPUT"
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           append: true
           message: |
             Bundled size of ${{ github.sha }}.
-            ```
             ${{ steps.bundled.outputs.result }}
-            ```
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
