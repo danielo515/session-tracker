@@ -1,40 +1,56 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { styled } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import isValidEmail from '../../common/isValidEmail';
 import isValidPassword from '../../common/isValidPassword';
 import { Copyright } from '../common/Copyright';
 import { useLoginForm } from './useLoginForm';
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/material';
 
-const useStyles = makeStyles(theme => ({
-  paper: {
+const PREFIX = 'SignUp';
+
+const classes = {
+  paper: `${PREFIX}-paper`,
+  avatar: `${PREFIX}-avatar`,
+  form: `${PREFIX}-form`,
+  submit: `${PREFIX}-submit`
+};
+
+const StyledContainer = styled(Container)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
+
+  [`& .${classes.form}`]: {
     width: '100%',
     marginTop: theme.spacing(1),
   },
-  submit: {
+
+  [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
-  },
+  }
 }));
 
 const isValidName = (name): name is string => typeof name === 'string' && name.length > 3;
@@ -45,7 +61,7 @@ type Props = {
 };
 
 export default function SignUp({ signUp, error }: Props) {
-  const classes = useStyles();
+
   const {
     email,
     setEmail,
@@ -64,7 +80,7 @@ export default function SignUp({ signUp, error }: Props) {
   const handleSubmit = () => canSubmit && signUp({ email, password, name });
 
   return (
-    <Container component="main" maxWidth="xs">
+    <StyledContainer component="main" maxWidth="xs">
       <Snackbar open={!!error} autoHideDuration={6000}>
         <Alert severity="error">{error}</Alert>
       </Snackbar>
@@ -157,6 +173,6 @@ export default function SignUp({ signUp, error }: Props) {
       <Box mt={8}>
         <Copyright />
       </Box>
-    </Container>
+    </StyledContainer>
   );
 }

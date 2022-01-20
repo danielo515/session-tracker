@@ -6,14 +6,14 @@ import {
   CardContent,
   ButtonGroup,
   Container,
-} from '@material-ui/core';
+} from '@mui/material';
 import * as Icons from '@common/Icon/Icon';
 import useAppSelector from 'hooks/useSelector';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { resetSelection, selectIcon } from './redux';
 import { useAppDispatch } from '@common/configStore';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import { replace } from '@lagunovsky/redux-react-router';
 
 const allIcons = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
@@ -80,10 +80,8 @@ export const ManageIcons = () => {
         <Box>
           <Button
             variant="text"
-            color="default"
             startIcon={<ArrowBack />}
-            onClick={() => dispatch(replace('/'))}
-          >
+            onClick={() => dispatch(replace('/'))}>
             back
           </Button>
           <Typography variant="h1" color="initial">

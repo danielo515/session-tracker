@@ -1,21 +1,31 @@
-import { CircularProgress, IconButton, makeStyles, Typography } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { CircularProgress, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { differenceInMinutes } from 'date-fns';
-import format from 'date-fns/format';
 import React from 'react';
 import { RenderTimer } from '../home/Timer';
+import { Started } from './StartedLabel';
 
-const useStyles = makeStyles(theme => ({
-  shell: {
-    padding: theme.spacing(4),
-  },
-  wrapper: {
+const PREFIX = 'CircularTimer';
+
+export const classes = {
+  shell: `${PREFIX}-shell`,
+  wrapper: `${PREFIX}-wrapper`,
+  timer: `${PREFIX}-timer`,
+  circle: `${PREFIX}-circle`,
+  bottom: `${PREFIX}-bottom`,
+};
+
+const Root = styled('div')(({ color, theme }) => ({
+  padding: theme.spacing(4),
+
+  [`& .${classes.wrapper}`]: {
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  timer: {
+
+  [`& .${classes.timer}`]: {
     position: 'absolute',
     display: 'flex',
     flexDirection: 'column',
@@ -26,49 +36,17 @@ const useStyles = makeStyles(theme => ({
     top: '50%',
     transform: 'translateY(-33%)',
   },
-  circle: {
-    color: ({ color = theme.palette.primary.main }: { color?: string } = {}) => color,
+
+  [`& .${classes.circle}`]: {
+    color: color || theme.palette.primary.main,
   },
-  bottom: {
+
+  [`& .${classes.bottom}`]: {
     position: 'absolute',
     top: 0,
-    color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-  },
-  // Editable date
-  startDate: {
-    display: 'flex',
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  icon: {
-    fontSize: '1rem',
-  },
-  iconButton: {
-    position: 'absolute',
-    right: -theme.spacing(3),
-    top: -2,
+    color: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 700],
   },
 }));
-
-/**
- * Renders a date with a edit icon
- * @param {Object} props
- * @param {Date} props.startDate
- */
-function Started({ startDate }: { startDate: Date }) {
-  const css = useStyles();
-  const formattedDate = format(startDate, 'E. HH:mm');
-
-  return (
-    <div className={css.startDate}>
-      <Typography variant="subtitle2">{formattedDate}</Typography>
-      <IconButton className={css.iconButton} size="small">
-        <EditIcon className={css.icon} />
-      </IconButton>
-    </div>
-  );
-}
 
 type Props = {
   name: string;
@@ -78,25 +56,23 @@ type Props = {
 };
 
 export function CircularTimer({ name, startDate, color, expectedDuration }: Props) {
-  const css = useStyles({ color });
   const percentCompleted = differenceInMinutes(new Date(), startDate) / expectedDuration;
   return (
-    <div className={css.shell}>
-      {' '}
-      <div className={css.wrapper}>
-        <CircularProgress size={250} className={css.bottom} variant="determinate" value={100} />
+    <Root color={color}>
+      <div className={classes.wrapper}>
+        <CircularProgress size={250} className={classes.bottom} variant="determinate" value={100} />
         <CircularProgress
           size={250}
           variant="determinate"
           value={percentCompleted * 100}
-          classes={{ circle: css.circle }}
+          classes={{ circle: classes.circle }}
         />
-        <div className={css.timer}>
+        <div className={classes.timer}>
           <RenderTimer startDate={startDate.toISOString()} />
           <Typography>{name}</Typography>
           <Started startDate={startDate} />
         </div>
       </div>
-    </div>
+    </Root>
   );
 }

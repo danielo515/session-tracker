@@ -1,15 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import { setHours, setMinutes, format } from 'date-fns';
-// https://codesandbox.io/s/ie3eh?file=/demo.js:0-900
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-}));
+const Root = styled('form')({
+  display: 'flex',
+  flexWrap: 'wrap',
+});
 
 /**
  *
@@ -27,19 +24,28 @@ function parseDate(originalDate: Date, dateString: string) {
  *
  * @param {{value: Date, onChange: (d: Date) => any, id: string, label?: string }} props
  */
-export default function TimePickers({ value, onChange, id, label }: { value: Date; onChange: (d: Date) => any; id: string; label?: string; }) {
-  const classes = useStyles();
-
+export default function TimePickers({
+  value,
+  onChange,
+  id,
+  label,
+}: {
+  value: Date;
+  onChange: (d: Date) => any;
+  id: string;
+  label?: string;
+}) {
   const formattedValue = format(value, 'HH:mm');
 
   return (
-    <form className={classes.container} noValidate>
+    <Root noValidate>
       <TextField
         id={id}
         value={formattedValue}
-        onChange={e => onChange(parseDate(value, e.target.value))}
+        onChange={(e) => onChange(parseDate(value, e.target.value))}
         label={label}
         type="time"
+        variant="standard"
         InputLabelProps={{
           shrink: true,
         }}
@@ -47,6 +53,6 @@ export default function TimePickers({ value, onChange, id, label }: { value: Dat
           step: 300, // 5 min
         }}
       />
-    </form>
+    </Root>
   );
 }

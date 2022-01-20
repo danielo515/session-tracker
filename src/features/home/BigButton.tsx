@@ -1,6 +1,6 @@
 import React from 'react';
-import Fab from '@material-ui/core/Fab';
-import TimelineIcon from '@material-ui/icons/Timeline';
+import Fab from '@mui/material/Fab';
+import TimelineIcon from '@mui/icons-material/Timeline';
 
 const variants = {
   color: {

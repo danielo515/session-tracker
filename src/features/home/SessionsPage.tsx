@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';

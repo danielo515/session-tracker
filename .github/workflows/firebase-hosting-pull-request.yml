@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn && yarn build
+      - name: Read the bundle stats
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: stats.html
+          recreate: true
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"

@@ -1,48 +1,41 @@
 import React, { MouseEventHandler, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import selectSessionNames from './redux/selectSessionNames';
 import { startSession } from '../home/redux/actions';
-import {
-  Card,
-  Grid,
-  Typography,
-  CardContent,
-  ButtonBase,
-  makeStyles,
-  Container,
-} from '@material-ui/core';
+import { Card, Grid, Typography, CardContent, ButtonBase, Container } from '@mui/material';
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
 import * as Icons from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';
 import useAppSelector from 'hooks/useSelector';
 import { push } from '@lagunovsky/redux-react-router';
 
-const useStyle = makeStyles((theme) => ({
-  Button: {
-    width: '100%',
-  },
-  Card: {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    borderColor: ({ color }: { color: string }) => color || theme.palette.divider,
-    position: 'relative',
-    overflow: 'visible',
-  },
-  Icon: {
-    position: 'absolute',
-    top: '3px',
-    left: '3px',
-    transform: 'translate(-50%, -50%)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: '50%',
-    height: '30px',
-    width: '30px',
-    border: ({ color }: { color: string }) => `1px solid ${color || theme.palette.divider}`,
-  },
+const StyledContainer = styled(Card)(({ color, theme }) => ({
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  borderColor: color || theme.palette.divider,
+  position: 'relative',
+  overflow: 'visible',
+}));
+
+const WidthButton = styled(ButtonBase)(() => ({
+  width: '100%',
+}));
+
+const IconWrapper = styled('div')(({ color, theme }) => ({
+  position: 'absolute',
+  top: '3px',
+  left: '3px',
+  transform: 'translate(-50%, -50%)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'white',
+  borderRadius: '50%',
+  height: '30px',
+  width: '30px',
+  border: `1px solid ${color || theme.palette.divider}`,
 }));
 
 function ButtonCard({
@@ -60,20 +53,19 @@ function ButtonCard({
   onClick: MouseEventHandler<any>;
   onLongPress: () => unknown;
 }) {
-  const style = useStyle({ color });
   const Icon = Icons[iconName] || Icons.Default;
   const longProps = useLongPress(onLongPress);
   return (
-    <Card variant="outlined" className={style.Card}>
-      <div className={style.Icon}>
+    <StyledContainer variant="outlined">
+      <IconWrapper color={color}>
         <Icon color={color} />
-      </div>
-      <ButtonBase {...longProps} className={style.Button} onClick={onClick} data-session={id}>
+      </IconWrapper>
+      <WidthButton {...longProps} onClick={onClick} data-session={id}>
         <CardContent>
           <Typography>{children}</Typography>
         </CardContent>
-      </ButtonBase>
-    </Card>
+      </WidthButton>
+    </StyledContainer>
   );
 }
 

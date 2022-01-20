@@ -1,12 +1,6 @@
 import React, { Suspense } from 'react';
-import CachedRoundedIcon from '@material-ui/icons/CachedRounded';
-import { makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  colored: {
-    color: ({ color }: { color: string }) => color || theme.palette.divider,
-  },
-}));
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
+import { useTheme } from '@mui/material';
 
 const LoadingIcon = () => <CachedRoundedIcon />;
 
@@ -17,8 +11,10 @@ type Props = {
 };
 
 const Renderer = ({ color, className, Component }: Props) => {
-  const classes = useStyles({ color });
-  return <Component className={`${classes.colored} ${className}`}></Component>;
+  const { palette } = useTheme();
+  return (
+    <Component sx={{ color: color || palette.divider }} className={`${className}`}></Component>
+  );
 };
 
 /**
@@ -45,417 +41,887 @@ function loadableIcon(importFn: () => any) {
 `console.log([...document.getElementsByClassName('js-navigation-open')].map( x => x.title.split('.')[0]).filter(x=>x?.includes('Outline')))`
 then templated with 
 regex: '(\w+)',
-export const $1 = () => import('@material-ui/icons/$1')
-export const $1 = loadableIcon(() => import('@material-ui/icons/$1'))
+export const $1 = () => import('@mui/icons-material/$1')
+export const $1 = loadableIcon(() => import('@mui/icons-material/$1'))
 */
 // prettier-ignore
-export const Default = loadableIcon(() => import('@material-ui/icons/BlockOutlined'));
-export const AcUnitOutlined = loadableIcon(() => import('@material-ui/icons/AcUnitOutlined'));
-export const AccessTimeOutlined = loadableIcon(() => import('@material-ui/icons/AccessTimeOutlined'));
-export const AccessibilityNewOutlined = loadableIcon(() => import('@material-ui/icons/AccessibilityNewOutlined'));
-export const AccessibleOutlined = loadableIcon(() => import('@material-ui/icons/AccessibleOutlined'));
-export const AccountBalanceOutlined = loadableIcon(() => import('@material-ui/icons/AccountBalanceOutlined'));
-export const AccountBalanceWalletOutlined = loadableIcon(() => import('@material-ui/icons/AccountBalanceWalletOutlined'));
-export const AccountCircleOutlined = loadableIcon(() => import('@material-ui/icons/AccountCircleOutlined'));
-export const AccountTreeOutlined = loadableIcon(() => import('@material-ui/icons/AccountTreeOutlined'));
-export const AdbOutlined = loadableIcon(() => import('@material-ui/icons/AdbOutlined'));
-export const AddIcCallOutlined = loadableIcon(() => import('@material-ui/icons/AddIcCallOutlined'));
-export const AirlineSeatFlatAngledOutlined = loadableIcon(() => import('@material-ui/icons/AirlineSeatFlatAngledOutlined'));
-export const AirlineSeatFlatOutlined = loadableIcon(() => import('@material-ui/icons/AirlineSeatFlatOutlined'));
-export const AirlineSeatIndividualSuiteOutlined = loadableIcon(() => import('@material-ui/icons/AirlineSeatIndividualSuiteOutlined'));
-export const AirlineSeatReclineNormalOutlined = loadableIcon(() => import('@material-ui/icons/AirlineSeatReclineNormalOutlined'));
-export const AirplanemodeActiveOutlined = loadableIcon(() => import('@material-ui/icons/AirplanemodeActiveOutlined'));
-export const AirplanemodeInactiveOutlined = loadableIcon(() => import('@material-ui/icons/AirplanemodeInactiveOutlined'));
-export const AirportShuttleOutlined = loadableIcon(() => import('@material-ui/icons/AirportShuttleOutlined'));
-export const AlarmOnOutlined = loadableIcon(() => import('@material-ui/icons/AlarmOnOutlined'));
-export const AllInboxOutlined = loadableIcon(() => import('@material-ui/icons/AllInboxOutlined'));
-export const AndroidOutlined = loadableIcon(() => import('@material-ui/icons/AndroidOutlined'));
-export const AnnouncementOutlined = loadableIcon(() => import('@material-ui/icons/AnnouncementOutlined'));
-export const ApartmentOutlined = loadableIcon(() => import('@material-ui/icons/ApartmentOutlined'));
-export const AssignmentIndOutlined = loadableIcon(() => import('@material-ui/icons/AssignmentIndOutlined'));
-export const AssignmentOutlined = loadableIcon(() => import('@material-ui/icons/AssignmentOutlined'));
-export const AssistantPhotoOutlined = loadableIcon(() => import('@material-ui/icons/AssistantPhotoOutlined'));
-export const AttachFileOutlined = loadableIcon(() => import('@material-ui/icons/AttachFileOutlined'));
-export const AttachMoneyOutlined = loadableIcon(() => import('@material-ui/icons/AttachMoneyOutlined'));
-export const AttachmentOutlined = loadableIcon(() => import('@material-ui/icons/AttachmentOutlined'));
-export const AudiotrackOutlined = loadableIcon(() => import('@material-ui/icons/AudiotrackOutlined'));
-export const BackupOutlined = loadableIcon(() => import('@material-ui/icons/BackupOutlined'));
-export const BallotOutlined = loadableIcon(() => import('@material-ui/icons/BallotOutlined'));
-export const BathtubOutlined = loadableIcon(() => import('@material-ui/icons/BathtubOutlined'));
-export const BatteryChargingFullOutlined = loadableIcon(() => import('@material-ui/icons/BatteryChargingFullOutlined'));
-export const BatteryFullOutlined = loadableIcon(() => import('@material-ui/icons/BatteryFullOutlined'));
-export const BeachAccessOutlined = loadableIcon(() => import('@material-ui/icons/BeachAccessOutlined'));
-export const BeenhereOutlined = loadableIcon(() => import('@material-ui/icons/BeenhereOutlined'));
-export const BlockOutlined = loadableIcon(() => import('@material-ui/icons/BlockOutlined'));
-export const BookOutlined = loadableIcon(() => import('@material-ui/icons/BookOutlined'));
-export const BookmarkBorderOutlined = loadableIcon(() => import('@material-ui/icons/BookmarkBorderOutlined'));
-export const Brightness5Outlined = loadableIcon(() => import('@material-ui/icons/Brightness5Outlined'));
-export const BrokenImageOutlined = loadableIcon(() => import('@material-ui/icons/BrokenImageOutlined'));
-export const BugReportOutlined = loadableIcon(() => import('@material-ui/icons/BugReportOutlined'));
-export const BuildOutlined = loadableIcon(() => import('@material-ui/icons/BuildOutlined'));
-export const BusinessCenterOutlined = loadableIcon(() => import('@material-ui/icons/BusinessCenterOutlined'));
-export const BusinessOutlined = loadableIcon(() => import('@material-ui/icons/BusinessOutlined'));
-export const CakeOutlined = loadableIcon(() => import('@material-ui/icons/CakeOutlined'));
-export const CalendarTodayOutlined = loadableIcon(() => import('@material-ui/icons/CalendarTodayOutlined'));
-export const CameraAltOutlined = loadableIcon(() => import('@material-ui/icons/CameraAltOutlined'));
-export const CameraOutlined = loadableIcon(() => import('@material-ui/icons/CameraOutlined'));
-export const CameraRollOutlined = loadableIcon(() => import('@material-ui/icons/CameraRollOutlined'));
-export const CancelOutlined = loadableIcon(() => import('@material-ui/icons/CancelOutlined'));
-export const CasinoOutlined = loadableIcon(() => import('@material-ui/icons/CasinoOutlined'));
-export const CategoryOutlined = loadableIcon(() => import('@material-ui/icons/CategoryOutlined'));
-export const CheckCircleOutlined = loadableIcon(() => import('@material-ui/icons/CheckCircleOutlined'));
-export const ChildCareOutlined = loadableIcon(() => import('@material-ui/icons/ChildCareOutlined'));
-export const ChildFriendlyOutlined = loadableIcon(() => import('@material-ui/icons/ChildFriendlyOutlined'));
-export const ChromeReaderModeOutlined = loadableIcon(() => import('@material-ui/icons/ChromeReaderModeOutlined'));
-export const ClassOutlined = loadableIcon(() => import('@material-ui/icons/ClassOutlined'));
+export const Default = loadableIcon(() => import('@mui/icons-material/BlockOutlined'));
+export const AcUnitOutlined = loadableIcon(() => import('@mui/icons-material/AcUnitOutlined'));
+export const AccessTimeOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccessTimeOutlined'),
+);
+export const AccessibilityNewOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccessibilityNewOutlined'),
+);
+export const AccessibleOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccessibleOutlined'),
+);
+export const AccountBalanceOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccountBalanceOutlined'),
+);
+export const AccountBalanceWalletOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccountBalanceWalletOutlined'),
+);
+export const AccountCircleOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccountCircleOutlined'),
+);
+export const AccountTreeOutlined = loadableIcon(
+  () => import('@mui/icons-material/AccountTreeOutlined'),
+);
+export const AdbOutlined = loadableIcon(() => import('@mui/icons-material/AdbOutlined'));
+export const AddIcCallOutlined = loadableIcon(
+  () => import('@mui/icons-material/AddIcCallOutlined'),
+);
+export const AirlineSeatFlatAngledOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirlineSeatFlatAngledOutlined'),
+);
+export const AirlineSeatFlatOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirlineSeatFlatOutlined'),
+);
+export const AirlineSeatIndividualSuiteOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirlineSeatIndividualSuiteOutlined'),
+);
+export const AirlineSeatReclineNormalOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirlineSeatReclineNormalOutlined'),
+);
+export const AirplanemodeActiveOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirplanemodeActiveOutlined'),
+);
+export const AirplanemodeInactiveOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirplanemodeInactiveOutlined'),
+);
+export const AirportShuttleOutlined = loadableIcon(
+  () => import('@mui/icons-material/AirportShuttleOutlined'),
+);
+export const AlarmOnOutlined = loadableIcon(() => import('@mui/icons-material/AlarmOnOutlined'));
+export const AllInboxOutlined = loadableIcon(() => import('@mui/icons-material/AllInboxOutlined'));
+export const AndroidOutlined = loadableIcon(() => import('@mui/icons-material/AndroidOutlined'));
+export const AnnouncementOutlined = loadableIcon(
+  () => import('@mui/icons-material/AnnouncementOutlined'),
+);
+export const ApartmentOutlined = loadableIcon(
+  () => import('@mui/icons-material/ApartmentOutlined'),
+);
+export const AssignmentIndOutlined = loadableIcon(
+  () => import('@mui/icons-material/AssignmentIndOutlined'),
+);
+export const AssignmentOutlined = loadableIcon(
+  () => import('@mui/icons-material/AssignmentOutlined'),
+);
+export const AssistantPhotoOutlined = loadableIcon(
+  () => import('@mui/icons-material/AssistantPhotoOutlined'),
+);
+export const AttachFileOutlined = loadableIcon(
+  () => import('@mui/icons-material/AttachFileOutlined'),
+);
+export const AttachMoneyOutlined = loadableIcon(
+  () => import('@mui/icons-material/AttachMoneyOutlined'),
+);
+export const AttachmentOutlined = loadableIcon(
+  () => import('@mui/icons-material/AttachmentOutlined'),
+);
+export const AudiotrackOutlined = loadableIcon(
+  () => import('@mui/icons-material/AudiotrackOutlined'),
+);
+export const BackupOutlined = loadableIcon(() => import('@mui/icons-material/BackupOutlined'));
+export const BallotOutlined = loadableIcon(() => import('@mui/icons-material/BallotOutlined'));
+export const BathtubOutlined = loadableIcon(() => import('@mui/icons-material/BathtubOutlined'));
+export const BatteryChargingFullOutlined = loadableIcon(
+  () => import('@mui/icons-material/BatteryChargingFullOutlined'),
+);
+export const BatteryFullOutlined = loadableIcon(
+  () => import('@mui/icons-material/BatteryFullOutlined'),
+);
+export const BeachAccessOutlined = loadableIcon(
+  () => import('@mui/icons-material/BeachAccessOutlined'),
+);
+export const BeenhereOutlined = loadableIcon(() => import('@mui/icons-material/BeenhereOutlined'));
+export const BlockOutlined = loadableIcon(() => import('@mui/icons-material/BlockOutlined'));
+export const BookOutlined = loadableIcon(() => import('@mui/icons-material/BookOutlined'));
+export const BookmarkBorderOutlined = loadableIcon(
+  () => import('@mui/icons-material/BookmarkBorderOutlined'),
+);
+export const Brightness5Outlined = loadableIcon(
+  () => import('@mui/icons-material/Brightness5Outlined'),
+);
+export const BrokenImageOutlined = loadableIcon(
+  () => import('@mui/icons-material/BrokenImageOutlined'),
+);
+export const BugReportOutlined = loadableIcon(
+  () => import('@mui/icons-material/BugReportOutlined'),
+);
+export const BuildOutlined = loadableIcon(() => import('@mui/icons-material/BuildOutlined'));
+export const BusinessCenterOutlined = loadableIcon(
+  () => import('@mui/icons-material/BusinessCenterOutlined'),
+);
+export const BusinessOutlined = loadableIcon(() => import('@mui/icons-material/BusinessOutlined'));
+export const CakeOutlined = loadableIcon(() => import('@mui/icons-material/CakeOutlined'));
+export const CalendarTodayOutlined = loadableIcon(
+  () => import('@mui/icons-material/CalendarTodayOutlined'),
+);
+export const CameraAltOutlined = loadableIcon(
+  () => import('@mui/icons-material/CameraAltOutlined'),
+);
+export const CameraOutlined = loadableIcon(() => import('@mui/icons-material/CameraOutlined'));
+export const CameraRollOutlined = loadableIcon(
+  () => import('@mui/icons-material/CameraRollOutlined'),
+);
+export const CancelOutlined = loadableIcon(() => import('@mui/icons-material/CancelOutlined'));
+export const CasinoOutlined = loadableIcon(() => import('@mui/icons-material/CasinoOutlined'));
+export const CategoryOutlined = loadableIcon(() => import('@mui/icons-material/CategoryOutlined'));
+export const CheckCircleOutlined = loadableIcon(
+  () => import('@mui/icons-material/CheckCircleOutlined'),
+);
+export const ChildCareOutlined = loadableIcon(
+  () => import('@mui/icons-material/ChildCareOutlined'),
+);
+export const ChildFriendlyOutlined = loadableIcon(
+  () => import('@mui/icons-material/ChildFriendlyOutlined'),
+);
+export const ChromeReaderModeOutlined = loadableIcon(
+  () => import('@mui/icons-material/ChromeReaderModeOutlined'),
+);
+export const ClassOutlined = loadableIcon(() => import('@mui/icons-material/ClassOutlined'));
 
-export const CloudCircleOutlined = loadableIcon(() => import('@material-ui/icons/CloudCircleOutlined'));
-export const CloudOutlined = loadableIcon(() => import('@material-ui/icons/CloudOutlined'));
+export const CloudCircleOutlined = loadableIcon(
+  () => import('@mui/icons-material/CloudCircleOutlined'),
+);
+export const CloudOutlined = loadableIcon(() => import('@mui/icons-material/CloudOutlined'));
 
-export const ColorizeOutlined = loadableIcon(() => import('@material-ui/icons/ColorizeOutlined'));
-export const CommuteOutlined = loadableIcon(() => import('@material-ui/icons/CommuteOutlined'));
+export const ColorizeOutlined = loadableIcon(() => import('@mui/icons-material/ColorizeOutlined'));
+export const CommuteOutlined = loadableIcon(() => import('@mui/icons-material/CommuteOutlined'));
 
-export const CompassCalibrationOutlined = loadableIcon(() => import('@material-ui/icons/CompassCalibrationOutlined'));
-export const ConfirmationNumberOutlined = loadableIcon(() => import('@material-ui/icons/ConfirmationNumberOutlined'));
-export const ContactlessOutlined = loadableIcon(() => import('@material-ui/icons/ContactlessOutlined'));
-export const ContactMailOutlined = loadableIcon(() => import('@material-ui/icons/ContactMailOutlined'));
+export const CompassCalibrationOutlined = loadableIcon(
+  () => import('@mui/icons-material/CompassCalibrationOutlined'),
+);
+export const ConfirmationNumberOutlined = loadableIcon(
+  () => import('@mui/icons-material/ConfirmationNumberOutlined'),
+);
+export const ContactlessOutlined = loadableIcon(
+  () => import('@mui/icons-material/ContactlessOutlined'),
+);
+export const ContactMailOutlined = loadableIcon(
+  () => import('@mui/icons-material/ContactMailOutlined'),
+);
 
+export const CopyrightOutlined = loadableIcon(
+  () => import('@mui/icons-material/CopyrightOutlined'),
+);
+export const CreateOutlined = loadableIcon(() => import('@mui/icons-material/CreateOutlined'));
+export const CreditCardOutlined = loadableIcon(
+  () => import('@mui/icons-material/CreditCardOutlined'),
+);
 
-export const CopyrightOutlined = loadableIcon(() => import('@material-ui/icons/CopyrightOutlined'));
-export const CreateOutlined = loadableIcon(() => import('@material-ui/icons/CreateOutlined'));
-export const CreditCardOutlined = loadableIcon(() => import('@material-ui/icons/CreditCardOutlined'));
-
-export const DashboardOutlined = loadableIcon(() => import('@material-ui/icons/DashboardOutlined'));
-export const DateRangeOutlined = loadableIcon(() => import('@material-ui/icons/DateRangeOutlined'));
-export const DeckOutlined = loadableIcon(() => import('@material-ui/icons/DeckOutlined'));
-export const DeleteOutlineOutlined = loadableIcon(() => import('@material-ui/icons/DeleteOutlineOutlined'));
-export const DepartureBoardOutlined = loadableIcon(() => import('@material-ui/icons/DepartureBoardOutlined'));
-export const DescriptionOutlined = loadableIcon(() => import('@material-ui/icons/DescriptionOutlined'));
-export const DesktopMacOutlined = loadableIcon(() => import('@material-ui/icons/DesktopMacOutlined'));
-export const DesktopWindowsOutlined = loadableIcon(() => import('@material-ui/icons/DesktopWindowsOutlined'));
-export const DeveloperBoardOutlined = loadableIcon(() => import('@material-ui/icons/DeveloperBoardOutlined'));
-export const DevicesOtherOutlined = loadableIcon(() => import('@material-ui/icons/DevicesOtherOutlined'));
-export const DevicesOutlined = loadableIcon(() => import('@material-ui/icons/DevicesOutlined'));
-export const DirectionsBikeOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsBikeOutlined'));
-export const DirectionsBoatOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsBoatOutlined'));
-export const DirectionsBusOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsBusOutlined'));
-export const DirectionsCarOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsCarOutlined'));
-export const DirectionsRailwayOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsRailwayOutlined'));
-export const DirectionsRunOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsRunOutlined'));
-export const DirectionsSubwayOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsSubwayOutlined'));
-export const DirectionsWalkOutlined = loadableIcon(() => import('@material-ui/icons/DirectionsWalkOutlined'));
-export const DnsOutlined = loadableIcon(() => import('@material-ui/icons/DnsOutlined'));
-export const DoneOutlineOutlined = loadableIcon(() => import('@material-ui/icons/DoneOutlineOutlined'));
-export const DonutLargeOutlined = loadableIcon(() => import('@material-ui/icons/DonutLargeOutlined'));
-export const DonutSmallOutlined = loadableIcon(() => import('@material-ui/icons/DonutSmallOutlined'));
-export const DoubleArrowOutlined = loadableIcon(() => import('@material-ui/icons/DoubleArrowOutlined'));
-export const DraftsOutlined = loadableIcon(() => import('@material-ui/icons/DraftsOutlined'));
-export const DuoOutlined = loadableIcon(() => import('@material-ui/icons/DuoOutlined'));
-export const DvrOutlined = loadableIcon(() => import('@material-ui/icons/DvrOutlined'));
-export const EcoOutlined = loadableIcon(() => import('@material-ui/icons/EcoOutlined'));
-export const EmojiEmotionsOutlined = loadableIcon(() => import('@material-ui/icons/EmojiEmotionsOutlined'));
-export const EmojiEventsOutlined = loadableIcon(() => import('@material-ui/icons/EmojiEventsOutlined'));
-export const EmojiFlagsOutlined = loadableIcon(() => import('@material-ui/icons/EmojiFlagsOutlined'));
-export const EmojiFoodBeverageOutlined = loadableIcon(() => import('@material-ui/icons/EmojiFoodBeverageOutlined'));
-export const EmojiNatureOutlined = loadableIcon(() => import('@material-ui/icons/EmojiNatureOutlined'));
-export const EmojiObjectsOutlined = loadableIcon(() => import('@material-ui/icons/EmojiObjectsOutlined'));
-export const EmojiSymbolsOutlined = loadableIcon(() => import('@material-ui/icons/EmojiSymbolsOutlined'));
-export const EmojiTransportationOutlined = loadableIcon(() => import('@material-ui/icons/EmojiTransportationOutlined'));
-export const ErrorOutlineOutlined = loadableIcon(() => import('@material-ui/icons/ErrorOutlineOutlined'));
-export const EuroSymbolOutlined = loadableIcon(() => import('@material-ui/icons/EuroSymbolOutlined'));
-export const EventAvailableOutlined = loadableIcon(() => import('@material-ui/icons/EventAvailableOutlined'));
-export const EventOutlined = loadableIcon(() => import('@material-ui/icons/EventOutlined'));
-export const EvStationOutlined = loadableIcon(() => import('@material-ui/icons/EvStationOutlined'));
-export const ExploreOutlined = loadableIcon(() => import('@material-ui/icons/ExploreOutlined'));
-export const ExtensionOutlined = loadableIcon(() => import('@material-ui/icons/ExtensionOutlined'));
-export const FaceOutlined = loadableIcon(() => import('@material-ui/icons/FaceOutlined'));
-export const FastfoodOutlined = loadableIcon(() => import('@material-ui/icons/FastfoodOutlined'));
-export const FavoriteBorderOutlined = loadableIcon(() => import('@material-ui/icons/FavoriteBorderOutlined'));
-export const FavoriteOutlined = loadableIcon(() => import('@material-ui/icons/FavoriteOutlined'));
-export const FeedbackOutlined = loadableIcon(() => import('@material-ui/icons/FeedbackOutlined'));
-export const FilterDramaOutlined = loadableIcon(() => import('@material-ui/icons/FilterDramaOutlined'));
-export const FilterVintageOutlined = loadableIcon(() => import('@material-ui/icons/FilterVintageOutlined'));
-export const FindInPageOutlined = loadableIcon(() => import('@material-ui/icons/FindInPageOutlined'));
-export const FingerprintOutlined = loadableIcon(() => import('@material-ui/icons/FingerprintOutlined'));
-export const FireplaceOutlined = loadableIcon(() => import('@material-ui/icons/FireplaceOutlined'));
-export const FitnessCenterOutlined = loadableIcon(() => import('@material-ui/icons/FitnessCenterOutlined'));
-export const FlagOutlined = loadableIcon(() => import('@material-ui/icons/FlagOutlined'));
-export const FlareOutlined = loadableIcon(() => import('@material-ui/icons/FlareOutlined'));
-export const FlightLandOutlined = loadableIcon(() => import('@material-ui/icons/FlightLandOutlined'));
-export const FlightTakeoffOutlined = loadableIcon(() => import('@material-ui/icons/FlightTakeoffOutlined'));
-export const FolderOutlined = loadableIcon(() => import('@material-ui/icons/FolderOutlined'));
-export const FolderSharedOutlined = loadableIcon(() => import('@material-ui/icons/FolderSharedOutlined'));
-export const FolderSpecialOutlined = loadableIcon(() => import('@material-ui/icons/FolderSpecialOutlined'));
-export const FormatPaintOutlined = loadableIcon(() => import('@material-ui/icons/FormatPaintOutlined'));
-export const FormatQuoteOutlined = loadableIcon(() => import('@material-ui/icons/FormatQuoteOutlined'));
-export const ForumOutlined = loadableIcon(() => import('@material-ui/icons/ForumOutlined'));
-export const FreeBreakfastOutlined = loadableIcon(() => import('@material-ui/icons/FreeBreakfastOutlined'));
-export const FunctionsOutlined = loadableIcon(() => import('@material-ui/icons/FunctionsOutlined'));
-export const GamesOutlined = loadableIcon(() => import('@material-ui/icons/GamesOutlined'));
-export const GavelOutlined = loadableIcon(() => import('@material-ui/icons/GavelOutlined'));
-export const GolfCourseOutlined = loadableIcon(() => import('@material-ui/icons/GolfCourseOutlined'));
-export const GpsFixedOutlined = loadableIcon(() => import('@material-ui/icons/GpsFixedOutlined'));
-export const GradeOutlined = loadableIcon(() => import('@material-ui/icons/GradeOutlined'));
-export const GradientOutlined = loadableIcon(() => import('@material-ui/icons/GradientOutlined'));
-export const GroupWorkOutlined = loadableIcon(() => import('@material-ui/icons/GroupWorkOutlined'));
-export const GTranslateOutlined = loadableIcon(() => import('@material-ui/icons/GTranslateOutlined'));
-export const HeadsetOutlined = loadableIcon(() => import('@material-ui/icons/HeadsetOutlined'));
-export const HealingOutlined = loadableIcon(() => import('@material-ui/icons/HealingOutlined'));
-export const HearingOutlined = loadableIcon(() => import('@material-ui/icons/HearingOutlined'));
-export const HelpOutlined = loadableIcon(() => import('@material-ui/icons/HelpOutlined'));
-export const HelpOutlineOutlined = loadableIcon(() => import('@material-ui/icons/HelpOutlineOutlined'));
-export const HomeOutlined = loadableIcon(() => import('@material-ui/icons/HomeOutlined'));
-export const HomeWorkOutlined = loadableIcon(() => import('@material-ui/icons/HomeWorkOutlined'));
-export const HotelOutlined = loadableIcon(() => import('@material-ui/icons/HotelOutlined'));
-export const HotTubOutlined = loadableIcon(() => import('@material-ui/icons/HotTubOutlined'));
-export const HouseOutlined = loadableIcon(() => import('@material-ui/icons/HouseOutlined'));
-export const HowToVoteOutlined = loadableIcon(() => import('@material-ui/icons/HowToVoteOutlined'));
-export const HttpsOutlined = loadableIcon(() => import('@material-ui/icons/HttpsOutlined'));
-export const ImageOutlined = loadableIcon(() => import('@material-ui/icons/ImageOutlined'));
-export const InboxOutlined = loadableIcon(() => import('@material-ui/icons/InboxOutlined'));
-export const InfoOutlined = loadableIcon(() => import('@material-ui/icons/InfoOutlined'));
-export const InsertChartOutlinedTwoTone = loadableIcon(() => import('@material-ui/icons/InsertChartOutlinedTwoTone'));
-export const InsertDriveFileOutlined = loadableIcon(() => import('@material-ui/icons/InsertDriveFileOutlined'));
-export const InsertEmoticonOutlined = loadableIcon(() => import('@material-ui/icons/InsertEmoticonOutlined'));
-export const InvertColorsOutlined = loadableIcon(() => import('@material-ui/icons/InvertColorsOutlined'));
-export const IsoOutlined = loadableIcon(() => import('@material-ui/icons/IsoOutlined'));
-export const KeyboardOutlined = loadableIcon(() => import('@material-ui/icons/KeyboardOutlined'));
-export const KingBedOutlined = loadableIcon(() => import('@material-ui/icons/KingBedOutlined'));
-export const KitchenOutlined = loadableIcon(() => import('@material-ui/icons/KitchenOutlined'));
-export const LandscapeOutlined = loadableIcon(() => import('@material-ui/icons/LandscapeOutlined'));
-export const LanguageOutlined = loadableIcon(() => import('@material-ui/icons/LanguageOutlined'));
-export const LaptopChromebookOutlined = loadableIcon(() => import('@material-ui/icons/LaptopChromebookOutlined'));
-export const LinkedCameraOutlined = loadableIcon(() => import('@material-ui/icons/LinkedCameraOutlined'));
-export const LocalActivityOutlined = loadableIcon(() => import('@material-ui/icons/LocalActivityOutlined'));
-export const LocalAtmOutlined = loadableIcon(() => import('@material-ui/icons/LocalAtmOutlined'));
-export const LocalBarOutlined = loadableIcon(() => import('@material-ui/icons/LocalBarOutlined'));
-export const LocalCafeOutlined = loadableIcon(() => import('@material-ui/icons/LocalCafeOutlined'));
-export const LocalCarWashOutlined = loadableIcon(() => import('@material-ui/icons/LocalCarWashOutlined'));
-export const LocalDiningOutlined = loadableIcon(() => import('@material-ui/icons/LocalDiningOutlined'));
-export const LocalDrinkOutlined = loadableIcon(() => import('@material-ui/icons/LocalDrinkOutlined'));
-export const LocalFloristOutlined = loadableIcon(() => import('@material-ui/icons/LocalFloristOutlined'));
-export const LocalGasStationOutlined = loadableIcon(() => import('@material-ui/icons/LocalGasStationOutlined'));
-export const LocalLaundryServiceOutlined = loadableIcon(() => import('@material-ui/icons/LocalLaundryServiceOutlined'));
-export const LocalLibraryOutlined = loadableIcon(() => import('@material-ui/icons/LocalLibraryOutlined'));
-export const LocalMallOutlined = loadableIcon(() => import('@material-ui/icons/LocalMallOutlined'));
-export const LocalMoviesOutlined = loadableIcon(() => import('@material-ui/icons/LocalMoviesOutlined'));
-export const LocalOfferOutlined = loadableIcon(() => import('@material-ui/icons/LocalOfferOutlined'));
-export const LocalParkingOutlined = loadableIcon(() => import('@material-ui/icons/LocalParkingOutlined'));
-export const LocalPharmacyOutlined = loadableIcon(() => import('@material-ui/icons/LocalPharmacyOutlined'));
-export const LocalPizzaOutlined = loadableIcon(() => import('@material-ui/icons/LocalPizzaOutlined'));
-export const LocalPlayOutlined = loadableIcon(() => import('@material-ui/icons/LocalPlayOutlined'));
-export const LocalShippingOutlined = loadableIcon(() => import('@material-ui/icons/LocalShippingOutlined'));
-export const LocalTaxiOutlined = loadableIcon(() => import('@material-ui/icons/LocalTaxiOutlined'));
-export const LocationCityOutlined = loadableIcon(() => import('@material-ui/icons/LocationCityOutlined'));
-export const LocationOffOutlined = loadableIcon(() => import('@material-ui/icons/LocationOffOutlined'));
-export const LocationOnOutlined = loadableIcon(() => import('@material-ui/icons/LocationOnOutlined'));
-export const LockOpenOutlined = loadableIcon(() => import('@material-ui/icons/LockOpenOutlined'));
-export const LockOutlined = loadableIcon(() => import('@material-ui/icons/LockOutlined'));
-export const Looks3Outlined = loadableIcon(() => import('@material-ui/icons/Looks3Outlined'));
-export const Looks4Outlined = loadableIcon(() => import('@material-ui/icons/Looks4Outlined'));
-export const Looks5Outlined = loadableIcon(() => import('@material-ui/icons/Looks5Outlined'));
-export const Looks6Outlined = loadableIcon(() => import('@material-ui/icons/Looks6Outlined'));
-export const LooksOneOutlined = loadableIcon(() => import('@material-ui/icons/LooksOneOutlined'));
-export const LooksOutlined = loadableIcon(() => import('@material-ui/icons/LooksOutlined'));
-export const LooksTwoOutlined = loadableIcon(() => import('@material-ui/icons/LooksTwoOutlined'));
-export const LoyaltyOutlined = loadableIcon(() => import('@material-ui/icons/LoyaltyOutlined'));
-export const MailOutlined = loadableIcon(() => import('@material-ui/icons/MailOutlined'));
-export const MapOutlined = loadableIcon(() => import('@material-ui/icons/MapOutlined'));
-export const MarkunreadMailboxOutlined = loadableIcon(() => import('@material-ui/icons/MarkunreadMailboxOutlined'));
-export const MeetingRoomOutlined = loadableIcon(() => import('@material-ui/icons/MeetingRoomOutlined'));
-export const MemoryOutlined = loadableIcon(() => import('@material-ui/icons/MemoryOutlined'));
-export const MenuBookOutlined = loadableIcon(() => import('@material-ui/icons/MenuBookOutlined'));
-export const MessageOutlined = loadableIcon(() => import('@material-ui/icons/MessageOutlined'));
-export const MicNoneOutlined = loadableIcon(() => import('@material-ui/icons/MicNoneOutlined'));
-export const MmsOutlined = loadableIcon(() => import('@material-ui/icons/MmsOutlined'));
-export const MonetizationOnOutlined = loadableIcon(() => import('@material-ui/icons/MonetizationOnOutlined'));
-export const MoneyOutlined = loadableIcon(() => import('@material-ui/icons/MoneyOutlined'));
-export const MonochromePhotosOutlined = loadableIcon(() => import('@material-ui/icons/MonochromePhotosOutlined'));
-export const MoodBadOutlined = loadableIcon(() => import('@material-ui/icons/MoodBadOutlined'));
-export const MoodOutlined = loadableIcon(() => import('@material-ui/icons/MoodOutlined'));
-export const MotorcycleOutlined = loadableIcon(() => import('@material-ui/icons/MotorcycleOutlined'));
-export const MouseOutlined = loadableIcon(() => import('@material-ui/icons/MouseOutlined'));
-export const MovieCreationOutlined = loadableIcon(() => import('@material-ui/icons/MovieCreationOutlined'));
-export const MuseumOutlined = loadableIcon(() => import('@material-ui/icons/MuseumOutlined'));
-export const MusicVideoOutlined = loadableIcon(() => import('@material-ui/icons/MusicVideoOutlined'));
-export const NatureOutlined = loadableIcon(() => import('@material-ui/icons/NatureOutlined'));
-export const NavigationOutlined = loadableIcon(() => import('@material-ui/icons/NavigationOutlined'));
-export const NetworkCellOutlined = loadableIcon(() => import('@material-ui/icons/NetworkCellOutlined'));
-export const NetworkCheckOutlined = loadableIcon(() => import('@material-ui/icons/NetworkCheckOutlined'));
-export const NetworkWifiOutlined = loadableIcon(() => import('@material-ui/icons/NetworkWifiOutlined'));
-export const NewReleasesOutlined = loadableIcon(() => import('@material-ui/icons/NewReleasesOutlined'));
-export const NfcOutlined = loadableIcon(() => import('@material-ui/icons/NfcOutlined'));
-export const NightsStayOutlined = loadableIcon(() => import('@material-ui/icons/NightsStayOutlined'));
-export const NotificationsActiveOutlined = loadableIcon(() => import('@material-ui/icons/NotificationsActiveOutlined'));
-export const NotificationsNoneOutlined = loadableIcon(() => import('@material-ui/icons/NotificationsNoneOutlined'));
-export const NotListedLocationOutlined = loadableIcon(() => import('@material-ui/icons/NotListedLocationOutlined'));
-export const OfflineBoltOutlined = loadableIcon(() => import('@material-ui/icons/OfflineBoltOutlined'));
-export const OndemandVideoOutlined = loadableIcon(() => import('@material-ui/icons/OndemandVideoOutlined'));
-export const OpacityOutlined = loadableIcon(() => import('@material-ui/icons/OpacityOutlined'));
-export const OpenWithOutlined = loadableIcon(() => import('@material-ui/icons/OpenWithOutlined'));
-export const OutdoorGrillOutlined = loadableIcon(() => import('@material-ui/icons/OutdoorGrillOutlined'));
-export const OutlinedFlag = loadableIcon(() => import('@material-ui/icons/OutlinedFlag'));
-export const PagesOutlined = loadableIcon(() => import('@material-ui/icons/PagesOutlined'));
-export const PageviewOutlined = loadableIcon(() => import('@material-ui/icons/PageviewOutlined'));
-export const PaletteOutlined = loadableIcon(() => import('@material-ui/icons/PaletteOutlined'));
-export const PanToolOutlined = loadableIcon(() => import('@material-ui/icons/PanToolOutlined'));
-export const PeopleAltOutlined = loadableIcon(() => import('@material-ui/icons/PeopleAltOutlined'));
-export const PermContactCalendarOutlined = loadableIcon(() => import('@material-ui/icons/PermContactCalendarOutlined'));
-export const PermIdentityOutlined = loadableIcon(() => import('@material-ui/icons/PermIdentityOutlined'));
-export const PersonOutlineOutlined = loadableIcon(() => import('@material-ui/icons/PersonOutlineOutlined'));
-export const PersonPinCircleOutlined = loadableIcon(() => import('@material-ui/icons/PersonPinCircleOutlined'));
-export const PersonPinOutlined = loadableIcon(() => import('@material-ui/icons/PersonPinOutlined'));
-export const PetsOutlined = loadableIcon(() => import('@material-ui/icons/PetsOutlined'));
-export const PhoneAndroidOutlined = loadableIcon(() => import('@material-ui/icons/PhoneAndroidOutlined'));
-export const PhoneIphoneOutlined = loadableIcon(() => import('@material-ui/icons/PhoneIphoneOutlined'));
-export const PhonelinkOffOutlined = loadableIcon(() => import('@material-ui/icons/PhonelinkOffOutlined'));
-export const PhonelinkOutlined = loadableIcon(() => import('@material-ui/icons/PhonelinkOutlined'));
-export const PhotoAlbumOutlined = loadableIcon(() => import('@material-ui/icons/PhotoAlbumOutlined'));
-export const PhotoCameraOutlined = loadableIcon(() => import('@material-ui/icons/PhotoCameraOutlined'));
-export const PhotoOutlined = loadableIcon(() => import('@material-ui/icons/PhotoOutlined'));
-export const PieChartOutlined = loadableIcon(() => import('@material-ui/icons/PieChartOutlined'));
-export const PolicyOutlined = loadableIcon(() => import('@material-ui/icons/PolicyOutlined'));
-export const PollOutlined = loadableIcon(() => import('@material-ui/icons/PollOutlined'));
-export const PolymerOutlined = loadableIcon(() => import('@material-ui/icons/PolymerOutlined'));
-export const PoolOutlined = loadableIcon(() => import('@material-ui/icons/PoolOutlined'));
-export const PortraitOutlined = loadableIcon(() => import('@material-ui/icons/PortraitOutlined'));
-export const PowerOutlined = loadableIcon(() => import('@material-ui/icons/PowerOutlined'));
-export const PowerSettingsNewOutlined = loadableIcon(() => import('@material-ui/icons/PowerSettingsNewOutlined'));
-export const PregnantWomanOutlined = loadableIcon(() => import('@material-ui/icons/PregnantWomanOutlined'));
-export const PresentToAllOutlined = loadableIcon(() => import('@material-ui/icons/PresentToAllOutlined'));
-export const PrintOutlined = loadableIcon(() => import('@material-ui/icons/PrintOutlined'));
-export const PriorityHighOutlined = loadableIcon(() => import('@material-ui/icons/PriorityHighOutlined'));
-export const PublicOutlined = loadableIcon(() => import('@material-ui/icons/PublicOutlined'));
-export const QueryBuilderOutlined = loadableIcon(() => import('@material-ui/icons/QueryBuilderOutlined'));
-export const RadioOutlined = loadableIcon(() => import('@material-ui/icons/RadioOutlined'));
-export const RateReviewOutlined = loadableIcon(() => import('@material-ui/icons/RateReviewOutlined'));
-export const ReceiptOutlined = loadableIcon(() => import('@material-ui/icons/ReceiptOutlined'));
-export const RecordVoiceOverOutlined = loadableIcon(() => import('@material-ui/icons/RecordVoiceOverOutlined'));
-export const RemoveCircleOutlineOutlined = loadableIcon(() => import('@material-ui/icons/RemoveCircleOutlineOutlined'));
-export const RemoveRedEyeOutlined = loadableIcon(() => import('@material-ui/icons/RemoveRedEyeOutlined'));
-export const ReportOutlined = loadableIcon(() => import('@material-ui/icons/ReportOutlined'));
-export const ReportProblemOutlined = loadableIcon(() => import('@material-ui/icons/ReportProblemOutlined'));
-export const RestaurantOutlined = loadableIcon(() => import('@material-ui/icons/RestaurantOutlined'));
-export const RingVolumeOutlined = loadableIcon(() => import('@material-ui/icons/RingVolumeOutlined'));
-export const RoomOutlined = loadableIcon(() => import('@material-ui/icons/RoomOutlined'));
-export const RoomServiceOutlined = loadableIcon(() => import('@material-ui/icons/RoomServiceOutlined'));
-export const RouterOutlined = loadableIcon(() => import('@material-ui/icons/RouterOutlined'));
-export const RowingOutlined = loadableIcon(() => import('@material-ui/icons/RowingOutlined'));
-export const RssFeedOutlined = loadableIcon(() => import('@material-ui/icons/RssFeedOutlined'));
-export const RvHookupOutlined = loadableIcon(() => import('@material-ui/icons/RvHookupOutlined'));
-export const SatelliteOutlined = loadableIcon(() => import('@material-ui/icons/SatelliteOutlined'));
-export const SaveOutlined = loadableIcon(() => import('@material-ui/icons/SaveOutlined'));
-export const ScannerOutlined = loadableIcon(() => import('@material-ui/icons/ScannerOutlined'));
-export const SchoolOutlined = loadableIcon(() => import('@material-ui/icons/SchoolOutlined'));
-export const SdCardOutlined = loadableIcon(() => import('@material-ui/icons/SdCardOutlined'));
-export const SecurityOutlined = loadableIcon(() => import('@material-ui/icons/SecurityOutlined'));
-export const SentimentDissatisfiedOutlined = loadableIcon(() => import('@material-ui/icons/SentimentDissatisfiedOutlined'));
-export const SentimentSatisfiedAltOutlined = loadableIcon(() => import('@material-ui/icons/SentimentSatisfiedAltOutlined'));
-export const SentimentSatisfiedOutlined = loadableIcon(() => import('@material-ui/icons/SentimentSatisfiedOutlined'));
-export const SentimentVeryDissatisfiedOutlined = loadableIcon(() => import('@material-ui/icons/SentimentVeryDissatisfiedOutlined'));
-export const SentimentVerySatisfiedOutlined = loadableIcon(() => import('@material-ui/icons/SentimentVerySatisfiedOutlined'));
-export const SettingsApplicationsOutlined = loadableIcon(() => import('@material-ui/icons/SettingsApplicationsOutlined'));
-export const SettingsBrightnessOutlined = loadableIcon(() => import('@material-ui/icons/SettingsBrightnessOutlined'));
-export const SettingsInputComponentOutlined = loadableIcon(() => import('@material-ui/icons/SettingsInputComponentOutlined'));
-export const SettingsInputHdmiOutlined = loadableIcon(() => import('@material-ui/icons/SettingsInputHdmiOutlined'));
-export const SettingsInputSvideoOutlined = loadableIcon(() => import('@material-ui/icons/SettingsInputSvideoOutlined'));
-export const SettingsOutlined = loadableIcon(() => import('@material-ui/icons/SettingsOutlined'));
-export const SettingsRemoteOutlined = loadableIcon(() => import('@material-ui/icons/SettingsRemoteOutlined'));
-export const SettingsSystemDaydreamOutlined = loadableIcon(() => import('@material-ui/icons/SettingsSystemDaydreamOutlined'));
-export const ShopOutlined = loadableIcon(() => import('@material-ui/icons/ShopOutlined'));
-export const ShoppingBasketOutlined = loadableIcon(() => import('@material-ui/icons/ShoppingBasketOutlined'));
-export const ShoppingCartOutlined = loadableIcon(() => import('@material-ui/icons/ShoppingCartOutlined'));
-export const ShutterSpeedOutlined = loadableIcon(() => import('@material-ui/icons/ShutterSpeedOutlined'));
-export const SimCardOutlined = loadableIcon(() => import('@material-ui/icons/SimCardOutlined'));
-export const SingleBedOutlined = loadableIcon(() => import('@material-ui/icons/SingleBedOutlined'));
-export const SmokingRoomsOutlined = loadableIcon(() => import('@material-ui/icons/SmokingRoomsOutlined'));
-export const SmsOutlined = loadableIcon(() => import('@material-ui/icons/SmsOutlined'));
-export const SpaOutlined = loadableIcon(() => import('@material-ui/icons/SpaOutlined'));
-export const SpeakerOutlined = loadableIcon(() => import('@material-ui/icons/SpeakerOutlined'));
-export const SpeedOutlined = loadableIcon(() => import('@material-ui/icons/SpeedOutlined'));
-export const SportsBaseballOutlined = loadableIcon(() => import('@material-ui/icons/SportsBaseballOutlined'));
-export const SportsBasketballOutlined = loadableIcon(() => import('@material-ui/icons/SportsBasketballOutlined'));
-export const SportsCricketOutlined = loadableIcon(() => import('@material-ui/icons/SportsCricketOutlined'));
-export const SportsEsportsOutlined = loadableIcon(() => import('@material-ui/icons/SportsEsportsOutlined'));
-export const SportsFootballOutlined = loadableIcon(() => import('@material-ui/icons/SportsFootballOutlined'));
-export const SportsGolfOutlined = loadableIcon(() => import('@material-ui/icons/SportsGolfOutlined'));
-export const SportsHandballOutlined = loadableIcon(() => import('@material-ui/icons/SportsHandballOutlined'));
-export const SportsHockeyOutlined = loadableIcon(() => import('@material-ui/icons/SportsHockeyOutlined'));
-export const SportsKabaddiOutlined = loadableIcon(() => import('@material-ui/icons/SportsKabaddiOutlined'));
-export const SportsMmaOutlined = loadableIcon(() => import('@material-ui/icons/SportsMmaOutlined'));
-export const SportsMotorsportsOutlined = loadableIcon(() => import('@material-ui/icons/SportsMotorsportsOutlined'));
-export const SportsOutlined = loadableIcon(() => import('@material-ui/icons/SportsOutlined'));
-export const SportsRugbyOutlined = loadableIcon(() => import('@material-ui/icons/SportsRugbyOutlined'));
-export const SportsSoccerOutlined = loadableIcon(() => import('@material-ui/icons/SportsSoccerOutlined'));
-export const SportsTennisOutlined = loadableIcon(() => import('@material-ui/icons/SportsTennisOutlined'));
-export const SportsVolleyballOutlined = loadableIcon(() => import('@material-ui/icons/SportsVolleyballOutlined'));
-export const SquareFootOutlined = loadableIcon(() => import('@material-ui/icons/SquareFootOutlined'));
-export const StarOutlined = loadableIcon(() => import('@material-ui/icons/StarOutlined'));
-export const StarOutlineOutlined = loadableIcon(() => import('@material-ui/icons/StarOutlineOutlined'));
-export const StarsOutlined = loadableIcon(() => import('@material-ui/icons/StarsOutlined'));
-export const StorageOutlined = loadableIcon(() => import('@material-ui/icons/StorageOutlined'));
-export const StorefrontOutlined = loadableIcon(() => import('@material-ui/icons/StorefrontOutlined'));
-export const StoreMallDirectoryOutlined = loadableIcon(() => import('@material-ui/icons/StoreMallDirectoryOutlined'));
-export const StraightenOutlined = loadableIcon(() => import('@material-ui/icons/StraightenOutlined'));
-export const StyleOutlined = loadableIcon(() => import('@material-ui/icons/StyleOutlined'));
-export const SubtitlesOutlined = loadableIcon(() => import('@material-ui/icons/SubtitlesOutlined'));
-export const SubwayOutlined = loadableIcon(() => import('@material-ui/icons/SubwayOutlined'));
-export const SupervisedUserCircleOutlined = loadableIcon(() => import('@material-ui/icons/SupervisedUserCircleOutlined'));
-export const SupervisorAccountOutlined = loadableIcon(() => import('@material-ui/icons/SupervisorAccountOutlined'));
-export const SurroundSoundOutlined = loadableIcon(() => import('@material-ui/icons/SurroundSoundOutlined'));
-export const TableChartOutlined = loadableIcon(() => import('@material-ui/icons/TableChartOutlined'));
-export const TabletAndroidOutlined = loadableIcon(() => import('@material-ui/icons/TabletAndroidOutlined'));
-export const TabletMacOutlined = loadableIcon(() => import('@material-ui/icons/TabletMacOutlined'));
-export const TabOutlined = loadableIcon(() => import('@material-ui/icons/TabOutlined'));
-export const TagFacesOutlined = loadableIcon(() => import('@material-ui/icons/TagFacesOutlined'));
-export const TerrainOutlined = loadableIcon(() => import('@material-ui/icons/TerrainOutlined'));
-export const TextsmsOutlined = loadableIcon(() => import('@material-ui/icons/TextsmsOutlined'));
-export const TheatersOutlined = loadableIcon(() => import('@material-ui/icons/TheatersOutlined'));
-export const ThumbDownAltOutlined = loadableIcon(() => import('@material-ui/icons/ThumbDownAltOutlined'));
-export const ThumbsUpDownOutlined = loadableIcon(() => import('@material-ui/icons/ThumbsUpDownOutlined'));
-export const ThumbUpAltOutlined = loadableIcon(() => import('@material-ui/icons/ThumbUpAltOutlined'));
-export const TimelapseOutlined = loadableIcon(() => import('@material-ui/icons/TimelapseOutlined'));
-export const TimerOutlined = loadableIcon(() => import('@material-ui/icons/TimerOutlined'));
-export const TimeToLeaveOutlined = loadableIcon(() => import('@material-ui/icons/TimeToLeaveOutlined'));
-export const TodayOutlined = loadableIcon(() => import('@material-ui/icons/TodayOutlined'));
-export const TonalityOutlined = loadableIcon(() => import('@material-ui/icons/TonalityOutlined'));
-export const TouchAppOutlined = loadableIcon(() => import('@material-ui/icons/TouchAppOutlined'));
-export const ToysOutlined = loadableIcon(() => import('@material-ui/icons/ToysOutlined'));
-export const TrackChangesOutlined = loadableIcon(() => import('@material-ui/icons/TrackChangesOutlined'));
-export const TrafficOutlined = loadableIcon(() => import('@material-ui/icons/TrafficOutlined'));
-export const TrainOutlined = loadableIcon(() => import('@material-ui/icons/TrainOutlined'));
-export const TramOutlined = loadableIcon(() => import('@material-ui/icons/TramOutlined'));
-export const TransferWithinAStationOutlined = loadableIcon(() => import('@material-ui/icons/TransferWithinAStationOutlined'));
-export const TranslateOutlined = loadableIcon(() => import('@material-ui/icons/TranslateOutlined'));
-export const TurnedInNotOutlined = loadableIcon(() => import('@material-ui/icons/TurnedInNotOutlined'));
-export const TurnedInOutlined = loadableIcon(() => import('@material-ui/icons/TurnedInOutlined'));
-export const TvOutlined = loadableIcon(() => import('@material-ui/icons/TvOutlined'));
-export const TwoWheelerOutlined = loadableIcon(() => import('@material-ui/icons/TwoWheelerOutlined'));
-export const UnarchiveOutlined = loadableIcon(() => import('@material-ui/icons/UnarchiveOutlined'));
-export const UsbOutlined = loadableIcon(() => import('@material-ui/icons/UsbOutlined'));
-export const VerifiedUserOutlined = loadableIcon(() => import('@material-ui/icons/VerifiedUserOutlined'));
-export const VideocamOutlined = loadableIcon(() => import('@material-ui/icons/VideocamOutlined'));
-export const VideogameAssetOutlined = loadableIcon(() => import('@material-ui/icons/VideogameAssetOutlined'));
-export const ViewQuiltOutlined = loadableIcon(() => import('@material-ui/icons/ViewQuiltOutlined'));
-export const VisibilityOutlined = loadableIcon(() => import('@material-ui/icons/VisibilityOutlined'));
-export const VoiceChatOutlined = loadableIcon(() => import('@material-ui/icons/VoiceChatOutlined'));
-export const VpnKeyOutlined = loadableIcon(() => import('@material-ui/icons/VpnKeyOutlined'));
-export const VpnLockOutlined = loadableIcon(() => import('@material-ui/icons/VpnLockOutlined'));
-export const WarningOutlined = loadableIcon(() => import('@material-ui/icons/WarningOutlined'));
-export const WatchLaterOutlined = loadableIcon(() => import('@material-ui/icons/WatchLaterOutlined'));
-export const WatchOutlined = loadableIcon(() => import('@material-ui/icons/WatchOutlined'));
-export const WavesOutlined = loadableIcon(() => import('@material-ui/icons/WavesOutlined'));
-export const WbCloudyOutlined = loadableIcon(() => import('@material-ui/icons/WbCloudyOutlined'));
-export const WbIncandescentOutlined = loadableIcon(() => import('@material-ui/icons/WbIncandescentOutlined'));
-export const WbIridescentOutlined = loadableIcon(() => import('@material-ui/icons/WbIridescentOutlined'));
-export const WbSunnyOutlined = loadableIcon(() => import('@material-ui/icons/WbSunnyOutlined'));
-export const WcOutlined = loadableIcon(() => import('@material-ui/icons/WcOutlined'));
-export const WebAssetOutlined = loadableIcon(() => import('@material-ui/icons/WebAssetOutlined'));
-export const WebOutlined = loadableIcon(() => import('@material-ui/icons/WebOutlined'));
-export const WeekendOutlined = loadableIcon(() => import('@material-ui/icons/WeekendOutlined'));
-export const WhatshotOutlined = loadableIcon(() => import('@material-ui/icons/WhatshotOutlined'));
-export const WhereToVoteOutlined = loadableIcon(() => import('@material-ui/icons/WhereToVoteOutlined'));
-export const WifiOutlined = loadableIcon(() => import('@material-ui/icons/WifiOutlined'));
-export const WorkOutlined = loadableIcon(() => import('@material-ui/icons/WorkOutlined'));
-export const WorkOutlineOutlined = loadableIcon(() => import('@material-ui/icons/WorkOutlineOutlined'));
-export const ZoomInOutlined = loadableIcon(() => import('@material-ui/icons/ZoomInOutlined'));
+export const DashboardOutlined = loadableIcon(
+  () => import('@mui/icons-material/DashboardOutlined'),
+);
+export const DateRangeOutlined = loadableIcon(
+  () => import('@mui/icons-material/DateRangeOutlined'),
+);
+export const DeckOutlined = loadableIcon(() => import('@mui/icons-material/DeckOutlined'));
+export const DeleteOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/DeleteOutlineOutlined'),
+);
+export const DepartureBoardOutlined = loadableIcon(
+  () => import('@mui/icons-material/DepartureBoardOutlined'),
+);
+export const DescriptionOutlined = loadableIcon(
+  () => import('@mui/icons-material/DescriptionOutlined'),
+);
+export const DesktopMacOutlined = loadableIcon(
+  () => import('@mui/icons-material/DesktopMacOutlined'),
+);
+export const DesktopWindowsOutlined = loadableIcon(
+  () => import('@mui/icons-material/DesktopWindowsOutlined'),
+);
+export const DeveloperBoardOutlined = loadableIcon(
+  () => import('@mui/icons-material/DeveloperBoardOutlined'),
+);
+export const DevicesOtherOutlined = loadableIcon(
+  () => import('@mui/icons-material/DevicesOtherOutlined'),
+);
+export const DevicesOutlined = loadableIcon(() => import('@mui/icons-material/DevicesOutlined'));
+export const DirectionsBikeOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsBikeOutlined'),
+);
+export const DirectionsBoatOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsBoatOutlined'),
+);
+export const DirectionsBusOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsBusOutlined'),
+);
+export const DirectionsCarOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsCarOutlined'),
+);
+export const DirectionsRailwayOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsRailwayOutlined'),
+);
+export const DirectionsRunOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsRunOutlined'),
+);
+export const DirectionsSubwayOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsSubwayOutlined'),
+);
+export const DirectionsWalkOutlined = loadableIcon(
+  () => import('@mui/icons-material/DirectionsWalkOutlined'),
+);
+export const DnsOutlined = loadableIcon(() => import('@mui/icons-material/DnsOutlined'));
+export const DoneOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/DoneOutlineOutlined'),
+);
+export const DonutLargeOutlined = loadableIcon(
+  () => import('@mui/icons-material/DonutLargeOutlined'),
+);
+export const DonutSmallOutlined = loadableIcon(
+  () => import('@mui/icons-material/DonutSmallOutlined'),
+);
+export const DoubleArrowOutlined = loadableIcon(
+  () => import('@mui/icons-material/DoubleArrowOutlined'),
+);
+export const DraftsOutlined = loadableIcon(() => import('@mui/icons-material/DraftsOutlined'));
+export const DuoOutlined = loadableIcon(() => import('@mui/icons-material/DuoOutlined'));
+export const DvrOutlined = loadableIcon(() => import('@mui/icons-material/DvrOutlined'));
+export const EmojiEmotionsOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiEmotionsOutlined'),
+);
+export const EmojiEventsOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiEventsOutlined'),
+);
+export const EmojiFlagsOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiFlagsOutlined'),
+);
+export const EmojiFoodBeverageOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiFoodBeverageOutlined'),
+);
+export const EmojiNatureOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiNatureOutlined'),
+);
+export const EmojiObjectsOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiObjectsOutlined'),
+);
+export const EmojiSymbolsOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiSymbolsOutlined'),
+);
+export const EmojiTransportationOutlined = loadableIcon(
+  () => import('@mui/icons-material/EmojiTransportationOutlined'),
+);
+export const ErrorOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/ErrorOutlineOutlined'),
+);
+export const EuroSymbolOutlined = loadableIcon(
+  () => import('@mui/icons-material/EuroSymbolOutlined'),
+);
+export const EventAvailableOutlined = loadableIcon(
+  () => import('@mui/icons-material/EventAvailableOutlined'),
+);
+export const EventOutlined = loadableIcon(() => import('@mui/icons-material/EventOutlined'));
+export const EvStationOutlined = loadableIcon(
+  () => import('@mui/icons-material/EvStationOutlined'),
+);
+export const ExploreOutlined = loadableIcon(() => import('@mui/icons-material/ExploreOutlined'));
+export const ExtensionOutlined = loadableIcon(
+  () => import('@mui/icons-material/ExtensionOutlined'),
+);
+export const FaceOutlined = loadableIcon(() => import('@mui/icons-material/FaceOutlined'));
+export const FastfoodOutlined = loadableIcon(() => import('@mui/icons-material/FastfoodOutlined'));
+export const FavoriteBorderOutlined = loadableIcon(
+  () => import('@mui/icons-material/FavoriteBorderOutlined'),
+);
+export const FavoriteOutlined = loadableIcon(() => import('@mui/icons-material/FavoriteOutlined'));
+export const FeedbackOutlined = loadableIcon(() => import('@mui/icons-material/FeedbackOutlined'));
+export const FilterDramaOutlined = loadableIcon(
+  () => import('@mui/icons-material/FilterDramaOutlined'),
+);
+export const FilterVintageOutlined = loadableIcon(
+  () => import('@mui/icons-material/FilterVintageOutlined'),
+);
+export const FindInPageOutlined = loadableIcon(
+  () => import('@mui/icons-material/FindInPageOutlined'),
+);
+export const FingerprintOutlined = loadableIcon(
+  () => import('@mui/icons-material/FingerprintOutlined'),
+);
+export const FireplaceOutlined = loadableIcon(
+  () => import('@mui/icons-material/FireplaceOutlined'),
+);
+export const FitnessCenterOutlined = loadableIcon(
+  () => import('@mui/icons-material/FitnessCenterOutlined'),
+);
+export const FlagOutlined = loadableIcon(() => import('@mui/icons-material/FlagOutlined'));
+export const FlareOutlined = loadableIcon(() => import('@mui/icons-material/FlareOutlined'));
+export const FlightLandOutlined = loadableIcon(
+  () => import('@mui/icons-material/FlightLandOutlined'),
+);
+export const FlightTakeoffOutlined = loadableIcon(
+  () => import('@mui/icons-material/FlightTakeoffOutlined'),
+);
+export const FolderOutlined = loadableIcon(() => import('@mui/icons-material/FolderOutlined'));
+export const FolderSharedOutlined = loadableIcon(
+  () => import('@mui/icons-material/FolderSharedOutlined'),
+);
+export const FolderSpecialOutlined = loadableIcon(
+  () => import('@mui/icons-material/FolderSpecialOutlined'),
+);
+export const FormatPaintOutlined = loadableIcon(
+  () => import('@mui/icons-material/FormatPaintOutlined'),
+);
+export const FormatQuoteOutlined = loadableIcon(
+  () => import('@mui/icons-material/FormatQuoteOutlined'),
+);
+export const ForumOutlined = loadableIcon(() => import('@mui/icons-material/ForumOutlined'));
+export const FreeBreakfastOutlined = loadableIcon(
+  () => import('@mui/icons-material/FreeBreakfastOutlined'),
+);
+export const FunctionsOutlined = loadableIcon(
+  () => import('@mui/icons-material/FunctionsOutlined'),
+);
+export const GamesOutlined = loadableIcon(() => import('@mui/icons-material/GamesOutlined'));
+export const GavelOutlined = loadableIcon(() => import('@mui/icons-material/GavelOutlined'));
+export const GolfCourseOutlined = loadableIcon(
+  () => import('@mui/icons-material/GolfCourseOutlined'),
+);
+export const GpsFixedOutlined = loadableIcon(() => import('@mui/icons-material/GpsFixedOutlined'));
+export const GradeOutlined = loadableIcon(() => import('@mui/icons-material/GradeOutlined'));
+export const GradientOutlined = loadableIcon(() => import('@mui/icons-material/GradientOutlined'));
+export const GroupWorkOutlined = loadableIcon(
+  () => import('@mui/icons-material/GroupWorkOutlined'),
+);
+export const GTranslateOutlined = loadableIcon(
+  () => import('@mui/icons-material/GTranslateOutlined'),
+);
+export const HeadsetOutlined = loadableIcon(() => import('@mui/icons-material/HeadsetOutlined'));
+export const HealingOutlined = loadableIcon(() => import('@mui/icons-material/HealingOutlined'));
+export const HearingOutlined = loadableIcon(() => import('@mui/icons-material/HearingOutlined'));
+export const HelpOutlined = loadableIcon(() => import('@mui/icons-material/HelpOutlined'));
+export const HelpOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/HelpOutlineOutlined'),
+);
+export const HomeOutlined = loadableIcon(() => import('@mui/icons-material/HomeOutlined'));
+export const HomeWorkOutlined = loadableIcon(() => import('@mui/icons-material/HomeWorkOutlined'));
+export const HotelOutlined = loadableIcon(() => import('@mui/icons-material/HotelOutlined'));
+export const HotTubOutlined = loadableIcon(() => import('@mui/icons-material/HotTubOutlined'));
+export const HouseOutlined = loadableIcon(() => import('@mui/icons-material/HouseOutlined'));
+export const HowToVoteOutlined = loadableIcon(
+  () => import('@mui/icons-material/HowToVoteOutlined'),
+);
+export const HttpsOutlined = loadableIcon(() => import('@mui/icons-material/HttpsOutlined'));
+export const ImageOutlined = loadableIcon(() => import('@mui/icons-material/ImageOutlined'));
+export const InboxOutlined = loadableIcon(() => import('@mui/icons-material/InboxOutlined'));
+export const InfoOutlined = loadableIcon(() => import('@mui/icons-material/InfoOutlined'));
+export const InsertChartOutlinedTwoTone = loadableIcon(
+  () => import('@mui/icons-material/InsertChartOutlinedTwoTone'),
+);
+export const InsertDriveFileOutlined = loadableIcon(
+  () => import('@mui/icons-material/InsertDriveFileOutlined'),
+);
+export const InsertEmoticonOutlined = loadableIcon(
+  () => import('@mui/icons-material/InsertEmoticonOutlined'),
+);
+export const InvertColorsOutlined = loadableIcon(
+  () => import('@mui/icons-material/InvertColorsOutlined'),
+);
+export const IsoOutlined = loadableIcon(() => import('@mui/icons-material/IsoOutlined'));
+export const KeyboardOutlined = loadableIcon(() => import('@mui/icons-material/KeyboardOutlined'));
+export const KingBedOutlined = loadableIcon(() => import('@mui/icons-material/KingBedOutlined'));
+export const KitchenOutlined = loadableIcon(() => import('@mui/icons-material/KitchenOutlined'));
+export const LandscapeOutlined = loadableIcon(
+  () => import('@mui/icons-material/LandscapeOutlined'),
+);
+export const LanguageOutlined = loadableIcon(() => import('@mui/icons-material/LanguageOutlined'));
+export const LaptopChromebookOutlined = loadableIcon(
+  () => import('@mui/icons-material/LaptopChromebookOutlined'),
+);
+export const LinkedCameraOutlined = loadableIcon(
+  () => import('@mui/icons-material/LinkedCameraOutlined'),
+);
+export const LocalActivityOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalActivityOutlined'),
+);
+export const LocalAtmOutlined = loadableIcon(() => import('@mui/icons-material/LocalAtmOutlined'));
+export const LocalBarOutlined = loadableIcon(() => import('@mui/icons-material/LocalBarOutlined'));
+export const LocalCafeOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalCafeOutlined'),
+);
+export const LocalCarWashOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalCarWashOutlined'),
+);
+export const LocalDiningOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalDiningOutlined'),
+);
+export const LocalDrinkOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalDrinkOutlined'),
+);
+export const LocalFloristOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalFloristOutlined'),
+);
+export const LocalGasStationOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalGasStationOutlined'),
+);
+export const LocalLaundryServiceOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalLaundryServiceOutlined'),
+);
+export const LocalLibraryOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalLibraryOutlined'),
+);
+export const LocalMallOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalMallOutlined'),
+);
+export const LocalMoviesOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalMoviesOutlined'),
+);
+export const LocalOfferOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalOfferOutlined'),
+);
+export const LocalParkingOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalParkingOutlined'),
+);
+export const LocalPharmacyOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalPharmacyOutlined'),
+);
+export const LocalPizzaOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalPizzaOutlined'),
+);
+export const LocalPlayOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalPlayOutlined'),
+);
+export const LocalShippingOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalShippingOutlined'),
+);
+export const LocalTaxiOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalTaxiOutlined'),
+);
+export const LocationCityOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocationCityOutlined'),
+);
+export const LocationOffOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocationOffOutlined'),
+);
+export const LocationOnOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocationOnOutlined'),
+);
+export const LockOpenOutlined = loadableIcon(() => import('@mui/icons-material/LockOpenOutlined'));
+export const LockOutlined = loadableIcon(() => import('@mui/icons-material/LockOutlined'));
+export const Looks3Outlined = loadableIcon(() => import('@mui/icons-material/Looks3Outlined'));
+export const Looks4Outlined = loadableIcon(() => import('@mui/icons-material/Looks4Outlined'));
+export const Looks5Outlined = loadableIcon(() => import('@mui/icons-material/Looks5Outlined'));
+export const Looks6Outlined = loadableIcon(() => import('@mui/icons-material/Looks6Outlined'));
+export const LooksOneOutlined = loadableIcon(() => import('@mui/icons-material/LooksOneOutlined'));
+export const LooksOutlined = loadableIcon(() => import('@mui/icons-material/LooksOutlined'));
+export const LooksTwoOutlined = loadableIcon(() => import('@mui/icons-material/LooksTwoOutlined'));
+export const LoyaltyOutlined = loadableIcon(() => import('@mui/icons-material/LoyaltyOutlined'));
+export const MailOutlined = loadableIcon(() => import('@mui/icons-material/MailOutlined'));
+export const MapOutlined = loadableIcon(() => import('@mui/icons-material/MapOutlined'));
+export const MarkunreadMailboxOutlined = loadableIcon(
+  () => import('@mui/icons-material/MarkunreadMailboxOutlined'),
+);
+export const MeetingRoomOutlined = loadableIcon(
+  () => import('@mui/icons-material/MeetingRoomOutlined'),
+);
+export const MemoryOutlined = loadableIcon(() => import('@mui/icons-material/MemoryOutlined'));
+export const MenuBookOutlined = loadableIcon(() => import('@mui/icons-material/MenuBookOutlined'));
+export const MessageOutlined = loadableIcon(() => import('@mui/icons-material/MessageOutlined'));
+export const MicNoneOutlined = loadableIcon(() => import('@mui/icons-material/MicNoneOutlined'));
+export const MmsOutlined = loadableIcon(() => import('@mui/icons-material/MmsOutlined'));
+export const MonetizationOnOutlined = loadableIcon(
+  () => import('@mui/icons-material/MonetizationOnOutlined'),
+);
+export const MoneyOutlined = loadableIcon(() => import('@mui/icons-material/MoneyOutlined'));
+export const MonochromePhotosOutlined = loadableIcon(
+  () => import('@mui/icons-material/MonochromePhotosOutlined'),
+);
+export const MoodBadOutlined = loadableIcon(() => import('@mui/icons-material/MoodBadOutlined'));
+export const MoodOutlined = loadableIcon(() => import('@mui/icons-material/MoodOutlined'));
+export const MouseOutlined = loadableIcon(() => import('@mui/icons-material/MouseOutlined'));
+export const MovieCreationOutlined = loadableIcon(
+  () => import('@mui/icons-material/MovieCreationOutlined'),
+);
+export const MuseumOutlined = loadableIcon(() => import('@mui/icons-material/MuseumOutlined'));
+export const MusicVideoOutlined = loadableIcon(
+  () => import('@mui/icons-material/MusicVideoOutlined'),
+);
+export const NatureOutlined = loadableIcon(() => import('@mui/icons-material/NatureOutlined'));
+export const NavigationOutlined = loadableIcon(
+  () => import('@mui/icons-material/NavigationOutlined'),
+);
+export const NetworkCellOutlined = loadableIcon(
+  () => import('@mui/icons-material/NetworkCellOutlined'),
+);
+export const NetworkCheckOutlined = loadableIcon(
+  () => import('@mui/icons-material/NetworkCheckOutlined'),
+);
+export const NetworkWifiOutlined = loadableIcon(
+  () => import('@mui/icons-material/NetworkWifiOutlined'),
+);
+export const NewReleasesOutlined = loadableIcon(
+  () => import('@mui/icons-material/NewReleasesOutlined'),
+);
+export const NfcOutlined = loadableIcon(() => import('@mui/icons-material/NfcOutlined'));
+export const NightsStayOutlined = loadableIcon(
+  () => import('@mui/icons-material/NightsStayOutlined'),
+);
+export const NotificationsActiveOutlined = loadableIcon(
+  () => import('@mui/icons-material/NotificationsActiveOutlined'),
+);
+export const NotificationsNoneOutlined = loadableIcon(
+  () => import('@mui/icons-material/NotificationsNoneOutlined'),
+);
+export const NotListedLocationOutlined = loadableIcon(
+  () => import('@mui/icons-material/NotListedLocationOutlined'),
+);
+export const OfflineBoltOutlined = loadableIcon(
+  () => import('@mui/icons-material/OfflineBoltOutlined'),
+);
+export const OndemandVideoOutlined = loadableIcon(
+  () => import('@mui/icons-material/OndemandVideoOutlined'),
+);
+export const OpacityOutlined = loadableIcon(() => import('@mui/icons-material/OpacityOutlined'));
+export const OpenWithOutlined = loadableIcon(() => import('@mui/icons-material/OpenWithOutlined'));
+export const OutdoorGrillOutlined = loadableIcon(
+  () => import('@mui/icons-material/OutdoorGrillOutlined'),
+);
+export const OutlinedFlag = loadableIcon(() => import('@mui/icons-material/OutlinedFlag'));
+export const PagesOutlined = loadableIcon(() => import('@mui/icons-material/PagesOutlined'));
+export const PageviewOutlined = loadableIcon(() => import('@mui/icons-material/PageviewOutlined'));
+export const PaletteOutlined = loadableIcon(() => import('@mui/icons-material/PaletteOutlined'));
+export const PanToolOutlined = loadableIcon(() => import('@mui/icons-material/PanToolOutlined'));
+export const PeopleAltOutlined = loadableIcon(
+  () => import('@mui/icons-material/PeopleAltOutlined'),
+);
+export const PermContactCalendarOutlined = loadableIcon(
+  () => import('@mui/icons-material/PermContactCalendarOutlined'),
+);
+export const PermIdentityOutlined = loadableIcon(
+  () => import('@mui/icons-material/PermIdentityOutlined'),
+);
+export const PersonOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/PersonOutlineOutlined'),
+);
+export const PersonPinCircleOutlined = loadableIcon(
+  () => import('@mui/icons-material/PersonPinCircleOutlined'),
+);
+export const PersonPinOutlined = loadableIcon(
+  () => import('@mui/icons-material/PersonPinOutlined'),
+);
+export const PetsOutlined = loadableIcon(() => import('@mui/icons-material/PetsOutlined'));
+export const PhoneAndroidOutlined = loadableIcon(
+  () => import('@mui/icons-material/PhoneAndroidOutlined'),
+);
+export const PhoneIphoneOutlined = loadableIcon(
+  () => import('@mui/icons-material/PhoneIphoneOutlined'),
+);
+export const PhonelinkOffOutlined = loadableIcon(
+  () => import('@mui/icons-material/PhonelinkOffOutlined'),
+);
+export const PhonelinkOutlined = loadableIcon(
+  () => import('@mui/icons-material/PhonelinkOutlined'),
+);
+export const PhotoAlbumOutlined = loadableIcon(
+  () => import('@mui/icons-material/PhotoAlbumOutlined'),
+);
+export const PhotoCameraOutlined = loadableIcon(
+  () => import('@mui/icons-material/PhotoCameraOutlined'),
+);
+export const PhotoOutlined = loadableIcon(() => import('@mui/icons-material/PhotoOutlined'));
+export const PieChartOutlined = loadableIcon(() => import('@mui/icons-material/PieChartOutlined'));
+export const PolicyOutlined = loadableIcon(() => import('@mui/icons-material/PolicyOutlined'));
+export const PollOutlined = loadableIcon(() => import('@mui/icons-material/PollOutlined'));
+export const PoolOutlined = loadableIcon(() => import('@mui/icons-material/PoolOutlined'));
+export const PortraitOutlined = loadableIcon(() => import('@mui/icons-material/PortraitOutlined'));
+export const PowerOutlined = loadableIcon(() => import('@mui/icons-material/PowerOutlined'));
+export const PowerSettingsNewOutlined = loadableIcon(
+  () => import('@mui/icons-material/PowerSettingsNewOutlined'),
+);
+export const PregnantWomanOutlined = loadableIcon(
+  () => import('@mui/icons-material/PregnantWomanOutlined'),
+);
+export const PresentToAllOutlined = loadableIcon(
+  () => import('@mui/icons-material/PresentToAllOutlined'),
+);
+export const PrintOutlined = loadableIcon(() => import('@mui/icons-material/PrintOutlined'));
+export const PriorityHighOutlined = loadableIcon(
+  () => import('@mui/icons-material/PriorityHighOutlined'),
+);
+export const PublicOutlined = loadableIcon(() => import('@mui/icons-material/PublicOutlined'));
+export const QueryBuilderOutlined = loadableIcon(
+  () => import('@mui/icons-material/QueryBuilderOutlined'),
+);
+export const RadioOutlined = loadableIcon(() => import('@mui/icons-material/RadioOutlined'));
+export const RateReviewOutlined = loadableIcon(
+  () => import('@mui/icons-material/RateReviewOutlined'),
+);
+export const ReceiptOutlined = loadableIcon(() => import('@mui/icons-material/ReceiptOutlined'));
+export const RecordVoiceOverOutlined = loadableIcon(
+  () => import('@mui/icons-material/RecordVoiceOverOutlined'),
+);
+export const RemoveCircleOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/RemoveCircleOutlineOutlined'),
+);
+export const RemoveRedEyeOutlined = loadableIcon(
+  () => import('@mui/icons-material/RemoveRedEyeOutlined'),
+);
+export const ReportOutlined = loadableIcon(() => import('@mui/icons-material/ReportOutlined'));
+export const ReportProblemOutlined = loadableIcon(
+  () => import('@mui/icons-material/ReportProblemOutlined'),
+);
+export const RestaurantOutlined = loadableIcon(
+  () => import('@mui/icons-material/RestaurantOutlined'),
+);
+export const RingVolumeOutlined = loadableIcon(
+  () => import('@mui/icons-material/RingVolumeOutlined'),
+);
+export const RoomOutlined = loadableIcon(() => import('@mui/icons-material/RoomOutlined'));
+export const RoomServiceOutlined = loadableIcon(
+  () => import('@mui/icons-material/RoomServiceOutlined'),
+);
+export const RouterOutlined = loadableIcon(() => import('@mui/icons-material/RouterOutlined'));
+export const RowingOutlined = loadableIcon(() => import('@mui/icons-material/RowingOutlined'));
+export const RssFeedOutlined = loadableIcon(() => import('@mui/icons-material/RssFeedOutlined'));
+export const RvHookupOutlined = loadableIcon(() => import('@mui/icons-material/RvHookupOutlined'));
+export const SatelliteOutlined = loadableIcon(
+  () => import('@mui/icons-material/SatelliteOutlined'),
+);
+export const SaveOutlined = loadableIcon(() => import('@mui/icons-material/SaveOutlined'));
+export const ScannerOutlined = loadableIcon(() => import('@mui/icons-material/ScannerOutlined'));
+export const SchoolOutlined = loadableIcon(() => import('@mui/icons-material/SchoolOutlined'));
+export const SdCardOutlined = loadableIcon(() => import('@mui/icons-material/SdCardOutlined'));
+export const SecurityOutlined = loadableIcon(() => import('@mui/icons-material/SecurityOutlined'));
+export const SentimentDissatisfiedOutlined = loadableIcon(
+  () => import('@mui/icons-material/SentimentDissatisfiedOutlined'),
+);
+export const SentimentSatisfiedAltOutlined = loadableIcon(
+  () => import('@mui/icons-material/SentimentSatisfiedAltOutlined'),
+);
+export const SentimentSatisfiedOutlined = loadableIcon(
+  () => import('@mui/icons-material/SentimentSatisfiedOutlined'),
+);
+export const SentimentVeryDissatisfiedOutlined = loadableIcon(
+  () => import('@mui/icons-material/SentimentVeryDissatisfiedOutlined'),
+);
+export const SentimentVerySatisfiedOutlined = loadableIcon(
+  () => import('@mui/icons-material/SentimentVerySatisfiedOutlined'),
+);
+export const SettingsApplicationsOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsApplicationsOutlined'),
+);
+export const SettingsBrightnessOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsBrightnessOutlined'),
+);
+export const SettingsInputComponentOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsInputComponentOutlined'),
+);
+export const SettingsInputHdmiOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsInputHdmiOutlined'),
+);
+export const SettingsInputSvideoOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsInputSvideoOutlined'),
+);
+export const SettingsOutlined = loadableIcon(() => import('@mui/icons-material/SettingsOutlined'));
+export const SettingsRemoteOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsRemoteOutlined'),
+);
+export const SettingsSystemDaydreamOutlined = loadableIcon(
+  () => import('@mui/icons-material/SettingsSystemDaydreamOutlined'),
+);
+export const ShopOutlined = loadableIcon(() => import('@mui/icons-material/ShopOutlined'));
+export const ShoppingBasketOutlined = loadableIcon(
+  () => import('@mui/icons-material/ShoppingBasketOutlined'),
+);
+export const ShoppingCartOutlined = loadableIcon(
+  () => import('@mui/icons-material/ShoppingCartOutlined'),
+);
+export const ShutterSpeedOutlined = loadableIcon(
+  () => import('@mui/icons-material/ShutterSpeedOutlined'),
+);
+export const SimCardOutlined = loadableIcon(() => import('@mui/icons-material/SimCardOutlined'));
+export const SingleBedOutlined = loadableIcon(
+  () => import('@mui/icons-material/SingleBedOutlined'),
+);
+export const SmokingRoomsOutlined = loadableIcon(
+  () => import('@mui/icons-material/SmokingRoomsOutlined'),
+);
+export const SmsOutlined = loadableIcon(() => import('@mui/icons-material/SmsOutlined'));
+export const SpaOutlined = loadableIcon(() => import('@mui/icons-material/SpaOutlined'));
+export const SpeakerOutlined = loadableIcon(() => import('@mui/icons-material/SpeakerOutlined'));
+export const SpeedOutlined = loadableIcon(() => import('@mui/icons-material/SpeedOutlined'));
+export const SportsBaseballOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsBaseballOutlined'),
+);
+export const SportsBasketballOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsBasketballOutlined'),
+);
+export const SportsCricketOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsCricketOutlined'),
+);
+export const SportsEsportsOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsEsportsOutlined'),
+);
+export const SportsFootballOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsFootballOutlined'),
+);
+export const SportsGolfOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsGolfOutlined'),
+);
+export const SportsHandballOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsHandballOutlined'),
+);
+export const SportsHockeyOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsHockeyOutlined'),
+);
+export const SportsKabaddiOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsKabaddiOutlined'),
+);
+export const SportsMmaOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsMmaOutlined'),
+);
+export const SportsMotorsportsOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsMotorsportsOutlined'),
+);
+export const SportsOutlined = loadableIcon(() => import('@mui/icons-material/SportsOutlined'));
+export const SportsRugbyOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsRugbyOutlined'),
+);
+export const SportsSoccerOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsSoccerOutlined'),
+);
+export const SportsTennisOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsTennisOutlined'),
+);
+export const SportsVolleyballOutlined = loadableIcon(
+  () => import('@mui/icons-material/SportsVolleyballOutlined'),
+);
+export const SquareFootOutlined = loadableIcon(
+  () => import('@mui/icons-material/SquareFootOutlined'),
+);
+export const StarOutlined = loadableIcon(() => import('@mui/icons-material/StarOutlined'));
+export const StarOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/StarOutlineOutlined'),
+);
+export const StarsOutlined = loadableIcon(() => import('@mui/icons-material/StarsOutlined'));
+export const StorageOutlined = loadableIcon(() => import('@mui/icons-material/StorageOutlined'));
+export const StorefrontOutlined = loadableIcon(
+  () => import('@mui/icons-material/StorefrontOutlined'),
+);
+export const StoreMallDirectoryOutlined = loadableIcon(
+  () => import('@mui/icons-material/StoreMallDirectoryOutlined'),
+);
+export const StraightenOutlined = loadableIcon(
+  () => import('@mui/icons-material/StraightenOutlined'),
+);
+export const StyleOutlined = loadableIcon(() => import('@mui/icons-material/StyleOutlined'));
+export const SubtitlesOutlined = loadableIcon(
+  () => import('@mui/icons-material/SubtitlesOutlined'),
+);
+export const SubwayOutlined = loadableIcon(() => import('@mui/icons-material/SubwayOutlined'));
+export const SupervisedUserCircleOutlined = loadableIcon(
+  () => import('@mui/icons-material/SupervisedUserCircleOutlined'),
+);
+export const SupervisorAccountOutlined = loadableIcon(
+  () => import('@mui/icons-material/SupervisorAccountOutlined'),
+);
+export const SurroundSoundOutlined = loadableIcon(
+  () => import('@mui/icons-material/SurroundSoundOutlined'),
+);
+export const TableChartOutlined = loadableIcon(
+  () => import('@mui/icons-material/TableChartOutlined'),
+);
+export const TabletAndroidOutlined = loadableIcon(
+  () => import('@mui/icons-material/TabletAndroidOutlined'),
+);
+export const TabletMacOutlined = loadableIcon(
+  () => import('@mui/icons-material/TabletMacOutlined'),
+);
+export const TabOutlined = loadableIcon(() => import('@mui/icons-material/TabOutlined'));
+export const TagFacesOutlined = loadableIcon(() => import('@mui/icons-material/TagFacesOutlined'));
+export const TerrainOutlined = loadableIcon(() => import('@mui/icons-material/TerrainOutlined'));
+export const TextsmsOutlined = loadableIcon(() => import('@mui/icons-material/TextsmsOutlined'));
+export const TheatersOutlined = loadableIcon(() => import('@mui/icons-material/TheatersOutlined'));
+export const ThumbDownAltOutlined = loadableIcon(
+  () => import('@mui/icons-material/ThumbDownAltOutlined'),
+);
+export const ThumbsUpDownOutlined = loadableIcon(
+  () => import('@mui/icons-material/ThumbsUpDownOutlined'),
+);
+export const ThumbUpAltOutlined = loadableIcon(
+  () => import('@mui/icons-material/ThumbUpAltOutlined'),
+);
+export const TimelapseOutlined = loadableIcon(
+  () => import('@mui/icons-material/TimelapseOutlined'),
+);
+export const TimerOutlined = loadableIcon(() => import('@mui/icons-material/TimerOutlined'));
+export const TimeToLeaveOutlined = loadableIcon(
+  () => import('@mui/icons-material/TimeToLeaveOutlined'),
+);
+export const TodayOutlined = loadableIcon(() => import('@mui/icons-material/TodayOutlined'));
+export const TonalityOutlined = loadableIcon(() => import('@mui/icons-material/TonalityOutlined'));
+export const TouchAppOutlined = loadableIcon(() => import('@mui/icons-material/TouchAppOutlined'));
+export const ToysOutlined = loadableIcon(() => import('@mui/icons-material/ToysOutlined'));
+export const TrackChangesOutlined = loadableIcon(
+  () => import('@mui/icons-material/TrackChangesOutlined'),
+);
+export const TrafficOutlined = loadableIcon(() => import('@mui/icons-material/TrafficOutlined'));
+export const TrainOutlined = loadableIcon(() => import('@mui/icons-material/TrainOutlined'));
+export const TramOutlined = loadableIcon(() => import('@mui/icons-material/TramOutlined'));
+export const TransferWithinAStationOutlined = loadableIcon(
+  () => import('@mui/icons-material/TransferWithinAStationOutlined'),
+);
+export const TranslateOutlined = loadableIcon(
+  () => import('@mui/icons-material/TranslateOutlined'),
+);
+export const TurnedInNotOutlined = loadableIcon(
+  () => import('@mui/icons-material/TurnedInNotOutlined'),
+);
+export const TurnedInOutlined = loadableIcon(() => import('@mui/icons-material/TurnedInOutlined'));
+export const TvOutlined = loadableIcon(() => import('@mui/icons-material/TvOutlined'));
+export const TwoWheelerOutlined = loadableIcon(
+  () => import('@mui/icons-material/TwoWheelerOutlined'),
+);
+export const UnarchiveOutlined = loadableIcon(
+  () => import('@mui/icons-material/UnarchiveOutlined'),
+);
+export const UsbOutlined = loadableIcon(() => import('@mui/icons-material/UsbOutlined'));
+export const VerifiedUserOutlined = loadableIcon(
+  () => import('@mui/icons-material/VerifiedUserOutlined'),
+);
+export const VideocamOutlined = loadableIcon(() => import('@mui/icons-material/VideocamOutlined'));
+export const VideogameAssetOutlined = loadableIcon(
+  () => import('@mui/icons-material/VideogameAssetOutlined'),
+);
+export const ViewQuiltOutlined = loadableIcon(
+  () => import('@mui/icons-material/ViewQuiltOutlined'),
+);
+export const VisibilityOutlined = loadableIcon(
+  () => import('@mui/icons-material/VisibilityOutlined'),
+);
+export const VoiceChatOutlined = loadableIcon(
+  () => import('@mui/icons-material/VoiceChatOutlined'),
+);
+export const VpnKeyOutlined = loadableIcon(() => import('@mui/icons-material/VpnKeyOutlined'));
+export const VpnLockOutlined = loadableIcon(() => import('@mui/icons-material/VpnLockOutlined'));
+export const WarningOutlined = loadableIcon(() => import('@mui/icons-material/WarningOutlined'));
+export const WatchLaterOutlined = loadableIcon(
+  () => import('@mui/icons-material/WatchLaterOutlined'),
+);
+export const WatchOutlined = loadableIcon(() => import('@mui/icons-material/WatchOutlined'));
+export const WavesOutlined = loadableIcon(() => import('@mui/icons-material/WavesOutlined'));
+export const WbCloudyOutlined = loadableIcon(() => import('@mui/icons-material/WbCloudyOutlined'));
+export const WbIncandescentOutlined = loadableIcon(
+  () => import('@mui/icons-material/WbIncandescentOutlined'),
+);
+export const WbIridescentOutlined = loadableIcon(
+  () => import('@mui/icons-material/WbIridescentOutlined'),
+);
+export const WbSunnyOutlined = loadableIcon(() => import('@mui/icons-material/WbSunnyOutlined'));
+export const WcOutlined = loadableIcon(() => import('@mui/icons-material/WcOutlined'));
+export const WebAssetOutlined = loadableIcon(() => import('@mui/icons-material/WebAssetOutlined'));
+export const WebOutlined = loadableIcon(() => import('@mui/icons-material/WebOutlined'));
+export const WeekendOutlined = loadableIcon(() => import('@mui/icons-material/WeekendOutlined'));
+export const WhatshotOutlined = loadableIcon(() => import('@mui/icons-material/WhatshotOutlined'));
+export const WhereToVoteOutlined = loadableIcon(
+  () => import('@mui/icons-material/WhereToVoteOutlined'),
+);
+export const WifiOutlined = loadableIcon(() => import('@mui/icons-material/WifiOutlined'));
+export const WorkOutlined = loadableIcon(() => import('@mui/icons-material/WorkOutlined'));
+export const WorkOutlineOutlined = loadableIcon(
+  () => import('@mui/icons-material/WorkOutlineOutlined'),
+);
+export const ZoomInOutlined = loadableIcon(() => import('@mui/icons-material/ZoomInOutlined'));

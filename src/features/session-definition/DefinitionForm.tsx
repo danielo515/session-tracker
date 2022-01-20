@@ -1,6 +1,6 @@
 import { IconSelector } from './Iconselector';
 import { DurationSlider } from './DurationSlider';
-import { Box, Button, Container, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { HexColorPicker } from 'react-colorful';
 import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
@@ -15,10 +15,12 @@ export default function DefinitionForm({
   definition,
   onSubmit,
   isLoading,
+  isUpdate,
 }: {
   isLoading: boolean;
-  onSubmit: (a: SessionDefinition) => any;
+  onSubmit: (a: SessionDefinition) => unknown;
   definition: SessionDefinition;
+  isUpdate: boolean;
 }) {
   const [color, setColor] = useState(definition.color);
   const [duration, setDuration] = useState(definition.expectedDuration || defaultDuration);
@@ -91,7 +93,7 @@ export default function DefinitionForm({
                 variant="contained"
                 size="large"
               >
-                Create
+                {isUpdate ? 'Save' : 'Create'}
               </Button>
             </FormRow>
           </Box>

@@ -1,6 +1,26 @@
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
+import { styled } from '@mui/material/styles';
 import React from 'react';
-import { Slider, withStyles } from '@material-ui/core';
+import { Slider, sliderClasses } from '@mui/material';
+
+const Root = styled('div')(({ theme: { spacing } }) => ({
+  padding: spacing(2),
+}));
+
+const StyledSlider = styled(Slider)(({ theme: { palette } }) => ({
+  [`& .${sliderClasses.markLabel}`]: {
+    transform: 'unset',
+  },
+
+  [`& .${sliderClasses.valueLabel}`]: {
+    top: '-2px',
+    width: '80px',
+    transform: 'unset',
+    background: 'transparent',
+    fontWeight: '400',
+    color: palette.text.secondary,
+  },
+}));
 
 export const sliderMarks = Array.from(Array(12), (_, i) => {
   const minuteValue = i * 60;
@@ -14,46 +34,21 @@ interface DurationSliderProps {
   onChange: (value: number) => void;
   value: number;
   valueLabelDisplay?: 'auto' | 'on' | 'off';
-  classes: { wrapper: string };
 }
-const DurationSlider_ = ({
-  onChange,
-  value,
-  classes: { wrapper, ...classes },
-  valueLabelDisplay,
-}: DurationSliderProps) => {
+export const DurationSlider = ({ onChange, value, valueLabelDisplay }: DurationSliderProps) => {
   return (
-    <div className={wrapper}>
-      <Slider
+    <Root>
+      <StyledSlider
         marks={sliderMarks}
-        // @ts-expect-error wrong library typings?
-        onChange={(e, value: number) => onChange(value)}
+        onChange={(e, value) => onChange(value as number)}
         valueLabelDisplay={valueLabelDisplay}
         value={value}
-        classes={classes}
         min={0}
         max={60 * 12}
         step={5}
-        valueLabelFormat={value => formatMinutes4Human(value)}
+        valueLabelFormat={(value) => formatMinutes4Human(value)}
+        size="small"
       />
-    </div>
+    </Root>
   );
 };
-
-export const DurationSlider = withStyles(({ palette, spacing }) => ({
-  wrapper: {
-    padding: spacing(2),
-  },
-  markLabel: {
-    transform: 'unset',
-  },
-  valueLabel: {
-    top: -22,
-    '& *': {
-      width: '80px',
-      transform: 'unset',
-      background: 'transparent',
-      color: palette.text.secondary,
-    },
-  },
-}))(DurationSlider_);

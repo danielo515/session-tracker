@@ -1,7 +1,7 @@
 import React from 'react';
 import meme from '../../images/not-implemented-meme.png';
-import Button from '@material-ui/core/Button';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 type Props = {
   history: {

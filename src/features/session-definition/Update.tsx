@@ -1,9 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useCreate } from './redux/hooks';
 import DefinitionForm from './DefinitionForm';
-import { Alert } from '@material-ui/lab';
-import { Snackbar } from '@material-ui/core';
+import { Alert } from '@mui/material';
+import { Snackbar } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { back } from '@lagunovsky/redux-react-router';
+import { useAppDispatch } from '@common/configStore';
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Update() {
   const params = useParams<'name'>();
@@ -13,10 +17,16 @@ export default function Update() {
   const { create, createPending, sessionDefinitions } = useCreate();
   const [showAlert, setShowAlert] = useState(false);
   const closeAlert = () => setShowAlert(false);
+  const dispatch = useAppDispatch();
   const definition = sessionDefinitions[params.name];
   const onSubmit = useCallback(
     (definition) => {
-      create(definition).then(() => setShowAlert(true));
+      create(definition)
+        .then(() => {
+          setShowAlert(true);
+          return wait(500);
+        })
+        .then(() => dispatch(back()));
     },
     [create],
   );
@@ -33,6 +43,7 @@ export default function Update() {
         }}
         onSubmit={onSubmit}
         isLoading={createPending}
+        isUpdate
       />
     </>
   );

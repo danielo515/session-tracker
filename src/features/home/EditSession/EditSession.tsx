@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import Delete from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Box from '@material-ui/core/Box';
-import { DatePicker } from '@material-ui/pickers';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import Delete from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import DialogTitle from '@mui/material/DialogTitle';
+import Box from '@mui/material/Box';
+import DatePicker from '@mui/lab/DatePicker';
 import TimePicker from '../../common/TimePicker';
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { addHours, addMinutes, intervalToDuration } from 'date-fns/esm';
 import { Session } from '@types';
 import { Merge } from 'type-fest';
+import { TextField } from '@mui/material';
 
 type Props = {
   open: boolean;
@@ -62,55 +63,67 @@ function EditSession(props: Merge<Session, Props>) {
           <Box flex="1 1 auto" textAlign="center">
             {name}
           </Box>
-          <IconButton onClick={deleteCb}>
+          <IconButton onClick={deleteCb} size="large">
             <Delete />
           </IconButton>
         </Box>
       </DialogTitle>
       <DialogContent>
-        <Box pb={4} display="flex">
-          <DatePicker
-            label="Started at date"
-            value={date}
-            onChange={(newDate) => setDate(newDate || new Date())}
-            variant="inline"
-          />
-          <TimePicker id="time-picker-start" label="time" value={date} onChange={setDate} />
-        </Box>
-        <Box display="flex">
-          <DatePicker
-            label="Finished at"
-            value={dateEnd}
-            onChange={(newDate) => setEndDate(newDate || new Date())}
-            variant="inline"
-          />
-          <TimePicker id="time-picker-end" label="time" value={dateEnd} onChange={setEndDate} />
-        </Box>
-        <Box pt={2}>
-          <Typography id="discrete-slider" gutterBottom>
-            Hours: {hours}
-          </Typography>
-          <Slider
-            value={hours}
-            min={0}
-            max={12}
-            step={1}
-            onChange={handleHourSlider}
-            valueLabelDisplay="auto"
-            marks
-          />
-          <Typography id="discrete-slider" gutterBottom>
-            Minutes: {minutes}
-          </Typography>
-          <Slider
-            value={minutes}
-            min={0}
-            max={59}
-            step={5}
-            valueLabelDisplay="auto"
-            onChange={handleMinuteSlider}
-            marks={minuteMarks}
-          />
+        <Box
+          sx={{
+            '& .MuiTextField-root': {
+              mr: 1,
+            },
+          }}
+        >
+          <Box pb={4} display="flex">
+            <DatePicker
+              value={date}
+              renderInput={(props) => (
+                <TextField {...props} fullWidth={false} label="Started at" variant="standard" />
+              )}
+              onChange={(newDate) => setDate(newDate || new Date())}
+            />
+            <TimePicker id="time-picker-start" label="time" value={date} onChange={setDate} />
+          </Box>
+          <Box display="flex">
+            <DatePicker
+              value={dateEnd}
+              renderInput={(props) => (
+                <TextField {...props} fullWidth={false} variant="standard" label="Finished at" />
+              )}
+              onChange={(newDate) => setEndDate(newDate || new Date())}
+            />
+            <TimePicker id="time-picker-end" label="time" value={dateEnd} onChange={setEndDate} />
+          </Box>
+          <Box pt={2}>
+            <Typography id="discrete-slider" gutterBottom>
+              Hours: {hours}
+            </Typography>
+            <Slider
+              value={hours}
+              min={0}
+              max={12}
+              step={1}
+              onChange={handleHourSlider}
+              valueLabelDisplay="auto"
+              marks
+              size="small"
+            />
+            <Typography id="discrete-slider" gutterBottom>
+              Minutes: {minutes}
+            </Typography>
+            <Slider
+              value={minutes}
+              min={0}
+              max={59}
+              step={5}
+              valueLabelDisplay="auto"
+              onChange={handleMinuteSlider}
+              marks={minuteMarks}
+              size="small"
+            />
+          </Box>
         </Box>
       </DialogContent>
       <DialogActions>
