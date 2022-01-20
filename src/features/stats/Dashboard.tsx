@@ -1,6 +1,6 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
-import makeStyles from '@mui/styles/makeStyles';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -10,23 +10,40 @@ import DonutContainer from './Donut.container';
 import { DaysNavigator } from './NavigationControls';
 import WeekChart from './WeekChart';
 import MonthChart from './MonthChart';
-const drawerWidth = 240;
+const PREFIX = 'Dashboard';
 
-export const useStyles = makeStyles(theme => ({
-  root: {
+const classes = {
+  root: `${PREFIX}-root`,
+  toolbar: `${PREFIX}-toolbar`,
+  toolbarIcon: `${PREFIX}-toolbarIcon`,
+  appBarShift: `${PREFIX}-appBarShift`,
+  menuButton: `${PREFIX}-menuButton`,
+  menuButtonHidden: `${PREFIX}-menuButtonHidden`,
+  title: `${PREFIX}-title`,
+  content: `${PREFIX}-content`,
+  container: `${PREFIX}-container`,
+  paper: `${PREFIX}-paper`,
+  fixedHeight: `${PREFIX}-fixedHeight`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`&.${classes.root}`]: {
     display: 'flex',
   },
-  toolbar: {
+
+  [`& .${classes.toolbar}`]: {
     paddingRight: 24, // keep right padding when drawer closed
   },
-  toolbarIcon: {
+
+  [`& .${classes.toolbarIcon}`]: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-  appBarShift: {
+
+  [`& .${classes.appBarShift}`]: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -34,49 +51,49 @@ export const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
+
+  [`& .${classes.menuButton}`]: {
     marginRight: 36,
   },
-  menuButtonHidden: {
+
+  [`& .${classes.menuButtonHidden}`]: {
     display: 'none',
   },
-  title: {
+
+  [`& .${classes.title}`]: {
     flexGrow: 1,
   },
 
-  content: {
+  [`& .${classes.content}`]: {
     flexGrow: 1,
     overflow: 'auto',
   },
-  container: {
+
+  [`& .${classes.container}`]: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
     overflow: 'hidden',
   },
-  paper: {
+
+  [`& .${classes.paper}`]: {
     padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
   },
-  fixedHeight: {
+
+  [`& .${classes.fixedHeight}`]: {
     height: 440,
     [theme.breakpoints.down('sm')]: { height: 400 },
   },
-  navigation: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 }));
 
-/** @typedef {import('@types').SessionWithDuration} SessionWithDuration */
-export default function Dashboard() {
-  const classes = useStyles();
+const drawerWidth = 240;
 
+export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-    <div className={classes.root}>
+    <Root className={classes.root}>
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
@@ -104,6 +121,6 @@ export default function Dashboard() {
           </Box>
         </Container>
       </main>
-    </div>
+    </Root>
   );
 }

@@ -3,11 +3,11 @@ import IconButton from '@mui/material/Button';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import Typography from '@mui/material/Typography';
-import { useStyles } from './Dashboard';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 import { useNavigateDays } from './redux/navigateDays';
 import { useNavigateWeeks } from './redux/navigateWeeks';
+import { styled } from '@mui/material/styles';
 
 type PropsA = {
   next: () => any;
@@ -27,10 +27,15 @@ type PropsB = {
   value: number;
 };
 
+const Root = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
 function NavigationControlsBase({ next, back, baseName, value, text, unit }: PropsA | PropsB) {
-  const { navigation } = useStyles();
   return (
-    <div className={navigation}>
+    <Root>
       <IconButton onClick={back} size="large">
         <NavigateBeforeIcon />
       </IconButton>
@@ -40,7 +45,7 @@ function NavigationControlsBase({ next, back, baseName, value, text, unit }: Pro
       <IconButton onClick={next} disabled={value === 0} size="large">
         <NavigateNextIcon />
       </IconButton>
-    </div>
+    </Root>
   );
 }
 
