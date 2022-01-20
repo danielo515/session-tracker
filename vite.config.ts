@@ -1,4 +1,5 @@
-import { visualizer } from 'rollup-plugin-visualizer';
+import fs from 'fs';
+import analyzer from 'rollup-plugin-analyzer';
 import { VitePWA } from 'vite-plugin-pwa';
 // import legacyPlugin from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
@@ -23,7 +24,7 @@ export default defineConfig(({ command, mode }) => {
     base: '/',
     root: './',
     define,
-    logLevel: 'info',
+    logLevel: 'warning',
 
     build: {
       target: 'es2015',
@@ -33,9 +34,16 @@ export default defineConfig(({ command, mode }) => {
       outDir: 'build',
       rollupOptions: {
         plugins: [
-          visualizer({
-            open: false,
-            template: 'treemap',
+          // visualizer({
+          //   open: false,
+          //   template: 'treemap',
+          // }),
+          analyzer({
+            showExports: false,
+            limit: 10,
+            writeTo(analysis) {
+              fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
+            },
           }),
         ],
       },
