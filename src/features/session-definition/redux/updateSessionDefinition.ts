@@ -1,6 +1,7 @@
 import { updateDefinition } from '@common/api';
 import { SessionDefinitionFromDb } from '@types';
 import { createAsyncReducer } from 'features/home/redux/createAsyncReducer';
+import { updateAtIdx } from 'features/home/redux/updateAtIdx';
 import initialState from './initialState';
 
 export const { reducer: updateSessionDefinitionReducer, action: updateSessionDefinition } =
@@ -16,6 +17,8 @@ export const { reducer: updateSessionDefinitionReducer, action: updateSessionDef
       state.updateSessionDefinitionError = null;
       state.updateSessionDefinitionPending = false;
       state.byName[payload.name] = payload;
+      const index = state.all.findIndex((d) => d.id === payload.id);
+      state.all = updateAtIdx(index, state.all, payload);
       return state;
     },
   });

@@ -193,7 +193,7 @@ export const deleteSession = withDb<DeleteInfo, DeleteInfo>((db, { id }) => {
 
 export const createSessionDefinition = withDb<SessionDefinition, SessionDefinition>(
   (db, sessionDefinition) => {
-    return pushValue(db, 'sessionDefinitions', sessionDefinition)
+    return pushValue(db, 'definitions', sessionDefinition)
       .then(() => ({ response: sessionDefinition, error: null }))
       .catch((error) => ({ error, response: null }));
   },
@@ -218,7 +218,7 @@ export const listDefinitions = withDb((db) => {
 
 export const updateDefinition = withDb<SessionDefinitionFromDb, SessionDefinitionFromDb>(
   (db, { id, ...definition }) => {
-    return setValue(db, 'sessionDefinitions/' + id, definition).then(() => ({
+    return setValue(db, 'definitions/' + id, definition).then(() => ({
       response: { id, ...definition },
       error: null,
     }));

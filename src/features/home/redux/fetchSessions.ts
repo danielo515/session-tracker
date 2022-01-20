@@ -11,12 +11,13 @@ import * as api from '../../../common/api';
 import { addedSession } from './startSession';
 import { AppDispatch } from '@common/configStore';
 import { State } from './initialState';
+import { updateAtIdx } from './updateAtIdx';
 
 /**
  * Fetches all sessions
  */
 export function fetchSessions() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: HOME_FETCH_SESSIONS_BEGIN,
     });
@@ -37,9 +38,6 @@ export function fetchSessions() {
     });
   };
 }
-/** @typedef {import('../../../types').Session} Session*/
-/** @typedef {import('./types').State} State*/
-
 /**
  * Starts the process of syncing sessions
  */
@@ -49,14 +47,14 @@ export function syncSessions() {
       onRunningUpdate(session) {
         dispatch(addedSession(session));
       },
-      onSessionAdded: value => {
+      onSessionAdded: (value) => {
         value.endDate &&
           dispatch({
             type: HOME_PUSHED_SESSION,
             payload: value,
           });
       },
-      onSessionUpdate: value => {
+      onSessionUpdate: (value) => {
         dispatch({
           type: HOME_UPDATED_SESSION,
           payload: value,
@@ -74,17 +72,6 @@ export function dismissFetchSessionsError() {
   };
 }
 
-/**
- * Updates a value in an array at the specified index
- */
-function updateAtIdx<T>(idx: number, arr: T[], newVal: T | ((x: T) => T)) {
-  const oldVAl = arr[idx];
-  return [
-    ...arr.slice(0, idx),
-    newVal instanceof Function ? newVal(oldVAl) : newVal,
-    ...arr.slice(idx + 1),
-  ];
-}
 export function reducer(state: State, action) {
   switch (action.type) {
     case HOME_FETCH_SESSIONS_BEGIN:
@@ -123,7 +110,7 @@ export function reducer(state: State, action) {
         ...state,
         sessions:
           sessionIdx >= 0
-            ? updateAtIdx(sessionIdx, state.sessions, oldSession => ({
+            ? updateAtIdx(sessionIdx, state.sessions, (oldSession) => ({
                 ...oldSession,
                 ...action.payload,
               }))
