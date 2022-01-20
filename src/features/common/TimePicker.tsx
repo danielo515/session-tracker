@@ -1,15 +1,12 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { setHours, setMinutes, format } from 'date-fns';
-// https://codesandbox.io/s/ie3eh?file=/demo.js:0-900
 
-const useStyles = makeStyles(() => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-}));
+const Root = styled('form')({
+  display: 'flex',
+  flexWrap: 'wrap',
+});
 
 /**
  *
@@ -38,12 +35,10 @@ export default function TimePickers({
   id: string;
   label?: string;
 }) {
-  const classes = useStyles();
-
   const formattedValue = format(value, 'HH:mm');
 
   return (
-    <form className={classes.container} noValidate>
+    <Root noValidate>
       <TextField
         id={id}
         value={formattedValue}
@@ -58,6 +53,6 @@ export default function TimePickers({
           step: 300, // 5 min
         }}
       />
-    </form>
+    </Root>
   );
 }
