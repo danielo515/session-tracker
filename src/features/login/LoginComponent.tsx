@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -9,7 +10,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
 import Container from '@mui/material/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import isValidEmail from '../../common/isValidEmail';
@@ -17,22 +17,34 @@ import isValidPassword from '../../common/isValidPassword';
 import { useLoginForm } from './useLoginForm';
 import { FooterWithVersion } from '../common/index';
 
-const useStyles = makeStyles(theme => ({
-  paper: {
+const PREFIX = 'LoginComponent';
+
+const classes = {
+  paper: `${PREFIX}-paper`,
+  avatar: `${PREFIX}-avatar`,
+  form: `${PREFIX}-form`,
+  submit: `${PREFIX}-submit`,
+};
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
+
+  [`& .${classes.form}`]: {
     width: '100%',
     marginTop: theme.spacing(1),
   },
-  submit: {
+
+  [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
@@ -50,15 +62,17 @@ type Props = {
 };
 
 export default function SignIn({ login, error }: Props) {
-  const classes = useStyles();
   const { email, setEmail, password, setPassword } = useLoginForm();
   const [rememberMe, setRememberMe] = useState(false);
-  const handleCheck = (set: (arg: boolean) => unknown) => ({ target }) => set(target.checked);
+  const handleCheck =
+    (set: (arg: boolean) => unknown) =>
+    ({ target }) =>
+      set(target.checked);
   const handleSubmit = (isGoogleLogin: boolean) =>
     login({ email, password, rememberMe, isGoogleLogin });
   const canSubmit = isValidEmail(email) && isValidPassword(password);
   return (
-    <Container component="main" maxWidth="xs">
+    <StyledContainer maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -144,6 +158,6 @@ export default function SignIn({ login, error }: Props) {
       <Box mt={8}>
         <FooterWithVersion />
       </Box>
-    </Container>
+    </StyledContainer>
   );
 }
