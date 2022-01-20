@@ -14,7 +14,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           path: stats.html
-          delete: true
+          recreate: true
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
