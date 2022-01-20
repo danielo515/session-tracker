@@ -145,7 +145,11 @@ const setValue = <T>(db: DatabaseReference, path: string, value: T) => {
 };
 const pushValue = <T>(db: DatabaseReference, path: string, value: T) => {
   const ref = child(db, path);
-  return push(ref, value);
+  const pushRef = push(ref, value);
+  return pushRef.then((snapshot) => {
+    if (!snapshot.key) throw new Error('No key after push');
+    return snapshot.key;
+  });
 };
 
 export const startSession = withDb<{ name: string }, RunningSession>((db, { name }) => {
@@ -191,10 +195,10 @@ export const deleteSession = withDb<DeleteInfo, DeleteInfo>((db, { id }) => {
     .catch((error) => ({ error, response: null }));
 });
 
-export const createSessionDefinition = withDb<SessionDefinition, SessionDefinition>(
+export const createSessionDefinition = withDb<SessionDefinition, SessionDefinitionFromDb>(
   (db, sessionDefinition) => {
     return pushValue(db, 'definitions', sessionDefinition)
-      .then(() => ({ response: sessionDefinition, error: null }))
+      .then((id) => ({ response: { id, ...sessionDefinition }, error: null }))
       .catch((error) => ({ error, response: null }));
   },
 );

@@ -38,13 +38,13 @@ export default defineConfig(({ command }) => {
           //   open: false,
           //   template: 'treemap',
           // }),
-          analyzer({
-            showExports: false,
-            limit: 10,
-            writeTo(analysis) {
-              fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
-            },
-          }) as Plugin,
+          // analyzer({
+          //   showExports: false,
+          //   limit: 10,
+          //   writeTo(analysis) {
+          //     fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
+          //   },
+          // }) as Plugin,
         ],
       },
     },

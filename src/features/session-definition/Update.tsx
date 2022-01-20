@@ -5,7 +5,7 @@ import { Alert } from '@mui/material';
 import { Snackbar } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { back } from '@lagunovsky/redux-react-router';
-import { useAppDispatch, useAppThunkDispatch } from '@common/configStore';
+import { useAppThunkDispatch } from '@common/configStore';
 import { SessionDefinitionFromDb } from '@types';
 import useAppSelector from 'hooks/useSelector';
 import { updateSessionDefinition } from './redux/updateSessionDefinition';
