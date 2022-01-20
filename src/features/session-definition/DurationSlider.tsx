@@ -3,14 +3,6 @@ import { styled } from '@mui/material/styles';
 import React from 'react';
 import { Slider, sliderClasses } from '@mui/material';
 
-const PREFIX = 'DurationSlider';
-
-const classes = {
-  wrapper: `${PREFIX}-wrapper`,
-  markLabel: `${PREFIX}-markLabel`,
-  valueLabel: `${PREFIX}-valueLabel`,
-};
-
 const Root = styled('div')(({ theme: { spacing } }) => ({
   padding: spacing(2),
 }));
@@ -21,7 +13,7 @@ const StyledSlider = styled(Slider)(({ theme: { palette } }) => ({
   },
 
   [`& .${sliderClasses.valueLabel}`]: {
-    top: '-20px',
+    top: '-2px',
     width: '80px',
     transform: 'unset',
     background: 'transparent',
@@ -51,7 +43,6 @@ export const DurationSlider = ({ onChange, value, valueLabelDisplay }: DurationS
         onChange={(e, value) => onChange(value as number)}
         valueLabelDisplay={valueLabelDisplay}
         value={value}
-        classes={classes}
         min={0}
         max={60 * 12}
         step={5}

@@ -3,7 +3,11 @@ import { styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import format from 'date-fns/format';
 import React from 'react';
-import { classes } from './CircularTimer';
+
+const classes = {
+  icon: 'Started-icon',
+  iconButton: 'Started-iconButton',
+};
 
 const StartedRoot = styled('div')({
   display: 'flex',
