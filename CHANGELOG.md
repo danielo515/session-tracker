@@ -1,3 +1,20 @@
+## [1.26.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.26.0...v1.26.1) (2022-01-20)
+
+
+### Bug Fixes
+
+* migrate TaskGroup ([9de9484](https://github.com/danielo515/pento-tech-challenge/commit/9de94847f540f6abf554bf71e8cfe42fdfdcc5c8))
+* migrated login ([6a089cc](https://github.com/danielo515/pento-tech-challenge/commit/6a089cc3d125659c481f09ed3ff7e51ab16d52af))
+* migrated SessionController ([a2a90ff](https://github.com/danielo515/pento-tech-challenge/commit/a2a90ff03f12557741e9400b93661fb71e43cdf7))
+* migrated SessionsList ([12a83ae](https://github.com/danielo515/pento-tech-challenge/commit/12a83ae1379342b1fc1d51f6b9ac77325016f37c))
+* migrated stats page ([bfc9de6](https://github.com/danielo515/pento-tech-challenge/commit/bfc9de6b93146d1f471bea74241fae058fde9462))
+* ported CircularTimer ([d9421f6](https://github.com/danielo515/pento-tech-challenge/commit/d9421f6b1dedcbf46465ac96c8a049043439e0a1))
+* ported DurationSlider ([909169f](https://github.com/danielo515/pento-tech-challenge/commit/909169ff9d6dd76608098ac187ea16a821a7cb32))
+* ported TimePicker to styled API ([95fe15a](https://github.com/danielo515/pento-tech-challenge/commit/95fe15a47624d837e036678e291ae1b166455ec7))
+* QuickPick ported to styled api ([4cc50b1](https://github.com/danielo515/pento-tech-challenge/commit/4cc50b1ef3562a7313c3fd3caee8941fa34b7216))
+* time and date pickers ([d14a1be](https://github.com/danielo515/pento-tech-challenge/commit/d14a1be33680a54203a40f4d4cfc731448076483))
+* update react version ([2ebe6ab](https://github.com/danielo515/pento-tech-challenge/commit/2ebe6abde65eb18ca5f07597cddb3cb3793f5b0d))
+
 # [1.26.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.25.0...v1.26.0) (2022-01-19)
 
 
