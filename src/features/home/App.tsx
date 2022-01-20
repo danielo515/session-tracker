@@ -7,12 +7,7 @@ import { setupApp } from '../common/redux/actions';
 import { Outlet, useMatch } from 'react-router-dom';
 import useAppSelector from 'hooks/useSelector';
 import { push } from '@lagunovsky/redux-react-router';
-import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
+import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme();
 
