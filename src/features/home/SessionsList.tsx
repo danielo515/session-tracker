@@ -1,43 +1,25 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import makeStyles from '@mui/styles/makeStyles';
 import { VariableSizeList } from 'react-window';
 import clsx from 'clsx';
-import Skeleton from '@mui/material/Skeleton';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import List from '@mui/material/List';
 import Autosizer from 'react-virtualized-auto-sizer';
 import { TaskGroup } from './TaskGroup';
 import { SessionGroup } from '@types';
-import { doTimes } from './doTimes';
+import { Loading } from './LoadingList';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
+const PREFIX = 'SessionsList';
 
-const ItemHeight = 72;
+const classes = {
+  root: `${PREFIX}-root`,
+};
+
+export const ItemHeight = 72;
 const ListHeight = ItemHeight + 3 * ItemHeight;
 
 export function CalculateListHeight(items: unknown[]) {
   return Math.min(ListHeight, ItemHeight + items.length * ItemHeight);
 }
-// const NestedItemHeight = 400;
-// const formatHour = 'HH:mm';
-
-const Loading = () => {
-  const isSmallScreen = useMediaQuery('(max-width: 600px');
-  return (
-    <div className="home-sessions-skeleton">
-      {doTimes(isSmallScreen ? 5 : 8)(i => (
-        <Skeleton height={ItemHeight} key={i} />
-      ))}
-    </div>
-  );
-};
-
 type Props = {
   sessions: SessionGroup[];
   startSession: (i: { name: string }) => any;
@@ -45,18 +27,17 @@ type Props = {
 };
 
 export default function SessionsList({ sessions, startSession, editSession }: Props) {
-  const classes = useStyles();
   // We need to use a ref because using the hook will re-render the entire list which will kill the animation
   // of each item esxpanding or collapsing. The child component will inform us on the onToggle handler.
   // I don't like it, but it works for now
   const selectedRow = useRef('');
-  const start = useCallback(e => startSession({ name: e.currentTarget.id }), [startSession]);
-  const edit = useCallback(e => editSession(e.currentTarget.id), [editSession]);
+  const start = useCallback((e) => startSession({ name: e.currentTarget.id }), [startSession]);
+  const edit = useCallback((e) => editSession(e.currentTarget.id), [editSession]);
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
       <VirtualList
         data={sessions}
-        itemSize={idx => {
+        itemSize={(idx) => {
           const sessionGroup = sessions[idx];
           return sessionGroup.name === selectedRow.current
             ? CalculateListHeight(sessionGroup.sessions)
@@ -71,7 +52,7 @@ export default function SessionsList({ sessions, startSession, editSession }: Pr
                 {...item}
                 startSession={start}
                 editSession={edit}
-                onToggle={sessionName => {
+                onToggle={(sessionName) => {
                   selectedRow.current = sessionName;
                   resizeList();
                 }}
@@ -138,7 +119,7 @@ export function VirtualList<T>({ data, row, itemSize }: VirtualProps<T>) {
           //@ts-expect-error stupid wrong types
           ref={list}
         >
-          {props => row({ ...props, resizeList })}
+          {(props) => row({ ...props, resizeList })}
         </VariableSizeList>
       )}
     </Autosizer>
