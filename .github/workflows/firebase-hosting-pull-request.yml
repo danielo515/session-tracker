@@ -10,17 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn && yarn build
-      - name: Read bundle stats
-        id: bundled
-        run: |
-          OUTPUT="$(cat stats.html)"
-          echo "::set-output name=result::$OUTPUT"
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - name: Read the bundle stats
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          append: true
-          message: |
-            Bundled size of ${{ github.sha }}.
-            ${{ steps.bundled.outputs.result }}
+          path: stats.html
+          delete: true
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
