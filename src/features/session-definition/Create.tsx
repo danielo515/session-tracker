@@ -7,6 +7,7 @@ export default function Create() {
 
   return (
     <DefinitionForm
+      isUpdate={false}
       definition={{
         expectedDuration: 60 * 8,
         name: '',
