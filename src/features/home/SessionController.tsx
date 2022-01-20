@@ -1,27 +1,24 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import { connect, ConnectedProps } from 'react-redux';
 import Timer from './Timer';
-import makeStyles from '@mui/styles/makeStyles';
 import * as actions from './redux/actions';
 import SessionStart from './SessionStart';
 import SessionStop from './SessionStop';
 import { RootState } from '@common/configStore';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '1rem 0',
-  },
-}));
+const Root = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '1rem 0',
+});
 
 export const SessionController = (props: ConnectedProps<typeof connector>) => {
-  const css = useStyles();
   const { runningSession, startSession, stopSession } = props;
   return (
-    <div className={css.root}>
+    <Root>
       <Timer startDate={runningSession?.startDate} isActive={Boolean(runningSession)} />
       {runningSession ? (
         <SessionStop
@@ -32,7 +29,7 @@ export const SessionController = (props: ConnectedProps<typeof connector>) => {
       ) : (
         <SessionStart startSession={startSession} />
       )}
-    </div>
+    </Root>
   );
 };
 
