@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -12,27 +12,43 @@ import { useSelectRow } from './redux/selectRow';
 import { SessionGroup } from '@types';
 import { Merge } from 'type-fest';
 
-const useStyles = makeStyles(theme => ({
-  nested: {
+const PREFIX = 'TaskGroup';
+
+const classes = {
+  nested: `${PREFIX}-nested`,
+  taskOverView: `${PREFIX}-taskOverView`,
+  rightItem: `${PREFIX}-rightItem`,
+  childWrapper: `${PREFIX}-childWrapper`,
+  leftItem: `${PREFIX}-leftItem`,
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.nested}`]: {
     backgroundColor: theme.palette.background.paper,
   },
-  taskOverView: {
+
+  [`& .${classes.taskOverView}`]: {
     display: 'flex',
   },
-  rightItem: {
+
+  [`& .${classes.rightItem}`]: {
     flex: '0 1 25%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
-  childWrapper: {
+
+  [`& .${classes.childWrapper}`]: {
     paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.grey[100],
   },
-  leftItem: {
+
+  [`& .${classes.leftItem}`]: {
     flex: '1 1 auto',
   },
 }));
+
 const ItemHeight = 72;
 const ListHeight = 3 * ItemHeight;
 
@@ -58,7 +74,6 @@ export function TaskGroup({
   startSession,
   editSession,
 }: Props) {
-  const css = useStyles();
   const { selectRow, selectedRow } = useSelectRow();
   const isOpen = name === selectedRow;
   const toggleRow = () => {
@@ -77,46 +92,48 @@ export function TaskGroup({
       onToggle(name);
     }
   }, []);
-  return <>
-    <ListItem button onClick={toggleRow} data-name={name} className={css.taskOverView}>
-      <ListItemText
-        primary={name}
-        secondary={formatStartDate(lastRun)}
-        classes={{ root: css.leftItem }}
-      />
-      <ListItemText primary="Today" secondary={msToHuman(total)} className={css.rightItem} />
-      <ListItemSecondaryAction>
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          id={name}
-          onClick={startSession}
-          size="large">
-          <PlayCircleOutline />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
-
-    {isOpen && (
-      <List component="div" disablePadding className={css.childWrapper}>
-        <FixedSizeList
-          height={Math.min(ListHeight, sessions.length * ItemHeight)}
-          width="100%"
-          itemSize={ItemHeight}
-          itemCount={sessions.length}
-          itemData={sessions}
-        >
-          {({ index, style, data }) => {
-            const { id, startDate: start, endDate: end = Date.now() } = data[index];
-            return (
-              <ListItem style={style} id={id} onClick={editSession} button className={css.nested}>
-                <ListItemText primary="Started" secondary={formatStartDate(start)} />
-                <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
-              </ListItem>
-            );
-          }}
-        </FixedSizeList>
-      </List>
-    )}
-  </>;
+  return (
+    <Root>
+      <ListItem button onClick={toggleRow} data-name={name} className={classes.taskOverView}>
+        <ListItemText
+          primary={name}
+          secondary={formatStartDate(lastRun)}
+          className={classes.leftItem}
+        />
+        <ListItemText primary="Today" secondary={msToHuman(total)} className={classes.rightItem} />
+        <ListItemSecondaryAction>
+          <IconButton edge="end" aria-label="delete" id={name} onClick={startSession} size="large">
+            <PlayCircleOutline />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+      {isOpen && (
+        <List component="div" disablePadding className={classes.childWrapper}>
+          <FixedSizeList
+            height={Math.min(ListHeight, sessions.length * ItemHeight)}
+            width="100%"
+            itemSize={ItemHeight}
+            itemCount={sessions.length}
+            itemData={sessions}
+          >
+            {({ index, style, data }) => {
+              const { id, startDate: start, endDate: end = Date.now() } = data[index];
+              return (
+                <ListItem
+                  style={style}
+                  id={id}
+                  onClick={editSession}
+                  button
+                  className={classes.nested}
+                >
+                  <ListItemText primary="Started" secondary={formatStartDate(start)} />
+                  <ListItemText primary="Duration" secondary={formatDateDiff(start, end)} />
+                </ListItem>
+              );
+            }}
+          </FixedSizeList>
+        </List>
+      )}
+    </Root>
+  );
 }
