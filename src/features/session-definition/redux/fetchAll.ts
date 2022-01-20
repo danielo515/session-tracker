@@ -4,11 +4,12 @@ import { useDispatch, shallowEqual } from 'react-redux';
 import { SESSION_DEFINITION_FETCH_ALL_DISMISS_ERROR } from './constants';
 import { listDefinitions } from '@common/api';
 import initialState from './initialState';
+import { SessionDefinitionFromDb } from '@types';
 
 export const fetchAllDefinitions = createAsyncThunk(
   'SESSION-DEFINITION/FETCH-ALL',
   async (arg, thunkApi) => {
-    const response = await listDefinitions(undefined);
+    const response = await listDefinitions();
     if (response.error) thunkApi.rejectWithValue(response.error);
     return response.response;
   },
@@ -24,7 +25,7 @@ export function useFetchAll() {
   const dispatch = useDispatch();
 
   const { definitions } = useAppSelector(
-    state => ({
+    (state) => ({
       definitions: state.sessionDefinition.all,
     }),
     shallowEqual,
@@ -36,18 +37,18 @@ export function useFetchAll() {
   };
 }
 
-export const reducer = createReducer(initialState, builder => {
+export const reducer = createReducer(initialState, (builder) => {
   builder.addCase(fetchAllDefinitions.fulfilled, (state, action) => {
     state.byName =
       action.payload?.reduce((acc, definition) => {
         acc[definition.name] = definition;
         return acc;
-      }, {}) || state.byName;
+      }, {} as Record<string, SessionDefinitionFromDb>) || state.byName;
     state.all = action.payload || [];
     state.fetchAllError = null;
     state.fetchAllPending = false;
   });
-  builder.addCase(fetchAllDefinitions.pending, state => {
+  builder.addCase(fetchAllDefinitions.pending, (state) => {
     state.fetchAllPending = true;
   });
   builder.addCase(fetchAllDefinitions.rejected, (state, action) => {

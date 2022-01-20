@@ -9,8 +9,9 @@
 import initialState, { State } from './initialState';
 import { reducer as createReducer } from './create';
 import { reducer as fetchAllReducer } from './fetchAll';
+import { updateSessionDefinitionReducer } from './updateSessionDefinition';
 
-const reducers = [createReducer, fetchAllReducer];
+const reducers = [createReducer, fetchAllReducer, updateSessionDefinitionReducer];
 
 export default function reducer(state = initialState, action): State {
   let newState;

@@ -1,4 +1,5 @@
 import { ComponentClass } from 'react';
+import { Merge } from 'type-fest';
 
 export type Session = {
   name: string;
@@ -19,6 +20,13 @@ export type SessionDefinition = {
   icon: string;
   expectedDuration: number;
 };
+
+export type SessionDefinitionFromDb = Merge<
+  SessionDefinition,
+  {
+    id: string;
+  }
+>;
 
 export type SessionWithDuration = {
   name: string;

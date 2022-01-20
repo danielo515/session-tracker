@@ -4,16 +4,18 @@
 // So Rekit extracts the initial state definition into a separate module so that you can have
 // a quick view about what data is used for the feature, at any time.
 
-import { SessionDefinition } from '@types';
+import { SessionDefinitionFromDb } from '@types';
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
   createPending: false,
   createError: null as null | string,
-  byName: {},
-  all: [] as SessionDefinition[],
+  byName: {} as Record<string, SessionDefinitionFromDb>,
+  all: [] as SessionDefinitionFromDb[],
   fetchAllPending: false,
   fetchAllError: null as null | string,
+  updateSessionDefinitionPending: false,
+  updateSessionDefinitionError: null,
 };
 
 export default initialState;
