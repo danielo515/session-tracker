@@ -1,5 +1,6 @@
-import fs from 'fs';
-import analyzer from 'rollup-plugin-analyzer';
+// import fs from 'fs';
+// import analyzer from 'rollup-plugin-analyzer';
+import visualizer from 'rollup-plugin-visualizer';
 import { VitePWA } from 'vite-plugin-pwa';
 // import legacyPlugin from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
@@ -34,10 +35,10 @@ export default defineConfig(({ command }) => {
       outDir: 'build',
       rollupOptions: {
         plugins: [
-          // visualizer({
-          //   open: false,
-          //   template: 'treemap',
-          // }),
+          visualizer({
+            open: false,
+            template: 'treemap',
+          }),
           // analyzer({
           //   showExports: false,
           //   limit: 10,
