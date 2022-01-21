@@ -21,13 +21,13 @@ export default function Create() {
         Create a new session
       </Typography>
       <DefinitionForm
-        isUpdate={false}
         definition={{
           expectedDuration: 60 * 8,
           name: '',
           color: '#b32aa9',
           icon: 'Default',
         }}
+        action="create"
         onSubmit={onSubmit}
         isLoading={createPending}
       />

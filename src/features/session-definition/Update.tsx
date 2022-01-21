@@ -50,7 +50,7 @@ export default function Update() {
         }}
         onSubmit={onSubmit}
         isLoading={pending}
-        isUpdate
+        action="update"
       />
     </>
   );

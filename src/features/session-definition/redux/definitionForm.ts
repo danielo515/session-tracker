@@ -36,13 +36,13 @@ export const {
       state.duration = action.payload;
     },
     setIcon: (state, action: PayloadAction<string>) => {
-      state.icon = action.payload;
+      state.icon = action.payload || 'Default';
     },
     setInitialValue(
       state,
       { payload: { name, color, icon, expectedDuration } }: PayloadAction<SessionDefinition>,
     ) {
-      return { ...state, name, color, icon, duration: expectedDuration };
+      return { ...state, name, color, icon: icon || 'Default', duration: expectedDuration };
     },
   },
 });

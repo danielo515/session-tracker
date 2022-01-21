@@ -31,6 +31,7 @@ import {
 } from './redux/definitionForm';
 import useAppSelector from 'hooks/useSelector';
 import { useAppDispatch } from '@common/configStore';
+import { IconCollection } from '@common/Icon/types';
 
 type SectionProps = {
   children: React.ReactNode;
@@ -127,13 +128,15 @@ const DurationSection = () => {
   );
 };
 
+const icons = Icons as IconCollection;
+
 const IconSection = () => {
   const dispatch = useAppDispatch();
   const icon = useAppSelector((state) => state.descriptionForm.icon);
-  const Icon = Icons[icon];
+  const Icon = icons[icon];
 
   return (
-    <Section title="Icon" hint={<Icon></Icon>} step="icon">
+    <Section title="Icon" hint={<Icon color="primary"></Icon>} step="icon">
       <Typography variant="subtitle1">Assign an icon to this task</Typography>
       <IconSelector icon={icon} onChange={(value) => dispatch(setIcon(value))} />
     </Section>
@@ -148,28 +151,28 @@ type Props =
       isLoading: boolean;
       onSubmit: CreateCb;
       definition: SessionDefinition;
-      isUpdate: false;
+      action: 'create';
     }
   | {
       isLoading: boolean;
       onSubmit: UpdateCb;
       definition: SessionDefinitionFromDb;
-      isUpdate: true;
+      action: 'update';
     };
 
 const SaveSection = (props: Props) => {
-  const { isUpdate, onSubmit, isLoading, definition } = props;
+  const { action, onSubmit, isLoading, definition } = props;
   const {
     description: { name, color, duration, icon },
   } = useDefinitionForm();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (isUpdate) {
+    if (action === 'update') {
       dispatch(setInitialValue(definition));
     }
   }, []);
   const submit = () => {
-    if (isUpdate) {
+    if (action === 'update') {
       onSubmit({
         id: definition.id,
         name,
@@ -206,7 +209,7 @@ const SaveSection = (props: Props) => {
           variant="contained"
           size="large"
         >
-          {isUpdate ? 'Save' : 'Create'}
+          {action === 'update' ? 'Save' : 'Create'}
         </Button>
       </FormRow>
     </Box>
