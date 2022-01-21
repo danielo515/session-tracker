@@ -7,7 +7,7 @@ import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig, Plugin } from 'vite';
+import { defineConfig } from 'vite';
 import Manifest from './public/manifest.json';
 
 // @see https://cn.vitejs.dev/config/

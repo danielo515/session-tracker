@@ -17,13 +17,13 @@ const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connect
   const { switchTask, editSession, groupedSessions } = props;
   return (
     <div className="home-default-page">
-      <SessionController />
       <SessionsList
         sessions={groupedSessions}
         editSession={editSession}
         startSession={switchTask}
       />
       <EditSession />
+      <SessionController />
       <Box pt={4} className="home-copyright">
         <FooterWithVersion />
       </Box>
