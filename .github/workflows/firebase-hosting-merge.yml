@@ -12,13 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn && yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIME_TRACKER_A0213 }}"
+        env:
           REACT_APP_FB_API_KEY: "${{ secrets.REACT_APP_FB_API_KEY }}"
           REACT_APP_FB_APP_ID: "${{ secrets.REACT_APP_FB_APP_ID }}"
           REACT_APP_FB_DATABASE_URL: "${{ secrets.REACT_APP_FB_DATABASE_URL }}"
           REACT_APP_FB_AUTH_DOMAIN: "${{ secrets.REACT_APP_FB_AUTH_DOMAIN }}"
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIME_TRACKER_A0213 }}"
           channelId: live
           projectId: time-tracker-a0213
