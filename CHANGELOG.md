@@ -1,3 +1,10 @@
+## [1.27.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.27.0...v1.27.1) (2022-01-21)
+
+
+### Bug Fixes
+
+* firebase hosting deployment ([2fcb338](https://github.com/danielo515/pento-tech-challenge/commit/2fcb3381f3a44e4a153ba99fc927f5b947b07a7f))
+
 # [1.27.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.26.1...v1.27.0) (2022-01-21)
 
 
