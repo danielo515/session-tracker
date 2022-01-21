@@ -4,12 +4,13 @@
 // So Rekit extracts the initial state definition into a separate module so that you can have
 // a quick view about what data is used for the feature, at any time.
 
+import { Session } from '@types';
+
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
   getSessionsPending: false,
-  getSessionsError: null,
-  /** @type { import("@types").Session[] }*/
-  sessions: [],
+  getSessionsError: null as string | null,
+  sessions: [] as Session[],
   daysAgo: 0,
   weeksAgo: 0,
   monthsAgo: 0,

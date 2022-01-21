@@ -1,3 +1,4 @@
+import { AppDispatch } from '@common/configStore';
 import useAppSelector from 'hooks/useSelector';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, shallowEqual } from 'react-redux';
@@ -9,7 +10,7 @@ import {
 } from './constants';
 
 export function loadSessionSettings() {
-  return dispatch => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: SETTINGS_LOAD_SESSION_SETTINGS_BEGIN,
     });
@@ -26,7 +27,7 @@ export function useLoadSessionSettings() {
   const dispatch = useDispatch();
 
   const { loadSessionSettingsPending, loadSessionSettingsError } = useAppSelector(
-    state => ({
+    (state) => ({
       loadSessionSettingsPending: state.settings.loadSessionSettingsPending,
       loadSessionSettingsError: state.settings.loadSessionSettingsError,
     }),
@@ -52,6 +53,7 @@ export function useLoadSessionSettings() {
   };
 }
 
+//@ts-expect-error migrate to redux-thunk
 export function reducer(state, action) {
   switch (action.type) {
     case SETTINGS_LOAD_SESSION_SETTINGS_BEGIN:

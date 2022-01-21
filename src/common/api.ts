@@ -24,7 +24,7 @@ import {
   Query,
   DataSnapshot,
 } from 'firebase/database';
-import { withDb } from './withDb';
+import { withDb, withDbList, withDbSync } from './withDb';
 
 const provider = new GoogleAuthProvider();
 
@@ -88,19 +88,23 @@ export const signUp = (args: { email: string; password: string; name: string }) 
   console.log('Not used anymore', args);
 };
 
-export const listSessions = withDb((db) => {
+export const listSessions = withDbList((db) => {
   const allQuery = query(child(db, 'all'), orderByKey());
   return Promise.all([get(allQuery), get(child(db, 'runningSession'))]).then(
     ([snapshot, currentSnap]) => {
       if (snapshot.exists())
         return {
           error: null,
-          response: { all: Object.values(snapshot.val()).reverse(), current: currentSnap.val() },
+          response: {
+            all: Object.values(snapshot.val()).reverse() as Session[],
+            current: currentSnap.val(),
+          },
         };
-      return { error: null, response: { all: [], current: currentSnap.val() } };
+      return { error: null, response: { all: [] as Session[], current: currentSnap.val() } };
     },
   );
 });
+
 type sessionCb = (args: Session) => unknown;
 type sessionCbNull = (args: Session | null) => unknown;
 type SyncArgs = {
@@ -121,7 +125,7 @@ const childOnce = (query: Query) => {
   });
 };
 
-export const syncData = withDb<SyncArgs, never>(
+export const syncData = withDbSync<SyncArgs>(
   async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
     const all = child(db, 'all');
     const last = await childOnce(query(all, orderByKey(), limitToLast(1)));
@@ -164,7 +168,11 @@ export const stopSession = withDb(async (db) => {
     throw new Error('Stopping not existing session');
   }
   const pushRef = await push(child(db, 'all'));
-  const session = { ...runningSnap.val(), id: pushRef.key, endDate: new Date().toISOString() };
+  const session: Session = {
+    ...runningSnap.val(),
+    id: pushRef.key,
+    endDate: new Date().toISOString(),
+  };
   await set(running, null);
   await set(pushRef, session);
   return { response: session, error: null };
@@ -203,7 +211,7 @@ export const createSessionDefinition = withDb<SessionDefinition, SessionDefiniti
   },
 );
 
-export const listDefinitions = withDb((db) => {
+export const listDefinitions = withDbList((db) => {
   const definitionsQuery = query(child(db, 'definitions'), orderByKey());
   const result = get(definitionsQuery).then((snapshot) => {
     if (snapshot.exists()) {
