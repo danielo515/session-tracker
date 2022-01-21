@@ -146,8 +146,8 @@ const IconSection = () => {
   );
 };
 
-type CreateCb = (definition: SessionDefinition) => Promise<void>;
-type UpdateCb = (definition: SessionDefinitionFromDb) => Promise<void>;
+type CreateCb = (definition: SessionDefinition) => Promise<unknown>;
+type UpdateCb = (definition: SessionDefinitionFromDb) => Promise<unknown>;
 
 type Props =
   | {

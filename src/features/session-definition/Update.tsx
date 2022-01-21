@@ -27,7 +27,7 @@ export default function Update() {
   const definition = definitions[params.name];
   const onSubmit = useCallback(
     (definition: SessionDefinitionFromDb) => {
-      dispatch(updateSessionDefinition(definition))
+      return dispatch(updateSessionDefinition(definition))
         .then(() => {
           setShowAlert(true);
           return wait(500);
