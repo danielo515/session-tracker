@@ -20,8 +20,11 @@ const childRoutes: RouteObject[] = [
   { path: 'internal', element: ManageIcons },
 ];
 
-export const renderRoutes = (routes): RouteObject[] => {
+export type RouteConfig = RouteObject & { element: () => JSX.Element; children?: RouteConfig[] };
+
+export const renderRoutes = (routes: RouteConfig[]): RouteObject[] => {
   return routes.map((route) => {
+    // @ts-expect-error will fix it someday
     if (route.children) route.children = renderRoutes(route.children);
     if (!route.element || isValidElement(route.element)) return route;
     const Element = route.element;

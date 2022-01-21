@@ -2,10 +2,8 @@ import useAppSelector from 'hooks/useSelector';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { HOME_SELECT_ROW } from './constants';
+import { State } from './initialState';
 
-/**
- * @param {string} sessionName
- **/
 export function selectRow(sessionName: string) {
   return {
     type: HOME_SELECT_ROW,
@@ -15,13 +13,13 @@ export function selectRow(sessionName: string) {
 
 export function useSelectRow() {
   const dispatch = useDispatch();
-  const boundAction = useCallback(sessionName => dispatch(selectRow(sessionName)), [dispatch]);
-  const selectedRow = useAppSelector(state => state.home.selectedRow);
+  const boundAction = useCallback((sessionName) => dispatch(selectRow(sessionName)), [dispatch]);
+  const selectedRow = useAppSelector((state) => state.home.selectedRow);
   return { selectRow: boundAction, selectedRow };
 }
 
-/** @type {import('./types').Reducer} **/
-export function reducer(state, { type, payload }) {
+// @ts-expect-error TODO migrate to toolkit
+export function reducer(state: State, { type, payload }) {
   switch (type) {
     case HOME_SELECT_ROW:
       return {

@@ -24,7 +24,7 @@ export function IconSelector({ icon, onChange, fixedHeight = true }: Props) {
   const itemWidth = 64;
   return (
     <Autosizer defaultHeight={300} disableHeight={fixedHeight}>
-      {({ height, width }) => {
+      {({ height, width }: { height: number; width: number }) => {
         const rowSize = Math.floor(width / itemWidth);
         return (
           <List

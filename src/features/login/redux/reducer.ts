@@ -6,13 +6,14 @@
 // Learn more from the introduction of this approach:
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
+import { AnyAction } from 'redux';
 import initialState, { State } from './initialState';
 import { reducer as loginActionReducer } from './loginAction';
 import { reducer as signUpReducer } from './signUp';
 
 const reducers = [loginActionReducer, signUpReducer];
 
-export default function reducer(state = initialState, action): State {
+export default function reducer(state = initialState, action: AnyAction): State {
   /** @type { typeof initialState }*/
   let newState;
   switch (action.type) {

@@ -105,7 +105,7 @@ export function VirtualList<T>({ data, row, itemSize }: VirtualProps<T>) {
   };
   return data.length ? (
     <Autosizer>
-      {({ height, width }) => (
+      {({ height, width }: { height: number; width: number }) => (
         <VariableSizeList
           innerElementType={List}
           className={'home-sessions-list'}

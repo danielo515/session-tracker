@@ -23,14 +23,10 @@ const classes = {
   paper: `${PREFIX}-paper`,
   avatar: `${PREFIX}-avatar`,
   form: `${PREFIX}-form`,
-  submit: `${PREFIX}-submit`
+  submit: `${PREFIX}-submit`,
 };
 
-const StyledContainer = styled(Container)((
-  {
-    theme
-  }
-) => ({
+const StyledContainer = styled(Container)(({ theme }) => ({
   [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -50,10 +46,10 @@ const StyledContainer = styled(Container)((
 
   [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
-  }
+  },
 }));
 
-const isValidName = (name): name is string => typeof name === 'string' && name.length > 3;
+const isValidName = (name: unknown): name is string => typeof name === 'string' && name.length > 3;
 
 type Props = {
   error: string | null;
@@ -61,7 +57,6 @@ type Props = {
 };
 
 export default function SignUp({ signUp, error }: Props) {
-
   const {
     email,
     setEmail,
@@ -80,7 +75,7 @@ export default function SignUp({ signUp, error }: Props) {
   const handleSubmit = () => canSubmit && signUp({ email, password, name });
 
   return (
-    <StyledContainer component="main" maxWidth="xs">
+    <StyledContainer maxWidth="xs">
       <Snackbar open={!!error} autoHideDuration={6000}>
         <Alert severity="error">{error}</Alert>
       </Snackbar>

@@ -8,6 +8,7 @@ import {
 import * as api from '../../../common/api';
 import history from '../../../common/history';
 import { State } from './initialState';
+import { AppDispatch } from '@common/configStore';
 
 /**
  * signs up the user
@@ -21,11 +22,12 @@ export function signUp({
   password: string;
   name: string;
 }) {
-  return async dispatch => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: LOGIN_SIGN_UP_BEGIN,
     });
 
+    //@ts-expect-error TODO restore signUp
     const { error, response } = await api.signUp({ email, password, name });
 
     if (error) {

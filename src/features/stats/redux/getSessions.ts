@@ -14,7 +14,7 @@ import * as api from '../../../common/api';
 type GetSessionThunk = ThunkAction<Promise<void>, RootState, void, Action>;
 
 export function getSessions(): GetSessionThunk {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: STATS_GET_SESSIONS_BEGIN,
     });

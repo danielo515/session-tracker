@@ -6,11 +6,11 @@ import react from '@vitejs/plugin-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
 import Manifest from './public/manifest.json';
 
 // @see https://cn.vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command }) => {
   const define = {
     'process.env.APP_IS_LOCAL': command === 'serve' ? '"true"' : '"false"',
     'process.env.REACT_APP_IS_LOCAL': command === 'serve' ? '"true"' : '"false"',
@@ -24,7 +24,7 @@ export default defineConfig(({ command, mode }) => {
     base: '/',
     root: './',
     define,
-    logLevel: 'warning',
+    logLevel: 'warn',
 
     build: {
       target: 'es2015',
@@ -38,13 +38,13 @@ export default defineConfig(({ command, mode }) => {
           //   open: false,
           //   template: 'treemap',
           // }),
-          analyzer({
-            showExports: false,
-            limit: 10,
-            writeTo(analysis) {
-              fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
-            },
-          }),
+          // analyzer({
+          //   showExports: false,
+          //   limit: 10,
+          //   writeTo(analysis) {
+          //     fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
+          //   },
+          // }) as Plugin,
         ],
       },
     },

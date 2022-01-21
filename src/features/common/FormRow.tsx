@@ -1,20 +1,14 @@
 import { Box } from '@mui/material';
 import React from 'react';
 
-/**
- *
- *
- * @export
- * @param {Object} props
- * @param {React.ReactNode} props.children
- * @param {boolean} [ props.centered ]
- * @param {boolean} [ props.row ]
- * @return {*}
- */
-export default function FormRow({ children, centered, row }: {
-    children: React.ReactNode;
-    centered?: boolean;
-    row?: boolean;
+export default function FormRow({
+  children,
+  centered,
+  row,
+}: {
+  children: React.ReactNode;
+  centered?: boolean;
+  row?: boolean;
 }) {
   const props = {
     alignItems: centered ? 'center' : 'stretch',
@@ -23,7 +17,7 @@ export default function FormRow({ children, centered, row }: {
     flexDirection: row ? 'row' : 'column',
   };
   return (
-    <Box pt={2} {...props}>
+    <Box pt={2} sx={props}>
       {children}
     </Box>
   );

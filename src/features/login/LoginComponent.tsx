@@ -64,10 +64,6 @@ type Props = {
 export default function SignIn({ login, error }: Props) {
   const { email, setEmail, password, setPassword } = useLoginForm();
   const [rememberMe, setRememberMe] = useState(false);
-  const handleCheck =
-    (set: (arg: boolean) => unknown) =>
-    ({ target }) =>
-      set(target.checked);
   const handleSubmit = (isGoogleLogin: boolean) =>
     login({ email, password, rememberMe, isGoogleLogin });
   const canSubmit = isValidEmail(email) && isValidPassword(password);
@@ -115,7 +111,7 @@ export default function SignIn({ login, error }: Props) {
                 value="remember"
                 color="primary"
                 checked={rememberMe}
-                onChange={handleCheck(setRememberMe)}
+                onChange={(_, checked) => setRememberMe(checked)}
               />
             }
             label="Remember me"

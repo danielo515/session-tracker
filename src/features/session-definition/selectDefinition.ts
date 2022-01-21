@@ -12,7 +12,7 @@ function selectDefinition(sessionName: string | undefined, state: DefinitionsSta
 }
 
 function selectName(
-  _: any,
+  _: unknown,
   props: {
     name?: string;
   },

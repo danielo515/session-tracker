@@ -1,4 +1,4 @@
-import { RunningSession, Session, SessionDefinition } from '@types';
+import { RunningSession, Session, SessionDefinition, SessionDefinitionFromDb } from '@types';
 import firebase from 'fb';
 import {
   getAuth,
@@ -24,7 +24,7 @@ import {
   Query,
   DataSnapshot,
 } from 'firebase/database';
-import { withDb } from './withDb';
+import { withDb, withDbList, withDbSync } from './withDb';
 
 const provider = new GoogleAuthProvider();
 
@@ -55,7 +55,8 @@ export const googleLogin = () =>
       // This gives you a Google Access Token. You can use it to access the Google API.
       const { user } = result;
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential && credential.toJSON();
+      if (!credential) throw new Error('No credential');
+      const token = credential.toJSON();
       // The signed-in user info.
       return {
         error: null,
@@ -84,25 +85,29 @@ export const googleLogin = () =>
       };
     });
 
-export const signUp = (args: { email: string; password: string; name: string }): any => {
-  console.log('Not used anymore');
+export const signUp = (args: { email: string; password: string; name: string }) => {
+  console.log('Not used anymore', args);
 };
 
-export const listSessions = withDb((db) => {
+export const listSessions = withDbList<{ all: Session[]; current: RunningSession }>((db) => {
   const allQuery = query(child(db, 'all'), orderByKey());
   return Promise.all([get(allQuery), get(child(db, 'runningSession'))]).then(
     ([snapshot, currentSnap]) => {
       if (snapshot.exists())
         return {
           error: null,
-          response: { all: Object.values(snapshot.val()).reverse(), current: currentSnap.val() },
+          response: {
+            all: Object.values(snapshot.val()).reverse() as Session[],
+            current: currentSnap.val(),
+          },
         };
-      return { error: null, response: { all: [], current: currentSnap.val() } };
+      return { error: null, response: { all: [] as Session[], current: currentSnap.val() } };
     },
   );
 });
-type sessionCb = (args: Session) => any;
-type sessionCbNull = (args: Session | null) => any;
+
+type sessionCb = (args: Session) => unknown;
+type sessionCbNull = (args: Session | null) => unknown;
 type SyncArgs = {
   onSessionAdded: sessionCb;
   onRunningUpdate: sessionCbNull;
@@ -121,7 +126,7 @@ const childOnce = (query: Query) => {
   });
 };
 
-export const syncData = withDb<SyncArgs, never>(
+export const syncData = withDbSync<SyncArgs>(
   async (db, { onSessionAdded, onRunningUpdate, onSessionUpdate }) => {
     const all = child(db, 'all');
     const last = await childOnce(query(all, orderByKey(), limitToLast(1)));
@@ -145,7 +150,11 @@ const setValue = <T>(db: DatabaseReference, path: string, value: T) => {
 };
 const pushValue = <T>(db: DatabaseReference, path: string, value: T) => {
   const ref = child(db, path);
-  return push(ref, value);
+  const pushRef = push(ref, value);
+  return pushRef.then((snapshot) => {
+    if (!snapshot.key) throw new Error('No key after push');
+    return snapshot.key;
+  });
 };
 
 export const startSession = withDb<{ name: string }, RunningSession>((db, { name }) => {
@@ -160,7 +169,11 @@ export const stopSession = withDb(async (db) => {
     throw new Error('Stopping not existing session');
   }
   const pushRef = await push(child(db, 'all'));
-  const session = { ...runningSnap.val(), id: pushRef.key, endDate: new Date().toISOString() };
+  const session: Session = {
+    ...runningSnap.val(),
+    id: pushRef.key,
+    endDate: new Date().toISOString(),
+  };
   await set(running, null);
   await set(pushRef, session);
   return { response: session, error: null };
@@ -191,23 +204,36 @@ export const deleteSession = withDb<DeleteInfo, DeleteInfo>((db, { id }) => {
     .catch((error) => ({ error, response: null }));
 });
 
-export const createSessionDefinition = withDb<SessionDefinition, SessionDefinition>(
+export const createSessionDefinition = withDb<SessionDefinition, SessionDefinitionFromDb>(
   (db, sessionDefinition) => {
-    return pushValue(db, 'sessionDefinitions', sessionDefinition)
-      .then(() => ({ response: sessionDefinition, error: null }))
+    return pushValue(db, 'definitions', sessionDefinition)
+      .then((id) => ({ response: { id, ...sessionDefinition }, error: null }))
       .catch((error) => ({ error, response: null }));
   },
 );
 
-export const listDefinitions = withDb<undefined, SessionDefinition[]>((db) => {
+export const listDefinitions = withDbList((db) => {
   const definitionsQuery = query(child(db, 'definitions'), orderByKey());
   const result = get(definitionsQuery).then((snapshot) => {
-    if (snapshot.exists())
+    if (snapshot.exists()) {
+      const definitionsCollection: { [id: string]: SessionDefinition } = snapshot.val();
       return {
         error: null,
-        response: Object.values(snapshot.val()) as SessionDefinition[],
+        response: Object.entries(definitionsCollection).map(([id, definition]) => {
+          return { ...definition, id };
+        }),
       };
+    }
     return { error: null, response: [] };
   });
   return result;
 });
+
+export const updateDefinition = withDb<SessionDefinitionFromDb, SessionDefinitionFromDb>(
+  (db, { id, ...definition }) => {
+    return setValue(db, 'definitions/' + id, definition).then(() => ({
+      response: { id, ...definition },
+      error: null,
+    }));
+  },
+);

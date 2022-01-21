@@ -1,7 +1,6 @@
-import React, { MouseEventHandler, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
-import selectSessionNames from './redux/selectSessionNames';
 import { startSession } from '../home/redux/actions';
 import { Card, Grid, Typography, CardContent, ButtonBase, Container } from '@mui/material';
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
@@ -38,6 +37,8 @@ const IconWrapper = styled('div')(({ color, theme }) => ({
   border: `1px solid ${color || theme.palette.divider}`,
 }));
 
+const icons: Record<string, ((props: any) => JSX.Element) | undefined> = Icons;
+
 function ButtonCard({
   onClick,
   children,
@@ -50,10 +51,10 @@ function ButtonCard({
   iconName: string;
   id: string;
   children: import('react').ReactNode;
-  onClick: MouseEventHandler<any>;
+  onClick: () => void;
   onLongPress: () => unknown;
 }) {
-  const Icon = Icons[iconName] || Icons.Default;
+  const Icon = icons[iconName] || Icons.Default;
   const longProps = useLongPress(onLongPress);
   return (
     <StyledContainer variant="outlined">
@@ -74,13 +75,11 @@ export const QuickPick = () => {
   useEffect(() => {
     dispatch(fetchAllDefinitions());
   }, []);
-  const { sessionNames: sessions, definitions } = useAppSelector((state) => ({
-    sessionNames: selectSessionNames(state),
-    definitions: state.sessionDefinition.byName,
+  const { definitions } = useAppSelector((state) => ({
+    definitions: state.sessionDefinition.all,
   }));
 
-  const startSessionOnClick = (e) => {
-    const name = e.currentTarget.dataset.session;
+  const startSessionOnClick = (name: string) => {
     dispatch(
       startSession({
         name,
@@ -91,18 +90,17 @@ export const QuickPick = () => {
   return (
     <Container maxWidth="sm">
       <Grid container spacing={2}>
-        {sessions.map((session) => {
-          const definition = definitions[session] || {};
+        {definitions.map((definition) => {
           return (
-            <Grid item xs={4} sm={3} key={session}>
+            <Grid item xs={4} sm={3} key={definition.id}>
               <ButtonCard
-                id={session}
-                onClick={startSessionOnClick}
+                id={definition.id}
+                onClick={() => startSessionOnClick(definition.name)}
                 color={definition.color}
                 iconName={definition.icon}
-                onLongPress={() => dispatch(push(`/session-definitions/update/${session}`))}
+                onLongPress={() => dispatch(push(`/session-definitions/update/${definition.name}`))}
               >
-                {session}
+                {definition.name}
               </ButtonCard>
             </Grid>
           );

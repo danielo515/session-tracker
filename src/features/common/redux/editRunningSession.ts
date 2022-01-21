@@ -19,14 +19,14 @@ export function editRunningSession({ name, startDate }: { name: string; startDat
     });
 
     return updateRunningSession({ name, startDate })
-      .then(({ error, response: runningSession }) => {
+      .then(({ response: runningSession }) => {
         dispatch({
           type: COMMON_EDIT_RUNNING_SESSION_SUCCESS,
           data: { runningSession },
         });
         return runningSession;
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({
           type: COMMON_EDIT_RUNNING_SESSION_FAILURE,
           data: { error: err },
@@ -45,7 +45,7 @@ export function useEditRunningSession() {
   const dispatch = useAppDispatch();
 
   const { runningSession, editRunningSessionPending, editRunningSessionError } = useAppSelector(
-    state => ({
+    (state) => ({
       runningSession: selectRunningSession(state),
       editRunningSessionPending: state.common.editRunningSessionPending,
       editRunningSessionError: state.common.editRunningSessionError,
@@ -54,7 +54,7 @@ export function useEditRunningSession() {
   );
 
   const boundAction = useCallback(
-    session => {
+    (session) => {
       return dispatch(editRunningSession(session));
     },
     [dispatch],
@@ -73,6 +73,7 @@ export function useEditRunningSession() {
   };
 }
 
+// @ts-expect-error TODO migrate to toolkit
 export function reducer(state: State, action) {
   switch (action.type) {
     case COMMON_EDIT_RUNNING_SESSION_BEGIN:

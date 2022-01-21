@@ -11,7 +11,7 @@ import { reducer as openEditReducer } from './openEdit';
 
 const reducers = [openEditReducer];
 
-export default function reducer(state = initialState, action): State {
+export default function reducer(state = initialState, action: any): State {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here

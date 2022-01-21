@@ -6,22 +6,26 @@ import { Page } from 'features/common';
 import FormRow from 'features/common/FormRow';
 import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SessionDefinition } from '@types';
+import { SessionDefinition, SessionDefinitionFromDb } from '@types';
 
 const defaultDuration = 60;
 const defaultIcon = 'Default';
 
-export default function DefinitionForm({
-  definition,
-  onSubmit,
-  isLoading,
-  isUpdate,
-}: {
-  isLoading: boolean;
-  onSubmit: (a: SessionDefinition) => unknown;
-  definition: SessionDefinition;
-  isUpdate: boolean;
-}) {
+type Props =
+  | {
+      isLoading: boolean;
+      onSubmit: (a: SessionDefinition) => unknown;
+      definition: SessionDefinition;
+      isUpdate: false;
+    }
+  | {
+      isLoading: boolean;
+      onSubmit: (a: SessionDefinitionFromDb) => unknown;
+      definition: SessionDefinitionFromDb;
+      isUpdate: true;
+    };
+
+export default function DefinitionForm({ definition, onSubmit, isLoading, isUpdate }: Props) {
   const [color, setColor] = useState(definition.color);
   const [duration, setDuration] = useState(definition.expectedDuration || defaultDuration);
   const [name, setName] = useState(definition.name);
@@ -29,12 +33,22 @@ export default function DefinitionForm({
 
   const submit = (e: SyntheticEvent) => {
     e.preventDefault();
-    onSubmit({
-      name,
-      color,
-      expectedDuration: duration,
-      icon,
-    });
+    if (isUpdate) {
+      onSubmit({
+        id: definition.id,
+        name,
+        color,
+        expectedDuration: duration,
+        icon,
+      });
+    } else {
+      onSubmit({
+        name,
+        color,
+        expectedDuration: duration,
+        icon,
+      });
+    }
   };
   return (
     <Page className="session-definition-create" scroll>

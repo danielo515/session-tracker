@@ -14,6 +14,7 @@ import { isUserLoggedIn } from '../../../common/api';
 import { fetchAllDefinitions } from 'features/session-definition/redux/fetchAll';
 
 export function setupApp() {
+  // @ts-expect-error TODO make to toolkit
   return async (dispatch, getState) => {
     const { setupAppPending } = getState().common;
     if (setupAppPending) {
