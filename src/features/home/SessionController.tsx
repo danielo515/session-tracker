@@ -22,7 +22,7 @@ const Content = styled(Container)(({ theme: { palette, spacing } }) => ({
   alignItems: 'center',
   margin: '0 auto',
   color: palette.primary.contrastText,
-  padding: spacing(2),
+  padding: `${spacing(1)} ${spacing(2)}`,
 }));
 
 export const SessionController = (props: ConnectedProps<typeof connector>) => {

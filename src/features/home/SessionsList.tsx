@@ -76,13 +76,6 @@ SessionsList.defaultProps = {
 
 const getIdOrName = <T extends { name: string; id?: string }>(idx: number, data: T[]) =>
   data[idx].id || data[idx].name;
-/**
- * @template T
- * @typedef {Object} VirtualProps
- * @property {T[]} data
- * @property { (props:{data: T[], style: Object, index: number, resizeList: () => any}) => any } row
- * @property {(i:number) => number} itemSize
- */
 
 type VirtualProps<T> = {
   data: T[];

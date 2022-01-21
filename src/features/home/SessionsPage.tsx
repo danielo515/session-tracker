@@ -24,7 +24,7 @@ const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connect
       />
       <EditSession />
       <SessionController />
-      <Box pt={4} className="home-copyright">
+      <Box pt={2} pb={1} className="home-copyright">
         <FooterWithVersion />
       </Box>
     </div>
