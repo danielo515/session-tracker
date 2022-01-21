@@ -1,3 +1,10 @@
+## [1.27.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.27.1...v1.27.2) (2022-01-21)
+
+
+### Bug Fixes
+
+* restore used icons ([26b45c8](https://github.com/danielo515/pento-tech-challenge/commit/26b45c870c17066b9efa7c2ce3bee3764a454579))
+
 ## [1.27.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.27.0...v1.27.1) (2022-01-21)
 
 
