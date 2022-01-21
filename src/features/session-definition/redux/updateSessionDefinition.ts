@@ -10,6 +10,9 @@ export const { reducer: updateSessionDefinitionReducer, action: updateSessionDef
     initialState,
     payloadCreator: async (definition: SessionDefinitionFromDb) => {
       const response = await updateDefinition(definition);
+      if (!response.response) {
+        throw response.error;
+      }
       return response.response;
     },
     actionName: 'SESSION-DEFINITION/UPDATE',

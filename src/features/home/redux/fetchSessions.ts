@@ -17,7 +17,7 @@ import { updateAtIdx } from './updateAtIdx';
  * Fetches all sessions
  */
 export function fetchSessions() {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: HOME_FETCH_SESSIONS_BEGIN,
     });
@@ -72,6 +72,7 @@ export function dismissFetchSessionsError() {
   };
 }
 
+// @ts-expect-error TODO migrate to toolkit
 export function reducer(state: State, action) {
   switch (action.type) {
     case HOME_FETCH_SESSIONS_BEGIN:

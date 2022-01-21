@@ -14,6 +14,7 @@ export function useOpenEdit() {
   return { openEdit: boundAction };
 }
 
+// @ts-expect-error TODO migrate to toolkit
 export function reducer(state, action) {
   switch (action.type) {
     case TIMER_OPEN_EDIT:

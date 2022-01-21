@@ -7,9 +7,11 @@ import {
 
 import * as api from '../../../common/api';
 import { Session } from '@types';
+import initialState from './initialState';
+import { AppDispatch } from '@common/configStore';
 
 export function updateSession(session: Session) {
-  return async dispatch => {
+  return async (dispatch: AppDispatch) => {
     dispatch({
       type: HOME_UPDATE_SESSION_BEGIN,
     });
@@ -38,7 +40,8 @@ export function dismissUpdateSessionError() {
   };
 }
 
-export function reducer(state, action) {
+//@ts-expect-error TODO migrate to toolkit
+export function reducer(state: typeof initialState, action) {
   switch (action.type) {
     case HOME_UPDATE_SESSION_BEGIN:
       // Just after a request is sent

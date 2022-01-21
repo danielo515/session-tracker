@@ -21,7 +21,7 @@ const reducers = [
   selectRowReducer,
 ] as const;
 
-export default function reducer(state = initialState, action): State {
+export default function reducer(state = initialState, action: any): State {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here

@@ -11,7 +11,7 @@ import { reducer as editRunningSessionReducer } from './editRunningSession';
 
 const reducers = [setupAppReducer, editRunningSessionReducer];
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   let newState: State;
   switch (action.type) {
     // Handle cross-topic actions here

@@ -88,7 +88,7 @@ export const signUp = (args: { email: string; password: string; name: string }) 
   console.log('Not used anymore', args);
 };
 
-export const listSessions = withDbList((db) => {
+export const listSessions = withDbList<{ all: Session[]; current: RunningSession }>((db) => {
   const allQuery = query(child(db, 'all'), orderByKey());
   return Promise.all([get(allQuery), get(child(db, 'runningSession'))]).then(
     ([snapshot, currentSnap]) => {
