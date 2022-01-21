@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { connect, ConnectedProps } from 'react-redux';
 import Timer from './Timer';
@@ -27,25 +27,26 @@ const Content = styled(Container)(({ theme: { palette, spacing } }) => ({
 
 export const SessionController = (props: ConnectedProps<typeof connector>) => {
   const { runningSession, stopSession } = props;
+  const name = runningSession && runningSession.name;
+  const [cachedName, setCachedName] = useState(name);
+  useEffect(() => {
+    if (name && name !== cachedName) {
+      setCachedName(name);
+    }
+  }, [name]);
+
   return (
     <Root>
       <Slide in={!!runningSession} direction="up">
         <AppBar position="relative" sx={{ top: 'auto', bottom: 0 }}>
           <Content>
-            <Timer
-              startDate={runningSession?.startDate || new Date()}
-              isActive={Boolean(runningSession)}
-            />
-            {runningSession ? (
-              <>
-                <Typography variant="body1">{runningSession.name}</Typography>
-                <Button onClick={stopSession} color="secondary" variant="outlined">
-                  <Stop />
-                </Button>
-              </>
-            ) : (
-              <Typography variant="body1"> </Typography>
-            )}
+            <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+              {cachedName}
+            </Typography>
+            <Timer startDate={runningSession?.startDate || new Date()} isActive />
+            <Button onClick={() => stopSession()} color="secondary" variant="outlined">
+              <Stop />
+            </Button>
           </Content>
         </AppBar>
       </Slide>
