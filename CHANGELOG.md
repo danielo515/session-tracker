@@ -1,3 +1,18 @@
+# [1.27.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.26.1...v1.27.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* 99% type error free ([1c03b93](https://github.com/danielo515/pento-tech-challenge/commit/1c03b930038fab6c66147192df2c8aa84b303f5a))
+* create injects the ID ([4326f16](https://github.com/danielo515/pento-tech-challenge/commit/4326f160fe179e3506a3bf45301b5b84fcc883c7))
+* no type errors ([4949596](https://github.com/danielo515/pento-tech-challenge/commit/4949596ab68c79beabf18fb69fbf4664efc649c4))
+
+
+### Features
+
+* update definition API ([9ae1848](https://github.com/danielo515/pento-tech-challenge/commit/9ae18486333fe29c9dd09d48f90b0eb55b6368fc))
+* update session definitions ([b97b8a5](https://github.com/danielo515/pento-tech-challenge/commit/b97b8a51761d5a2622474c625541832e1c3878f1))
+
 ## [1.26.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.26.0...v1.26.1) (2022-01-20)
 
 
