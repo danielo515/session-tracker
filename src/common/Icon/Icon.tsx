@@ -848,10 +848,19 @@ export const TimelapseOutlined = loadableIcon(
   () => import('@mui/icons-material/TimelapseOutlined'),
 );
 export const TimerOutlined = loadableIcon(() => import('@mui/icons-material/TimerOutlined'));
+export const AlarmOffOutlined = loadableIcon(() => import('@mui/icons-material/AlarmOffOutlined'));
 export const TimeToLeaveOutlined = loadableIcon(
   () => import('@mui/icons-material/TimeToLeaveOutlined'),
 );
 export const TodayOutlined = loadableIcon(() => import('@mui/icons-material/TodayOutlined'));
+export const AirplayOutlined = loadableIcon(() => import('@mui/icons-material/AirplayOutlined'));
+export const MovieOutlined = loadableIcon(() => import('@mui/icons-material/MovieOutlined'));
+export const LocalGroceryStoreOutlined = loadableIcon(
+  () => import('@mui/icons-material/LocalGroceryStoreOutlined'),
+);
+export const RestaurantMenuOutlined = loadableIcon(
+  () => import('@mui/icons-material/RestaurantMenuOutlined'),
+);
 export const TonalityOutlined = loadableIcon(() => import('@mui/icons-material/TonalityOutlined'));
 export const TouchAppOutlined = loadableIcon(() => import('@mui/icons-material/TouchAppOutlined'));
 export const ToysOutlined = loadableIcon(() => import('@mui/icons-material/ToysOutlined'));
