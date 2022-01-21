@@ -8,8 +8,7 @@ import { useAppThunkDispatch } from '@common/configStore';
 import { SessionDefinitionFromDb } from '@types';
 import useAppSelector from 'hooks/useSelector';
 import { updateSessionDefinition } from './redux/updateSessionDefinition';
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { wait } from './wait';
 
 export default function Update() {
   const params = useParams<'name'>();
