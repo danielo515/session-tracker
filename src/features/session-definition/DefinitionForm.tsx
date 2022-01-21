@@ -32,18 +32,19 @@ import {
 import useAppSelector from 'hooks/useSelector';
 import { useAppDispatch } from '@common/configStore';
 import { IconCollection } from '@common/Icon/types';
+import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
 
 type SectionProps = {
   children: React.ReactNode;
   title: React.ReactNode;
   hint: React.ReactNode;
   step: Step;
+  noPadding?: boolean;
 };
 
-const Section = ({ children, title, hint, step }: SectionProps) => {
-  const currentStep = useAppSelector((state) => state.descriptionForm.step);
+const Section = ({ children, title, hint, step, noPadding = false }: SectionProps) => {
+  const shouldBeExpanded = useAppSelector((state) => state.descriptionForm.step === step);
   const dispatch = useAppDispatch();
-  const shouldBeExpanded = currentStep === step;
   return (
     <Accordion
       TransitionProps={{ unmountOnExit: true }}
@@ -64,7 +65,7 @@ const Section = ({ children, title, hint, step }: SectionProps) => {
           {hint}
         </Box>
       </AccordionSummary>
-      <AccordionDetails>{children}</AccordionDetails>
+      <AccordionDetails sx={{ px: noPadding ? 0 : undefined }}>{children}</AccordionDetails>
     </Accordion>
   );
 };
@@ -117,7 +118,7 @@ const DurationSection = () => {
   const dispatch = useAppDispatch();
   const duration = useAppSelector((state) => state.descriptionForm.duration);
   return (
-    <Section title="Expected duration" hint={duration} step="duration">
+    <Section title="Expected duration" hint={formatMinutes4Human(duration)} step="duration">
       <Typography variant="subtitle1">How much will this task usually last?</Typography>
       <DurationSlider
         value={duration}
@@ -136,8 +137,10 @@ const IconSection = () => {
   const Icon = icons[icon];
 
   return (
-    <Section title="Icon" hint={<Icon color="primary"></Icon>} step="icon">
-      <Typography variant="subtitle1">Assign an icon to this task</Typography>
+    <Section title="Icon" hint={<Icon color="primary"></Icon>} step="icon" noPadding>
+      <Typography variant="subtitle1" px={2}>
+        Assign an icon to this task
+      </Typography>
       <IconSelector icon={icon} onChange={(value) => dispatch(setIcon(value))} />
     </Section>
   );
@@ -198,7 +201,7 @@ const SaveSection = (props: Props) => {
           variant="outlined"
           size="large"
           component={Link}
-          to="/"
+          to="/timer"
         >
           Cancel
         </Button>
