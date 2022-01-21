@@ -20,7 +20,7 @@ const childRoutes: RouteObject[] = [
   { path: 'internal', element: ManageIcons },
 ];
 
-type RouteConfig = RouteObject & { element: () => JSX.Element; children?: RouteConfig[] };
+export type RouteConfig = RouteObject & { element: () => JSX.Element; children?: RouteConfig[] };
 
 export const renderRoutes = (routes: RouteConfig[]): RouteObject[] => {
   return routes.map((route) => {

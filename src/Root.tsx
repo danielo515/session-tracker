@@ -7,12 +7,12 @@ import { ReduxRouter } from '@lagunovsky/redux-react-router';
 import history from './common/history';
 import { LoadingComponent } from '@common/makeAsyncPage';
 import { Store } from '@reduxjs/toolkit';
-import routes, { renderRoutes } from '@common/routeConfig';
+import routes, { renderRoutes, RouteConfig } from '@common/routeConfig';
 
 // This ridiculous separation is needed because useRoutes can only be used inside
 // the scope of a Router provider
 function RenderRouteConfig() {
-  const memoizedRoutes = useMemo(() => renderRoutes(routes), []);
+  const memoizedRoutes = useMemo(() => renderRoutes(routes as RouteConfig[]), []);
   const children = useRoutes(memoizedRoutes);
   return <Suspense fallback={<LoadingComponent />}>{children}</Suspense>;
 }

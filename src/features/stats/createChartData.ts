@@ -11,23 +11,26 @@ type AddToRow = (
   diffCalc: (a: Date, b: Date) => number,
 ) => (map: MapRow, session: Session) => MapRow;
 
-export const addToRow: AddToRow = (formatter, diffCalc) => (map, { name, startDate, endDate }) => {
-  const duration = diffCalc(new Date(endDate || Date.now()), new Date(startDate));
-  const date = formatter(new Date(startDate));
+export const addToRow: AddToRow =
+  (formatter, diffCalc) =>
+  (map, { name, startDate, endDate }) => {
+    const duration = diffCalc(new Date(endDate || Date.now()), new Date(startDate));
+    const date = formatter(new Date(startDate));
 
-  const existing = /** @type { Row }*/ map[date] || {};
-  const names = map.names || new Set();
-  names.add(name);
-  return {
-    ...map,
-    names,
-    [date]: {
-      ...existing,
-      [name]: (existing[name] || 0) + duration,
-      startDate: date,
-    },
+    const existing = map[date] || ({} as Row);
+    const names = map.names || new Set();
+    names.add(name);
+    return {
+      ...map,
+      names,
+      [date]: {
+        ...existing,
+        // @ts-expect-error TODO fix this with fresh mind
+        [name]: (existing[name] || 0) + duration,
+        startDate: date,
+      },
+    };
   };
-};
 
 const makeWeekRow = addToRow(format('E do MMM'), differenceInMinutes);
 const makeMonthRow = addToRow(format('Io'), differenceInMinutes);

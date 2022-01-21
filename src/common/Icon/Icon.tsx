@@ -29,7 +29,7 @@ function loadableIcon(importFn: () => any) {
       },
     };
   });
-  const SuspendedIcon = (props) => (
+  const SuspendedIcon = (props: { color: string; className?: string }) => (
     <Suspense fallback={<LoadingIcon />}>
       <Inner {...props} />
     </Suspense>

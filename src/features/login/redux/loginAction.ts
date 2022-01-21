@@ -13,14 +13,8 @@ type Props = {
 
 export const loginAction = createAsyncThunk(
   'LOGIN',
-  async ({ email, password, isGoogleLogin = false }: Props, { rejectWithValue, dispatch }) => {
-    let result;
-
-    if (isGoogleLogin) {
-      result = await api.googleLogin();
-    } else {
-      result = await api.login({ email, password });
-    }
+  async (args: Props, { rejectWithValue, dispatch }) => {
+    const result = await api.googleLogin();
 
     if (result.error) {
       console.error('Error logging in:', result.error);
@@ -28,7 +22,7 @@ export const loginAction = createAsyncThunk(
     }
 
     dispatch(replace('/'));
-    return result.response?.token;
+    return result.response.token;
   },
 );
 
@@ -56,7 +50,7 @@ export const {
     builder.addCase(loginAction.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        token: payload?.token,
+        token: JSON.stringify(payload),
         loginActionPending: false,
         loginActionError: null,
       };

@@ -55,7 +55,8 @@ export const googleLogin = () =>
       // This gives you a Google Access Token. You can use it to access the Google API.
       const { user } = result;
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential && credential.toJSON();
+      if (!credential) throw new Error('No credential');
+      const token = credential.toJSON();
       // The signed-in user info.
       return {
         error: null,

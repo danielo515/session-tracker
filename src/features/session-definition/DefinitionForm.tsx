@@ -33,13 +33,22 @@ export default function DefinitionForm({ definition, onSubmit, isLoading, isUpda
 
   const submit = (e: SyntheticEvent) => {
     e.preventDefault();
-    onSubmit({
-      ...definition,
-      name,
-      color,
-      expectedDuration: duration,
-      icon,
-    });
+    if (isUpdate) {
+      onSubmit({
+        id: definition.id,
+        name,
+        color,
+        expectedDuration: duration,
+        icon,
+      });
+    } else {
+      onSubmit({
+        name,
+        color,
+        expectedDuration: duration,
+        icon,
+      });
+    }
   };
   return (
     <Page className="session-definition-create" scroll>
