@@ -9,6 +9,7 @@ const TimerRoot = styled('div')(({ theme }) => ({
   ...theme.typography.button,
   display: 'flex',
   fontSize: '1.5rem',
+  fontWeight: theme.typography.fontWeightLight,
 }));
 
 export const RenderTimer = ({ startDate }: { startDate: string | Date }) => {
@@ -18,7 +19,17 @@ export const RenderTimer = ({ startDate }: { startDate: string | Date }) => {
     <TimerRoot>
       <div> {hours} </div>:<div> {minutes} </div>
       <div> : </div>
-      <motion.div> {seconds} </motion.div>
+      <motion.div
+        key={seconds}
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          ease: 'easeOut',
+          duration: 0.5,
+        }}
+      >
+        {seconds}
+      </motion.div>
     </TimerRoot>
   );
 };

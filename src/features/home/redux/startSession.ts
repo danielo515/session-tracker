@@ -1,8 +1,7 @@
 import * as api from '../../../common/api';
 import { createAction, createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import initialState from './initialState';
-import { RunningSession, Session } from '@types';
-import { SetOptional } from 'type-fest';
+import { RunningSession } from '@types';
 
 export const startSession = createAsyncThunk(
   'HOME_START_SESSION',
@@ -20,8 +19,8 @@ export const startSession = createAsyncThunk(
 
 export const addedSession = createAction<RunningSession | null>('ADDED_SESSION');
 
-export const reducer = createReducer(initialState, builder => {
-  builder.addCase(startSession.pending, state => ({
+export const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(startSession.pending, (state) => ({
     ...state,
     startSessionPending: true,
     startSessionError: null,

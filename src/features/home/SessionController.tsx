@@ -44,7 +44,7 @@ export const SessionController = (props: ConnectedProps<typeof connector>) => {
               {cachedName}
             </Typography>
             <Timer startDate={runningSession?.startDate || new Date()} isActive />
-            <Button onClick={() => stopSession()} color="secondary" variant="outlined">
+            <Button onClick={() => stopSession()} color="secondary" variant="contained">
               <Stop />
             </Button>
           </Content>
