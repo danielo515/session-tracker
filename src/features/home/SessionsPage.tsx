@@ -10,9 +10,24 @@ import selectGroupedSessions from './redux/selectGroupedSessions';
 import { RootState } from '@common/configStore';
 import Fab from '@mui/material/Fab';
 import { Add } from '@mui/icons-material';
-import { Slide, useTheme } from '@mui/material';
+import { Slide, styled, useTheme } from '@mui/material';
 import selectRunningSession from './redux/selectRunningSession';
 import { Link } from 'react-router-dom';
+
+const Root = styled('div')`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  box-sizing: border-box;
+  form {
+    padding: 16px 0;
+  }
+`;
 
 const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connector>) => {
   useEffect(() => {
@@ -22,7 +37,7 @@ const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connect
   const { switchTask, editSession, groupedSessions, runningSession } = props;
   const theme = useTheme();
   return (
-    <div className="home-default-page">
+    <Root>
       <SessionsList
         sessions={groupedSessions}
         editSession={editSession}
@@ -44,7 +59,7 @@ const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connect
       <Box pt={3} pb={1} className="home-copyright">
         <FooterWithVersion />
       </Box>
-    </div>
+    </Root>
   );
 };
 

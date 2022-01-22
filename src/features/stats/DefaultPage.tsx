@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { fetchSessions } from '../home/redux/actions';
-import Dashboard from './Dashboard';
+import Dashboard, { Days } from './Dashboard';
+import MonthChart from './MonthChart';
+import WeekChart from './WeekChart';
 
 const mapDispatchToProps = {
   fetchSessions,
@@ -13,7 +16,16 @@ function StatsDefaultPage({ fetchSessions }: ConnectedProps<typeof connector>) {
   useEffect(() => {
     fetchSessions();
   }, []);
-  return <Dashboard />;
+  return (
+    <Routes>
+      <Route element={<Dashboard />}>
+        <Route path="day" element={<Days />} />
+        <Route path="week" element={<WeekChart />} />
+        <Route path="month" element={<MonthChart />} />
+        <Route path="*" element={<Navigate to="day" />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default connector(StatsDefaultPage);

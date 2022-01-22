@@ -10,6 +10,7 @@ import DonutContainer from './Donut.container';
 import { DaysNavigator } from './NavigationControls';
 import WeekChart from './WeekChart';
 import MonthChart from './MonthChart';
+import { Link, Outlet } from 'react-router-dom';
 const PREFIX = 'Dashboard';
 
 const classes = {
@@ -29,6 +30,7 @@ const classes = {
 const Root = styled('div')(({ theme }) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
+    height: '90%',
   },
 
   [`& .${classes.toolbar}`]: {
@@ -72,50 +74,30 @@ const Root = styled('div')(({ theme }) => ({
   [`& .${classes.container}`]: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    overflow: 'hidden',
+    height: '100%',
   },
 
   [`& .${classes.paper}`]: {
     padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
-  },
-
-  [`& .${classes.fixedHeight}`]: {
-    height: 440,
-    [theme.breakpoints.down('sm')]: { height: 400 },
+    height: '100%',
   },
 }));
+
+export const Days = () => <DonutContainer title={<DaysNavigator />} />;
 
 const drawerWidth = 240;
 
 export default function Dashboard() {
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   return (
     <Root className={classes.root}>
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Day */}
-            <Grid item xs={12} md={6}>
-              <Paper className={fixedHeightPaper}>
-                <DonutContainer title={<DaysNavigator />} />
-              </Paper>
-            </Grid>
-            {/* Week */}
-            <Grid item xs={12} md={6}>
-              <Paper className={fixedHeightPaper}>
-                <WeekChart />
-              </Paper>
-            </Grid>
-            {/* Month */}
-            <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                <MonthChart />
-              </Paper>
-            </Grid>
-          </Grid>
+          <Paper className={classes.paper}>
+            <Link to="week">Week</Link>
+            <Outlet />
+          </Paper>
           <Box pt={4}>
             <FooterWithVersion />
           </Box>
