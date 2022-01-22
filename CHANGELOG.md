@@ -1,3 +1,19 @@
+# [1.28.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.27.2...v1.28.0) (2022-01-22)
+
+
+### Bug Fixes
+
+* delete old sessin controller components ([f15b4fb](https://github.com/danielo515/pento-tech-challenge/commit/f15b4fbaf07d27e3ac45886e7777c38e43752fbd))
+
+
+### Features
+
+* awesome session controller ([c933412](https://github.com/danielo515/pento-tech-challenge/commit/c93341299efe50e193771394b902db20a8580c05))
+* bottom controls for session list ([0bfb04a](https://github.com/danielo515/pento-tech-challenge/commit/0bfb04ae1cd9697a2a312fd3934ab63f80e1e485))
+* button to create new definition ([b2750b8](https://github.com/danielo515/pento-tech-challenge/commit/b2750b81c1de694c90c154a834315078ea92a053))
+* create small theme ([aea6ff8](https://github.com/danielo515/pento-tech-challenge/commit/aea6ff85548bd0fbacae4b92991eed7fa9567e3d))
+* performant DefinitionForm with redux ([8afa8f5](https://github.com/danielo515/pento-tech-challenge/commit/8afa8f535401501b44bfe9aac4e000d4995908e5))
+
 ## [1.27.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.27.1...v1.27.2) (2022-01-21)
 
 
