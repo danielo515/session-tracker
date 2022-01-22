@@ -8,8 +8,7 @@ import { useAppThunkDispatch } from '@common/configStore';
 import { SessionDefinitionFromDb } from '@types';
 import useAppSelector from 'hooks/useSelector';
 import { updateSessionDefinition } from './redux/updateSessionDefinition';
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { wait } from './wait';
 
 export default function Update() {
   const params = useParams<'name'>();
@@ -28,7 +27,7 @@ export default function Update() {
   const definition = definitions[params.name];
   const onSubmit = useCallback(
     (definition: SessionDefinitionFromDb) => {
-      dispatch(updateSessionDefinition(definition))
+      return dispatch(updateSessionDefinition(definition))
         .then(() => {
           setShowAlert(true);
           return wait(500);
@@ -50,7 +49,7 @@ export default function Update() {
         }}
         onSubmit={onSubmit}
         isLoading={pending}
-        isUpdate
+        action="update"
       />
     </>
   );

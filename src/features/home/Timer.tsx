@@ -1,49 +1,45 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { styled } from '@mui/material';
+import { motion } from 'framer-motion';
 
 import React from 'react';
 import useTimeDiff from './hooks/useTimeDiff';
 import { msToHourMinSec } from './msToHourMinSec';
 
-export const RenderTimer = ({ startDate }: { startDate: string }) => {
+const TimerRoot = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  display: 'flex',
+  fontSize: '1.5rem',
+  fontWeight: theme.typography.fontWeightLight,
+}));
+
+export const RenderTimer = ({ startDate }: { startDate: string | Date }) => {
   useTimeDiff(startDate);
   const [hours, minutes, seconds] = msToHourMinSec(Date.now() - new Date(startDate).getTime());
   return (
-    <div className="home-timer">
-      <h3> {hours} </h3>:<h3> {minutes} </h3>
-      <h3> : </h3>
-      <h3> {seconds} </h3>
-    </div>
+    <TimerRoot>
+      <div> {hours} </div>:<div> {minutes} </div>
+      <div> : </div>
+      <motion.div
+        key={seconds}
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          ease: 'easeOut',
+          duration: 0.5,
+        }}
+      >
+        {seconds}
+      </motion.div>
+    </TimerRoot>
   );
 };
-
-const initial = { maxWidth: 0, opacity: 0 };
-const exit = { maxWidth: 0, opacity: 0 };
-const animateTo = { maxWidth: 200, opacity: 1 };
-const style = { overflow: 'hidden' };
 
 type PropsB = {
   isActive: boolean;
-  startDate?: string;
+  startDate?: string | Date;
 };
 export default function Timer({ startDate }: PropsB) {
-  return (
-    <div className={`home-timer-wrapper ${!startDate ? 'empty' : ''}`}>
-      <AnimatePresence exitBeforeEnter>
-        {startDate && (
-          <motion.div
-            initial={initial}
-            animate={animateTo}
-            exit={exit}
-            key={startDate}
-            style={style}
-            transition={{ duration: 1 }}
-          >
-            <RenderTimer startDate={startDate} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+  return <div>{startDate && <RenderTimer startDate={startDate} />}</div>;
 }
 
 Timer.defaultProps = {

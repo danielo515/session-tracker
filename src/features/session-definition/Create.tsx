@@ -4,6 +4,7 @@ import DefinitionForm from './DefinitionForm';
 import { useAppThunkDispatch } from '@common/configStore';
 import { back } from '@lagunovsky/redux-react-router';
 import { SessionDefinition } from '@types';
+import { Container, Typography } from '@mui/material';
 
 export default function Create() {
   const { create, createPending } = useCreate();
@@ -15,17 +16,22 @@ export default function Create() {
   };
 
   return (
-    <DefinitionForm
-      isUpdate={false}
-      definition={{
-        expectedDuration: 60 * 8,
-        name: '',
-        color: '#b32aa9',
-        icon: 'Default',
-      }}
-      onSubmit={onSubmit}
-      isLoading={createPending}
-    />
+    <Container>
+      <Typography variant="h4" p={2}>
+        Create a new session
+      </Typography>
+      <DefinitionForm
+        definition={{
+          expectedDuration: 60 * 8,
+          name: '',
+          color: '#b32aa9',
+          icon: 'Default',
+        }}
+        action="create"
+        onSubmit={onSubmit}
+        isLoading={createPending}
+      />
+    </Container>
   );
 }
 

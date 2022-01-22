@@ -2,6 +2,8 @@ import React from 'react';
 import './ReloadPrompt.css';
 
 import { useRegisterSW } from 'virtual:pwa-register/react';
+import { Button } from '@mui/material';
+import { Close, Refresh } from '@mui/icons-material';
 
 function ReloadPrompt() {
   const {
@@ -10,7 +12,6 @@ function ReloadPrompt() {
     updateServiceWorker,
   } = useRegisterSW({
     onRegistered(r) {
-      // eslint-disable-next-line prefer-template
       console.log('SW Registered: ' + r);
     },
     onRegisterError(error) {
@@ -35,13 +36,17 @@ function ReloadPrompt() {
             )}
           </div>
           {needRefresh && (
-            <button className="ReloadPrompt-toast-button" onClick={() => updateServiceWorker(true)}>
+            <Button
+              variant="outlined"
+              startIcon={<Refresh />}
+              onClick={() => updateServiceWorker(true)}
+            >
               Reload
-            </button>
+            </Button>
           )}
-          <button className="ReloadPrompt-toast-button" onClick={() => close()}>
+          <Button variant="outlined" startIcon={<Close />} onClick={() => close()}>
             Close
-          </button>
+          </Button>
         </div>
       )}
     </div>

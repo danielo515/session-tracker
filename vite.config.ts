@@ -1,5 +1,6 @@
 import fs from 'fs';
 import analyzer from 'rollup-plugin-analyzer';
+import visualizer from 'rollup-plugin-visualizer';
 import { VitePWA } from 'vite-plugin-pwa';
 // import legacyPlugin from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
@@ -17,9 +18,6 @@ export default defineConfig(({ command }) => {
     'process.env.APP_VERSION': JSON.stringify(pkg.version),
   };
 
-  /**
-   *  * @type {import('vite').UserConfig}
-   */
   return {
     base: '/',
     root: './',
@@ -38,13 +36,14 @@ export default defineConfig(({ command }) => {
           //   open: false,
           //   template: 'treemap',
           // }),
-          // analyzer({
-          //   showExports: false,
-          //   limit: 10,
-          //   writeTo(analysis) {
-          //     fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
-          //   },
-          // }) as Plugin,
+          analyzer({
+            showExports: false,
+            limit: 10,
+            summaryOnly: true,
+            writeTo(analysis: string) {
+              fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
+            },
+          }) as Plugin,
         ],
       },
     },

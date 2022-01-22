@@ -8,8 +8,15 @@ import { Outlet, useMatch } from 'react-router-dom';
 import useAppSelector from 'hooks/useSelector';
 import { push } from '@lagunovsky/redux-react-router';
 import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#fafafa',
+    },
+  },
+});
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -37,7 +44,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <div className="page-container">{isSetupPending ? null : <Outlet />}</div>
+          <Box bgcolor="background.default" className="page-container">
+            {isSetupPending ? null : <Outlet />}
+          </Box>
         </LocalizationProvider>
       </ThemeProvider>
     </StyledEngineProvider>
