@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.0...v1.28.1) (2022-01-23)
+
+
+### Bug Fixes
+
+* better matching for Navigation component ([9386a91](https://github.com/danielo515/pento-tech-challenge/commit/9386a91769f9b996cffe16026bf9f6a66b7a644a))
+
 # [1.28.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.27.2...v1.28.0) (2022-01-22)
 
 
