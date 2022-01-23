@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.1...v1.28.2) (2022-01-23)
+
+
+### Bug Fixes
+
+* use styled for SessionsPage ([b352e15](https://github.com/danielo515/pento-tech-challenge/commit/b352e1593cfe71ca2a4b8fbae5832be9c0f16181))
+
 ## [1.28.1](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.0...v1.28.1) (2022-01-23)
 
 
