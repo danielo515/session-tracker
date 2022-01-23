@@ -3,6 +3,6 @@
 import makeAsyncPage from '@common/makeAsyncPage';
 
 export default {
-  path: 'stats',
+  path: 'stats/*',
   element: makeAsyncPage(() => import('./DefaultPage')),
 };
