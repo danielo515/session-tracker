@@ -41,7 +41,7 @@ function LinkTab({ label, ...props }: { label: string; to: string; icon: any; va
  * @param {string} props.page
  * */
 export default function Navigation({ page }: { page: string }) {
-  const knownRoute = ['/stats', '/timer', '/'].includes(page);
+  const knownRoute = ['/stats', '/timer', '/'].find((path) => page.startsWith(path));
   if (!knownRoute) {
     return null;
   }
@@ -49,7 +49,7 @@ export default function Navigation({ page }: { page: string }) {
     <AppBar position="static">
       <Tabs
         variant="fullWidth"
-        value={page}
+        value={knownRoute}
         aria-label="navigation"
         centered
         indicatorColor="primary"
