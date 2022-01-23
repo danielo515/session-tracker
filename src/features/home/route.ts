@@ -1,4 +1,4 @@
-import { DefaultPage } from './DefaultPage';
+import { HomeWrapper } from './HomeWrapper';
 import SettingsRoute from '../settings/route';
 import StatsRoute from '../stats/route';
 import TimerRoute from '../timer/route';
@@ -6,8 +6,7 @@ import makeAsyncPage from '@common/makeAsyncPage';
 import { RouteObject } from 'react-router-dom';
 
 const route: RouteObject = {
-  path: '',
-  element: DefaultPage,
+  element: HomeWrapper,
   children: [
     {
       index: true,
