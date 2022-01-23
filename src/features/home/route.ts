@@ -6,7 +6,6 @@ import makeAsyncPage from '@common/makeAsyncPage';
 import { RouteObject } from 'react-router-dom';
 
 const route: RouteObject = {
-  path: '',
   element: HomeWrapper,
   children: [
     {
