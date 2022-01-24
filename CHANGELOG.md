@@ -1,3 +1,10 @@
+## [1.28.3](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.2...v1.28.3) (2022-01-24)
+
+
+### Bug Fixes
+
+* split login into it's own bundle ([19e7dbb](https://github.com/danielo515/pento-tech-challenge/commit/19e7dbb6022568e3eac9a4774f3758b052ccfaff))
+
 ## [1.28.2](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.1...v1.28.2) (2022-01-23)
 
 
