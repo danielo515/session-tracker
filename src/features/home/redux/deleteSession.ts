@@ -1,12 +1,12 @@
-import * as api from '@common/api';
 import initialState from './initialState';
 import { createAsyncReducer } from './createAsyncReducer';
+import { deleteSession as deleteAPI } from '@common/api';
 
 export const { action: deleteSession, reducer } = createAsyncReducer({
   actionName: 'HOME_DELETE_SESSION',
   prefix: 'deleteSession',
   initialState: initialState,
-  payloadCreator: (id: string) => api.deleteSession({ id }),
+  payloadCreator: (id: string) => deleteAPI({ id }),
   onFulfilled: (state, action) => {
     return {
       ...state,

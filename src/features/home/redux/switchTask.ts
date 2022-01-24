@@ -1,9 +1,8 @@
-import * as api from '../../../common/api';
-
 import { AppDispatch, RootState } from '@common/configStore';
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import { stopSession } from './stopSession';
 import initialState from './initialState';
+import { startSession } from '@common/api';
 
 /**
  * Stops current task and starts a new one with the given name
@@ -18,15 +17,15 @@ export const switchTask = createAsyncThunk<
   } = getState();
 
   runningSession && (await dispatch(stopSession()));
-  const response = await api.startSession({ name });
+  const response = await startSession({ name });
   if (response.error) {
     return rejectWithValue(response.error);
   }
   // dispatch(addedSession(response.response)); handled by the sync mechanism
 });
 
-export const reducer = createReducer(initialState, builder => {
-  builder.addCase(switchTask.pending, state => {
+export const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(switchTask.pending, (state) => {
     return {
       ...state,
       switchTaskPending: true,
@@ -40,7 +39,7 @@ export const reducer = createReducer(initialState, builder => {
       switchTaskError: action.error.message || 'Unknown error',
     };
   });
-  builder.addCase(switchTask.fulfilled, state => {
+  builder.addCase(switchTask.fulfilled, (state) => {
     return {
       ...state,
       switchTaskPending: false,

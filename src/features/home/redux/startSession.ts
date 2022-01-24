@@ -1,12 +1,12 @@
-import * as api from '../../../common/api';
 import { createAction, createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import initialState from './initialState';
 import { RunningSession } from '@types';
+import { startSession as startSessionApi } from '@common/api';
 
 export const startSession = createAsyncThunk(
   'HOME_START_SESSION',
   async ({ name }: { name?: string }, { rejectWithValue, dispatch }) => {
-    const { error, response } = await api.startSession({
+    const { error, response } = await startSessionApi({
       name: name || new Date().toDateString(),
     });
     if (error) {

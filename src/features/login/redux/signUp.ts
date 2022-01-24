@@ -5,7 +5,6 @@ import {
   LOGIN_SIGN_UP_DISMISS_ERROR,
 } from './constants';
 
-import * as api from '../../../common/api';
 import history from '../../../common/history';
 import { State } from './initialState';
 import { AppDispatch } from '@common/configStore';

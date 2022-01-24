@@ -5,7 +5,7 @@ import {
   HOME_UPDATE_SESSION_DISMISS_ERROR,
 } from './constants';
 
-import * as api from '../../../common/api';
+import { updateSession as updateSessionApi } from '@common/api';
 import { Session } from '@types';
 import initialState from './initialState';
 import { AppDispatch } from '@common/configStore';
@@ -16,7 +16,7 @@ export function updateSession(session: Session) {
       type: HOME_UPDATE_SESSION_BEGIN,
     });
 
-    const { error, response } = await api.updateSession(session);
+    const { error, response } = await updateSessionApi(session);
 
     if (error) {
       dispatch({

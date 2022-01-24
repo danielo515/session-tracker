@@ -1,8 +1,8 @@
 import { replace } from '@lagunovsky/redux-react-router';
-import * as api from '../../../common/api';
 import { getErrorData } from '../../../common/getErrorData';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import initialState from './initialState';
+import { googleLogin } from '@common/login';
 
 type Props = {
   email: string;
@@ -14,7 +14,7 @@ type Props = {
 export const loginAction = createAsyncThunk(
   'LOGIN',
   async (args: Props, { rejectWithValue, dispatch }) => {
-    const result = await api.googleLogin();
+    const result = await googleLogin();
 
     if (result.error) {
       console.error('Error logging in:', result.error);

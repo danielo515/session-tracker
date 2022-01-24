@@ -1,10 +1,6 @@
-// This is the JSON way to define React Router rules in a Rekit app.
-// Learn more from: http://rekit.js.org/docs/routing.html
-// This is the JSON way to define React Router rules in a Rekit app.
-// Learn more from: http://rekit.js.org/docs/routing.html
-import { LoginDefaultPage } from './';
+import React from 'react';
 
 export default [
-  { path: 'login', element: LoginDefaultPage },
-  { path: 'signup', element: LoginDefaultPage },
+  { path: 'login', element: React.lazy(() => import('./LoginDefaultPage')) },
+  { path: 'signup', element: React.lazy(() => import('./LoginDefaultPage')) },
 ];

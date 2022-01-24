@@ -26,7 +26,7 @@ jobs:
         with:
           urls: |
             ${{ steps.netlify.outputs.url }}
-            ${{ steps.netlify.outputs.url }}/stats/
+            ${{ steps.netlify.outputs.url }}/login/
           # budgetPath: ./budget.json
           uploadArtifacts: true
           temporaryPublicStorage: true

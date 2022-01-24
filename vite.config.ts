@@ -30,18 +30,22 @@ export default defineConfig(({ command }) => {
       manifest: false,
       sourcemap: 'inline',
       outDir: 'build',
+
       rollupOptions: {
+        output: {
+          manualChunks: { '@firebase-auth': ['@firebase/auth'] },
+        },
         plugins: [
-          // visualizer({
-          //   open: false,
-          //   template: 'treemap',
-          // }),
+          visualizer({
+            open: true,
+            template: 'treemap',
+          }),
           analyzer({
             showExports: false,
             limit: 10,
             summaryOnly: true,
             writeTo(analysis: string) {
-              fs.writeFileSync('./stats.html', `<pre><code>${analysis}</code></pre>`);
+              fs.writeFileSync('./stats-comment.html', `<pre><code>${analysis}</code></pre>`);
             },
           }) as Plugin,
         ],
@@ -63,6 +67,9 @@ export default defineConfig(({ command }) => {
         strategies: 'generateSW',
         registerType: 'autoUpdate',
         manifest: Manifest,
+        workbox: {
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        },
       }),
     ],
     css: {

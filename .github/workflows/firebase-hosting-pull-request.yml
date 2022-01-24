@@ -15,10 +15,10 @@ jobs:
           REACT_APP_FB_APP_ID: "${{ secrets.REACT_APP_FB_APP_ID }}"
           REACT_APP_FB_DATABASE_URL: "${{ secrets.REACT_APP_FB_DATABASE_URL }}"
           REACT_APP_FB_AUTH_DOMAIN: "${{ secrets.REACT_APP_FB_AUTH_DOMAIN }}"
-      - name: Read the bundle stats
+      - name: Read the bundle stats and put it on a comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: stats.html
+          path: stats-comment.html
           recreate: true
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

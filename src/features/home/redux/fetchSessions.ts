@@ -7,11 +7,11 @@ import {
   HOME_UPDATED_SESSION,
 } from './constants';
 
-import * as api from '../../../common/api';
 import { addedSession } from './startSession';
 import { AppDispatch } from '@common/configStore';
 import { State } from './initialState';
 import { updateAtIdx } from './updateAtIdx';
+import { listSessions, syncData } from '@common/api';
 
 /**
  * Fetches all sessions
@@ -22,7 +22,7 @@ export function fetchSessions() {
       type: HOME_FETCH_SESSIONS_BEGIN,
     });
 
-    const result = await api.listSessions();
+    const result = await listSessions();
 
     if (result.error) {
       dispatch({
@@ -43,7 +43,7 @@ export function fetchSessions() {
  */
 export function syncSessions() {
   return (dispatch: AppDispatch) => {
-    api.syncData({
+    syncData({
       onRunningUpdate(session) {
         dispatch(addedSession(session));
       },

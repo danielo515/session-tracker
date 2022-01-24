@@ -9,7 +9,7 @@ import { Action } from 'redux';
 import { State } from './initialState';
 import { Session } from '@types';
 import { ThunkAction } from 'redux-thunk';
-import * as api from '../../../common/api';
+import { listSessions } from '@common/api';
 
 type GetSessionThunk = ThunkAction<Promise<void>, RootState, void, Action>;
 
@@ -19,7 +19,7 @@ export function getSessions(): GetSessionThunk {
       type: STATS_GET_SESSIONS_BEGIN,
     });
 
-    const { error, response } = await api.listSessions();
+    const { error, response } = await listSessions();
 
     if (error) {
       dispatch({
