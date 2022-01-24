@@ -8,6 +8,7 @@ import timerRoute from '../features/timer/route';
 import sessionDefinitionRoute from '../features/session-definition/route';
 import { RouteObject } from 'react-router-dom';
 import { ManageIcons } from 'features/Internal/manageIcons';
+import { detailRoutes } from 'features/detail/routes';
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
 
@@ -17,6 +18,7 @@ const childRoutes: RouteObject[] = [
   sessionDefinitionRoute,
   homeRoute,
   timerRoute,
+  detailRoutes,
   { path: 'internal', element: ManageIcons },
 ];
 
