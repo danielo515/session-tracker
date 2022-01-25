@@ -4,7 +4,7 @@ import React, { Suspense, useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { useRoutes } from 'react-router-dom';
 import { ReduxRouter } from '@lagunovsky/redux-react-router';
-import history from './common/history';
+import history from 'common/history';
 import { LoadingComponent } from '@common/makeAsyncPage';
 import { Store } from '@reduxjs/toolkit';
 import routes, { renderRoutes, RouteConfig } from '@common/routeConfig';
