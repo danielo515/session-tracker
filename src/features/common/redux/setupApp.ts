@@ -10,7 +10,7 @@ import { State } from './initialState';
 import history from '../../../common/history';
 import { syncSessions } from '../../home/redux/actions';
 import homeSetup from '../../home/redux/setup';
-import { isUserLoggedIn } from '@common/login';
+import { isUserLoggedIn } from '@common/isUserLoggedIn';
 import { fetchAllDefinitions } from 'features/session-definition/redux/fetchAll';
 
 export function setupApp() {
