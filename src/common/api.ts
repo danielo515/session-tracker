@@ -18,9 +18,33 @@ import {
 } from 'firebase/database';
 import { withDb, withDbList, withDbSync } from './withDb';
 
+const childOnce = (query: Query) => {
+  return new Promise<DataSnapshot>((resolve) => {
+    onChildAdded(
+      query,
+      (snapshot) => {
+        resolve(snapshot);
+      },
+      { onlyOnce: true },
+    );
+  });
+};
+
+const valueOnce = (query: Query) => {
+  return new Promise<DataSnapshot>((resolve) => {
+    onValue(
+      query,
+      (snapshot) => {
+        resolve(snapshot);
+      },
+      { onlyOnce: true },
+    );
+  });
+};
+
 export const listSessions = withDbList<{ all: Session[]; current: RunningSession }>((db) => {
   const allQuery = query(child(db, 'all'), orderByKey());
-  return Promise.all([get(allQuery), get(child(db, 'runningSession'))]).then(
+  return Promise.all([valueOnce(allQuery), valueOnce(child(db, 'runningSession'))]).then(
     ([snapshot, currentSnap]) => {
       if (snapshot.exists())
         return {
@@ -41,18 +65,6 @@ type SyncArgs = {
   onSessionAdded: sessionCb;
   onRunningUpdate: sessionCbNull;
   onSessionUpdate: sessionCb;
-};
-
-const childOnce = (query: Query) => {
-  return new Promise<DataSnapshot>((resolve) => {
-    onChildAdded(
-      query,
-      (snapshot) => {
-        resolve(snapshot);
-      },
-      { onlyOnce: true },
-    );
-  });
 };
 
 export const syncData = withDbSync<SyncArgs>(
@@ -143,7 +155,7 @@ export const createSessionDefinition = withDb<SessionDefinition, SessionDefiniti
 
 export const listDefinitions = withDbList((db) => {
   const definitionsQuery = query(child(db, 'definitions'), orderByKey());
-  const result = get(definitionsQuery).then((snapshot) => {
+  const result = valueOnce(definitionsQuery).then((snapshot) => {
     if (snapshot.exists()) {
       const definitionsCollection: { [id: string]: SessionDefinition } = snapshot.val();
       return {
