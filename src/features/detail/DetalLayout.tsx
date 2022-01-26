@@ -1,7 +1,7 @@
-import { Box, Container, styled } from '@mui/material';
+import { Container, styled } from '@mui/material';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Navigation } from './components/Navigation';
+import { Navigation } from './components/DetailNavigation';
 
 const StyledContainer = styled('div')`
   display: flex;
