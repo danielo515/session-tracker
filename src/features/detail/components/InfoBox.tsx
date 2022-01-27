@@ -1,20 +1,31 @@
 import React from 'react';
 import { Box } from '@mui/system';
-import { IconProps, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
-import { SvgIconComponent } from '@mui/icons-material';
 
-const Root = styled(Box)(({ theme }) => ({
-  // border: '1px solid tomato',
-  backgroundColor: theme.palette.primary.light,
-  color: theme.palette.primary.contrastText,
-  borderRadius: '5px',
-  display: 'flex',
-  flexDirection: 'column',
-  padding: `${theme.spacing(2)}  ${theme.spacing(1)}`,
-  flex: 1,
-  position: 'relative',
-}));
+const Root = styled(Box)<{ variant: 'main' | 'secondary' }>(
+  ({ theme: { spacing, palette, shape }, variant }) => {
+    const variants = {
+      main: {
+        color: palette.info.contrastText,
+        backgroundColor: palette.info.light,
+      },
+      secondary: {
+        color: palette.secondary.contrastText,
+        backgroundColor: palette.secondary.light,
+      },
+    };
+    return {
+      ...variants[variant],
+      borderRadius: shape.borderRadius,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: `${spacing(2)}  ${spacing(1)}`,
+      flex: 1,
+      position: 'relative',
+    };
+  },
+);
 
 const Title = styled('h2')(({ theme }) => ({
   ...theme.typography.subtitle1,
@@ -35,12 +46,13 @@ const IconPosition = styled('div')(({ theme }) => ({
 type Props = {
   title: string;
   amountInMinutes: number;
-  Icon: React.ComponentType<SvgIconComponent>;
+  Icon: React.ComponentType<any>;
+  variant: 'main' | 'secondary';
 };
 
-export const InfoBox = ({ title, amountInMinutes, Icon }: Props) => {
+export const InfoBox = ({ title, amountInMinutes, Icon, variant = 'main' }: Props) => {
   return (
-    <Root>
+    <Root variant={variant}>
       <Title>{title}</Title>
       <Subtitle>{formatMinutes4Human(amountInMinutes, false)}</Subtitle>
       <IconPosition>
