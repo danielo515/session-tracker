@@ -1,6 +1,6 @@
 import { CalendarTodayOutlined, TodayOutlined } from '@mui/icons-material';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { Box, Stack, List, Card, CardContent, Paper } from '@mui/material';
+import { Box, Stack, List, Paper } from '@mui/material';
 import React from 'react';
 import { InfoBox } from './components/InfoBox';
 import { DetailListItem } from './components/ListItem';
@@ -25,7 +25,7 @@ export const Overview = () => {
                   height,
                   width,
                   paddingTop: 0,
-                  '& li:first-child': { margin: 0 },
+                  '& li:first-of-type': { margin: 0 },
                 }}
               >
                 <DetailListItem />
