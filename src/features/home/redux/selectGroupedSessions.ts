@@ -1,11 +1,11 @@
-type Grouped = {
-  [k: string]: SessionGroup;
-};
-
 import { Session, SessionGroup } from '@types';
 import { createSelector } from 'reselect';
 import { diffDateStrings } from './diffDateStrings';
 import selectSessions from './selectSessions';
+
+type Grouped = {
+  [k: string]: SessionGroup;
+};
 
 function getTodayISO() {
   const today = new Date();
@@ -13,6 +13,13 @@ function getTodayISO() {
   return today.toISOString();
 }
 
+/**
+ *
+ * Selects the sessions grouped by name
+ * and also calculates the total for today
+ * and the lastRun of this group of sessions.
+ * This is done for performance and it is tied to the sessionsList view
+ */
 function selectGroupedSessions(sessions: Session[]) {
   const today = getTodayISO();
   const grouped = sessions.reduce((result: Grouped, session) => {
