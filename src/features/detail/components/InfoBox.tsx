@@ -5,30 +5,30 @@ import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
 import ParentSize from '@visx/responsive/lib/components/ParentSize';
 import { LowDetailBars } from './LowDetailBars';
 
-const Root = styled(Box)<{ variant: 'main' | 'secondary' }>(
-  ({ theme: { spacing, palette, shape }, variant }) => {
-    const variants = {
-      main: {
-        color: palette.info.contrastText,
-        backgroundColor: palette.info.light,
-      },
-      secondary: {
-        color: palette.secondary.contrastText,
-        backgroundColor: palette.secondary.light,
-      },
-    };
-    return {
-      ...variants[variant],
-      borderRadius: shape.borderRadius,
-      display: 'flex',
-      flexDirection: 'column',
-      padding: `${spacing(2)}  ${spacing(1)}`,
-      flex: 1,
-      position: 'relative',
-      overflow: 'hidden',
-    };
-  },
-);
+type VariantProps = { variant: 'main' | 'secondary' };
+
+const Root = styled(Box)<VariantProps>(({ theme: { spacing, palette, shape }, variant }) => {
+  const variants = {
+    main: {
+      color: palette.info.contrastText,
+      backgroundColor: palette.info.light,
+    },
+    secondary: {
+      color: palette.secondary.contrastText,
+      backgroundColor: palette.secondary.light,
+    },
+  };
+  return {
+    ...variants[variant],
+    borderRadius: shape.borderRadius,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: `${spacing(2)}  ${spacing(1)}`,
+    flex: 1,
+    position: 'relative',
+    overflow: 'hidden',
+  };
+});
 
 const GraphWrapper = styled('div')({
   position: 'absolute',
@@ -38,17 +38,27 @@ const GraphWrapper = styled('div')({
   bottom: 0,
 });
 
-const Bubble = styled('div')(({ theme: { palette } }) => ({
-  position: 'absolute',
-  right: 0,
-  top: 0,
-  marginTop: -10,
-  marginRight: -10,
-  width: '80px',
-  height: '80px',
-  borderRadius: '100%',
-  backgroundColor: palette.secondary.main,
-}));
+const Bubble = styled('div')<VariantProps>(({ theme: { palette }, variant = 'main' }) => {
+  const variants = {
+    main: {
+      backgroundColor: palette.info.main,
+    },
+    secondary: {
+      backgroundColor: palette.secondary.main,
+    },
+  };
+  return {
+    ...variants[variant],
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    marginTop: -10,
+    marginRight: -10,
+    width: '80px',
+    height: '80px',
+    borderRadius: '100%',
+  };
+});
 
 const Title = styled('h2')(({ theme }) => ({
   ...theme.typography.subtitle1,
@@ -60,7 +70,7 @@ const Title = styled('h2')(({ theme }) => ({
 const Subtitle = styled('h3')(({ theme }) => ({
   ...theme.typography.subtitle2,
   position: 'relative',
-  // fontSize: '1.5rem',
+  fontSize: '1rem',
 }));
 
 const IconPosition = styled('div')(({ theme }) => ({
@@ -80,12 +90,8 @@ type Props = {
 export const InfoBox = ({ title, amountInMinutes, Icon, variant = 'main' }: Props) => {
   return (
     <Root variant={variant}>
-      <Bubble />
-      <GraphWrapper>
-        <ParentSize>
-          {({ width, height }) => <LowDetailBars width={width} height={height} />}
-        </ParentSize>
-      </GraphWrapper>
+      <Bubble variant={variant} />
+
       <Title>{title}</Title>
       <Subtitle>{formatMinutes4Human(amountInMinutes, false)}</Subtitle>
       <IconPosition>
