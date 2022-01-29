@@ -49,6 +49,7 @@ const Item = ({ id }: { id: string }) => {
       title={msToHuman(duration)}
       subTitle={range}
       onClick={deleteLocal}
+      //@ts-expect-error mui types are incorrect
       component={motion.li}
       variants={{
         exit: { opacity: 0, x: -400, transition: { duration: 0.3 } },
