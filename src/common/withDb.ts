@@ -1,9 +1,14 @@
 import firebase from 'fb';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, DatabaseReference, ref } from 'firebase/database';
+import { getDatabase, DatabaseReference, ref, connectDatabaseEmulator } from 'firebase/database';
 
 const database = getDatabase(firebase);
 const auth = getAuth(firebase);
+
+if (location.hostname === 'localhost') {
+  // Point to the RTDB emulator running on localhost.
+  connectDatabaseEmulator(database, 'localhost', 9000);
+}
 
 export type ErrorResponse = {
   error: { status: number };
