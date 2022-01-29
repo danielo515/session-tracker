@@ -8,16 +8,24 @@ import { selectMonthStatsByName } from './redux/selectMonthStatsByName';
 import useAppSelector from 'hooks/useSelector';
 import { toFrappeCharts } from 'features/timer/redux/toFrappeCharts';
 import { selectDetailStats } from './redux/selectDetailStats';
+import { useParams } from 'react-router-dom';
+import { replace } from '@lagunovsky/redux-react-router';
+import { useAppDispatch } from '@common/configStore';
 
 function msToMinutes(ms: number) {
   return Math.floor(ms / (1000 * 60));
 }
 
 export const Overview = () => {
-  const sessionName = 'This site';
+  const params = useParams<string>();
+  const sessionName = params.sessionName;
+  const dispatch = useAppDispatch();
+  if (!sessionName) {
+    return dispatch(replace('/'));
+  }
   const data = useAppSelector((state) => selectMonthStatsByName(state, sessionName));
   const { weekTotal, monthTotal } = useAppSelector((state) =>
-    selectDetailStats(state, 'This site'),
+    selectDetailStats(state, sessionName),
   );
   const { labels, values } = toFrappeCharts(data);
   return (
@@ -45,7 +53,7 @@ export const Overview = () => {
             yAxisMode: 'tick',
             xIsSeries: 1,
           }}
-          height={250}
+          height={200}
           data={{
             labels,
             datasets: [{ values }],

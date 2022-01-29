@@ -6,7 +6,7 @@ export const detailRoutes = {
   path: 'detail',
   element: DetailLayout,
   children: [
-    { index: true, element: Overview },
-    { path: 'detail/:name', element: Update },
+    { path: ':sessionName', element: Overview },
+    { path: ':sessionName/edit', element: Update },
   ],
 };

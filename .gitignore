@@ -27,3 +27,5 @@ stats.html
 .firebase
 firebase-debug.log
 stats-comment.html
+ui-debug.log
+database-debug.log

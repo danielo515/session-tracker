@@ -12,14 +12,15 @@ type Props = {
   title: string;
   subTitle: string;
   onClick: () => unknown;
-};
+} & ListItemProps;
 
 export const DetailListItem = forwardRef<any, Props>(function DetailListItem(
-  { title, subTitle, onClick }: Props,
+  { title, subTitle, onClick, ...props }: Props,
   ref,
 ) {
   return (
     <Item
+      {...props}
       ref={ref}
       secondaryAction={
         <IconButton edge="end" aria-label="delete" onClick={onClick}>
