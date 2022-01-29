@@ -1,6 +1,6 @@
-import { styled, ListItem, ListItemText, IconButton } from '@mui/material';
+import { styled, ListItem, ListItemText, IconButton, ListItemProps } from '@mui/material';
 import { DeleteOutlined } from '@mui/icons-material';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 const Item = styled(ListItem)(({ theme }) => ({
   borderRadius: '5px',
@@ -14,9 +14,13 @@ type Props = {
   onClick: () => unknown;
 };
 
-export const DetailListItem = ({ title, subTitle, onClick }: Props) => {
+export const DetailListItem = forwardRef<any, Props>(function DetailListItem(
+  { title, subTitle, onClick }: Props,
+  ref,
+) {
   return (
     <Item
+      ref={ref}
       secondaryAction={
         <IconButton edge="end" aria-label="delete" onClick={onClick}>
           <DeleteOutlined />
@@ -26,4 +30,4 @@ export const DetailListItem = ({ title, subTitle, onClick }: Props) => {
       <ListItemText primary={title} secondary={subTitle}></ListItemText>
     </Item>
   );
-};
+});
