@@ -11,13 +11,14 @@ const Item = styled(ListItem)(({ theme }) => ({
 type Props = {
   title: string;
   subTitle: string;
+  onClick: () => unknown;
 };
 
-export const DetailListItem = ({ title, subTitle }: Props) => {
+export const DetailListItem = ({ title, subTitle, onClick }: Props) => {
   return (
     <Item
       secondaryAction={
-        <IconButton edge="end" aria-label="delete">
+        <IconButton edge="end" aria-label="delete" onClick={onClick}>
           <DeleteOutlined />
         </IconButton>
       }
