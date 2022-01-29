@@ -8,15 +8,33 @@ import { DetailListItem } from './components/ListItem';
 import { selectMonthStatsByName } from './redux/selectMonthStatsByName';
 import useAppSelector from 'hooks/useSelector';
 import { toFrappeCharts } from 'features/timer/redux/toFrappeCharts';
+import { selectDetailStats } from './redux/selectDetailStats';
+
+function msToMinutes(ms: number) {
+  return Math.floor(ms / (1000 * 60));
+}
 
 export const Overview = () => {
   const data = useAppSelector((state) => selectMonthStatsByName(state, { name: 'This site' }));
+  const { weekTotal, monthTotal } = useAppSelector((state) =>
+    selectDetailStats(state, { name: 'This site' }),
+  );
   const { labels, values } = toFrappeCharts(data);
   return (
     <Box pt={2} display="flex" flexDirection="column" flex={1} height="100%">
       <Stack spacing={2} direction="row" justifyContent="center">
-        <InfoBox title="Week" amountInMinutes={3000} Icon={CalendarTodayOutlined} variant="main" />
-        <InfoBox title="Month" amountInMinutes={8000} Icon={TodayOutlined} variant="secondary" />
+        <InfoBox
+          title="Week"
+          amountInMinutes={msToMinutes(weekTotal)}
+          Icon={CalendarTodayOutlined}
+          variant="main"
+        />
+        <InfoBox
+          title="Month"
+          amountInMinutes={msToMinutes(monthTotal)}
+          Icon={TodayOutlined}
+          variant="secondary"
+        />
       </Stack>
       <Paper sx={{ padding: 1, mt: 2 }}>
         <ReactFrappeChart
