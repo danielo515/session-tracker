@@ -2,10 +2,8 @@ import React from 'react';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material';
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
-import ParentSize from '@visx/responsive/lib/components/ParentSize';
-import { LowDetailBars } from './LowDetailBars';
 
-type VariantProps = { variant: 'main' | 'secondary' };
+type VariantProps = { variant: 'main' | 'secondary'; intensity?: 'dark' | 'light' };
 
 const Root = styled(Box)<VariantProps>(({ theme: { spacing, palette, shape }, variant }) => {
   const variants = {
@@ -30,35 +28,37 @@ const Root = styled(Box)<VariantProps>(({ theme: { spacing, palette, shape }, va
   };
 });
 
-const GraphWrapper = styled('div')({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-});
-
-const Bubble = styled('div')<VariantProps>(({ theme: { palette }, variant = 'main' }) => {
-  const variants = {
-    main: {
-      backgroundColor: palette.info.main,
-    },
-    secondary: {
-      backgroundColor: palette.secondary.main,
-    },
-  };
-  return {
-    ...variants[variant],
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    marginTop: -10,
-    marginRight: -10,
-    width: '80px',
-    height: '80px',
-    borderRadius: '100%',
-  };
-});
+const Bubble = styled('div')<VariantProps & { positionY: number; positionX?: number }>(
+  ({
+    theme: { palette },
+    variant = 'main',
+    intensity = 'dark',
+    positionY = -30,
+    positionX = -10,
+  }) => {
+    const size = '100px';
+    const variants = {
+      main: {
+        backgroundColor: intensity === 'dark' ? palette.info.dark : palette.info.main,
+      },
+      secondary: {
+        backgroundColor: intensity === 'dark' ? palette.secondary.dark : palette.secondary.main,
+      },
+    };
+    return {
+      ...variants[variant],
+      opacity: 0.8,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      marginTop: positionY,
+      marginRight: positionX,
+      width: size,
+      height: size,
+      borderRadius: '100%',
+    };
+  },
+);
 
 const Title = styled('h2')(({ theme }) => ({
   ...theme.typography.subtitle1,
@@ -90,13 +90,14 @@ type Props = {
 export const InfoBox = ({ title, amountInMinutes, Icon, variant = 'main' }: Props) => {
   return (
     <Root variant={variant}>
-      <Bubble variant={variant} />
+      <Bubble variant={variant} positionY={-50} positionX={-10} intensity="light" />
+      <Bubble variant={variant} positionY={-30} positionX={-50} intensity="dark" />
 
       <Title>{title}</Title>
       <Subtitle>{formatMinutes4Human(amountInMinutes, false)}</Subtitle>
-      <IconPosition>
+      {/* <IconPosition>
         <Icon />
-      </IconPosition>
+      </IconPosition> */}
     </Root>
   );
 };

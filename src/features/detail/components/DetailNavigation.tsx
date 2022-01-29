@@ -4,7 +4,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Wrapper = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
+  // padding: theme.spacing(2),
   paddingTop: 0,
   backgroundColor: theme.palette.primary.main,
 }));
