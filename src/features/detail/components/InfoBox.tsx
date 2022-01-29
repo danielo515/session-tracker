@@ -28,7 +28,11 @@ const Root = styled(Box)<VariantProps>(({ theme: { spacing, palette, shape }, va
   };
 });
 
-const Bubble = styled('div')<VariantProps & { positionY: number; positionX?: number }>(
+const Bubble = styled('div', {
+  shouldForwardProp(propName) {
+    return !/position(Y|X)/.test(String(propName));
+  },
+})<VariantProps & { positionY: number; positionX?: number }>(
   ({
     theme: { palette },
     variant = 'main',
