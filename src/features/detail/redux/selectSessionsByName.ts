@@ -5,9 +5,9 @@ import { selectRelativeMonthsSessions } from 'features/stats/redux/selectRelativ
 /**
  * Given a name, returns the sessions having that name.
  */
-const selectSessionsByName = createSelector(
+export const selectSessionsByName = createSelector(
   selectSessions,
-  (_: unknown, props: { name: string }) => props.name,
+  (_: unknown, name: string) => name,
   (sessions, name) => sessions.filter((s) => s.name === name),
 );
 

@@ -8,7 +8,12 @@ const Item = styled(ListItem)(({ theme }) => ({
   margin: `${theme.spacing(1)} 0`,
 }));
 
-export const DetailListItem = () => {
+type Props = {
+  title: string;
+  subTitle: string;
+};
+
+export const DetailListItem = ({ title, subTitle }: Props) => {
   return (
     <Item
       secondaryAction={
@@ -17,10 +22,7 @@ export const DetailListItem = () => {
         </IconButton>
       }
     >
-      <ListItemText
-        primary="2 hours 5 minutes"
-        secondary="2020-12-01 16:00 -> 18:00"
-      ></ListItemText>
+      <ListItemText primary={title} secondary={subTitle}></ListItemText>
     </Item>
   );
 };
