@@ -31,8 +31,8 @@ jobs:
         id: lighthouse_audit
         with:
           urls: |
-            ${{ steps.deploy.outputs.url }}
-            ${{ steps.deploy.outputs.url }}/login/
+            ${{ steps.deploy.outputs.urls[0] }}
+            ${{ steps.deploy.outputs.urls[0] }}/login/
           # budgetPath: ./budget.json
           uploadArtifacts: true
           temporaryPublicStorage: true
