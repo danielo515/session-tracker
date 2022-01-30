@@ -21,7 +21,7 @@ jobs:
           path: stats-comment.html
           recreate: true
       - uses: FirebaseExtended/action-hosting-deploy@v0
-        id: deploy
+        id: fb_deploy
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIME_TRACKER_A0213 }}"
@@ -31,8 +31,8 @@ jobs:
         id: lighthouse_audit
         with:
           urls: |
-            ${{ steps.deploy.outputs.urls[0] }}
-            ${{ steps.deploy.outputs.urls[0] }}/login/
+            ${{ steps.fb_deploy.outputs.details_url }}
+            ${{ steps.fb_deploy.outputs.details_url }}/login/
           # budgetPath: ./budget.json
           uploadArtifacts: true
           temporaryPublicStorage: true
