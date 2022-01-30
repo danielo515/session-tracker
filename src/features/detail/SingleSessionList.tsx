@@ -52,7 +52,12 @@ const Item = ({ id }: { id: string }) => {
       //@ts-expect-error mui types are incorrect
       component={motion.li}
       variants={{
-        exit: { opacity: 0, x: -400, transition: { duration: 0.3 } },
+        exit: {
+          opacity: 0,
+          x: -400,
+          backgroundColor: 'rgba(255, 109, 109, 0.445)',
+          transition: { duration: 0.3 },
+        },
         present: { opacity: 1 },
       }}
       onAnimationComplete={deleteMe}
@@ -77,7 +82,7 @@ export function SingleSessionList({ sessionName }: Props) {
             },
           }}
         >
-          {sessions.slice(0, 5).map((session) => (
+          {sessions.slice(0, 25).map((session) => (
             <Item key={session.id} id={session.id} />
           ))}
         </List>
