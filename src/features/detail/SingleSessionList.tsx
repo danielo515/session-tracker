@@ -73,7 +73,7 @@ export function SingleSessionList({ sessionName }: Props) {
       {({ height, width }) => (
         <List
           sx={{
-            overflow: 'scroll',
+            overflowY: 'auto',
             height,
             width,
             paddingTop: 0,

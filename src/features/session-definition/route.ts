@@ -9,7 +9,7 @@ const route: RouteObject = {
   path: 'session-definitions',
   children: [
     { path: 'new', element: Create },
-    { path: 'update/:name', element: Update },
+    { path: 'update/:sessionName', element: Update },
   ],
 };
 
