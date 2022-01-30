@@ -4,9 +4,9 @@ import { VariableSizeList } from 'react-window';
 import clsx from 'clsx';
 import List from '@mui/material/List';
 import Autosizer from 'react-virtualized-auto-sizer';
-import { TaskGroup } from './TaskGroup';
 import { SessionGroup } from '@types';
 import { Loading } from './LoadingList';
+import { SimpleListItem } from './SimpleListItem';
 
 const PREFIX = 'SessionsList';
 
@@ -22,17 +22,16 @@ export function CalculateListHeight(items: unknown[]) {
 }
 type Props = {
   sessions: SessionGroup[];
-  startSession: (i: { name: string }) => any;
-  editSession: (id: string) => any;
+  startSession: (i: { name: string }) => unknown;
+  editSession: (id: string) => unknown;
 };
 
-export default function SessionsList({ sessions, startSession, editSession }: Props) {
+export default function SessionsList({ sessions, startSession }: Props) {
   // We need to use a ref because using the hook will re-render the entire list which will kill the animation
   // of each item esxpanding or collapsing. The child component will inform us on the onToggle handler.
   // I don't like it, but it works for now
   const selectedRow = useRef('');
   const start = useCallback((e) => startSession({ name: e.currentTarget.id }), [startSession]);
-  const edit = useCallback((e) => editSession(e.currentTarget.id), [editSession]);
   return (
     <div className={clsx(classes.root, 'home-sessions-list')}>
       <VirtualList
@@ -43,20 +42,12 @@ export default function SessionsList({ sessions, startSession, editSession }: Pr
             ? CalculateListHeight(sessionGroup.sessions)
             : ItemHeight;
         }}
-        row={({ index, style, data, resizeList }) => {
+        row={({ index, style, data }) => {
           const item = data[index];
 
           return (
             <div style={style} className="virtual-node">
-              <TaskGroup
-                {...item}
-                startSession={start}
-                editSession={edit}
-                onToggle={(sessionName) => {
-                  selectedRow.current = sessionName;
-                  resizeList();
-                }}
-              />
+              <SimpleListItem {...item} startSession={start} />
             </div>
           );
         }}
@@ -83,7 +74,7 @@ type VirtualProps<T> = {
     data: T[];
     style: React.CSSProperties;
     index: number;
-    resizeList: () => any;
+    resizeList: () => unknown;
   }) => any;
   itemSize: (i: number) => number;
 };
