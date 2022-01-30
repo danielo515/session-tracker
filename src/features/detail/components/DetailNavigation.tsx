@@ -1,7 +1,7 @@
 import { EditOutlined, InfoOutlined } from '@mui/icons-material';
 import { BottomNavigation, BottomNavigationAction, Box, styled } from '@mui/material';
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const Wrapper = styled(Box)(({ theme }) => ({
   // padding: theme.spacing(2),
@@ -10,11 +10,13 @@ const Wrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const Navigation = () => {
-  const path = useLocation().pathname;
+  const path = useLocation();
+  const pathName = path.pathname.replace(/(\w+)\/.+?$/, '$1');
+  const param = useParams<string>();
   return (
     <Wrapper>
       <BottomNavigation
-        value={path}
+        value={pathName}
         sx={{ borderBottomRightRadius: '5px', borderBottomLeftRadius: '5px' }}
       >
         <BottomNavigationAction
@@ -22,14 +24,14 @@ export const Navigation = () => {
           value="/detail"
           icon={<InfoOutlined />}
           component={Link}
-          to="/detail"
+          to={`/detail/${param.sessionName}`}
         />
         <BottomNavigationAction
           label="Edit"
           value="/detail/edit"
           icon={<EditOutlined />}
           component={Link}
-          to="/detail/edit"
+          to={`/detail/${param.sessionName}/edit`}
         />
       </BottomNavigation>
     </Wrapper>
