@@ -57,7 +57,7 @@ jobs:
                 `| ${score(result.seo)} SEO | ${result.seo} |`,
                 `| ${score(result.pwa)} PWA | ${result.pwa} |`,
                 ' ',
-                `*Lighthouse ran on [${Object.keys(links)[0]}](${Object.keys(links)[0]})*`
+                `*Lighthouse ran on [${Object.keys(links) }](${Object.keys(links)[0]})*`,
                 `${new Date().toLocaleString()}`
             ].join('\n')
             core.setOutput("comment", comment);
