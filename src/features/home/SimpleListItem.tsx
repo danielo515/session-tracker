@@ -4,6 +4,7 @@ import { push } from '@lagunovsky/redux-react-router';
 import { PlayCircleOutline } from '@mui/icons-material';
 import {
   IconButton,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemSecondaryAction,
@@ -11,6 +12,7 @@ import {
   styled,
 } from '@mui/material';
 import { SessionGroup } from '@types';
+import { formatDistanceToNow } from 'date-fns/esm';
 import { selectDefinition } from 'features/session-definition/selectDefinition';
 import { validateIcon } from 'features/session-definition/validateIcon';
 import { formatStartDate, msToHuman } from 'formatters/formatDateDiff';
@@ -25,7 +27,7 @@ const classes = {
 };
 
 // TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
-const Root = styled(ListItemButton)(({ theme }) => ({
+const Root = styled(ListItem)(({ theme }) => ({
   display: 'flex',
 
   [`& .${classes.rightItem}`]: {
@@ -33,10 +35,6 @@ const Root = styled(ListItemButton)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-  },
-
-  [`& .${classes.leftItem}`]: {
-    flex: '1 1 auto',
   },
 }));
 type Props = Merge<
@@ -52,22 +50,29 @@ export const SimpleListItem = ({ name, total, lastRun, startSession }: Props) =>
   const { icon, color } = useAppSelector(
     (state) => selectDefinition(state, name) ?? { icon: 'Default', color: 'pink' },
   );
+  const TimeInfoLabel = total ? 'Today' : 'Last';
+  const TimeInfoData = total ? msToHuman(total) : formatDistanceToNow(new Date(lastRun));
   const Icon = validateIcon(icon) ? Icons[icon] : Icons.Default;
   const navigate = () => {
     dispatch(push(destination));
   };
   return (
-    <Root onClick={navigate} data-name={name}>
+    <Root
+      onClick={navigate}
+      data-name={name}
+      // @ts-expect-error this is deprecated, but it doesn't have an equivalent
+      button
+    >
       <ListItemIcon>
         <Icon color={color} />
       </ListItemIcon>
-      <ListItemText
-        primary={name}
-        secondary={formatStartDate(lastRun)}
-        //   className={classes.leftItem}
-      />
+      <ListItemText primary={name} secondary={formatStartDate(lastRun)} />
 
-      <ListItemText primary="Today" secondary={msToHuman(total)} className={classes.rightItem} />
+      <ListItemText
+        primary={TimeInfoLabel}
+        secondary={TimeInfoData}
+        className={classes.rightItem}
+      />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" id={name} onClick={startSession} size="large">
           <PlayCircleOutline />
