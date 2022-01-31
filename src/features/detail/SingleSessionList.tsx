@@ -11,6 +11,7 @@ import { format } from 'date-fns/esm';
 import { useAppDispatch } from '@common/configStore';
 import { deleteSession } from 'features/home/redux/deleteSession';
 import { motion } from 'framer-motion';
+import { editSession } from 'features/home/redux/editSession';
 
 type Props = {
   sessionName: string;
@@ -37,6 +38,10 @@ const Item = ({ id }: { id: string }) => {
     }
   };
 
+  const editMe = () => {
+    dispatch(editSession(id));
+  };
+
   if (!session) {
     throw new Error('Session not found inside a list of sessions, WTF?');
   }
@@ -48,7 +53,8 @@ const Item = ({ id }: { id: string }) => {
     <DetailListItem
       title={msToHuman(duration)}
       subTitle={range}
-      onClick={deleteLocal}
+      onDelete={deleteLocal}
+      onClick={editMe}
       //@ts-expect-error mui types are incorrect
       component={motion.li}
       variants={{

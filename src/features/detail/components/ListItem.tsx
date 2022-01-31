@@ -12,18 +12,20 @@ type Props = {
   title: string;
   subTitle: string;
   onClick: () => unknown;
+  onDelete: () => unknown;
 } & ListItemProps;
 
 export const DetailListItem = forwardRef<any, Props>(function DetailListItem(
-  { title, subTitle, onClick, ...props }: Props,
+  { title, subTitle, onClick, onDelete, ...props }: Props,
   ref,
 ) {
   return (
     <Item
       {...props}
       ref={ref}
+      onClick={onClick}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={onClick}>
+        <IconButton edge="end" aria-label="delete" onClick={onDelete}>
           <DeleteOutlined />
         </IconButton>
       }

@@ -40,19 +40,11 @@ function EditSession(props: Merge<Session, Props>) {
   const submit = () =>
     onSubmit({ id, name, startDate: date.toISOString(), endDate: dateEnd.toISOString() });
   const deleteCb = React.useCallback(() => onDelete(id), [onDelete, id]);
-  /**
-   * @param {*} _
-   * @param {number|number[]} newHours
-   */
-  const handleHourSlider = (_: any, newHours: number | number[]) => {
+  const handleHourSlider = (_: unknown, newHours: number | number[]) => {
     if (Array.isArray(newHours)) return;
     setEndDate((current) => addHours(current, newHours - hours));
   };
-  /**
-   * @param {*} _
-   * @param {number|number[]} value
-   */
-  const handleMinuteSlider = (_: any, value: number | number[]) => {
+  const handleMinuteSlider = (_: unknown, value: number | number[]) => {
     if (Array.isArray(value)) return;
     setEndDate((current) => addMinutes(current, value - minutes));
   };
