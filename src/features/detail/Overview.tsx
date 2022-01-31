@@ -11,6 +11,7 @@ import { selectDetailStats } from './redux/selectDetailStats';
 import { useParams } from 'react-router-dom';
 import { replace } from '@lagunovsky/redux-react-router';
 import { useAppDispatch } from '@common/configStore';
+import EditSession from 'features/home/EditSession';
 
 function msToMinutes(ms: number) {
   return Math.floor(ms / (1000 * 60));
@@ -29,7 +30,14 @@ export const Overview = () => {
   );
   const { labels, values } = toFrappeCharts(data);
   return (
-    <Box pt={2} display="flex" flexDirection="column" flex={1} height="100%">
+    <Box
+      pt={2}
+      display="flex"
+      flexDirection="column"
+      flex={1}
+      height="100%"
+      sx={{ overflowY: 'auto' }}
+    >
       <Stack spacing={2} direction="row" justifyContent="center">
         <InfoBox
           title="Week"
@@ -65,6 +73,7 @@ export const Overview = () => {
           <SingleSessionList sessionName={sessionName} />
         </Paper>
       </Box>
+      <EditSession />
     </Box>
   );
 };
