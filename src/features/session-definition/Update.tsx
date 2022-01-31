@@ -11,10 +11,11 @@ import { updateSessionDefinition } from './redux/updateSessionDefinition';
 import { wait } from './wait';
 
 export default function Update() {
-  const params = useParams<'name'>();
-  if (!params.name) {
+  const params = useParams<{ sessionName: string }>();
+  if (!params.sessionName) {
     return <Alert severity="error">No session name, this URL is incorrect</Alert>;
   }
+  const sessionName = params.sessionName;
   const { definitions, pending } = useAppSelector(({ sessionDefinition }) => {
     return {
       definitions: sessionDefinition.byName,
@@ -24,7 +25,7 @@ export default function Update() {
   const dispatch = useAppThunkDispatch();
   const [showAlert, setShowAlert] = useState(false);
   const closeAlert = () => setShowAlert(false);
-  const definition = definitions[params.name];
+  const definition = definitions[sessionName];
   const onSubmit = useCallback(
     (definition: SessionDefinitionFromDb) => {
       return dispatch(updateSessionDefinition(definition))
@@ -40,12 +41,12 @@ export default function Update() {
   return (
     <>
       <Snackbar open={showAlert} autoHideDuration={2000} onClose={closeAlert}>
-        <Alert onClose={closeAlert}>Session {params.name} updated!</Alert>
+        <Alert onClose={closeAlert}>Session {sessionName} updated!</Alert>
       </Snackbar>
       <DefinitionForm
         definition={{
           ...definition,
-          name: params.name,
+          name: sessionName,
         }}
         onSubmit={onSubmit}
         isLoading={pending}

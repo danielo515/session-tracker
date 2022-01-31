@@ -2,20 +2,25 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import Login from './LoginComponent';
 import SignUp from './SignUp';
-import { loginAction } from './redux/loginAction';
+import { loginAction, loginArgs } from './redux/loginAction';
 import { signUp } from './redux/actions';
 import useAppSelector from 'hooks/useSelector';
-import { useAppDispatch } from '@common/configStore';
+import { useAppThunkDispatch } from '@common/configStore';
 import { useMatch } from 'react-router-dom';
+import { replace } from '@lagunovsky/redux-react-router';
 
 const useLogin = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppThunkDispatch();
+  const login = (args: loginArgs) =>
+    dispatch(loginAction(args)).then(() => {
+      dispatch(replace('/'));
+    });
 
   return {
+    loginAction: login,
     ...useAppSelector((state) => ({ login: state.login })),
     ...bindActionCreators(
       {
-        loginAction: loginAction,
         signUp: signUp,
       },
       dispatch,

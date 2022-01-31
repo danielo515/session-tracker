@@ -22,7 +22,7 @@ export default defineConfig(({ command }) => {
     base: '/',
     root: './',
     define,
-    logLevel: 'warn',
+    logLevel: 'info',
 
     build: {
       target: 'es2015',
@@ -30,16 +30,21 @@ export default defineConfig(({ command }) => {
       manifest: false,
       sourcemap: 'inline',
       outDir: 'build',
+      assetsInlineLimit: 8096,
+      cssCodeSplit: false,
 
       rollupOptions: {
         output: {
-          manualChunks: { '@firebase-auth': ['@firebase/auth'] },
+          manualChunks: {
+            '@firebase-auth': ['@firebase/auth'],
+            '@firebase/database': ['@firebase/database'],
+          },
         },
         plugins: [
           visualizer({
             open: true,
             template: 'treemap',
-          }),
+          }) as Plugin,
           analyzer({
             showExports: false,
             limit: 10,

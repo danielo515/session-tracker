@@ -13,11 +13,11 @@ import { Replay, Add, Remove } from '@mui/icons-material';
 import { useStopRunningSession } from 'features/common/redux/useStopRunningSession';
 import { useInterval } from '@common/hooks/useInterval';
 
-import QuickPick from '../common/QuickPick';
 import useAppSelector from 'hooks/useSelector';
 import selectDefinition from 'features/session-definition/selectDefinition';
 import { Alert, AlertTitle } from '@mui/material';
 import { RunningSession } from '@types';
+import QuickPick from 'features/common/QuickPick';
 
 type editFn = (args: { name: string; startDate: Date }) => any;
 

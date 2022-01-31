@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getInitialValue, getSessionStatsReducer, Stats } from './selectRunningSessionStats';
 import { Session } from 'types';
 
-function getNameFromProps(_: any, name?: string) {
+function getNameFromProps(_: unknown, name?: string) {
   return name;
 }
 

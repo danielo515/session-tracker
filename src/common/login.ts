@@ -1,29 +1,8 @@
 import firebase from 'fb';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithPopup,
-  User,
-} from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth(firebase);
-
-export function isUserLoggedIn() {
-  return new Promise<User | null>((resolve) => {
-    onAuthStateChanged(
-      auth,
-      (user) => {
-        resolve(user);
-      },
-      (error) => {
-        console.error('Failed checking logged user', error);
-        return resolve(null);
-      },
-    );
-  });
-}
 
 export function login({ email, password }: { email: string; password: string }) {
   return { error: null, response: null };

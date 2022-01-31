@@ -1,10 +1,9 @@
-import { replace } from '@lagunovsky/redux-react-router';
 import { getErrorData } from '../../../common/getErrorData';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import initialState from './initialState';
 import { googleLogin } from '@common/login';
 
-type Props = {
+export type loginArgs = {
   email: string;
   password: string;
   rememberMe: boolean;
@@ -13,7 +12,7 @@ type Props = {
 
 export const loginAction = createAsyncThunk(
   'LOGIN',
-  async (args: Props, { rejectWithValue, dispatch }) => {
+  async (args: loginArgs, { rejectWithValue }) => {
     const result = await googleLogin();
 
     if (result.error) {
@@ -21,7 +20,6 @@ export const loginAction = createAsyncThunk(
       return rejectWithValue(result.error);
     }
 
-    dispatch(replace('/'));
     return result.response.token;
   },
 );
