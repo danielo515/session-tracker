@@ -18,7 +18,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SessionDefinition, SessionDefinitionFromDb } from '@types';
 import { ExpandMore } from '@mui/icons-material';
-import * as Icons from '@common/Icon/Icon';
+import { Icons } from '@common/Icon/Icon';
 import {
   Step,
   useDefinitionForm,
@@ -31,8 +31,8 @@ import {
 } from './redux/definitionForm';
 import useAppSelector from 'hooks/useSelector';
 import { useAppDispatch } from '@common/configStore';
-import { IconCollection } from '@common/Icon/types';
 import { formatMinutes4Human } from 'formatters/formatMinutes4Human';
+import { validateIcon } from './validateIcon';
 
 type SectionProps = {
   children: React.ReactNode;
@@ -129,12 +129,10 @@ const DurationSection = () => {
   );
 };
 
-const icons = Icons as IconCollection;
-
 const IconSection = () => {
   const dispatch = useAppDispatch();
   const icon = useAppSelector((state) => state.descriptionForm.icon);
-  const Icon = icons[icon];
+  const Icon = validateIcon(icon) ? Icons[icon] : Icons.Default;
 
   return (
     <Section title="Icon" hint={<Icon color="primary"></Icon>} step="icon" noPadding>
