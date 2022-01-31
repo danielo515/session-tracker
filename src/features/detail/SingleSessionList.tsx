@@ -1,7 +1,7 @@
 import useAppSelector from 'hooks/useSelector';
 import { selectSessionsByName } from './redux/selectSessionsByName';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { DetailListItem } from './components/ListItem';
+import { DetailListItem } from './components/DetailListItem';
 import React, { useState } from 'react';
 import { List } from '@mui/material';
 import { selectSessionById } from './redux/selectSessionById';
