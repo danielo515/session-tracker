@@ -36,7 +36,7 @@ export default defineConfig(({ command }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            // '@firebase-auth': ['@firebase/auth'],
+            '@firebase-auth': ['@firebase/auth'],
             '@firebase/database': ['@firebase/database'],
           },
         },
