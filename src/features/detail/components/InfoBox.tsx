@@ -73,8 +73,11 @@ const Title = styled('h2')(({ theme }) => ({
 
 const Subtitle = styled('h3')(({ theme }) => ({
   ...theme.typography.subtitle2,
+  margin: 0,
+  marginTop: theme.spacing(1),
   position: 'relative',
-  fontSize: '1rem',
+  fontSize: '1.2rem',
+  lineHeight: '1.75rem',
 }));
 
 const IconPosition = styled('div')(({ theme }) => ({
