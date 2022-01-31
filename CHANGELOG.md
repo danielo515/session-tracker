@@ -1,3 +1,23 @@
+# [1.29.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.3...v1.29.0) (2022-01-31)
+
+
+### Bug Fixes
+
+* async QuickPick ([278606a](https://github.com/danielo515/pento-tech-challenge/commit/278606a0aaef5bb5e3ce2cc817797ce4f9903994))
+* better font sizes for infoBox ([414ed37](https://github.com/danielo515/pento-tech-challenge/commit/414ed378174c14e68cb332e47f8087525a99dc97))
+* split selectRelativeMonthsSessions ([d43af8f](https://github.com/danielo515/pento-tech-challenge/commit/d43af8f7fdd6a02fe307d49d54c09d5daffa5607))
+
+
+### Features
+
+* added list of sessions to detail view ([cf7a422](https://github.com/danielo515/pento-tech-challenge/commit/cf7a4225a9f3bda2b7b76ce3e4b9908984913559))
+* delete sessions from detail view ([6d28979](https://github.com/danielo515/pento-tech-challenge/commit/6d289792b67e0b0273d1413e29797c90a3c090d9))
+* edit session from details page ([02e151f](https://github.com/danielo515/pento-tech-challenge/commit/02e151f3b869ea37bf71f48f20977b57be528158))
+* get month stats by session name ([e851b49](https://github.com/danielo515/pento-tech-challenge/commit/e851b499c2dd3fa188cf96225a2a57258705ea2c))
+* InfoBox for Details ([2d9d6df](https://github.com/danielo515/pento-tech-challenge/commit/2d9d6df8808c764af863856313cd112953c9bdb5))
+* real data for month and week overview ([66492f8](https://github.com/danielo515/pento-tech-challenge/commit/66492f8a01f38e6e20a1465d1f8ee9f3493818b5))
+* real list of items on detail ([314a155](https://github.com/danielo515/pento-tech-challenge/commit/314a1557f9f1cc909d53e9f53cb0bb1bac4ff230))
+
 ## [1.28.3](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.2...v1.28.3) (2022-01-24)
 
 
