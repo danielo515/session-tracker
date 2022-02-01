@@ -1,5 +1,5 @@
 module.exports = async ({ core, steps }) => {
-  console.log({ context });
+  console.log({ steps });
   const result = steps.lighthouse_audit.outputs.manifest[0].summary;
   const links = steps.lighthouse_audit.outputs.links;
   const formatResult = (res) => Math.round(res * 100);

@@ -2,9 +2,8 @@ import React, { Suspense } from 'react';
 
 const EditSessionComponent = React.lazy(() => import('./EditSession.container'));
 
-const LoadingComponent = () => <h3>please wait...</h3>;
 const EditSession = () => (
-  <Suspense fallback={<LoadingComponent />}>
+  <Suspense fallback={null}>
     <EditSessionComponent />
   </Suspense>
 );
