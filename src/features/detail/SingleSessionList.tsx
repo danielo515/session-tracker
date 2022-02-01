@@ -7,7 +7,7 @@ import { List } from '@mui/material';
 import { selectSessionById } from './redux/selectSessionById';
 import { calculateSessionDuration } from '@common/calculateSessionDuration';
 import { msToHuman } from 'formatters/formatDateDiff';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 import { useAppDispatch } from '@common/configStore';
 import { deleteSession } from 'features/home/redux/deleteSession';
 import { motion } from 'framer-motion';

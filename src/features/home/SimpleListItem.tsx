@@ -12,7 +12,7 @@ import {
   styled,
 } from '@mui/material';
 import { SessionGroup } from '@types';
-import { formatDistanceToNow } from 'date-fns/esm';
+import { formatDistanceToNow } from 'date-fns';
 import { selectDefinition } from 'features/session-definition/selectDefinition';
 import { validateIcon } from 'features/session-definition/validateIcon';
 import { formatStartDate, msToHuman } from 'formatters/formatDateDiff';

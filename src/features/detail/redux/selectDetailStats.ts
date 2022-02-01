@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { isThisWeek } from 'date-fns/esm';
+import { isThisWeek } from 'date-fns';
 import { diffDateStrings } from 'features/home/redux/diffDateStrings';
 import { selectMonthByName } from './selectSessionsByName';
 
