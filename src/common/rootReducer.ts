@@ -7,6 +7,7 @@ import timerReducer from '../features/timer/redux/reducer';
 import sessionDefinitionReducer from '../features/session-definition/redux/reducer';
 import { ManageIconsReducer } from 'features/Internal/redux';
 import { descriptionFormReducer } from 'features/session-definition/redux/definitionForm';
+import { createdToastReducer } from 'features/home/redux/createdToast';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -23,4 +24,5 @@ export const reducerMap = {
   sessionDefinition: sessionDefinitionReducer,
   manageIcons: ManageIconsReducer,
   descriptionForm: descriptionFormReducer,
+  createdToast: createdToastReducer,
 } as const;
