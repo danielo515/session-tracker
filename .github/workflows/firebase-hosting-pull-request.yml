@@ -37,6 +37,14 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
       - name: Format lighthouse score
+        id: test_format_lighthouse_score
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const script = require('./path/to/script.js')
+            await script({context, core})
+      - name: Format lighthouse score
         id: format_lighthouse_score
         uses: actions/github-script@v3
         with:
@@ -57,7 +65,7 @@ jobs:
                 `| ${score(result.seo)} SEO | ${result.seo} |`,
                 `| ${score(result.pwa)} PWA | ${result.pwa} |`,
                 ' ',
-                `*Lighthouse ran on [${Object.keys(links) }](${Object.keys(links)[0]})*`,
+                `*Lighthouse ran on [${ Object.keys(links)[0] }](${Object.keys(links)[0]})*`,
                 `${new Date().toLocaleString()}`
             ].join('\n')
             core.setOutput("comment", comment);
