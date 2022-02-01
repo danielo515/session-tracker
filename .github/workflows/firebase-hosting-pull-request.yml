@@ -42,7 +42,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const script = require('./path/to/script.js')
+            const script = require('./format-lighthouse.js')
             await script({context, core})
       - name: Format lighthouse score
         id: format_lighthouse_score
