@@ -1,7 +1,7 @@
-module.exports = async ({ core, context }) => {
+module.exports = async ({ core, steps }) => {
   console.log({ context });
-  const result = context.steps.lighthouse_audit.outputs.manifest[0].summary;
-  const links = context.steps.lighthouse_audit.outputs.links;
+  const result = steps.lighthouse_audit.outputs.manifest[0].summary;
+  const links = steps.lighthouse_audit.outputs.links;
   const formatResult = (res) => Math.round(res * 100);
   Object.keys(result).forEach((key) => (result[key] = formatResult(result[key])));
   const score = (res) => (res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴');
