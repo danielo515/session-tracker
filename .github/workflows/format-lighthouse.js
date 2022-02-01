@@ -1,4 +1,5 @@
 module.exports = async ({ core, context }) => {
+  console.log({ context });
   const result = context.steps.lighthouse_audit.outputs.manifest[0].summary;
   const links = context.steps.lighthouse_audit.outputs.links;
   const formatResult = (res) => Math.round(res * 100);
@@ -17,6 +18,5 @@ module.exports = async ({ core, context }) => {
     `*Lighthouse ran on [${Object.keys(links)[0]}](${Object.keys(links)[0]})*`,
     `${new Date().toLocaleString()}`,
   ].join('\n');
-  console.log({ context });
   core.setOutput('comment', comment);
 };
