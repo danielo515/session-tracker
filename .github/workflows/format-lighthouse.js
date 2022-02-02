@@ -1,9 +1,9 @@
 const { inspect } = require('util');
 
-module.exports = async ({ core, steps }) => {
-  console.log("fuck", inspect(steps(), { depth: 5 }));
-  const result = steps.lighthouse_audit.outputs.manifest[0].summary;
-  const links = steps.lighthouse_audit.outputs.links;
+module.exports = async ({ core, audit }) => {
+  console.log(inspect(audit, { depth: 5 }));
+  const result = audit.outputs.manifest[0].summary;
+  const links = audit.outputs.links;
   const formatResult = (res) => Math.round(res * 100);
   Object.keys(result).forEach((key) => (result[key] = formatResult(result[key])));
   const score = (res) => (res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴');
