@@ -1,7 +1,5 @@
-const { inspect } = require('util');
-
 module.exports = async ({ core, outputs }) => {
-  console.log('Heeee', inspect(outputs, { depth: 5 }));
+  console.log({ outputs });
   const result = outputs.manifest[0].summary;
   const links = outputs.links;
   const formatResult = (res) => Math.round(res * 100);
