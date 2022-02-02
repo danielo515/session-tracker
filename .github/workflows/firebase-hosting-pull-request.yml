@@ -43,7 +43,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const script = require('./.github/workflows/format-lighthouse.js')
-            await script({context, steps: ${{ JSON.stringify( steps.lighthouse_audit.outputs )}} })
+            await script({context, outputs: ${{ steps.lighthouse_audit.outputs }} })
       - name: Format lighthouse score
         id: format_lighthouse_score
         uses: actions/github-script@v5
