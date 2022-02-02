@@ -1,9 +1,10 @@
 const { inspect } = require('util');
 
-module.exports = async ({ core, audit }) => {
-  console.log(inspect(audit, { depth: 5 }));
-  const result = audit.outputs.manifest[0].summary;
-  const links = audit.outputs.links;
+module.exports = async ({ core, steps }) => {
+  console.log(inspect(steps, { depth: 5 }));
+  const { outputs } = JSON.parse(steps);
+  const result = outputs.manifest[0].summary;
+  const links = outputs.links;
   const formatResult = (res) => Math.round(res * 100);
   Object.keys(result).forEach((key) => (result[key] = formatResult(result[key])));
   const score = (res) => (res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴');
