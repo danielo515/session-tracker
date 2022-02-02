@@ -31,7 +31,7 @@ jobs:
         id: lighthouse_audit
         with:
           urls: |
-            # ${{ steps.fb_deploy.outputs.details_url }}
+            ${{ steps.fb_deploy.outputs.details_url }}
             ${{ steps.fb_deploy.outputs.details_url }}/login/
           # budgetPath: ./budget.json
           uploadArtifacts: true
