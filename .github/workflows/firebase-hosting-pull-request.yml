@@ -31,7 +31,7 @@ jobs:
         id: lighthouse_audit
         with:
           urls: |
-            ${{ steps.fb_deploy.outputs.details_url }}
+            # ${{ steps.fb_deploy.outputs.details_url }}
             ${{ steps.fb_deploy.outputs.details_url }}/login/
           # budgetPath: ./budget.json
           uploadArtifacts: true
@@ -43,6 +43,8 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const script = require('./.github/workflows/format-lighthouse.js')
+            console.log(${{ toJson(steps) }}) 
+            console.log("xxx", ${{ steps }}) 
             await script({context, outputs: ${{ steps.lighthouse_audit.outputs }} })
       - name: Format lighthouse score
         id: format_lighthouse_score
