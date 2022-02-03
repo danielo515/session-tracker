@@ -14,7 +14,7 @@ import { useStopRunningSession } from 'features/common/redux/useStopRunningSessi
 import { useInterval } from '@common/hooks/useInterval';
 
 import useAppSelector from 'hooks/useSelector';
-import selectDefinition from 'features/session-definition/selectDefinition';
+import { selectDefinition } from 'features/session-definition/selectDefinition';
 import { Alert, AlertTitle } from '@mui/material';
 import { RunningSession } from '@types';
 import QuickPick from 'features/common/QuickPick';
@@ -32,7 +32,7 @@ export default function TimerTab() {
   const { stopRunningSession } = useStopRunningSession();
   const runningStats = useRunningSessionStats();
   const sessionDefinition = useAppSelector((state) =>
-    selectDefinition(state, { name: runningSession?.name }),
+    selectDefinition(state, runningSession?.name),
   );
   // Tick every minute to update the UI
   const [count, setCount] = React.useState(0);

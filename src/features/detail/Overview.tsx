@@ -1,8 +1,7 @@
 import { SingleSessionList } from './SingleSessionList';
 import { CalendarTodayOutlined, TodayOutlined } from '@mui/icons-material';
-import ReactFrappeChart from 'react-frappe-charts';
 import { Box, Stack, Paper } from '@mui/material';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { InfoBox } from './components/InfoBox';
 import { selectMonthStatsByName } from './redux/selectMonthStatsByName';
 import useAppSelector from 'hooks/useSelector';
@@ -16,6 +15,9 @@ import EditSession from 'features/home/EditSession';
 function msToMinutes(ms: number) {
   return Math.floor(ms / (1000 * 60));
 }
+
+const ReactFrappeChart = React.lazy(() => import('react-frappe-charts'));
+const Placeholder = () => <div style={{ height: '200px' }}>Loading...</div>;
 
 export const Overview = () => {
   const params = useParams<string>();
@@ -53,20 +55,22 @@ export const Overview = () => {
         />
       </Stack>
       <Paper sx={{ padding: 1, mt: 2 }}>
-        <ReactFrappeChart
-          type="bar"
-          colors={['#21ba45']}
-          axisOptions={{
-            xAxisMode: 'tick',
-            yAxisMode: 'tick',
-            xIsSeries: 1,
-          }}
-          height={200}
-          data={{
-            labels,
-            datasets: [{ values }],
-          }}
-        />
+        <Suspense fallback={<Placeholder />}>
+          <ReactFrappeChart
+            type="bar"
+            colors={['#21ba45']}
+            axisOptions={{
+              xAxisMode: 'tick',
+              yAxisMode: 'tick',
+              xIsSeries: 1,
+            }}
+            height={200}
+            data={{
+              labels,
+              datasets: [{ values }],
+            }}
+          />
+        </Suspense>
       </Paper>
       <Box my={2} width="100%" flex={1}>
         <Paper sx={{ height: '100%', width: '100%', padding: 2 }}>

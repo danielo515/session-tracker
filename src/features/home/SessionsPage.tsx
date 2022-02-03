@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import SessionController from './SessionController';
 import SessionsList from './SessionsList';
-import EditSession from './EditSession';
 import { FooterWithVersion } from '../common/index';
 import selectGroupedSessions from './redux/selectGroupedSessions';
 import { RootState } from '@common/configStore';
@@ -43,7 +42,6 @@ const SessionsPage = (props: import('react-redux').ConnectedProps<typeof connect
         editSession={editSession}
         startSession={switchTask}
       />
-      <EditSession />
       <SessionController />
       <Slide in={!runningSession}>
         <Fab

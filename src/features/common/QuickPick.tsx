@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { startSession } from '../home/redux/actions';
 import { Card, Grid, Typography, CardContent, ButtonBase, Container } from '@mui/material';
 import { fetchAllDefinitions } from 'features/session-definition/redux/actions';
-import * as Icons from '@common/Icon/Icon';
+import { Icons } from '@common/Icon/Icon';
 import { useLongPress } from 'hooks/useLongPress';
 import useAppSelector from 'hooks/useSelector';
 import { push } from '@lagunovsky/redux-react-router';
@@ -37,7 +37,7 @@ const IconWrapper = styled('div')(({ color, theme }) => ({
   border: `1px solid ${color || theme.palette.divider}`,
 }));
 
-const icons: Record<string, ((props: any) => JSX.Element) | undefined> = Icons;
+// const icons: Record<string, ((props: any) => JSX.Element) | undefined> = Icons;
 
 function ButtonCard({
   onClick,
@@ -48,13 +48,13 @@ function ButtonCard({
   onLongPress,
 }: {
   color: string;
-  iconName: string;
+  iconName: keyof typeof Icons;
   id: string;
   children: import('react').ReactNode;
   onClick: () => void;
   onLongPress: () => unknown;
 }) {
-  const Icon = icons[iconName] || Icons.Default;
+  const Icon = Icons[iconName] || Icons.Default;
   const longProps = useLongPress(onLongPress);
   return (
     <StyledContainer variant="outlined">
@@ -97,7 +97,7 @@ export const QuickPick = () => {
                 id={definition.id}
                 onClick={() => startSessionOnClick(definition.name)}
                 color={definition.color}
-                iconName={definition.icon}
+                iconName={definition.icon as keyof typeof Icons}
                 onLongPress={() => dispatch(push(`/session-definitions/update/${definition.name}`))}
               >
                 {definition.name}

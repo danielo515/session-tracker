@@ -13,7 +13,7 @@ import TimePicker from '../../common/TimePicker';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { addHours, addMinutes, intervalToDuration } from 'date-fns/esm';
+import { addHours, addMinutes, intervalToDuration } from 'date-fns';
 import { Session } from '@types';
 import { Merge } from 'type-fest';
 import { TextField } from '@mui/material';

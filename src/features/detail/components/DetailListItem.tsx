@@ -25,7 +25,14 @@ export const DetailListItem = forwardRef<any, Props>(function DetailListItem(
       ref={ref}
       onClick={onClick}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={onDelete}>
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
           <DeleteOutlined />
         </IconButton>
       }

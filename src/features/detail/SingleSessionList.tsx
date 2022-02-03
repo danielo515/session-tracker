@@ -1,13 +1,13 @@
 import useAppSelector from 'hooks/useSelector';
 import { selectSessionsByName } from './redux/selectSessionsByName';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { DetailListItem } from './components/ListItem';
+import { DetailListItem } from './components/DetailListItem';
 import React, { useState } from 'react';
 import { List } from '@mui/material';
 import { selectSessionById } from './redux/selectSessionById';
 import { calculateSessionDuration } from '@common/calculateSessionDuration';
 import { msToHuman } from 'formatters/formatDateDiff';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 import { useAppDispatch } from '@common/configStore';
 import { deleteSession } from 'features/home/redux/deleteSession';
 import { motion } from 'framer-motion';
