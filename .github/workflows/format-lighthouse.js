@@ -1,7 +1,5 @@
-module.exports = async ({ core, outputs }) => {
-  const result = outputs.manifest[0].summary;
-  const links = outputs.links;
-  console.log('manifest', typeof outputs.manifest);
+module.exports = async ({ core, links, manifest }) => {
+  console.log('data', links, manifest);
   const formatResult = (res) => Math.round(res * 100);
   Object.keys(result).forEach((key) => (result[key] = formatResult(result[key])));
   const score = (res) => (res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴');
