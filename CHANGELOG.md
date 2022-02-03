@@ -1,3 +1,19 @@
+# [1.30.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.29.0...v1.30.0) (2022-02-03)
+
+
+### Bug Fixes
+
+* laod frappe charts async ([0315baf](https://github.com/danielo515/pento-tech-challenge/commit/0315bafb16929cd62a5b7dd0109d34a65c47300b))
+* stop propagation on detail List ([121891f](https://github.com/danielo515/pento-tech-challenge/commit/121891fc0d989d540281b857d7d328338db66b8a))
+* turn incon exports into a single exported object ([8557db3](https://github.com/danielo515/pento-tech-challenge/commit/8557db32deac3f1c09084fa5f8fa1f6498987905))
+
+
+### Features
+
+* edit session on any page ([7a7a686](https://github.com/danielo515/pento-tech-challenge/commit/7a7a686ab53cab33ff59129514d5c0e8e410bf8a))
+* Icons and last run on main list ([db2c3f0](https://github.com/danielo515/pento-tech-challenge/commit/db2c3f0df1e31713fe64d519c2db87d309107b43))
+* Show corresponding icon on the list ([811a9d9](https://github.com/danielo515/pento-tech-challenge/commit/811a9d9c11327ccda73bde6bc4f00dbb30ca75ae))
+
 # [1.29.0](https://github.com/danielo515/pento-tech-challenge/compare/v1.28.3...v1.29.0) (2022-01-31)
 
 
