@@ -49,6 +49,7 @@ jobs:
       - name: Add comment to PR
         id: comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v1
+        if: github.repository == 'danielo515/session-tracker'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.issue.number }}
